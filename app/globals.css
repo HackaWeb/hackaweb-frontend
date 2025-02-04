@@ -24,6 +24,8 @@
     --blue: #4da6ff;
     --blue-dark: #007acc;
     --blue-light: #66b3ff;
+
+    --background: #f9f9f9;
 }
 
 * {
@@ -34,7 +36,7 @@
 
 body {
     color: var(--black);
-    background: var(--gray-light);
+    background: var(--background);
     font-family: Inter, sans-serif;
 }
 
