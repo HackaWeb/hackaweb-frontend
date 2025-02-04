@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ReactNode } from "react";
+import { ReduxProvider } from "@/components/providers/Redux";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -24,10 +26,13 @@ const RootLayout = ({ children }: Readonly<RootLayoutProps>) => {
     return (
         <html lang="en">
             <body className={inter.variable}>
-                {/* <Aside />
+                <ReduxProvider>
+                    {/* <Aside />
                 <Header /> */}
-                <main>{children}</main>
-                {/* <Footer /> */}
+                    <main>{children}</main>
+                    {/* <Footer /> */}
+                    <ToastContainer />
+                </ReduxProvider>
             </body>
         </html>
     );
