@@ -8,7 +8,7 @@ export const Button = ({
     ...rest
 }: ButtonProps) => {
     const colorStyles = {
-        purple: "bg-[#7351f5] text-white hover:bg-[#4020c3]",
+        purple: "bg-purple text-white hover:bg-purple-dark",
         gray: "border-2 border-gray-200 text-gray-600 hover:bg-gray-200 hover:text-gray-800",
         red: "bg-red-600 text-white hover:bg-red-500",
     };
