@@ -1,13 +1,8 @@
 "use client";
-
-import { Input } from "@/components/ui/Input";
 import React, { useState } from "react";
 import { ProfileControlsProps } from "./ProfileControls.props";
 import { Button } from "@/components/ui/Button";
-import Label from "@/components/ui/Label";
 import Block from "@/components/ui/Block";
-import { FiEdit2 } from "react-icons/fi";
-import { cn } from "@/helpers/cn";
 import EditableInput from "@/components/ui/Input/Editable";
 
 const ProfileControls = ({

@@ -92,11 +92,16 @@ const HomeProfile = () => {
                 <IoReturnUpBack /> Повернутися назад
             </Button>
             <div className="flex flex-wrap gap-8 mt-8">
-                <AvatarControls
-                    avatarParams={{ rating: 4 }}
-                    recentAchievements={recentAchievements}
-                    upcomingAchievements={upcomingAchievements}
-                />
+                <div className="flex flex-col gap-8">
+                    <AvatarControls
+                        avatarParams={{ rating: 4 }}
+                        recentAchievements={recentAchievements}
+                        upcomingAchievements={upcomingAchievements}
+                    />
+                    <Button className="text-red w-full" color="redBorder">
+                        Видалити акаунт
+                    </Button>
+                </div>
                 <ProfileControls
                     defaultEmail={userEmail}
                     defaultName={userName}
