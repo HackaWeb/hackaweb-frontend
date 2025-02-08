@@ -8,7 +8,7 @@ function ModalBg({ modal }: ModalBgProps) {
 
     return (
         <div
-            className="h-full w-full fixed bg-blackOpacity-dark"
+            className="h-full w-full fixed bg-black bg-opacity-70"
             onClick={() => dispatch(toggleModal(modal))}
         />
     );
