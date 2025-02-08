@@ -17,10 +17,8 @@ import { BsFillImageFill } from "react-icons/bs";
 
 export const CreateQuest = () => {
     const dispatch = useAppDispatch();
-
     const modals = useAppSelector(selectModals);
     const fileInputRef = useRef<HTMLInputElement>(null);
-
     const [file, setFile] = useState<string | null>(null);
 
     const onQuestionAddClick = () => {
@@ -29,24 +27,36 @@ export const CreateQuest = () => {
 
     const onCreateQuestSubmit = (e: FormEvent) => {
         e.preventDefault();
-
         toast.info("Створення Квесту");
+    };
+
+    const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const uploadedFile = e.target.files?.[0];
+
+        if (uploadedFile) {
+            const fileURL = URL.createObjectURL(uploadedFile);
+            setFile(fileURL);
+        }
     };
 
     return (
         isModalOpened("QuestCreation", modals) && (
             <>
-                <div className="absolute left-[50%] -translate-x-[50%] min-w-[600px] top-10 z-10 flex flex-col place-content-center place-items-center bg-blue max-w-5xl p-6">
+                <div className="absolute left-[50%] -translate-x-[50%] max-w-[700px] top-10 z-10 flex flex-col place-content-center place-items-center bg-blue p-6">
                     <ReturnBtn className="self-start" modal="QuestCreation" />
                     <span className="text-3xl mt-10">Створення Квесту</span>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
-                            {!file?.includes("blob") ? (
-                                <div className="w-full h-auto border-purple border-2 aspect-square flex items-center justify-center">
+                            {file ? (
+                                <img
+                                    src={file}
+                                    alt="Зображення квесту"
+                                    className="w-full h-auto aspect-square object-cover"
+                                />
+                            ) : (
+                                <div className="w-full h-auto border-2 border-purple aspect-square flex items-center justify-center">
                                     <BsFillImageFill className="size-20 text-gray" />
                                 </div>
-                            ) : (
-                                <img src="" alt="" />
                             )}
                             <Input
                                 id="picture"
@@ -54,18 +64,10 @@ export const CreateQuest = () => {
                                 ref={fileInputRef}
                                 className="hidden"
                                 accept="image/*"
-                                /* onChange={(e) => {
-                                    const media = handleMedia(e);
-                                    setFile(media ? media : null);
-                                }} */
+                                onChange={onImageUpload}
                             />
                             <Button
-                                className={cn(
-                                    "absolute right-4 p-3",
-                                    file?.includes("blob")
-                                        ? "top-4"
-                                        : "bottom-4",
-                                )}
+                                className="absolute right-4 p-3 bottom-4"
                                 color="purpleBackground"
                                 onClick={() => fileInputRef.current?.click()}
                             >
@@ -100,14 +102,11 @@ export const CreateQuest = () => {
                                 />
                             </div>
                             <div className="mt-4">
-                                <label
-                                    htmlFor="description"
-                                    className="text-gray"
-                                >
+                                <label htmlFor="duration" className="text-gray">
                                     Тривалість (хв)
                                 </label>
                                 <Input
-                                    id="description"
+                                    id="duration"
                                     type="number"
                                     className="mt-2"
                                 />
