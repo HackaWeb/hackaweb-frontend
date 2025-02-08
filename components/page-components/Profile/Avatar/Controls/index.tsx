@@ -6,6 +6,7 @@ import { AvatarControlsProps } from "./AvatarControls.props";
 import Achievement from "../../Achievement";
 import { TfiCup } from "react-icons/tfi";
 import AchievementGroup from "../../Achievement/Group";
+import Block from "@/components/ui/Block";
 
 const AvatarControls = ({
     avatarParams,
@@ -13,7 +14,7 @@ const AvatarControls = ({
     upcomingAchievements,
 }: AvatarControlsProps) => {
     return (
-        <div className="bg-black p-4 flex flex-col gap-4 w-fit items-center rounded-md">
+        <Block className="pb-4">
             <Avatar {...avatarParams} />
             <Link href="/profile/avatar" className="underline">
                 Змінити аватар
@@ -36,7 +37,7 @@ const AvatarControls = ({
                     <TfiCup className="w-4 h-4 text-purple absolute right-2 bottom-2" />
                 </AchievementGroup>
             </div>
-        </div>
+        </Block>
     );
 };
 
