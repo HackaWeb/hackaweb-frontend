@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { TbArrowBackUp } from "react-icons/tb";
 import { FaUser } from "react-icons/fa6";
+import { FaCopy } from "react-icons/fa";
 import { FiLoader } from "react-icons/fi";
 
 export const QuestCompletingPageComponent = () => {
@@ -51,6 +52,15 @@ export const QuestCompletingPageComponent = () => {
                         Чекаємо на інших гравців
                     </div>
                     <FiLoader className="size-7" />
+                </div>
+                <div className="bg-blackOpacity-DEFAUlT flex items-center justify-between p-6 rounded-lg text-gray">
+                    <span className="font-medium text-lg">
+                        Ваш код лобі:{" "}
+                        <span className="text-white ml-1">13GFGF4</span>
+                    </span>
+                    <button>
+                        <FaCopy className="size-7 text-purple hover:text-purple-light duration-300" />
+                    </button>
                 </div>
             </div>
         </div>
