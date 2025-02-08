@@ -23,6 +23,30 @@ const quest: Quest = {
     timeLimit: 60,
 };
 
+const leaderboardData = [
+    {
+        id: 1,
+        nickname: "Danil Diachenko",
+        avatar: "",
+        time: "60 хв.",
+        score: "100/100",
+    },
+    {
+        id: 2,
+        nickname: "Danil Diachenko",
+        avatar: "",
+        time: "60 хв.",
+        score: "100/100",
+    },
+    {
+        id: 3,
+        nickname: "Danil Diachenko",
+        avatar: "",
+        time: "60 хв.",
+        score: "100/100",
+    },
+];
+
 const QuestDetails = () => {
     return (
         <div>
@@ -33,12 +57,12 @@ const QuestDetails = () => {
                     <span>Повернутися назад</span>
                 </Button>
             </Link>
-            <div className="grid grid-cols-[0.33fr_0.66fr] mt-6">
+            <div className="grid grid-cols-[0.33fr_0.66fr] mt-6 gap-8 items-start">
                 <div>
                     <GeneralInfo quest={quest} />
                     <Reviews quest={quest} />
                 </div>
-                <Leaderboard />
+                <Leaderboard data={leaderboardData} />
             </div>
         </div>
     );
