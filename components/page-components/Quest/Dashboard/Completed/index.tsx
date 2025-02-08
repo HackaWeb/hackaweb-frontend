@@ -27,8 +27,11 @@ const CompletedQuestsDashboard = ({
                 </thead>
                 <tbody>
                     {attempts.length !== 0 &&
-                        attempts.map((attempt) => (
-                            <tr className="border-b border-[#242A4D]">
+                        attempts.map((attempt, index) => (
+                            <tr
+                                className="border-b border-[#242A4D]"
+                                key={index}
+                            >
                                 <td className="px-4 py-2">
                                     <Link href={`/quest/${attempt.questId}`}>
                                         {attempt.questTitle}
