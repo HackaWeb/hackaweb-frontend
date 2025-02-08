@@ -11,11 +11,10 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
                 </div>
                 {children}
                 <div className="flex place-items-center place-content-center mt-3">
-                    <button className=" py-2 px-12 flex gap-4 place-items-center bg-blackOpacity-dark rounded-md hover:opacity-90 duration-200">
+                    <button className="py-2 px-12 flex gap-4 place-items-center bg-blackOpacity-dark rounded-md hover:opacity-90 duration-200">
                         <figure className="bg-white p-1.5 rounded-md">
-                            <FaGoogle size={30} color="black" />
+                            <FaGoogle size={20} className="text-purple" />
                         </figure>
-
                         <span className="text-lg">Google</span>
                     </button>
                 </div>
