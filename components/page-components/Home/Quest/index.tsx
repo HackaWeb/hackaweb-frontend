@@ -7,7 +7,7 @@ import { MdOutlineAccessTimeFilled } from "react-icons/md";
 
 export const Quest = ({ quest }: QuestProps) => {
     return (
-        <div className="bg-blackOpacity-dark">
+        <div className="bg-blackOpacity-dark hover:scale-105 transition duration-200 rounded-lg">
             <Image
                 src="/test.png"
                 alt="Квест"
@@ -25,7 +25,7 @@ export const Quest = ({ quest }: QuestProps) => {
                     від <Link href="/users/1">Danil Diachenko</Link> (
                     <span className="text-purple">4.5</span> з 5)
                 </div>
-                <div className="flex items-center justify-between text-gray mt-3">
+                <div className="flex items-center justify-between text-gray mt-10">
                     <div className="flex items-center gap-2">
                         <FaUser />
                         135
