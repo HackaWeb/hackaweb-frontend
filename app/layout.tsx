@@ -57,6 +57,7 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
                 )}
             >
                 <ReduxProvider>
+                    <div className="fixed -z-10 bg-[#8C55FE] bg-opacity-40 w-[550px] h-[550px] -left-[160px] top-0 blur-[500px]"></div>
                     <Aside isAuthorized={isAuthorized} />
                     <main className="p-12">{children}</main>
                     <ToastProvider />
