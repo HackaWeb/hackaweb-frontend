@@ -11,6 +11,8 @@ export default {
             colors: {
                 yellow: {
                     DEFAULT: "#ffd500",
+                    dark: "#ccaa00",
+                    light: "#ffe066",
                 },
                 purple: {
                     DEFAULT: "#8c55fe",

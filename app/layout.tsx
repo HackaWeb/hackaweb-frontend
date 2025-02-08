@@ -3,7 +3,11 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ReactNode } from "react";
 import { ReduxProvider } from "@/components/providers/Redux";
-import { ToastContainer } from "react-toastify";
+import { Aside } from "@/components/common/Aside";
+import { cn } from "@/helpers/cn";
+import { ToastProvider } from "@/components/providers/Toast";
+import { getCookie } from "@/helpers/getCookie";
+import { getProfile } from "@/api/auth";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -22,16 +26,40 @@ interface RootLayoutProps {
     children: ReactNode;
 }
 
-const RootLayout = ({ children }: Readonly<RootLayoutProps>) => {
+const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
+    const token = await getCookie("token");
+
+    let isAuthorized;
+
+    if (!token || !token.length) {
+        isAuthorized = false;
+    } else {
+        try {
+            const profile = await getProfile();
+
+            if ("email" in profile) {
+                isAuthorized = true;
+            } else {
+                isAuthorized = false;
+            }
+        } catch (error) {
+            console.log(error);
+            isAuthorized = false;
+        }
+    }
+
     return (
         <html lang="en">
-            <body className={inter.variable}>
+            <body
+                className={cn(
+                    "grid grid-cols-[minmax(320px,420px)_1fr]",
+                    inter.variable,
+                )}
+            >
                 <ReduxProvider>
-                    {/* <Aside />
-                <Header /> */}
+                    <Aside isAuthorized={isAuthorized} />
                     <main>{children}</main>
-                    {/* <Footer /> */}
-                    <ToastContainer />
+                    <ToastProvider />
                 </ReduxProvider>
             </body>
         </html>
