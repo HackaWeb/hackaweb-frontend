@@ -62,12 +62,13 @@ export const Aside = ({ isAuthorized }: AsideProps) => {
                                 }
                                 key={index}
                             >
-                                {pathname === link.link && link.link !== "/login" && (
-                                    <div className="absolute left-0 flex items-center">
-                                        <div className="w-[4px] h-10 bg-purple"></div>
-                                        <div className="w-4 h-6 bg-purple blur-md"></div>
-                                    </div>
-                                )}
+                                {pathname === link.link &&
+                                    link.link !== "/login" && (
+                                        <div className="absolute left-0 flex items-center">
+                                            <div className="w-[4px] h-10 bg-purple"></div>
+                                            <div className="w-4 h-6 bg-purple blur-md"></div>
+                                        </div>
+                                    )}
                                 <Link
                                     href={link.link}
                                     className="ml-6 text-white"
