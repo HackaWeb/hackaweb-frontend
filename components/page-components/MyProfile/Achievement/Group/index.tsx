@@ -1,6 +1,5 @@
 import React from "react";
 import { AchievementGroupProps } from "./AchievementGroup.props";
-import Achievement from "..";
 import { cn } from "@/helpers/cn";
 
 const AchievementGroup = ({

@@ -2,7 +2,11 @@ import React from "react";
 import { AchievementProps } from "./Achievement.props";
 import { cn } from "@/helpers/cn";
 
-const Achievement = ({ achievement, className, ...rest }: AchievementProps) => {
+export const Achievement = ({
+    title,
+    className,
+    ...rest
+}: AchievementProps) => {
     return (
         <div
             className={cn(
@@ -11,9 +15,7 @@ const Achievement = ({ achievement, className, ...rest }: AchievementProps) => {
             )}
             {...rest}
         >
-            {achievement.name}
+            {title}
         </div>
     );
 };
-
-export default Achievement;

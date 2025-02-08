@@ -5,7 +5,7 @@ const profile: Profile = {
     id: "1",
     email: "testuser@example.com",
     nickname: "TestUser",
-    rating: 4.5,
+    rating: 5,
     questsCompleted: 3,
     createdQuests: [
         {
@@ -50,7 +50,7 @@ const profile: Profile = {
             title: "Escape from the Haunted Mansion",
             description: "Solve the clues and escape from the haunted mansion.",
             rating: 4.5,
-            imageUrl: "/images/mansion-quest.jpg",
+            imageUrl: "/quest.png",
             createdAt: "2024-02-06T18:00:00Z",
             owner: {
                 id: "3",

@@ -2,34 +2,38 @@ import { Button } from "@/components/ui/Button";
 import AvatarControls from "./Avatar/Controls";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import AchievementGroup from "./Achievement/Group";
-import Achievement from "./Achievement";
+import { Achievement } from "./Achievement";
 import { MyProfileProps } from "./MyProfile.props";
+import { getAchievements } from "@/data/getAchievements";
+import { IoTrophyOutline } from "react-icons/io5";
+import ProfileControls from "./Controls";
+import QuestDashboard from "../Quest/Dashboard";
+import UserQuestsDashboard from "../Quest/Dashboard/User";
+import CompletedQuestsDashboard from "../Quest/Dashboard/Completed";
 
 export const MyProfilePageComponent = ({ profile }: MyProfileProps) => {
+    const achievements = getAchievements(profile);
+
     return (
         <div>
             <h1>Мій кабінет</h1>
             <ReturnBtn className="mt-4" />
             <div className="flex flex-wrap gap-8 mt-8">
                 <div className="flex flex-col gap-8">
-                    <AvatarControls
-                        avatarParams={{ rating: 4 }}
-                        recentAchievements={recentAchievements}
-                        upcomingAchievements={upcomingAchievements}
-                    />
+                    <AvatarControls avatarParams={{ rating: profile.rating }} />
                     <div className="flex flex-col gap-3 w-full">
                         <AchievementGroup>
-                            {recentAchievements.map((a) => (
-                                <Achievement key={a.name} achievement={a} />
+                            {achievements.unlocked.map((achievement, index) => (
+                                <Achievement key={index} title={achievement} />
                             ))}
                         </AchievementGroup>
                         <hr />
                         <AchievementGroup className="relative">
-                            {upcomingAchievements.map((a) => (
+                            {achievements.locked.map((achievement, index) => (
                                 <Achievement
                                     className="text-[6pt] opacity-50"
-                                    key={a.name}
-                                    achievement={a}
+                                    key={index}
+                                    title={achievement}
                                 />
                             ))}
                             <IoTrophyOutline className="w-4 h-4 text-purple absolute right-2 bottom-2" />
@@ -43,25 +47,20 @@ export const MyProfilePageComponent = ({ profile }: MyProfileProps) => {
                     </Button>
                 </div>
                 <ProfileControls
-                    defaultEmail={userEmail}
-                    defaultName={userName}
+                    defaultEmail={profile.email}
+                    defaultName={profile.nickname}
                 />
-                <QuestDashboard
-                    className="min-w-1/2"
-                    myQuests={myQuests}
-                    questAttempts={questAttempts}
-                    isActionable={true}
-                >
+                {/* <QuestDashboard className="min-w-1/2">
                     <UserQuestsDashboard
                         title="Мої тести"
-                        quests={myQuests}
+                        quests={profile.createdQuests}
                         isActionable={true}
                     />
                     <CompletedQuestsDashboard
                         title="Пройдені тести"
-                        attempts={questAttempts}
+                        attempts={profile.completedQuests}
                     />
-                </QuestDashboard>
+                </QuestDashboard> */}
             </div>
         </div>
     );

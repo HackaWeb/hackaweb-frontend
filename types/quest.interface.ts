@@ -13,3 +13,7 @@ export interface Quest {
     timeLimit: number;
     reviews: Review[];
 }
+
+export interface CompletedQuest extends Quest {
+    correctness: number;
+}
