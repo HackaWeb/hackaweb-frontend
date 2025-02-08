@@ -1,10 +1,14 @@
-export const MyQuestsHeader = [
+export const NonActionableUserQuestsHeader = [
     "Назва",
     "Картинка",
     "Час",
     "Зіграно раз",
     "Рейтинг",
     "Кількість завдань",
+];
+
+export const ActionableUserQuestsHeader = [
+    ...NonActionableUserQuestsHeader,
     "Дії",
 ];
 

@@ -1,102 +1,69 @@
+"use client";
 import React from "react";
-import { IoReturnUpBack } from "react-icons/io5";
-import Avatar from "@/components/page-components/Profile/Avatar";
+import { IoReturnUpBack, IoTrophyOutline } from "react-icons/io5";
 import { Button } from "@/components/ui/Button";
 import AvatarControls from "@/components/page-components/Profile/Avatar/Controls";
-import { Achievement } from "@/types/achivement.interface";
 import ProfileControls from "@/components/page-components/Profile/Controls";
 import QuestDashboard from "@/components/page-components/Quest/Dashboard";
-import { Quest } from "@/types/quest.interface";
-import { Attempt } from "@/types/attempt.interface";
-
-const recentAchievements: Achievement[] = [
-    { name: "1 пройдений тест" },
-    { name: "1 створений тест" },
-];
-
-const upcomingAchievements: Achievement[] = [
-    { name: "10 пройдених тестів" },
-    { name: "10 створених тестів" },
-];
-
-const userName = "Ivan Dutov";
-const userEmail = "dutov.ivan@lll.kpi.ua";
-const myQuests: Quest[] = [
-    {
-        id: "1",
-        title: "Quest 1",
-        description: "Description 1",
-        timesPlayed: 30,
-        rating: 4,
-        imageUrl: "/test.png",
-        owner: {
-            id: "1",
-            nickname: "Danil Diachenko",
-            email: "danildiachenko23@gmail.com",
-            rating: 4.5,
-        },
-        createdAt: "2021-10-10",
-        timeLimit: 60,
-    },
-    {
-        id: "2",
-        title: "Quest 2",
-        description: "Description 1",
-        timesPlayed: 30,
-        rating: 4,
-        imageUrl: "/test.png",
-        owner: {
-            id: "1",
-            nickname: "Danil Diachenko",
-            email: "danildiachenko23@gmail.com",
-            rating: 4.5,
-        },
-        createdAt: "2021-10-10",
-        timeLimit: 60,
-    },
-    {
-        id: "3",
-        title: "Quest 3",
-        description: "Description 1",
-        timesPlayed: 30,
-        rating: 4,
-        imageUrl: "/test.png",
-        owner: {
-            id: "1",
-            nickname: "Danil Diachenko",
-            email: "danildiachenko23@gmail.com",
-            rating: 4.5,
-        },
-        createdAt: "2021-10-10",
-        timeLimit: 60,
-    },
-];
-
-const questAttempts: Attempt[] = [
-    {
-        questId: "3",
-        questTitle: "Quest 3",
-        questImageUrl: "/test.png",
-        mark: 88,
-        maxMark: 100,
-        lastPlayedTime: "2021-10-10",
-        status: "Пройдено",
-    },
-];
+import AchievementGroup from "@/components/page-components/Profile/Achievement/Group";
+import {
+    myQuests,
+    questAttempts,
+    recentAchievements,
+    upcomingAchievements,
+    userEmail,
+    userName,
+} from "./mock";
+import Achievement from "@/components/page-components/Profile/Achievement";
+import UserQuestsDashboard from "@/components/page-components/Quest/Dashboard/User";
+import CompletedQuestsDashboard from "@/components/page-components/Quest/Dashboard/Completed";
+import { useRouter } from "next/navigation";
 
 const HomeProfile = () => {
+    const router = useRouter();
     return (
         <div>
             <h1>Мій кабінет</h1>
-            <Button className="mt-4" color="purpleBorder">
+            <Button
+                className="mt-4"
+                color="purpleBorder"
+                onClick={() => router.back()}
+            >
                 <IoReturnUpBack /> Повернутися назад
             </Button>
             <div className="flex flex-wrap gap-8 mt-8">
-                <AvatarControls
-                    avatarParams={{ rating: 4 }}
-                    recentAchievements={recentAchievements}
-                    upcomingAchievements={upcomingAchievements}
-                />
+                <div className="flex flex-col gap-8">
+                    <AvatarControls
+                        avatarParams={{ rating: 4 }}
+                        recentAchievements={recentAchievements}
+                        upcomingAchievements={upcomingAchievements}
+                    />
+
+                    <div className="flex flex-col gap-3 w-full">
+                        <AchievementGroup>
+                            {recentAchievements.map((a) => (
+                                <Achievement key={a.name} achievement={a} />
+                            ))}
+                        </AchievementGroup>
+                        <hr />
+                        <AchievementGroup className="relative">
+                            {upcomingAchievements.map((a) => (
+                                <Achievement
+                                    className="text-[6pt] opacity-50"
+                                    key={a.name}
+                                    achievement={a}
+                                />
+                            ))}
+                            <IoTrophyOutline className="w-4 h-4 text-purple absolute right-2 bottom-2" />
+                        </AchievementGroup>
+                    </div>
+                    <Button
+                        className="text-red w-full hover:text-white"
+                        color="redBorder"
+                    >
+                        Видалити акаунт
+                    </Button>
+                </div>
                 <ProfileControls
                     defaultEmail={userEmail}
                     defaultName={userName}
@@ -105,7 +72,18 @@ const HomeProfile = () => {
                     className="min-w-1/2"
                     myQuests={myQuests}
                     questAttempts={questAttempts}
-                />
+                    isActionable={true}
+                >
+                    <UserQuestsDashboard
+                        title="Мої тести"
+                        quests={myQuests}
+                        isActionable={true}
+                    />
+                    <CompletedQuestsDashboard
+                        title="Пройдені тести"
+                        attempts={questAttempts}
+                    />
+                </QuestDashboard>
             </div>
         </div>
     );
