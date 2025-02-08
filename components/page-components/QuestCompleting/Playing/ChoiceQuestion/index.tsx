@@ -2,52 +2,73 @@
 
 import { Checkbox } from "@/components/ui/Checkbox";
 import { ChoiceQuestionProps } from "./ChoiceQuestion.props";
+import { useEffect, useState } from "react";
+import { cn } from "@/helpers/cn";
+
+const answersColors = [
+    "bg-[#452168]",
+    "bg-[#215e3f]",
+    "bg-[#8e612d]",
+    "bg-[#452168]",
+];
 
 export const ChoiceQuestion = ({
     question,
+    onAnswerChange,
+    initialAnswer = [],
 }: ChoiceQuestionProps) => {
+    const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
+
+    if (!question.options) return;
+
+    useEffect(() => {
+        if (initialAnswer.length > 0) {
+            const restoredIndexes = question.options
+                .map((option, index) =>
+                    initialAnswer.includes(option) ? index : -1,
+                )
+                .filter((index) => index !== -1);
+
+            setSelectedOptions(restoredIndexes);
+        }
+    }, [initialAnswer, question.options]);
+
+    const onOptionSelect = (index: number) => {
+        let newSelectedOptions;
+
+        if (selectedOptions.includes(index)) {
+            newSelectedOptions = selectedOptions.filter((i) => i !== index);
+        } else {
+            newSelectedOptions = [...selectedOptions, index];
+        }
+
+        setSelectedOptions(newSelectedOptions);
+
+        onAnswerChange(newSelectedOptions.map((i) => question.options[i]));
+    };
+
     return (
-        <div className={`grid grid-cols-4 mt-10`}>
-            <div className="bg-[#452168] text-white text-xl font-semibold flex items-center justify-center aspect-square relative">
-                Option 1
-                <div className="absolute top-4 right-4">
+        <div className="grid grid-cols-4 gap-4 mt-10">
+            {question.options.map((option, index) => (
+                <div
+                    key={index}
+                    className={cn(
+                        "text-white text-xl font-semibold flex items-center justify-center aspect-square relative cursor-pointer rounded-lg transition-all",
+                        answersColors[index],
+                        selectedOptions.includes(index)
+                            ? "opacity-100"
+                            : "opacity-50",
+                    )}
+                    onClick={() => onOptionSelect(index)}
+                >
+                    {option.title}
                     <Checkbox
-                        checked={true}
-                        onChange={() => {}}
-                        className="w-10 h-10"
+                        checked={selectedOptions.includes(index)}
+                        onChange={() => onOptionSelect(index)}
+                        className="absolute top-4 right-4 w-6 h-6"
                     />
                 </div>
-            </div>
-            <div className="bg-[#8e612d] text-white text-xl font-semibold flex items-center justify-center aspect-square relative">
-                Option 2
-                <div className="absolute top-4 right-4">
-                    <Checkbox
-                        checked={true}
-                        onChange={() => {}}
-                        className="w-10 h-10"
-                    />
-                </div>
-            </div>
-            <div className="bg-[#7a3392] text-white text-xl font-semibold flex items-center justify-center aspect-square relative">
-                Option 3
-                <div className="absolute top-4 right-4">
-                    <Checkbox
-                        checked={true}
-                        onChange={() => {}}
-                        className="w-10 h-10"
-                    />
-                </div>
-            </div>
-            <div className="bg-[#215e3f] text-white text-xl font-semibold flex items-center justify-center aspect-square relative">
-                Option 4
-                <div className="absolute top-4 right-4">
-                    <Checkbox
-                        checked={true}
-                        onChange={() => {}}
-                        className="w-10 h-10"
-                    />
-                </div>
-            </div>
+            ))}
         </div>
     );
 };

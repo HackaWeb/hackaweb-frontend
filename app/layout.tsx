@@ -38,13 +38,14 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
         isAuthorized = false;
     } else {
         try {
-            const profile = await getProfile();
+            /* const profile = await getProfile(); */
 
-            if ("email" in profile) {
+            /* if ("email" in profile) {
                 isAuthorized = true;
             } else {
                 isAuthorized = false;
-            }
+            } */
+            isAuthorized = false;
         } catch (error) {
             console.log(error);
             isAuthorized = false;

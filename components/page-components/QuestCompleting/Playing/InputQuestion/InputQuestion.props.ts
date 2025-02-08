@@ -1,5 +1,6 @@
 import { Question } from "@/types/question.interface";
 
 export interface InputQuestionProps {
-    question: Question;
+    onAnswerChange: (answer: string) => void;
+    initialAnswer: string | null;
 }
