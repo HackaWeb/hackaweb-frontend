@@ -1,7 +1,7 @@
 "use client";
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import { selectModals } from "@/store/slices/modals";
+import { selectModals, toggleModal } from "@/store/slices/modals";
 import ModalBg from "../ModalBg";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import Image from "next/image";
@@ -12,28 +12,14 @@ import { Textarea } from "@/components/ui/Textarea";
 import { FormEvent, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { cn } from "@/helpers/cn";
+import { useAppDispatch } from "@/store/hooks/useAppDispatch";
+import { handleMedia } from "@/helpers/handleMedia";
 
 function QuestCreation() {
+    const dispatch = useAppDispatch();
     const [file, setFile] = useState<string>();
     const modals = useAppSelector(selectModals);
     const fileInputRef = useRef<HTMLInputElement>(null);
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const uploadedFile = e.target.files?.[0];
-
-        if (uploadedFile) {
-            if (uploadedFile.name.includes(".mp4")) {
-                const result = URL.createObjectURL(uploadedFile);
-                setFile(result);
-            } else {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    setFile(e.target?.result as string);
-                };
-                reader.readAsDataURL(uploadedFile);
-            }
-        }
-    };
 
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -66,7 +52,11 @@ function QuestCreation() {
                             ref={fileInputRef}
                             className="hidden"
                             accept=".jpg, .jpeg, .png, .mp4"
-                            onChange={handleFileChange}
+                            onChange={(e) => {
+                                const media = handleMedia(e);
+                                console.log(media);
+                                setFile(media);
+                            }}
                         />
                         <Button
                             className={cn(
@@ -83,12 +73,12 @@ function QuestCreation() {
                         className="w-full mt-10 px-10 space-y-10"
                         onSubmit={onSubmit}
                     >
-                        <div className="space-y-2">
+                        <div className="space-y-3">
                             <label htmlFor="name">Назва квесту</label>
                             <Input id="name" className="bg-blue-dark" />
                         </div>
 
-                        <div className="space-y-2">
+                        <div className="space-y-3">
                             <label htmlFor="description">Опис квесту</label>
                             <Textarea
                                 id="description"
@@ -96,7 +86,7 @@ function QuestCreation() {
                             />
                         </div>
 
-                        <div className="space-y-2">
+                        <div className="space-y-3">
                             <label htmlFor="description">
                                 {"Тривалість(хв)"}
                             </label>
@@ -106,7 +96,19 @@ function QuestCreation() {
                                 className="bg-blue-dark"
                             />
                         </div>
-                        <div className="mt-10">Список питань</div>
+                        <div className="space-y-4">
+                            <span className="mt-10">Список питань</span>
+                            {}
+                            <Button
+                                color="yellowBorder"
+                                type="button"
+                                onClick={() =>
+                                    dispatch(toggleModal("QuestionCreation"))
+                                }
+                            >
+                                Додати питання
+                            </Button>
+                        </div>
                         <Button
                             color="purpleBackground"
                             type="submit"

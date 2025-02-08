@@ -46,6 +46,7 @@ body {
 a {
     color: var(--purple);
     transition: 0.3s;
+    cursor: pointer;
 
     &:hover {
         color: var(--purple-dark);
