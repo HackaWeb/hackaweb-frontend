@@ -12,15 +12,31 @@ export const QuestCompletingPageComponent = ({
     questions,
     completingType,
 }: QuestCompletingProps) => {
-    const [stage, setStage] = useState<Stage>(
-        completingType === "multi" ? "waiting-room" : "game",
-    );
+    const [stage, setStage] = useState<Stage>("waiting-room");
+
+    const onStartQuestClick = () => {
+        setStage("game");
+    };
+
+    const onCompleteTest = () => {
+        setStage("results");
+    };
 
     switch (stage) {
         case "waiting-room":
-            return <WaitingRoom />;
+            return (
+                <WaitingRoom
+                    completingType={completingType}
+                    onStartQuestClick={onStartQuestClick}
+                />
+            );
         case "game":
-            return <PlayingGame questions={questions} />;
+            return (
+                <PlayingGame
+                    questions={questions}
+                    onCompleteTest={onCompleteTest}
+                />
+            );
         case "results":
             return <Results />;
     }

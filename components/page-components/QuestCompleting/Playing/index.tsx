@@ -6,7 +6,7 @@ import { PlayingProps } from "./Playing.props";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-export const PlayingGame = ({ questions }: PlayingProps) => {
+export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<{ [key: number]: any }>({});
     const [questionsCompleted, setQuestionsCompleted] = useState<number[]>([]);
@@ -41,6 +41,7 @@ export const PlayingGame = ({ questions }: PlayingProps) => {
         }
 
         if (currentQuestionIndex === questions.length - 1) {
+            onCompleteTest();
             toast.success("Тест успішно завершено!");
 
             console.log(answers);
