@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
     return (
-        <div className="bg-blackOpacity-DEFAUlT rounded-md">
+        <div className="bg-blackOpacity-DEFAULT rounded-md">
             <Image
                 src={quest.imageUrl}
                 alt="Тест"
