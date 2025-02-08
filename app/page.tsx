@@ -1,5 +1,107 @@
+import { HomePageComponent } from "@/components/page-components/Home";
+import { Quest } from "@/types/quest.interface";
+
+const serverQuests: Quest[] = [
+    {
+        id: "1",
+        title: "Квест 1",
+        description: "Опис квесту 1",
+        rating: 4.5,
+        imageUrl: "/test.png",
+        createdAt: "2022-01-01",
+        owner: {
+            id: "1",
+            email: "danildiachenko23@gmail.com",
+            nickname: "Danil Diachenko",
+            rating: 4.5,
+        },
+        timesPlayed: 30,
+        timeLimit: 60,
+    },
+    {
+        id: "2",
+        title: "Квест 2",
+        description: "Опис квесту 2",
+        rating: 4.5,
+        imageUrl: "/test.png",
+        createdAt: "2022-01-01",
+        owner: {
+            id: "1",
+            email: "danildiachenko23@gmail.com",
+            nickname: "Danil Diachenko",
+            rating: 4.5,
+        },
+        timesPlayed: 30,
+        timeLimit: 60,
+    },
+    {
+        id: "3",
+        title: "Квест 3",
+        description: "Опис квесту 3",
+        rating: 4.5,
+        imageUrl: "/test.png",
+        createdAt: "2022-01-01",
+        owner: {
+            id: "1",
+            email: "danildiachenko23@gmail.com",
+            nickname: "Danil Diachenko",
+            rating: 4.5,
+        },
+        timesPlayed: 30,
+        timeLimit: 60,
+    },
+    {
+        id: "4",
+        title: "Квест 4",
+        description: "Опис квесту 4",
+        rating: 4.5,
+        imageUrl: "/test.png",
+        createdAt: "2022-01-01",
+        owner: {
+            id: "1",
+            email: "danildiachenko23@gmail.com",
+            nickname: "Danil Diachenko",
+            rating: 4.5,
+        },
+        timesPlayed: 30,
+        timeLimit: 60,
+    },
+    {
+        id: "5",
+        title: "Квест 5",
+        description: "Опис квесту 5",
+        rating: 4.5,
+        imageUrl: "/test.png",
+        createdAt: "2022-01-01",
+        owner: {
+            id: "1",
+            email: "danildiachenko23@gmail.com",
+            nickname: "Danil Diachenko",
+            rating: 4.5,
+        },
+        timesPlayed: 30,
+        timeLimit: 60,
+    },
+    {
+        id: "6",
+        title: "Квест 6",
+        description: "Опис квесту 6",
+        rating: 4.5,
+        imageUrl: "/test.png",
+        createdAt: "2022-01-01",
+        owner: {
+            id: "1",
+            email: "danildiachenko23@gmail.com",
+            nickname: "Danil Diachenko",
+            rating: 4.5,
+        },
+        timesPlayed: 30,
+        timeLimit: 60,
+    },
+];
+
 const Home = () => {
-    return <></>;
+    return <HomePageComponent serverQuests={serverQuests} />;
 };
 
 export default Home;

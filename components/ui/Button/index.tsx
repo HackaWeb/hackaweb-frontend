@@ -8,15 +8,16 @@ export const Button = ({
     ...rest
 }: ButtonProps) => {
     const colorStyles = {
-        purple: "bg-purple text-white hover:bg-purple-dark",
-        gray: "border-2 border-gray-200 text-gray-600 hover:bg-gray-200 hover:text-gray-800",
-        red: "bg-red-600 text-white hover:bg-red-500",
+        purpleBackground: "bg-purple text-white hover:bg-purple-light",
+        purpleBorder: "border-2 border-purple hover:text-purple text-white",
+        yellowBorder: "border-2 border-yellow hover:bg-yellow-light",
+        redBorder: "border-2 border-red hover:bg-red-light",
     };
 
     return (
         <button
             className={cn(
-                "p-3 px-4 flex items-center justify-center rounded-lg w-full font-semibold",
+                "p-3 px-4 flex items-center justify-center rounded-lg duration-300 gap-3",
                 color && colorStyles[color],
                 className,
             )}

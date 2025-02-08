@@ -9,22 +9,31 @@ export default {
     theme: {
         extend: {
             colors: {
-                black: "#464646",
-                purple: "#7351f5",
-                "purple-dark": "#4020c3",
-                "purple-light": "#b39fff",
-                gray: "#f5f5f5",
-                "gray-dark": "#333",
-                "gray-light": "#f9f9f9",
-                red: "#ff4d4d",
-                "red-dark": "#cc0000",
-                "red-light": "#ff6666",
-                green: "#00cc66",
-                "green-dark": "#009933",
-                "green-light": "#00ff99",
-                blue: "#4da6ff",
-                "blue-dark": "#007acc",
-                "blue-light": "#66b3ff",
+                yellow: {
+                    DEFAULT: "#ffd500",
+                    dark: "#ccaa00",
+                    light: "#ffe066",
+                },
+                purple: {
+                    DEFAULT: "#8c55fe",
+                    dark: "#6e3dc7",
+                    light: "#a97fff",
+                },
+                gray: {
+                    DEFAULT: "#bdbdbd",
+                    dark: "#7a7a7a",
+                    light: "#e0e0e0",
+                },
+                red: {
+                    DEFAULT: "#ff0000",
+                    dark: "#ff4d4d",
+                    light: "#cc0000",
+                },
+                blackOpacity: {
+                    DEFAUlT: "#00000026",
+                    light: "#0000001a",
+                    dark: "#0000004d",
+                },
             },
         },
     },

@@ -5,7 +5,7 @@ export const Input = ({ className, ...rest }: InputProps) => {
     return (
         <input
             className={cn(
-                "w-full p-3 text-base font-medium bg-gray-100 rounded-md",
+                "w-full p-3 text-base bg-blackOpacity-DEFAUlT rounded-md",
                 className,
             )}
             {...rest}
