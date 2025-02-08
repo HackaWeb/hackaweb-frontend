@@ -51,17 +51,20 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
                 <span className="text-white font-bold">{quests.length}</span>{" "}
                 результатів знайдено
             </div>
-            <div className="grid grid-cols-5 gap-7 mt-6">
-                {quests.length ? (
-                    <>
+            {quests.length ? (
+                <>
+                    <div className="grid grid-cols-5 gap-7 mt-6">
                         {quests.map((quest) => (
                             <Quest key={quest.id} quest={quest} />
                         ))}
-                    </>
-                ) : (
-                    <div className="text-gray text-sm">Квестів не знайдено</div>
-                )}
-            </div>
+                    </div>
+                    <Button color="purpleBackground" className="mx-auto mt-4">
+                        Завантажити ще
+                    </Button>
+                </>
+            ) : (
+                <div className="text-gray text-sm">Квестів не знайдено</div>
+            )}
         </>
     );
 };
