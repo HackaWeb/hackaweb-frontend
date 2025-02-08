@@ -15,6 +15,8 @@ const serverQuests: Quest[] = [
             nickname: "Danil Diachenko",
             rating: 4.5,
         },
+        timesPlayed: 30,
+        timeLimit: 60,
     },
     {
         id: "2",
@@ -29,6 +31,8 @@ const serverQuests: Quest[] = [
             nickname: "Danil Diachenko",
             rating: 4.5,
         },
+        timesPlayed: 30,
+        timeLimit: 60,
     },
     {
         id: "3",
@@ -43,6 +47,8 @@ const serverQuests: Quest[] = [
             nickname: "Danil Diachenko",
             rating: 4.5,
         },
+        timesPlayed: 30,
+        timeLimit: 60,
     },
     {
         id: "4",
@@ -57,6 +63,8 @@ const serverQuests: Quest[] = [
             nickname: "Danil Diachenko",
             rating: 4.5,
         },
+        timesPlayed: 30,
+        timeLimit: 60,
     },
     {
         id: "5",
@@ -71,6 +79,8 @@ const serverQuests: Quest[] = [
             nickname: "Danil Diachenko",
             rating: 4.5,
         },
+        timesPlayed: 30,
+        timeLimit: 60,
     },
     {
         id: "6",
@@ -85,6 +95,8 @@ const serverQuests: Quest[] = [
             nickname: "Danil Diachenko",
             rating: 4.5,
         },
+        timesPlayed: 30,
+        timeLimit: 60,
     },
 ];
 

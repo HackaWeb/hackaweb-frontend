@@ -8,4 +8,6 @@ export interface Quest {
     imageUrl: string;
     createdAt: string;
     owner: User;
+    timesPlayed: number;
+    timeLimit: number;
 }
