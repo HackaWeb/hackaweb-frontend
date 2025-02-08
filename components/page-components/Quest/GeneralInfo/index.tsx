@@ -22,20 +22,24 @@ export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
                     {quest.title}
                 </div>
                 <div className="flex gap-5 mt-4">
-                    <Button
-                        className="bg-purple gap-2"
-                        color="purpleBackground"
-                    >
-                        <FaUser className="size-4" />
-                        <span>Грати наодинці</span>
-                    </Button>
-                    <Button
-                        className="bg-purple gap-2"
-                        color="purpleBackground"
-                    >
-                        <HiUsers className="size-5" />
-                        <span>Грати в команді</span>
-                    </Button>
+                    <Link href="/quest-completing/1?type=single">
+                        <Button
+                            className="bg-purple gap-2"
+                            color="purpleBackground"
+                        >
+                            <FaUser className="size-4" />
+                            <span>Грати наодинці</span>
+                        </Button>
+                    </Link>
+                    <Link href="/quest-completing/1?type=multi">
+                        <Button
+                            className="bg-purple gap-2"
+                            color="purpleBackground"
+                        >
+                            <HiUsers className="size-5" />
+                            <span>Грати в команді</span>
+                        </Button>
+                    </Link>
                 </div>
                 <div className="text-gray mt-2">
                     <span className="font-semibold text-white">112</span> разів

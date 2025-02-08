@@ -10,8 +10,11 @@ type Stage = "waiting-room" | "game" | "results";
 
 export const QuestCompletingPageComponent = ({
     questions,
+    completingType,
 }: QuestCompletingProps) => {
-    const [stage, setStage] = useState<Stage>("results");
+    const [stage, setStage] = useState<Stage>(
+        completingType === "multi" ? "waiting-room" : "game",
+    );
 
     switch (stage) {
         case "waiting-room":

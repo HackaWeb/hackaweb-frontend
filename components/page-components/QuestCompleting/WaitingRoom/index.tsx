@@ -23,6 +23,7 @@ export const WaitingRoom = () => {
                         height={0}
                         sizes="100vw"
                         className="mx-auto mt-3 rounded-lg max-w-[800px]"
+                        loading="eager"
                     />
                     <h1 className="py-10 text-center">Назва Квесту</h1>
                 </div>
@@ -66,7 +67,7 @@ export const WaitingRoom = () => {
                 color="purpleBackground"
                 className="mt-4 mx-auto max-w-[200] w-full mb-10"
             >
-                Почати гру
+                Почати квест
             </Button>
         </div>
     );
