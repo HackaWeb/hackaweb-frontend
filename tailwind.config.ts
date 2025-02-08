@@ -28,7 +28,8 @@ export default {
                     light: "#cc0000",
                 },
                 blackOpacity: {
-                    light: "#00000026",
+                    DEFAUlT: "#00000026",
+                    light: "#0000001a",
                     dark: "#0000004d",
                 },
             },
