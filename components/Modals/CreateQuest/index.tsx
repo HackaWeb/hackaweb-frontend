@@ -2,7 +2,6 @@
 
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import { selectModals, toggleModal } from "@/store/slices/modals";
 import ModalBg from "../ModalBg";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { RiEditLine } from "react-icons/ri";
@@ -11,9 +10,9 @@ import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { FormEvent, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { cn } from "@/helpers/cn";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { BsFillImageFill } from "react-icons/bs";
+import { selectModals, toggleModal } from "@/store/slices/modals/modals";
 
 export const CreateQuest = () => {
     const dispatch = useAppDispatch();
@@ -22,6 +21,7 @@ export const CreateQuest = () => {
     const [file, setFile] = useState<string | null>(null);
 
     const onQuestionAddClick = () => {
+        dispatch(toggleModal("QuestCreation"));
         dispatch(toggleModal("QuestionCreation"));
     };
 

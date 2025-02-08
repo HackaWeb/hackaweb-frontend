@@ -10,24 +10,24 @@ export const Checkbox = ({
     className,
     id,
 }: CheckboxProps) => {
+    const [isChecked, setChecked] = useState<boolean>(checked);
+
     const toggleCheckbox = () => {
-        onChange(!checked);
-        if (onChange) {
-            onChange(!checked);
-        }
+        if (onChange) onChange(!isChecked);
+        setChecked((prev) => !prev);
     };
 
     return (
         <div
             className={cn(
                 "w-6 h-6 flex items-center justify-center border-2 rounded-md cursor-pointer transition-all border-purple",
-                checked ? "bg-purple border-purple" : "",
+                isChecked ? "bg-purple border-purple" : "",
                 className,
             )}
             onClick={toggleCheckbox}
             id={id}
         >
-            {checked && <MdCheck className="size-8" />}
+            {isChecked && <MdCheck className="size-8" />}
         </div>
     );
 };

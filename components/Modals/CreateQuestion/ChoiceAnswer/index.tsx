@@ -10,13 +10,8 @@ export const Choice = () => {
             <div>
                 <div className="mt-2">
                     <div className="flex justify-between relative">
-                        <Input
-                            placeholder="Впишіть варіант 1"
-                            value="Відповідь 1"
-                        />
+                        <Input placeholder="Впишіть варіант 1" />
                         <Checkbox
-                            checked={true}
-                            onChange={() => {}}
                             id="true"
                             className="absolute right-4 top-3"
                         />
@@ -26,8 +21,6 @@ export const Choice = () => {
                     <div className="flex justify-between relative">
                         <Input placeholder="Впишіть варіант 2..." />
                         <Checkbox
-                            checked={false}
-                            onChange={() => {}}
                             id="true"
                             className="absolute right-4 top-3"
                         />
@@ -37,8 +30,6 @@ export const Choice = () => {
                     <div className="flex justify-between relative">
                         <Input placeholder="Впишіть варіант 3..." />
                         <Checkbox
-                            checked={false}
-                            onChange={() => {}}
                             id="true"
                             className="absolute right-4 top-3"
                         />
@@ -48,8 +39,6 @@ export const Choice = () => {
                     <div className="flex justify-between relative">
                         <Input placeholder="Впишіть варіант 4..." />
                         <Checkbox
-                            checked={false}
-                            onChange={() => {}}
                             id="true"
                             className="absolute right-4 top-3"
                         />

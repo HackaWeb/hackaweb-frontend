@@ -2,7 +2,7 @@
 
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { ModalBgProps } from "./ModalBg.props";
-import { toggleModal } from "@/store/slices/modals";
+import { toggleModal } from "@/store/slices/modals/modals";
 
 function ModalBg({ modal }: ModalBgProps) {
     const dispatch = useAppDispatch();

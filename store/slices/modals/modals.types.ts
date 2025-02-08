@@ -4,4 +4,7 @@ export type ModalType =
     | "QuestionCreation"
     | "QuestionEdit";
 
-export type ModalState = ModalType[];
+export type ModalState = {
+    active: ModalType[];
+    prev?: ModalType;
+};

@@ -4,9 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { isModalOpened } from "@/helpers/isModalOpened";
-import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import { selectModals } from "@/store/slices/modals";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import ModalBg from "../ModalBg";
@@ -19,6 +17,7 @@ import { Checkbox } from "@/components/ui/Checkbox";
 import { InputAnswer } from "./InputAnswer";
 import { TrueFalseAnswer } from "./TrueFalseAnswer";
 import { Choice } from "./ChoiceAnswer";
+import { selectModals } from "@/store/slices/modals/modals";
 
 interface CustomSelectOption extends SelectOption {
     value: QuestionType;
@@ -40,8 +39,6 @@ const questionTypes: CustomSelectOption[] = [
 ];
 
 export const CreateQuestion = () => {
-    const dispatch = useAppDispatch();
-
     const fileInputRef = useRef<HTMLInputElement>(null);
     const modals = useAppSelector(selectModals);
 
