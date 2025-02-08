@@ -1,114 +1,73 @@
-import React from "react";
-import { IoReturnUpBack } from "react-icons/io5";
-import Avatar from "@/components/page-components/Profile/Avatar";
-import { Button } from "@/components/ui/Button";
-import AvatarControls from "@/components/page-components/Profile/Avatar/Controls";
-import { Achievement } from "@/types/achivement.interface";
-import ProfileControls from "@/components/page-components/Profile/Controls";
-import QuestDashboard from "@/components/page-components/Quest/Dashboard";
-import { Quest } from "@/types/quest.interface";
-import { Attempt } from "@/types/attempt.interface";
+import { MyProfilePageComponent } from "@/components/page-components/MyProfile";
+import { Profile } from "@/types/user.interface";
 
-const recentAchievements: Achievement[] = [
-    { name: "1 пройдений тест" },
-    { name: "1 створений тест" },
-];
-
-const upcomingAchievements: Achievement[] = [
-    { name: "10 пройдених тестів" },
-    { name: "10 створених тестів" },
-];
-
-const userName = "Ivan Dutov";
-const userEmail = "dutov.ivan@lll.kpi.ua";
-const myQuests: Quest[] = [
-    {
-        id: "1",
-        title: "Quest 1",
-        description: "Description 1",
-        timesPlayed: 30,
-        rating: 4,
-        imageUrl: "/test.png",
-        owner: {
-            id: "1",
-            nickname: "Danil Diachenko",
-            email: "danildiachenko23@gmail.com",
-            rating: 4.5,
+const profile: Profile = {
+    id: "1",
+    email: "testuser@example.com",
+    nickname: "TestUser",
+    rating: 5,
+    questsCompleted: 3,
+    createdQuests: [
+        {
+            id: "quest1",
+            title: "Adventure in the Forest",
+            description: "Explore the mysterious forest and solve puzzles.",
+            rating: 4.8,
+            imageUrl: "/quest.png",
+            createdAt: "2024-02-08T12:00:00Z",
+            owner: {
+                id: "1",
+                email: "testuser@example.com",
+                nickname: "TestUser",
+                rating: 4.5,
+            },
+            timesPlayed: 120,
+            timeLimit: 30,
+            reviews: [],
         },
-        createdAt: "2021-10-10",
-        timeLimit: 60,
-    },
-    {
-        id: "2",
-        title: "Quest 2",
-        description: "Description 1",
-        timesPlayed: 30,
-        rating: 4,
-        imageUrl: "/test.png",
-        owner: {
-            id: "1",
-            nickname: "Danil Diachenko",
-            email: "danildiachenko23@gmail.com",
-            rating: 4.5,
+    ],
+    completedQuests: [
+        {
+            id: "quest2",
+            title: "Mystery of the Lost Treasure",
+            description: "Find the lost treasure hidden deep in the mountains.",
+            rating: 4.7,
+            imageUrl: "/quest.png",
+            createdAt: "2024-02-07T15:00:00Z",
+            owner: {
+                id: "2",
+                email: "questowner@example.com",
+                nickname: "QuestMaster",
+                rating: 4.9,
+            },
+            timesPlayed: 200,
+            timeLimit: 45,
+            reviews: [],
+            correctness: 85,
         },
-        createdAt: "2021-10-10",
-        timeLimit: 60,
-    },
-    {
-        id: "3",
-        title: "Quest 3",
-        description: "Description 1",
-        timesPlayed: 30,
-        rating: 4,
-        imageUrl: "/test.png",
-        owner: {
-            id: "1",
-            nickname: "Danil Diachenko",
-            email: "danildiachenko23@gmail.com",
+        {
+            id: "quest3",
+            title: "Escape from the Haunted Mansion",
+            description: "Solve the clues and escape from the haunted mansion.",
             rating: 4.5,
+            imageUrl: "/quest.png",
+            createdAt: "2024-02-06T18:00:00Z",
+            owner: {
+                id: "3",
+                email: "hauntedmaster@example.com",
+                nickname: "GhostHunter",
+                rating: 4.6,
+            },
+            timesPlayed: 150,
+            timeLimit: 60,
+            reviews: [],
+            correctness: 72,
         },
-        createdAt: "2021-10-10",
-        timeLimit: 60,
-    },
-];
-
-const questAttempts: Attempt[] = [
-    {
-        questId: "3",
-        questTitle: "Quest 3",
-        questImageUrl: "/test.png",
-        mark: 88,
-        maxMark: 100,
-        lastPlayedTime: "2021-10-10",
-        status: "Пройдено",
-    },
-];
-
-const HomeProfile = () => {
-    return (
-        <div>
-            <h1>Мій кабінет</h1>
-            <Button className="mt-4" color="purpleBorder">
-                <IoReturnUpBack /> Повернутися назад
-            </Button>
-            <div className="flex flex-wrap gap-8 mt-8">
-                <AvatarControls
-                    avatarParams={{ rating: 4 }}
-                    recentAchievements={recentAchievements}
-                    upcomingAchievements={upcomingAchievements}
-                />
-                <ProfileControls
-                    defaultEmail={userEmail}
-                    defaultName={userName}
-                />
-                <QuestDashboard
-                    className="min-w-1/2"
-                    myQuests={myQuests}
-                    questAttempts={questAttempts}
-                />
-            </div>
-        </div>
-    );
+    ],
 };
 
-export default HomeProfile;
+const MyProfile = () => {
+    return <MyProfilePageComponent profile={profile} />;
+};
+
+export default MyProfile;
