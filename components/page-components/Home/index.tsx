@@ -9,6 +9,8 @@ import { useState } from "react";
 import { IoCreateOutline } from "react-icons/io5";
 import { HomePageComponentProps } from "./Home.props";
 import { Quest } from "./Quest";
+import { useAppDispatch } from "@/store/hooks/useAppDispatch";
+import { toggleModal } from "@/store/slices/modals";
 
 const sortOptions: SelectOption[] = [
     { title: "Рейтингом тесту", value: "testRating" },
@@ -18,6 +20,7 @@ const sortOptions: SelectOption[] = [
 ];
 
 export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
+    const dispatch = useAppDispatch();
     const [sortOption, setSortOption] = useState<SelectOption | null>(null);
     const [searchQuest, setSearchQuest] = useState<string>("");
     const [quests, setQuests] = useState(serverQuests);
@@ -26,7 +29,11 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
         <>
             <h1>Квести</h1>
             <Link href="#" className="mt-3 duration-0">
-                <Button color="purpleBorder" className="mt-3">
+                <Button
+                    color="purpleBorder"
+                    className="mt-3"
+                    onClick={() => dispatch(toggleModal("QuestCreation"))}
+                >
                     <span>Створити свій квест</span>
                     <IoCreateOutline className="size-6" />
                 </Button>

@@ -9,6 +9,7 @@ import { ToastProvider } from "@/components/providers/Toast";
 import { getCookie } from "@/helpers/getCookie";
 import { getProfile } from "@/api/auth";
 import { JoinWithCode } from "@/components/common/JoinWithCode";
+import ModalWrapper from "@/components/modals/Wrapper";
 import { getPathname } from "@/helpers/getPathname";
 
 const inter = Inter({
@@ -77,6 +78,7 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
                     <div className="fixed -z-10 bg-[#8C55FE] bg-opacity-40 w-[550px] h-[550px] -left-[160px] top-0 blur-[500px]"></div>
                     <div className="fixed -z-10 bg-[#00D1FF] bg-opacity-20 w-[550px] h-[550px] left-[50%] top-[50%] blur-[500px] -translate-x-[50%]"></div>
                     <div className="fixed -z-10 bg-[#BD00FF] bg-opacity-20 w-[550px] h-[550px] -right-[150px] -bottom-[100px] blur-[500px]"></div>
+                    <ModalWrapper />
                     <ToastProvider />
                 </ReduxProvider>
             </body>

@@ -33,6 +33,10 @@ export default {
                     dark: "#ff4d4d",
                     light: "#cc0000",
                 },
+                blue: {
+                    DEFAULT: "#161a2e",
+                    dark: "#131627",
+                },
                 blackOpacity: {
                     DEFAULT: "#00000026",
                     light: "#0000001a",
