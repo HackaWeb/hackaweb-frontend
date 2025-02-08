@@ -9,12 +9,31 @@ import { RiEditLine } from "react-icons/ri";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { cn } from "@/helpers/cn";
 
 function QuestCreation() {
+    const [file, setFile] = useState<string>();
     const modals = useAppSelector(selectModals);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const uploadedFile = e.target.files?.[0];
+
+        if (uploadedFile) {
+            if (uploadedFile.name.includes(".mp4")) {
+                const result = URL.createObjectURL(uploadedFile);
+                setFile(result);
+            } else {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    setFile(e.target?.result as string);
+                };
+                reader.readAsDataURL(uploadedFile);
+            }
+        }
+    };
 
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -28,24 +47,34 @@ function QuestCreation() {
                     <ReturnBtn className="self-start" modal="QuestCreation" />
                     <span className="text-3xl">Створення Квесту</span>
                     <div className="relative w-3/4 mt-10">
-                        <Image
-                            src="/test.png"
-                            alt="Квест"
-                            className="w-full h-auto"
-                            width={0}
-                            height={0}
-                            sizes="100vw"
-                        />
+                        {file?.includes("blob") ? (
+                            <video controls src={file}></video>
+                        ) : (
+                            <Image
+                                src={file || "/test.png"}
+                                alt="Картинка Квесту"
+                                className="w-full h-auto"
+                                width={0}
+                                height={0}
+                                sizes="100vw"
+                            />
+                        )}
+
                         <Input
                             id="picture"
                             type="file"
                             ref={fileInputRef}
                             className="hidden"
-                            onChange={(e) => fileInputRef.current?.click()}
+                            accept=".jpg, .jpeg, .png, .mp4"
+                            onChange={handleFileChange}
                         />
                         <Button
-                            className="absolute right-4 bottom-4"
+                            className={cn(
+                                "absolute right-4",
+                                file?.includes("blob") ? "top-4" : "bottom-4",
+                            )}
                             color="purpleBackground"
+                            onClick={() => fileInputRef.current?.click()}
                         >
                             <RiEditLine size={24} />
                         </Button>
