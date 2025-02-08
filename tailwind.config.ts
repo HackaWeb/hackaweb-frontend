@@ -9,33 +9,27 @@ export default {
     theme: {
         extend: {
             colors: {
-                black: {
-                    DEFAULT: "#464646",
+                yellow: {
+                    DEFAULT: "#ffd500",
                 },
                 purple: {
-                    DEFAULT: "#7351f5",
-                    dark: "#4020c3",
-                    light: "#b39fff",
+                    DEFAULT: "#8c55fe",
+                    dark: "#6e3dc7",
+                    light: "#a97fff",
                 },
                 gray: {
-                    DEFAULT: "#ebebeb",
-                    dark: "#333",
-                    light: "#f2f2f2",
+                    DEFAULT: "#bdbdbd",
+                    dark: "#7a7a7a",
+                    light: "#e0e0e0",
                 },
                 red: {
-                    DEFAULT: "#ff4d4d",
-                    dark: "#cc0000",
-                    light: "#ff6666",
+                    DEFAULT: "#ff0000",
+                    dark: "#ff4d4d",
+                    light: "#cc0000",
                 },
-                green: {
-                    DEFAULT: "#00cc66",
-                    dark: "#009933",
-                    light: "#00ff99",
-                },
-                blue: {
-                    DEFAULT: "#4da6ff",
-                    dark: "#007acc",
-                    light: "#66b3ff",
+                blackOpacity: {
+                    light: "#00000026",
+                    dark: "#0000004d",
                 },
             },
         },
