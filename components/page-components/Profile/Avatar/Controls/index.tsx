@@ -29,7 +29,7 @@ const AvatarControls = ({
                 <AchievementGroup className="relative">
                     {upcomingAchievements.map((a) => (
                         <Achievement
-                            className="text-xs opacity-50"
+                            className="text-[6pt] opacity-50"
                             key={a.name}
                             achievement={a}
                         />

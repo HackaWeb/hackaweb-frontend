@@ -6,7 +6,7 @@ const Achievement = ({ achievement, className, ...rest }: AchievementProps) => {
     return (
         <div
             className={cn(
-                "w-fit py-1 px-2 border-2 text-sm border-purple rounded-md",
+                "w-fit py-1 px-2 border text-sm border-purple rounded-md",
                 className,
             )}
             {...rest}
