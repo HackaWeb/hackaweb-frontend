@@ -38,7 +38,7 @@ export const Aside = ({ isAuthorized }: AsideProps) => {
                 <Link href="/" className="mx-10 text-white text-2xl">
                     КВЕСТ АПП
                 </Link>
-                <div className="flex mt-8 mx-10 items-center gap-4 bg-blackOpacity-DEFAULT p-3">
+                <div className="flex mt-8 mx-10 items-center gap-4 bg-blackOpacity p-3">
                     <div className="p-3 border-purple border-2 rounded-md">
                         <AiOutlineUser className="text-purple size-6" />
                     </div>

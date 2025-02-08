@@ -16,7 +16,7 @@ interface LeaderboardProps {
 
 export const Leaderboard = ({ data }: LeaderboardProps) => {
     return (
-        <div className="overflow-x-auto bg-blackOpacity-DEFAULT pt-4 rounded-lg h-auto">
+        <div className="overflow-x-auto bg-blackOpacity pt-4 rounded-lg h-auto">
             <h2 className="text-white text-lg font-semibold mb-4 ml-4">
                 Таблиця лідерів
             </h2>
