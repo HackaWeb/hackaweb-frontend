@@ -8,8 +8,8 @@ import { TbArrowBackUp } from "react-icons/tb";
 export const PlayingGame = () => {
     return (
         <div>
-            <div className="bg-blackOpacity-DEFAUlT pt-6 relative max-h-[50vh]">
-                <div className="absolute right-10 top-10 text-gray p-6 rounded-md bg-blackOpacity-DEFAUlT">
+            <div className="bg-blackOpacity pt-6 relative max-h-[50vh]">
+                <div className="absolute right-10 top-10 text-gray p-6 rounded-md bg-blackOpacity">
                     <div>Часу залишилось: 59.59</div>
                     <div>Питання №: 12 з 20</div>
                 </div>
@@ -26,7 +26,7 @@ export const PlayingGame = () => {
                 </div>
             </div>
             <div className="mt-6 grid grid-cols-3 gap-6 px-20 items-start">
-                <div className="bg-blackOpacity-DEFAUlT p-6 rounded-lg">
+                <div className="bg-blackOpacity p-6 rounded-lg">
                     <div className="text-xl font-bold">Учасники</div>
                     <ul>
                         <li className="flex items-center justify-between p-5 bg-blackOpacity-dark mt-4 rounded-md">
@@ -44,13 +44,13 @@ export const PlayingGame = () => {
                         </li>
                     </ul>
                 </div>
-                <div className="bg-blackOpacity-DEFAUlT p-6 rounded-lg flex items-center justify-between text-gray">
+                <div className="bg-blackOpacity p-6 rounded-lg flex items-center justify-between text-gray">
                     <div className="font-medium text-lg">
                         Чекаємо на інших гравців
                     </div>
                     <FiLoader className="size-7" />
                 </div>
-                <div className="bg-blackOpacity-DEFAUlT flex items-center justify-between p-6 rounded-lg text-gray">
+                <div className="bg-blackOpacity flex items-center justify-between p-6 rounded-lg text-gray">
                     <span className="font-medium text-lg">
                         Ваш код лобі:{" "}
                         <span className="text-white ml-1">13GFGF4</span>

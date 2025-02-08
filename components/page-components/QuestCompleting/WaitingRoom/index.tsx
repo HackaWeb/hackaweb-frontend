@@ -8,7 +8,7 @@ import { TbArrowBackUp } from "react-icons/tb";
 export const WaitingRoom = () => {
     return (
         <div>
-            <div className="bg-blackOpacity-DEFAUlT pt-6">
+            <div className="bg-blackOpacity pt-6">
                 <Link href="#" className="block ml-6">
                     <Button color="purpleBorder">
                         <TbArrowBackUp className="size-6" />
@@ -28,7 +28,7 @@ export const WaitingRoom = () => {
                 </div>
             </div>
             <div className="mt-6 grid grid-cols-3 gap-6 px-20 items-start">
-                <div className="bg-blackOpacity-DEFAUlT p-6 rounded-lg">
+                <div className="bg-blackOpacity p-6 rounded-lg">
                     <div className="text-xl font-bold">Учасники</div>
                     <ul>
                         <li className="flex items-center justify-between p-5 bg-blackOpacity-dark mt-4 rounded-md">
@@ -46,13 +46,13 @@ export const WaitingRoom = () => {
                         </li>
                     </ul>
                 </div>
-                <div className="bg-blackOpacity-DEFAUlT p-6 rounded-lg flex items-center justify-between text-gray">
+                <div className="bg-blackOpacity p-6 rounded-lg flex items-center justify-between text-gray">
                     <div className="font-medium text-lg">
                         Чекаємо на інших гравців
                     </div>
                     <FiLoader className="size-7" />
                 </div>
-                <div className="bg-blackOpacity-DEFAUlT flex items-center justify-between p-6 rounded-lg text-gray">
+                <div className="bg-blackOpacity flex items-center justify-between p-6 rounded-lg text-gray">
                     <span className="font-medium text-lg">
                         Ваш код лобі:{" "}
                         <span className="text-white ml-1">13GFGF4</span>
