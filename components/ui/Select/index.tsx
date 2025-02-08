@@ -24,7 +24,10 @@ export const Select = ({
     return (
         <div className={cn("relative w-full", className)} id={id}>
             <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => {
+                    setIsOpen(!isOpen);
+                }}
+                type="button"
                 className="w-full flex justify-between items-center px-4 py-3 bg-blackOpacity text-white rounded-md focus:outline-none"
             >
                 {activeOption ? (
