@@ -2,17 +2,21 @@ import Block from "@/components/ui/Block";
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { CompletedQuestsHeader, MyQuestsHeader } from "../Header/header";
+import {
+    CompletedQuestsHeader,
+    ActionableUserQuestsHeader,
+} from "../Header/header";
 import DashboardHeader from "../Header";
 import { CompletedQuestsDashboardProps } from "./CompletedQuestsDashboard.props";
 
 const CompletedQuestsDashboard = ({
     attempts,
+    title,
 }: CompletedQuestsDashboardProps) => {
     return (
         <Block className="p-0 bg-black w-full">
             <div className="flex justify-start w-full px-4 pt-4 items-center gap-8">
-                <h2 className="font-bold text-xl">Пройдені тести</h2>
+                <h2 className="font-bold text-xl">{title}</h2>
             </div>
             <table className="table-auto border-spacing-2 text-gray w-full">
                 <thead>

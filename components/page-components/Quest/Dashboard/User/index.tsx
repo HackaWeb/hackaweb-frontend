@@ -5,23 +5,36 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import React from "react";
-import { MyQuestsHeader } from "../Header/header";
-import { MyQuestsDashboardProps } from "./Dashboard.props";
+import {
+    ActionableUserQuestsHeader,
+    NonActionableUserQuestsHeader,
+} from "../Header/header";
+import { MyQuestsDashboardProps } from "./UserQuestsDashboard.props";
 import DashboardHeader from "../Header";
 import { RenderRating } from "@/helpers/RenderRating";
 
-const MyQuestsDashboard = ({ quests }: MyQuestsDashboardProps) => {
+const UserQuestsDashboard = ({
+    quests,
+    title,
+    isActionable,
+}: MyQuestsDashboardProps) => {
     return (
         <Block className="p-0 bg-black">
             <div className="flex justify-between w-full px-4 pt-4 items-center gap-8">
-                <h2 className="font-bold text-xl">Мої тести</h2>
-                <Button color="purpleBorder">Створити тест</Button>
+                <h2 className="font-bold text-xl">{title}</h2>
+                {isActionable && (
+                    <Button color="purpleBorder">Створити тест</Button>
+                )}
             </div>
             <table className="table-auto border-spacing-2 text-gray">
                 <thead>
                     <DashboardHeader
                         className="bg-gray-superdark"
-                        items={MyQuestsHeader}
+                        items={
+                            isActionable
+                                ? ActionableUserQuestsHeader
+                                : NonActionableUserQuestsHeader
+                        }
                     />
                 </thead>
                 <tbody>
@@ -58,15 +71,16 @@ const MyQuestsDashboard = ({ quests }: MyQuestsDashboardProps) => {
                                     <p>10</p>
                                 </td>
                                 {/*TODO: Кількість завдань*/}
-                                <td className="px-4 py-2 flex gap-2">
-                                    <div className="border rounded-md border-purple p-1">
-                                        <MdModeEdit className="size-4 text-purple" />
-                                    </div>
-                                    <div className="border rounded-md border-red p-1">
-                                        <IoMdTrash className="size-4 text-red" />
-                                    </div>
-                                    {/*FIX: icons are not shown*/}
-                                </td>
+                                {isActionable && (
+                                    <td className="px-4 py-2 flex gap-2">
+                                        <div className="border rounded-md border-purple p-1">
+                                            <MdModeEdit className="size-4 text-purple" />
+                                        </div>
+                                        <div className="border rounded-md border-red p-1">
+                                            <IoMdTrash className="size-4 text-red" />
+                                        </div>
+                                    </td>
+                                )}
                             </tr>
                         ))}
                 </tbody>
@@ -75,4 +89,4 @@ const MyQuestsDashboard = ({ quests }: MyQuestsDashboardProps) => {
     );
 };
 
-export default MyQuestsDashboard;
+export default UserQuestsDashboard;

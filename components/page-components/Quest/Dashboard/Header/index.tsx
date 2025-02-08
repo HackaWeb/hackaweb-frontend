@@ -10,7 +10,7 @@ const DashboardHeader = ({
     return (
         <tr className={cn(className)} {...rest}>
             {items.map((item, index) => (
-                <th className="bg-blackOpacity py-2" key={index}>
+                <th className="bg-blackOpacity p-2" key={index}>
                     {item}
                 </th>
             ))}

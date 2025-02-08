@@ -6,4 +6,5 @@ export interface QuestDashboardProps
     extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     myQuests: Quest[];
     questAttempts: Attempt[];
+    isActionable: boolean;
 }
