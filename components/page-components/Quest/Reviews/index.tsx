@@ -23,7 +23,7 @@ interface ReviewsProps {
 
 export const Reviews = ({ reviews }: ReviewsProps) => {
     return (
-        <div className="bg-blackOpacity-DEFAULT p-4 rounded-lg mt-8">
+        <div className="bg-blackOpacity p-4 rounded-lg mt-8">
             <h2 className="text-white text-lg font-semibold mb-4">
                 Відгуки ({reviews.length})
             </h2>
