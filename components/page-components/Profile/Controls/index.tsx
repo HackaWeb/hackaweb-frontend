@@ -6,6 +6,9 @@ import { ProfileControlsProps } from "./ProfileControls.props";
 import { Button } from "@/components/ui/Button";
 import Label from "@/components/ui/Label";
 import Block from "@/components/ui/Block";
+import { FiEdit2 } from "react-icons/fi";
+import { cn } from "@/helpers/cn";
+import EditableInput from "@/components/ui/Input/Editable";
 
 const ProfileControls = ({
     defaultEmail,
@@ -18,21 +21,19 @@ const ProfileControls = ({
         <Block>
             <div className="flex flex-col gap-8">
                 <div>
-                    <Label htmlFor="email">Ваша пошта</Label>
-                    <Input
+                    <EditableInput
+                        label="Ваша пошта"
                         name="email"
-                        type="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        setValue={(value) => setEmail(value)}
                     />
                 </div>
                 <div>
-                    <Label htmlFor="name">Ваш нікнейм</Label>
-                    <Input
+                    <EditableInput
+                        label="Ваш нікнейм"
                         name="name"
-                        type="name"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        setValue={(value) => setName(value)}
                     />
                 </div>
             </div>
