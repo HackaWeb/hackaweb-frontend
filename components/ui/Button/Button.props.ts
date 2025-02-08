@@ -6,10 +6,5 @@ export interface ButtonProps
         HTMLButtonElement
     > {
     children: ReactNode;
-    color:
-        | "purpleBackground"
-        | "purpleBorder"
-        | "yellowBorder"
-        | "redBorder"
-        | "purpleBlueGradient";
+    color: "purpleBackground" | "purpleBorder" | "yellowBorder" | "redBorder";
 }

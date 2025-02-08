@@ -1,42 +1,57 @@
 "use client";
-import React, { useState } from "react";
+
+import { useState } from "react";
 import { ProfileControlsProps } from "./ProfileControls.props";
 import { Button } from "@/components/ui/Button";
-import Block from "@/components/ui/Block";
-import EditableInput from "@/components/ui/Input/Editable";
+import { Input } from "@/components/ui/Input";
+import { FiEdit2 } from "react-icons/fi";
 
-const ProfileControls = ({
+export const ProfileControls = ({
     defaultEmail,
-    defaultName,
+    defaultNickname,
 }: ProfileControlsProps) => {
     const [email, setEmail] = useState(defaultEmail);
-    const [name, setName] = useState(defaultName);
+    const [nickname, setNickname] = useState(defaultNickname);
 
     return (
-        <Block>
-            <div className="flex flex-col gap-8">
+        <div className="bg-blackOpacity p-4 rounded-md">
+            <div>
                 <div>
-                    <EditableInput
-                        label="Ваша пошта"
-                        name="email"
-                        value={email}
-                        setValue={(value) => setEmail(value)}
-                    />
+                    <label htmlFor="email" className="text-gray">
+                        Ваша пошта
+                    </label>
+                    <div className="relative">
+                        <Input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Ваша пошта..."
+                            className="mt-2"
+                        />
+                        <FiEdit2 className="text-purple absolute right-3 bottom-3 size-5" />
+                    </div>
                 </div>
-                <div>
-                    <EditableInput
-                        label="Ваш нікнейм"
-                        name="name"
-                        value={name}
-                        setValue={(value) => setName(value)}
-                    />
+                <div className="mt-6">
+                    <label htmlFor="nickname" className="text-gray">
+                        Ваша нікнейм
+                    </label>
+                    <div className="relative">
+                        <Input
+                            type="text"
+                            id="nickname"
+                            value={nickname}
+                            onChange={(e) => setNickname(e.target.value)}
+                            placeholder="Ваша нікнейм..."
+                            className="mt-2"
+                        />
+                        <FiEdit2 className="text-purple absolute right-3 bottom-3 size-5" />
+                    </div>
                 </div>
             </div>
-            <Button color="purpleBlueGradient" className="px-16">
+            <Button color="purpleBackground" className="px-16 mt-10 mx-auto mb-4">
                 Зберегти
             </Button>
-        </Block>
+        </div>
     );
 };
-
-export default ProfileControls;
