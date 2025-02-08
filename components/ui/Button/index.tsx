@@ -10,7 +10,7 @@ export const Button = ({
     const colorStyles = {
         purpleBackground: "bg-purple text-white hover:bg-purple-light",
         purpleBorder: "border-2 border-purple hover:text-purple text-white",
-        yellowBorder: "border-2 border-yellow hover:bg-yellow-light",
+        yellowBorder: "border-2 border-yellow hover:text-yellow-light text-white",
         redBorder: "border-2 border-red hover:bg-red-light",
         purpleBlueGradient: "bg-gradient-to-b from-blue to-purple",
     };
