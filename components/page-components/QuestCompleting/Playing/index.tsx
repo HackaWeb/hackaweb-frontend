@@ -8,21 +8,19 @@ import { TbArrowBackUp } from "react-icons/tb";
 export const PlayingGame = () => {
     return (
         <div>
-            <div className="bg-blackOpacity-DEFAUlT pt-6">
-                <Link href="#" className="block ml-6">
-                    <Button color="purpleBorder">
-                        <TbArrowBackUp className="size-6" />
-                        <span>Повернутися назад</span>
-                    </Button>
-                </Link>
+            <div className="bg-blackOpacity-DEFAUlT pt-6 relative max-h-[50vh]">
+                <div className="absolute right-10 top-10 text-gray p-6 rounded-md bg-blackOpacity-DEFAUlT">
+                    <div>Часу залишилось: 59.59</div>
+                    <div>Питання №: 12 з 20</div>
+                </div>
                 <div>
                     <Image
-                        src="/test.png"
-                        alt="Квест"
+                        src="/question.png"
+                        alt="Питання"
                         width={0}
                         height={0}
                         sizes="100vw"
-                        className="mx-auto mt-3 rounded-lg max-w-[800px]"
+                        className="mx-auto mt-3 rounded-lg max-w-[800px] w-auto h-full"
                     />
                     <h1 className="py-10 text-center">Назва Квесту</h1>
                 </div>
@@ -62,6 +60,12 @@ export const PlayingGame = () => {
                     </button>
                 </div>
             </div>
+            <Button
+                color="purpleBackground"
+                className="mt-4 mx-auto max-w-[200] w-full mb-10"
+            >
+                Почати гру
+            </Button>
         </div>
     );
 };

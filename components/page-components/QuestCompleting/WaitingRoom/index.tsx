@@ -62,6 +62,12 @@ export const WaitingRoom = () => {
                     </button>
                 </div>
             </div>
+            <Button
+                color="purpleBackground"
+                className="mt-4 mx-auto max-w-[200] w-full mb-10"
+            >
+                Почати гру
+            </Button>
         </div>
     );
 };
