@@ -10,7 +10,7 @@ export const Achievement = ({
     return (
         <div
             className={cn(
-                "w-fit py-1 px-2 border text-sm border-purple rounded-md",
+                "w-fit py-1 px-2 text-sm border-2 text-yellow border-purple rounded-md bg-blackOpacity-dark",
                 className,
             )}
             {...rest}
