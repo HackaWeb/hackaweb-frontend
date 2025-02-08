@@ -26,7 +26,7 @@ export const Aside = ({ isAuthorized }: AsideProps) => {
         },
         {
             title: "Я адміністратор",
-            link: "/admin",
+            link: "/login",
         },
     ];
 
@@ -35,10 +35,10 @@ export const Aside = ({ isAuthorized }: AsideProps) => {
     return (
         <aside className="w-full min-h-[100vh] h-full bg-blackOpacity-dark">
             <div className="mt-10">
-                <Link href="/" className="mx-10 text-white text-2xl">
+                <Link href="/" className="mx-4 text-white text-2xl">
                     КВЕСТ АПП
                 </Link>
-                <div className="flex mt-8 mx-10 items-center gap-4 bg-blackOpacity p-3">
+                <div className="flex mt-8 mx-4 items-center gap-4 bg-blackOpacity p-3">
                     <div className="p-3 border-purple border-2 rounded-md">
                         <AiOutlineUser className="text-purple size-6" />
                     </div>

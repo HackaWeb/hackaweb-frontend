@@ -57,7 +57,7 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
             <body
                 className={cn(
                     !pathname.includes("quest-completing")
-                        ? "grid grid-cols-[minmax(320px,420px)_1fr] relative"
+                        ? "grid grid-cols-[320px_1fr] relative"
                         : "",
                     inter.variable,
                 )}
