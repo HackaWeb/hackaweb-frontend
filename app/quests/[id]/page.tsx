@@ -47,6 +47,42 @@ const leaderboardData = [
     },
 ];
 
+const reviewsData = [
+    {
+        id: 1,
+        user: {
+            id: "1",
+            name: "Alex Chubak",
+            avatar: "",
+        },
+        date: "23.12.2024",
+        rating: 3.5,
+        text: "Тест стоподобався хочу ще!",
+    },
+    {
+        id: 2,
+        user: {
+            id: "1",
+            name: "Alex Chubak",
+            avatar: "",
+        },
+        date: "23.12.2024",
+        rating: 4.5,
+        text: "Тест стоподобався хочу ще!",
+    },
+    {
+        id: 3,
+        user: {
+            id: "1",
+            name: "Alex Chubak",
+            avatar: "",
+        },
+        date: "23.12.2024",
+        rating: 2.5,
+        text: "Тест стоподобався хочу ще!",
+    },
+];
+
 const QuestDetails = () => {
     return (
         <div>
@@ -57,10 +93,10 @@ const QuestDetails = () => {
                     <span>Повернутися назад</span>
                 </Button>
             </Link>
-            <div className="grid grid-cols-[0.33fr_0.66fr] mt-6 gap-8 items-start">
+            <div className="grid grid-cols-[0.4fr_0.6fr] mt-6 gap-8 items-start">
                 <div>
                     <GeneralInfo quest={quest} />
-                    <Reviews quest={quest} />
+                    <Reviews reviews={reviewsData} />
                 </div>
                 <Leaderboard data={leaderboardData} />
             </div>

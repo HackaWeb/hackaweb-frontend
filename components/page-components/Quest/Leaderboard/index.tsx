@@ -16,7 +16,7 @@ interface LeaderboardProps {
 
 export const Leaderboard = ({ data }: LeaderboardProps) => {
     return (
-        <div className="overflow-x-auto bg-blackOpacity-dark pt-4 rounded-lg h-auto">
+        <div className="overflow-x-auto bg-blackOpacity-DEFAUlT pt-4 rounded-lg h-auto">
             <h2 className="text-white text-lg font-semibold mb-4 ml-4">
                 Таблиця лідерів
             </h2>
@@ -34,7 +34,7 @@ export const Leaderboard = ({ data }: LeaderboardProps) => {
                     {data.map((player, index) => (
                         <tr
                             key={player.id}
-                            className="border-t border-gray-dark text-white"
+                            className="border-t border-gray-dark bg-blackOpacity-dark text-white"
                         >
                             <td className="px-4 py-2">
                                 <span
