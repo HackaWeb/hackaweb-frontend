@@ -5,8 +5,5 @@ import { Provider } from "react-redux";
 import { ReduxProps } from "./Redux.props";
 
 export const ReduxProvider = ({ children }: ReduxProps) => {
-    {
-        /* <Provider store={store}>{children}</Provider>; */
-    }
-    return <> {children}</>;
+    return <Provider store={store}>{children}</Provider>;
 };
