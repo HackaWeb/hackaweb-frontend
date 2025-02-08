@@ -36,7 +36,7 @@ const ProfileControls = ({
                     />
                 </div>
             </div>
-            <Button color="purpleBackground" className="px-16">
+            <Button color="purpleBlueGradient" className="px-16">
                 Зберегти
             </Button>
         </Block>
