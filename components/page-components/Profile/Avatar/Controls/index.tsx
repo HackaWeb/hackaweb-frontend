@@ -1,12 +1,11 @@
-import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import React from "react";
 import Avatar from "..";
 import { AvatarControlsProps } from "./AvatarControls.props";
 import Achievement from "../../Achievement";
-import { TfiCup } from "react-icons/tfi";
 import AchievementGroup from "../../Achievement/Group";
 import Block from "@/components/ui/Block";
+import { IoTrophyOutline } from "react-icons/io5";
 
 const AvatarControls = ({
     avatarParams,
@@ -34,7 +33,7 @@ const AvatarControls = ({
                             achievement={a}
                         />
                     ))}
-                    <TfiCup className="w-4 h-4 text-purple absolute right-2 bottom-2" />
+                    <IoTrophyOutline className="w-4 h-4 text-purple absolute right-2 bottom-2" />
                 </AchievementGroup>
             </div>
         </Block>

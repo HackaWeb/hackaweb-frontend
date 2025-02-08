@@ -1,10 +1,6 @@
 import Block from "@/components/ui/Block";
-import { CiEdit } from "react-icons/ci";
-import { FaRegTrashAlt } from "react-icons/fa";
-import Rating from "@/components/common/Rating";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
 import React from "react";
 import { CompletedQuestsHeader, MyQuestsHeader } from "../Header/header";
 import DashboardHeader from "../Header";
@@ -28,7 +24,10 @@ const CompletedQuestsDashboard = ({
                 <tbody>
                     {attempts.length !== 0 &&
                         attempts.map((attempt) => (
-                            <tr className="border-b border-[#242A4D]">
+                            <tr
+                                key={attempt.questId}
+                                className="border-b border-[#242A4D]"
+                            >
                                 <td className="px-4 py-2">
                                     <Link href={`/quest/${attempt.questId}`}>
                                         {attempt.questTitle}
