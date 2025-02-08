@@ -9,8 +9,8 @@ const DashboardHeader = ({
 }: DashboardHeaderProps) => {
     return (
         <tr className={cn(className)} {...rest}>
-            {items.map((item) => (
-                <th className="bg-blackOpacity py-2" key={item}>
+            {items.map((item, index) => (
+                <th className="bg-blackOpacity py-2" key={index}>
                     {item}
                 </th>
             ))}
