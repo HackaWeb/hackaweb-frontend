@@ -42,9 +42,9 @@ export const CreateQuest = () => {
     return (
         isModalOpened("QuestCreation", modals) && (
             <>
-                <div className="absolute left-[50%] -translate-x-[50%] max-w-[700px] top-10 z-10 flex flex-col place-content-center place-items-center bg-blue p-6">
+                <div className="absolute left-[50%] -translate-x-[50%] max-w-[700px] w-full top-10 z-10 flex flex-col place-content-center place-items-center bg-blue p-6">
                     <ReturnBtn className="self-start" modal="QuestCreation" />
-                    <span className="text-3xl mt-10">Створення Квесту</span>
+                    <div className="text-3xl mt-10">Створення Квесту</div>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
                             {file ? (

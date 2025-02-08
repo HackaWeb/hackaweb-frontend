@@ -1,6 +1,6 @@
 import { CreateQuest } from "./CreateQuest";
 import QuestEdit from "./QuestEdit";
-import QuestionCreation from "./QuestionCreation";
+import { CreateQuestion } from "./CreateQuestion";
 import QuestionEdit from "./QuestionEdit";
 
 export const Modals = () => {
@@ -8,7 +8,7 @@ export const Modals = () => {
         <>
             <CreateQuest />
             <QuestEdit />
-            <QuestionCreation />
+            <CreateQuestion />
             <QuestionEdit />
         </>
     );

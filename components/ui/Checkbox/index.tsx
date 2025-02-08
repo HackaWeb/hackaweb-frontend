@@ -8,6 +8,7 @@ export const Checkbox = ({
     checked = false,
     onChange,
     className,
+    id,
 }: CheckboxProps) => {
     const toggleCheckbox = () => {
         onChange(!checked);
@@ -24,6 +25,7 @@ export const Checkbox = ({
                 className,
             )}
             onClick={toggleCheckbox}
+            id={id}
         >
             {checked && <MdCheck className="size-8" />}
         </div>
