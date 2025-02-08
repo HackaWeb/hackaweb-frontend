@@ -1,8 +1,8 @@
-import Rating from "@/components/common/Rating";
 import Image from "next/image";
 import React from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { AvatarProps } from "./Avatar.props";
+import { RenderRating } from "@/helpers/RenderRating";
 
 const Avatar = ({
     image: imagePath,
@@ -14,7 +14,7 @@ const Avatar = ({
             <div className="absolute inset-0 rounded-md bg-gradient-to-br from-purple to-blue p-[1px]">
                 <div className="w-full h-full bg-opacity-75 bg-black rounded-md flex justify-center items-center">
                     {rating && (
-                        <Rating
+                        <RenderRating
                             className="absolute top-2 left-2"
                             rating={rating}
                         />
