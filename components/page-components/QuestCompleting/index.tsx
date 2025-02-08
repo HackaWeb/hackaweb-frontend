@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { WaitingRoom } from "./WaitingRoom";
 import { PlayingGame } from "./Playing";
-import { Question } from "@/types/question.interface";
 import { QuestCompletingProps } from "./QuestCompleting.props";
 import { Results } from "./Results";
 
