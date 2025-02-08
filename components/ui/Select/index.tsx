@@ -25,7 +25,7 @@ export const Select = ({
         <div className={cn("relative w-full", className)} id={id}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex justify-between items-center px-4 py-3 bg-blackOpacity-DEFAUlT text-white rounded-md focus:outline-none"
+                className="w-full flex justify-between items-center px-4 py-3 bg-blackOpacity-DEFAULT text-white rounded-md focus:outline-none"
             >
                 {activeOption ? (
                     activeOption.title
