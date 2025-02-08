@@ -4,7 +4,7 @@ import Avatar from "..";
 import { AvatarControlsProps } from "./AvatarControls.props";
 import Block from "@/components/ui/Block";
 
-const AvatarControls = ({ avatarParams }: AvatarControlsProps) => {
+export const AvatarControls = ({ avatarParams }: AvatarControlsProps) => {
     return (
         <Block className="pb-4">
             <Avatar {...avatarParams} />
@@ -14,5 +14,3 @@ const AvatarControls = ({ avatarParams }: AvatarControlsProps) => {
         </Block>
     );
 };
-
-export default AvatarControls;

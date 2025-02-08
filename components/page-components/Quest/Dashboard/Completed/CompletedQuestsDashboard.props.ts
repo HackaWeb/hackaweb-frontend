@@ -1,7 +1,6 @@
-import { Attempt } from "@/types/attempt.interface";
-import { Quest } from "@/types/quest.interface";
+import { CompletedQuest } from "@/types/quest.interface";
 
 export interface CompletedQuestsDashboardProps {
-    attempts: Attempt[];
+    attempts: CompletedQuest[];
     title: string;
 }

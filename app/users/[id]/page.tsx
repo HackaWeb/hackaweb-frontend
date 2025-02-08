@@ -3,13 +3,18 @@ import React from "react";
 import { IoReturnUpBack, IoTrophyOutline } from "react-icons/io5";
 import { Button } from "@/components/ui/Button";
 import QuestDashboard from "@/components/page-components/Quest/Dashboard";
-import AchievementGroup from "@/components/page-components/Profile/Achievement/Group";
-import Achievement from "@/components/page-components/Profile/Achievement";
+import AchievementGroup from "@/components/page-components/MyProfile/Achievement/Group";
+import Achievement from "@/components/page-components/MyProfile/Achievement";
 import UserQuestsDashboard from "@/components/page-components/Quest/Dashboard/User";
 import CompletedQuestsDashboard from "@/components/page-components/Quest/Dashboard/Completed";
-import Avatar from "@/components/page-components/Profile/Avatar";
-import { myQuests, questAttempts, recentAchievements, userName } from "../mock";
+import Avatar from "@/components/page-components/MyProfile/Avatar";
 import { useRouter } from "next/navigation";
+import {
+    myQuests,
+    questAttempts,
+    recentAchievements,
+    userName,
+} from "@/app/profile/mock";
 
 const UserProfile = () => {
     const router = useRouter();
