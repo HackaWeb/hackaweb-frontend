@@ -58,7 +58,7 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
             >
                 <ReduxProvider>
                     <Aside isAuthorized={isAuthorized} />
-                    <main>{children}</main>
+                    <main className="p-12">{children}</main>
                     <ToastProvider />
                 </ReduxProvider>
             </body>

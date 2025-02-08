@@ -1,7 +1,7 @@
-import { Textarea } from "@/components/ui/Textarea";
+import { HomePageComponent } from "@/components/page-components/Home";
 
 const Home = () => {
-    return <div></div>;
+    return <HomePageComponent />;
 };
 
 export default Home;

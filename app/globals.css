@@ -49,3 +49,9 @@ a {
         color: var(--purple-dark);
     }
 }
+
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+}
