@@ -40,7 +40,7 @@ export const Select = ({
                 />
             </button>
             {isOpen && (
-                <ul className="absolute left-0 top-full mt-1 w-full bg-blackOpacity-light text-gray rounded-md shadow-lg z-10 overflow-hidden">
+                <ul className="absolute left-0 top-full mt-1 w-full bg-[#201f2d] text-gray rounded-md shadow-lg z-10 overflow-hidden">
                     {options.map((option) => (
                         <li
                             key={option.value}

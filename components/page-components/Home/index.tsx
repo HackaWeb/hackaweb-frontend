@@ -7,6 +7,8 @@ import { SelectOption } from "@/types/selectOption.interface";
 import Link from "next/link";
 import { useState } from "react";
 import { IoCreateOutline } from "react-icons/io5";
+import { HomePageComponentProps } from "./Home.props";
+import { Quest } from "./Quest";
 
 const sortOptions: SelectOption[] = [
     { title: "Рейтингом тесту", value: "testRating" },
@@ -15,8 +17,10 @@ const sortOptions: SelectOption[] = [
     { title: "Рейтингом автора", value: "authorRating" },
 ];
 
-export const HomePageComponent = () => {
+export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
     const [sortOption, setSortOption] = useState<SelectOption | null>(null);
+    const [searchQuest, setSearchQuest] = useState<string>("");
+    const [quests, setQuests] = useState(serverQuests);
 
     return (
         <>
@@ -31,6 +35,8 @@ export const HomePageComponent = () => {
                 <Input
                     placeholder="Пошук за назвою..."
                     className="max-w-[300px]"
+                    value={searchQuest}
+                    onChange={(e) => setSearchQuest(e.target.value)}
                 />
                 <Select
                     options={sortOptions}
@@ -40,6 +46,21 @@ export const HomePageComponent = () => {
                     placeholder="Сортувати за..."
                     className="max-w-[300px]"
                 />
+            </div>
+            <div className="mt-4 text-gray">
+                <span className="text-white font-bold">{quests.length}</span>{" "}
+                результатів знайдено
+            </div>
+            <div className="grid grid-cols-5 gap-7 mt-6">
+                {quests.length ? (
+                    <>
+                        {quests.map((quest) => (
+                            <Quest key={quest.id} quest={quest} />
+                        ))}
+                    </>
+                ) : (
+                    <div className="text-gray text-sm">Квестів не знайдено</div>
+                )}
             </div>
         </>
     );
