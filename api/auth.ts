@@ -1,11 +1,10 @@
 import { fetchApi } from "./fetchApi.api";
 import {
-    GetProfileResponse,
-    LoginResponse,
-    LoginUserRequest,
-    RegisterResponse,
-    RegisterUserRequest,
-} from "./responses/auth.types";
+    LoginRequestBody,
+    RegisterRequestBody,
+} from "./requestBodies/auth.interface";
+import { LoginResponse, RegisterResponse } from "./responses/auth.types";
+import { GetProfileResponse } from "./responses/user.types";
 
 export const getProfile = async (): Promise<GetProfileResponse> =>
     fetchApi({
@@ -15,21 +14,19 @@ export const getProfile = async (): Promise<GetProfileResponse> =>
     });
 
 export const register = async (
-    registerOptions: RegisterUserRequest,
+    body: RegisterRequestBody,
 ): Promise<RegisterResponse> =>
     fetchApi({
-        endpoint: "/api/Auth/register",
+        endpoint: "/Auth/register",
         isAuthRequired: false,
         method: "POST",
-        body: registerOptions,
+        body: body,
     });
 
-export const login = async (
-    loginOptions: LoginUserRequest,
-): Promise<LoginResponse> =>
+export const login = async (body: LoginRequestBody): Promise<LoginResponse> =>
     fetchApi({
-        endpoint: "/api/Auth/login",
+        endpoint: "/Auth/login",
         isAuthRequired: false,
         method: "POST",
-        body: loginOptions,
+        body: body,
     });

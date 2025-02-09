@@ -14,7 +14,7 @@ import {
     INVALID_PASSWORD_MESSAGE,
     isValidEmail,
     isValidPasswordLength,
-} from "@/helpers/formHelpers";
+} from "@/helpers/constants";
 import { setCookie } from "@/helpers/setCookie";
 import { useRouter } from "next/navigation";
 import { FormEvent, useRef, useState } from "react";
