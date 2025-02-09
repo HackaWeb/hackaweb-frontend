@@ -20,7 +20,7 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                     </div>
                 </div>
                 <div className="mt-2 text-center text-xl font-semibold">
-                    {profile.nickname}
+                    {profile.firstName} {profile.lastName}
                 </div>
                 <ul className="mt-6 pb-4 border-b-2 border-b-gray-300 border-opacity-10 flex flex-col justify-start gap-2 relative">
                     {achievements.unlocked.map((achiev, index) => (

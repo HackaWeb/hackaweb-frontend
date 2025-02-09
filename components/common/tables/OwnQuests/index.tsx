@@ -10,7 +10,7 @@ export const OwnQuests = ({ profile, isCreatedByMe }: OwnQuestsProps) => {
                 <h2 className="text-xl font-semibold text-white">
                     {isCreatedByMe
                         ? "Мої квести"
-                        : `Квести користувача ${profile.nickname}`}
+                        : `Квести користувача ${profile.firstName} ${profile.lastName}`}
                 </h2>
                 {isCreatedByMe && (
                     <Button color="purpleBorder" className="py-2 px-4">

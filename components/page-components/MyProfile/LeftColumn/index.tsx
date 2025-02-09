@@ -8,18 +8,45 @@ import { getAchievements } from "@/data/getAchievements";
 import { RenderRating } from "@/helpers/RenderRating";
 import { Button } from "@/components/ui/Button";
 import { AiOutlineClose } from "react-icons/ai";
+import { editUserProfile } from "@/api/user";
+import { toast } from "react-toastify";
+import { displayToasts } from "@/helpers/displayToasts";
+import {
+    DEFAULT_FIELD_ERROR,
+    RequestError,
+} from "@/api/responses/common/failure.interface";
 
 export const LeftColumn = ({ profile }: LeftColumnProps) => {
     const achievements = getAchievements(profile);
 
     const [avatar, setAvatar] = useState<string | null>(null);
 
-    const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
 
-        if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            setAvatar(imageUrl);
+        if (!file) return;
+        const imageUrl = URL.createObjectURL(file);
+        setAvatar(imageUrl);
+
+        await updateAvatar(file);
+    };
+
+    const updateAvatar = async (imageData: File): Promise<RequestError[]> => {
+        const formData = new FormData();
+        formData.append("avatar", imageData);
+
+        try {
+            const data = await editUserProfile(formData);
+            if ("isSuccess" in data) {
+                if (!data.isSuccess) {
+                    return data.errors;
+                }
+                return [];
+            }
+            return [DEFAULT_FIELD_ERROR];
+        } catch (error) {
+            console.error(error);
+            return [DEFAULT_FIELD_ERROR];
         }
     };
 
