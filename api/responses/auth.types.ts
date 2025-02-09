@@ -1,10 +1,8 @@
 import { BadRequestResponse } from "./common/badRequest.interface";
 import { UnathorizedResponse } from "./common/unathorized.interface";
+import { UpdateUserResponse } from "./user.types";
 
-interface GetProfileResponseSuccess {
-    email: string;
-    id: string;
-}
+interface GetProfileResponseSuccess extends UpdateUserResponse {}
 
 export interface RegisterUserRequest {
     email: string;
@@ -28,7 +26,3 @@ export type LoginResponse =
     | BadRequestResponse
     | UnathorizedResponse;
 export type RegisterResponse = RegisterUserResponseSuccess | BadRequestResponse;
-
-export type GetProfileResponse =
-    | GetProfileResponseSuccess
-    | UnathorizedResponse;
