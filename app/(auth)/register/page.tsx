@@ -1,6 +1,9 @@
 "use client";
+import { register } from "@/api/auth";
+import { RegisterUserRequest } from "@/api/responses/auth.types";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { displayToasts } from "@/helpers/displayToasts";
 import {
     INVALID_CONFIRMATION_PASSWORD_MESSAGE,
     INVALID_EMAIL_MESSAGE,
@@ -8,6 +11,7 @@ import {
     isValidEmail,
     isValidPasswordLength,
 } from "@/helpers/formHelpers";
+import { setCookie } from "@/helpers/setCookie";
 import { FormEvent, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -16,7 +20,7 @@ function Register() {
     const passwordRef = useRef<HTMLInputElement | null>(null);
     const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
 
-    const onSubmit = (e: FormEvent) => {
+    const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (
             !emailRef ||
@@ -47,7 +51,30 @@ function Register() {
             return;
         }
 
-        toast.success("Вас успішно зареєстровано!");
+        const results = await registerUser({
+            email,
+            password,
+        });
+
+        if (results.length === 0) {
+            toast.success("Вас успішно зареєстровано!");
+        } else {
+            displayToasts(results);
+        }
+    };
+
+    const registerUser = async (registerOptions: RegisterUserRequest) => {
+        try {
+            const res = await register(registerOptions);
+            if ("jwtToken" in res) {
+                setCookie("jwtToken", res.jwtToken);
+                return [];
+            }
+            return res.errors;
+        } catch (error) {
+            console.error(error);
+            return ["Невідома помилка. Зв'яжіться з нами!"];
+        }
     };
 
     return (

@@ -1,12 +1,16 @@
 "use client";
+import { login } from "@/api/auth";
+import { LoginUserRequest } from "@/api/responses/auth.types";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { displayToasts } from "@/helpers/displayToasts";
 import {
     INVALID_EMAIL_MESSAGE,
     INVALID_PASSWORD_MESSAGE as INVALID_PASSWORD_LENGTH_MESSAGE,
     isValidEmail,
     isValidPasswordLength,
 } from "@/helpers/formHelpers";
+import { setCookie } from "@/helpers/setCookie";
 import Link from "next/link";
 import { FormEvent, useRef } from "react";
 import { toast } from "react-toastify";
@@ -15,7 +19,7 @@ function Login() {
     const emailRef = useRef<HTMLInputElement | null>(null);
     const passwordRef = useRef<HTMLInputElement | null>(null);
 
-    const onSubmit = (e: FormEvent) => {
+    const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (
             !emailRef ||
@@ -38,7 +42,30 @@ function Login() {
             return;
         }
 
-        toast.success("Вас успішно авторизовано!");
+        const results = await loginUser({
+            email,
+            password,
+        });
+
+        if (results.length === 0) {
+            toast.success("Вас успішно авторизовано!");
+        } else {
+            displayToasts(results);
+        }
+    };
+
+    const loginUser = async (loginOptions: LoginUserRequest) => {
+        try {
+            const res = await login(loginOptions);
+            if ("jwtToken" in res) {
+                setCookie("jwtToken", res.jwtToken);
+                return [];
+            }
+            return res.errors;
+        } catch (error) {
+            console.error(error);
+            return ["Невідома помилка. Зв'яжіться з нами!"];
+        }
     };
 
     return (
