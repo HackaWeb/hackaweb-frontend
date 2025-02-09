@@ -8,13 +8,15 @@ import { getAchievements } from "@/data/getAchievements";
 import { RenderRating } from "@/helpers/RenderRating";
 import { Button } from "@/components/ui/Button";
 import { AiOutlineClose } from "react-icons/ai";
-import { editUserProfile } from "@/api/user";
+import { updateUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
 import { displayToasts } from "@/helpers/displayToasts";
 import {
     DEFAULT_FIELD_ERROR,
     RequestError,
 } from "@/api/responses/common/failure.interface";
+import { BadRequestResponse } from "@/api/responses/common/badRequest.interface";
+import { UnathorizedResponse } from "@/api/responses/common/unathorized.interface";
 
 export const LeftColumn = ({ profile }: LeftColumnProps) => {
     const achievements = getAchievements(profile);
@@ -36,10 +38,12 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
         formData.append("avatar", imageData);
 
         try {
-            const data = await editUserProfile(formData);
-            if ("isSuccess" in data) {
-                if (!data.isSuccess) {
+            const data = await updateUserProfile(formData);
+            if ("statusCode" in data) {
+                if (data.statusCode === 400) {
                     return data.errors;
+                } else if (data.statusCode === 401) {
+                    return [{ field: "", message: data.message }];
                 }
                 return [];
             }
