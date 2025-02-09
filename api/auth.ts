@@ -15,21 +15,19 @@ export const getProfile = async (): Promise<GetProfileResponse> =>
     });
 
 export const register = async (
-    registerOptions: RegisterUserRequest,
+    body: RegisterRequestBody,
 ): Promise<RegisterResponse> =>
     fetchApi({
         endpoint: "/api/auth/register",
         isAuthRequired: false,
         method: "POST",
-        body: registerOptions,
+        body: body,
     });
 
-export const login = async (
-    loginOptions: LoginUserRequest,
-): Promise<LoginResponse> =>
+export const login = async (body: LoginRequestBody): Promise<LoginResponse> =>
     fetchApi({
         endpoint: "/api/auth/login",
         isAuthRequired: false,
         method: "POST",
-        body: loginOptions,
+        body: body,
     });

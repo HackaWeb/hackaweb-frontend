@@ -10,11 +10,11 @@ import { Button } from "@/components/ui/Button";
 import { AiOutlineClose } from "react-icons/ai";
 import { updateProfile } from "@/api/user";
 import { toast } from "react-toastify";
-import { displayToasts } from "@/helpers/displayToasts";
 import {
     DEFAULT_FIELD_ERROR,
     RequestError,
 } from "@/api/responses/common/failure.interface";
+import { printToastErrorMessages } from "@/helpers/displayToasts";
 
 export const LeftColumn = ({ profile }: LeftColumnProps) => {
     // const achievements = getAchievements(profile);
@@ -33,7 +33,7 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
         if (result.length === 0) {
             toast.success("Аватар завантажено успішно!");
         } else {
-            displayToasts(result.map((res) => res.message));
+            printToastErrorMessages(result.map((res) => res.message));
         }
     };
 

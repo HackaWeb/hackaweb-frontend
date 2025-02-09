@@ -1,3 +1,5 @@
+import { TRY_AGAIN_MESSAGE } from "@/constants";
+
 export interface RequestError {
     field: string;
     message: string;
@@ -5,5 +7,5 @@ export interface RequestError {
 
 export const DEFAULT_FIELD_ERROR: RequestError = {
     field: "",
-    message: "Сталася помилка, зверніться до розробників!",
+    message: TRY_AGAIN_MESSAGE,
 };

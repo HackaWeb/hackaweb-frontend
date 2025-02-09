@@ -1,7 +1,7 @@
 import { fetchApi } from "./fetchApi.api";
+import { UpdateProfileRequestBody } from "./requestBodies/profile.interface";
 import {
     DeleteUserResponse,
-    EditUserRequest,
     GetProfileResponse,
     UpdateUserResponse,
 } from "./responses/user.types";
@@ -13,20 +13,19 @@ export const getProfile = async (): Promise<GetProfileResponse> =>
         method: "GET",
     });
 
-export const updateProfile = async (
-    editOptions: EditUserRequest,
+export const updateUserProfile = async (
+    body: UpdateProfileRequestBody | FormData,
 ): Promise<UpdateUserResponse> =>
     fetchApi({
-        endpoint: "/api/user/user-profile/update",
+        endpoint: "/user/user-profile/update",
         isAuthRequired: true,
-        type: "form",
-        body: editOptions,
         method: "POST",
+        body: body,
     });
 
 export const deleteProfile = async (): Promise<DeleteUserResponse> =>
     fetchApi({
-        endpoint: "/profile/", // getting id from token
+        endpoint: "/profile/",
         isAuthRequired: true,
         method: "DELETE",
     });
