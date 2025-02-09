@@ -31,7 +31,7 @@ export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
                             <span>Грати наодинці</span>
                         </Button>
                     </Link>
-                    <Link href="/quest-completing/1?type=multi">
+                    {/* <Link href="/quest-completing/1?type=multi">
                         <Button
                             className="bg-purple gap-2"
                             color="purpleBackground"
@@ -39,7 +39,7 @@ export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
                             <HiUsers className="size-5" />
                             <span>Грати в команді</span>
                         </Button>
-                    </Link>
+                    </Link> */}
                 </div>
                 <div className="text-gray mt-2">
                     <span className="font-semibold text-white">112</span> разів

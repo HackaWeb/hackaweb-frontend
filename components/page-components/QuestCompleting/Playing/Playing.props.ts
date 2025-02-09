@@ -1,6 +1,6 @@
-import { Question } from "@/types/question.interface";
+import { QuestionWhileTesting } from "@/types/question.interface";
 
 export interface PlayingProps {
-    questions: Question[];
+    questions: QuestionWhileTesting[];
     onCompleteTest: () => void;
 }
