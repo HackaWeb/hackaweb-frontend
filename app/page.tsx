@@ -21,6 +21,7 @@ const serverQuests: Quest[] = [
         timeLimit: 60,
         reviews: [],
         questions: [],
+        finishers: [],
     },
     {
         id: "2",
@@ -41,6 +42,7 @@ const serverQuests: Quest[] = [
         timeLimit: 60,
         reviews: [],
         questions: [],
+        finishers: [],
     },
     {
         id: "3",
@@ -61,6 +63,7 @@ const serverQuests: Quest[] = [
         timeLimit: 60,
         reviews: [],
         questions: [],
+        finishers: [],
     },
     {
         id: "4",
@@ -81,6 +84,7 @@ const serverQuests: Quest[] = [
         timeLimit: 60,
         reviews: [],
         questions: [],
+        finishers: [],
     },
     {
         id: "5",
@@ -101,6 +105,7 @@ const serverQuests: Quest[] = [
         timeLimit: 60,
         reviews: [],
         questions: [],
+        finishers: [],
     },
     {
         id: "6",
@@ -121,6 +126,7 @@ const serverQuests: Quest[] = [
         timeLimit: 60,
         reviews: [],
         questions: [],
+        finishers: [],
     },
 ];
 

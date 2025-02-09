@@ -3,18 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
+import { LeaderboardProps } from "./Leaderboard.props";
 
-interface LeaderboardProps {
-    data: {
-        id: number;
-        nickname: string;
-        avatar: string;
-        time: string;
-        score: string;
-    }[];
-}
-
-export const Leaderboard = ({ data }: LeaderboardProps) => {
+export const Leaderboard = ({ quest }: LeaderboardProps) => {
     return (
         <div className="overflow-x-auto bg-blackOpacity pt-4 rounded-lg h-auto">
             <h2 className="text-white text-lg font-semibold mb-4 ml-4">
@@ -31,7 +22,7 @@ export const Leaderboard = ({ data }: LeaderboardProps) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((player, index) => (
+                    {quest.finishers.map((player, index) => (
                         <tr
                             key={player.id}
                             className="border-t border-gray-dark bg-blackOpacity-dark text-white"
@@ -56,7 +47,7 @@ export const Leaderboard = ({ data }: LeaderboardProps) => {
                                     href={`/users/${player.id}`}
                                     className="text-purple"
                                 >
-                                    {player.nickname}
+                                    {player.firstName + " " + player.lastName}
                                 </Link>
                             </td>
                             <td className="px-4 py-2">

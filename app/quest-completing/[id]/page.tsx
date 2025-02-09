@@ -1,18 +1,18 @@
 import { QuestCompletingPageComponent } from "@/components/page-components/QuestCompleting";
 import { getPathname } from "@/helpers/getPathname";
 import { CompletingType } from "@/types/completingType.type";
-import { Question } from "@/types/question.interface";
+import { Question, QuestionWhileTesting } from "@/types/question.interface";
 
-const questions: Question[] = [
+const questions: QuestionWhileTesting[] = [
     {
         id: 1,
         title: "What is the capital of France?",
         type: "choice",
         options: [
-            { title: "Paris", slug: "paris" },
-            { title: "Berlin", slug: "berlin" },
-            { title: "London", slug: "london" },
-            { title: "Madrid", slug: "madrid" },
+            { title: "Paris" },
+            { title: "Berlin" },
+            { title: "London" },
+            { title: "Madrid" },
         ],
     },
     {
@@ -23,7 +23,7 @@ const questions: Question[] = [
     {
         id: 3,
         title: "Is 2 + 2 = 4?",
-        type: "trueFalse",
+        type: "boolean",
     },
 ];
 

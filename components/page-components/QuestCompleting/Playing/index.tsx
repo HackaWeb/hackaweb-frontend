@@ -107,7 +107,7 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
                     }
                 />
             )}
-            {currentQuestion.type === "trueFalse" && (
+            {currentQuestion.type === "boolean" && (
                 <BooleanQuestion
                     onAnswerChange={onAnswerChange}
                     initialAnswer={answers[currentQuestionIndex]}

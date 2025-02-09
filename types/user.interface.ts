@@ -1,4 +1,4 @@
-import { CompletedQuest, Quest } from "./quest.interface";
+import { Quest } from "./quest.interface";
 
 export interface User {
     id: string;
@@ -11,5 +11,5 @@ export interface User {
 
 export interface Profile extends User {
     createdQuests: Quest[];
-    completedQuests: CompletedQuest[];
+    completedQuests: Quest[];
 }

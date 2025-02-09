@@ -5,11 +5,24 @@ export interface ChoiceOption {
     isCorrect: boolean;
 }
 
+export interface ChoiceOptionWhileTesting {
+    title: string;
+}
+
 export interface Question {
     id: number;
     title: string;
     type: QuestionType;
     options: ChoiceOption[];
+    image?: string;
+    video?: string;
+}
+
+export interface QuestionWhileTesting {
+    id: number;
+    title: string;
+    type: QuestionType;
+    options?: ChoiceOptionWhileTesting[];
     image?: string;
     video?: string;
 }

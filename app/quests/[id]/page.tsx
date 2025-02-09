@@ -25,31 +25,39 @@ const quest: Quest = {
     timeLimit: 60,
     questions: [],
     reviews: [],
+    finishers: [
+        {
+            id: "1dsar23gfdgfd",
+            firstName: "Danil",
+            lastName: "Diachenko",
+            avatar: null,
+            time: 60,
+            score: 100,
+            email: "danildiachenko23@gmail.com",
+            rating: 4.5,
+        },
+        {
+            id: "131gfdg43rgfd",
+            firstName: "Danil",
+            lastName: "Diachenko",
+            avatar: null,
+            time: 60,
+            score: 90,
+            email: "danildiachenko23@gmail.com",
+            rating: 4.5,
+        },
+        {
+            id: "1fgd24rfgd",
+            firstName: "Danil",
+            lastName: "Diachenko",
+            avatar: null,
+            time: 60,
+            score: 80,
+            email: "danildiachenko23@gmail.com",
+            rating: 4.5,
+        },
+    ],
 };
-
-const leaderboardData = [
-    {
-        id: 1,
-        nickname: "Danil Diachenko",
-        avatar: null,
-        time: "60 хв.",
-        score: "100/100",
-    },
-    {
-        id: 2,
-        nickname: "Danil Diachenko",
-        avatar: null,
-        time: "60 хв.",
-        score: "100/100",
-    },
-    {
-        id: 3,
-        nickname: "Danil Diachenko",
-        avatar: null,
-        time: "60 хв.",
-        score: "100/100",
-    },
-];
 
 const QuestDetails = () => {
     return (
@@ -66,7 +74,7 @@ const QuestDetails = () => {
                     <GeneralInfo quest={quest} />
                     <Reviews quest={quest} />
                 </div>
-                <Leaderboard data={leaderboardData} />
+                <Leaderboard quest={quest} />
             </div>
         </div>
     );
