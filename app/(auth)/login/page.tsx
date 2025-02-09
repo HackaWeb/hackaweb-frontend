@@ -1,6 +1,7 @@
 "use client";
 import { login } from "@/api/auth";
 import { LoginUserRequest } from "@/api/responses/auth.types";
+import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { displayToasts } from "@/helpers/displayToasts";
@@ -64,12 +65,17 @@ function Login() {
                 setCookie("jwtToken", res.jwtToken);
                 return [];
             }
-            return res.errors;
+            if ("statusCode" in res) {
+                if (res.statusCode === 400) {
+                    return res.errors;
+                } else if (res.statusCode === 401) {
+                    return [{ field: "", message: res.message }];
+                }
+            }
+            return [DEFAULT_FIELD_ERROR];
         } catch (error) {
             console.error(error);
-            return [
-                { field: "", message: "Невідома помилка. Зв'яжіться з нами!" },
-            ];
+            return [DEFAULT_FIELD_ERROR];
         }
     };
 

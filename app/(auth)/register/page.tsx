@@ -1,7 +1,10 @@
 "use client";
 import { register } from "@/api/auth";
 import { RegisterUserRequest } from "@/api/responses/auth.types";
-import { RequestError } from "@/api/responses/common/failure.interface";
+import {
+    DEFAULT_FIELD_ERROR,
+    RequestError,
+} from "@/api/responses/common/failure.interface";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { displayToasts } from "@/helpers/displayToasts";
@@ -37,17 +40,7 @@ function Register() {
         }
 
         const email = emailRef.current.value;
-        if (!isValidEmail(email)) {
-            toast.error(INVALID_EMAIL_MESSAGE);
-            return;
-        }
-
         const password = passwordRef.current.value;
-        if (!isValidPasswordLength(password)) {
-            toast.error(INVALID_PASSWORD_MESSAGE);
-            return;
-        }
-
         const confirmPassword = confirmPasswordRef.current.value;
         if (password !== confirmPassword) {
             toast.error(INVALID_CONFIRMATION_PASSWORD_MESSAGE);
@@ -79,9 +72,7 @@ function Register() {
             return res.errors;
         } catch (error) {
             console.error(error);
-            return [
-                { field: "", message: "Невідома помилка. Зв'яжіться з нами!" },
-            ];
+            return [DEFAULT_FIELD_ERROR];
         }
     };
 
