@@ -3,6 +3,7 @@ import { LeftColumn } from "./LeftColumn";
 import { LeftColumnProps } from "./LeftColumn/LeftColumn.props";
 import { MiddleColumn } from "./MiddleColumn";
 import { MyQuests } from "./MyQuests";
+import { CompletedQuests } from "./CompletedQuests";
 
 export const MyProfilePageComponent = ({ profile }: LeftColumnProps) => {
     return (
@@ -14,6 +15,7 @@ export const MyProfilePageComponent = ({ profile }: LeftColumnProps) => {
                 <MiddleColumn profile={profile} />
                 <div>
                     <MyQuests profile={profile} />
+                    <CompletedQuests profile={profile} />
                 </div>
             </div>
         </div>
