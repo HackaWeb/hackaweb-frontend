@@ -5,6 +5,7 @@ export interface User {
     email: string;
     nickname: string;
     rating: number;
+    avatar: string;
 }
 
 export interface Profile extends User {

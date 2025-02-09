@@ -1,4 +1,4 @@
-"use client";
+/* "use client";
 import React from "react";
 import { IoReturnUpBack, IoTrophyOutline } from "react-icons/io5";
 import { Button } from "@/components/ui/Button";
@@ -7,19 +7,20 @@ import AchievementGroup from "@/components/page-components/MyProfile/Achievement
 import Achievement from "@/components/page-components/MyProfile/Achievement";
 import UserQuestsDashboard from "@/components/page-components/Quest/Dashboard/User";
 import CompletedQuestsDashboard from "@/components/page-components/Quest/Dashboard/Completed";
-import Avatar from "@/components/page-components/MyProfile/Avatar";
+import Avatar from "@/components/page-components/MyProfile/LeftColumn/Avatar";
 import { useRouter } from "next/navigation";
 import {
     myQuests,
     questAttempts,
     recentAchievements,
     userName,
-} from "@/app/profile/mock";
+} from "@/app/profile/mock"; */
 
 const UserProfile = () => {
-    const router = useRouter();
+    /* const router = useRouter(); */
     return (
-        <div>
+    <></>
+        /* <div>
             <h1>Профіль користувача {userName}</h1>
             <Button
                 className="mt-4"
@@ -41,12 +42,7 @@ const UserProfile = () => {
                         <hr />
                     </div>
                 </div>
-                <QuestDashboard
-                    className="min-w-1/2"
-                    myQuests={myQuests}
-                    questAttempts={questAttempts}
-                    isActionable={false}
-                >
+                <QuestDashboard className="min-w-1/2">
                     <UserQuestsDashboard
                         title={`Тести користувача ${userName}`}
                         quests={myQuests}
@@ -58,7 +54,7 @@ const UserProfile = () => {
                     />
                 </QuestDashboard>
             </div>
-        </div>
+        </div> */
     );
 };
 
