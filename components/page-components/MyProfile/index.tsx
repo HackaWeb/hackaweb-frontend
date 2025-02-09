@@ -2,6 +2,7 @@ import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { MyProfileProps } from "./MyProfile.props";
 import { ProfileControls } from "./Controls";
 import { LeftColumn } from "./LeftColumn";
+import { MyQuests } from "./MyQuests";
 
 export const MyProfilePageComponent = ({ profile }: MyProfileProps) => {
     return (
@@ -14,6 +15,9 @@ export const MyProfilePageComponent = ({ profile }: MyProfileProps) => {
                     defaultEmail={profile.email}
                     defaultNickname={profile.nickname}
                 />
+                <div>
+                    <MyQuests profile={profile} />
+                </div>
                 {/* <QuestDashboard className="min-w-1/2">
                     <UserQuestsDashboard
                         title="Мої тести"

@@ -1,6 +1,6 @@
-import { GeneralInfo } from "@/components/page-components/Quest/GeneralInfo";
-import { Leaderboard } from "@/components/page-components/Quest/Leaderboard";
-import { Reviews } from "@/components/page-components/Quest/Reviews";
+import { GeneralInfo } from "@/components/common/profile/Quest/GeneralInfo";
+import { Leaderboard } from "@/components/common/profile/Quest/Leaderboard";
+import { Reviews } from "@/components/common/profile/Quest/Reviews";
 import { Button } from "@/components/ui/Button";
 import { Quest } from "@/types/quest.interface";
 import Link from "next/link";
