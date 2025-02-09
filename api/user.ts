@@ -26,6 +26,7 @@ export const updateUserProfile = async (
         endpoint: "/api/User/update-profile/",
         isAuthRequired: true,
         method: "POST",
+        type: "form",
         body: editOptions,
     });
 

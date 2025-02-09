@@ -14,9 +14,9 @@ import {
     selectEditingQuestion,
 } from "@/store/slices/questions/questions";
 import { useEffect, useRef, useState } from "react";
-import { InputAnswer } from "../CreateQuestion/InputAnswer";
-import { Choice } from "../CreateQuestion/ChoiceAnswer";
-import { TrueFalseAnswer } from "../CreateQuestion/TrueFalseAnswer";
+import { InputAnswer } from "../../Modals/CreateQuestion/InputAnswer";
+import { Choice } from "../../Modals/CreateQuestion/ChoiceAnswer";
+import { TrueFalseAnswer } from "../../Modals/CreateQuestion/TrueFalseAnswer";
 import { SelectOption } from "@/types/selectOption.interface";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";

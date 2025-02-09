@@ -62,7 +62,7 @@ function Login() {
         try {
             const res = await login(loginOptions);
             if ("jwtToken" in res) {
-                setCookie("jwtToken", res.jwtToken);
+                setCookie("token", res.jwtToken);
                 return [];
             }
             if ("statusCode" in res) {

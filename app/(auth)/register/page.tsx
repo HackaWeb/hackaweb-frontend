@@ -66,7 +66,7 @@ function Register() {
         try {
             const res = await register(registerOptions);
             if ("jwtToken" in res) {
-                setCookie("jwtToken", res.jwtToken);
+                setCookie("token", res.jwtToken);
                 return [];
             }
             return res.errors;
