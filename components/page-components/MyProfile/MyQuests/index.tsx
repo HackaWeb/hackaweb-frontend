@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/Button";
 
 export const MyQuests = ({ profile }: MyQuestsProps) => {
     return (
-        <div className="bg-blackOpacity rounded-md">
-            <div className="bg-blackOpacity-dark flex justify-between items-center p-4">
+        <div className="bg-blackOpacity-dark rounded-md">
+            <div className="flex justify-between items-center p-4">
                 <h2 className="text-xl font-semibold text-white">Мої тести</h2>
                 <Button color="purpleBorder" className="py-2 px-4">
                     Створити тест
@@ -35,7 +35,7 @@ export const MyQuests = ({ profile }: MyQuestsProps) => {
                         {profile.createdQuests.map((quest, index) => (
                             <tr
                                 key={index}
-                                className="border-t border-gray-700 bg-blackOpacity-dark"
+                                className="border-t border-gray-700"
                             >
                                 <td className="p-3 font-semibold">
                                     <Link href="#" className="text-purple-400">

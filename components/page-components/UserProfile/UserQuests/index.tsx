@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { CompletedQuestsProps } from "./CompletedQuests.props";
+import { UserQuestsProps } from "./UserQuests.props";
 
-export const CompletedQuests = ({ profile }: CompletedQuestsProps) => {
+export const UserQuests = ({ profile }: UserQuestsProps) => {
     return (
-        <div className="bg-blackOpacity-dark rounded-md mt-6">
+        <div className="rounded-md bg-blackOpacity-dark">
             <div className="p-4">
                 <h2 className="text-xl font-semibold text-white">
-                    Пройдені тести
+                    Тести користувача {profile.nickname}
                 </h2>
             </div>
             <div className="overflow-x-auto">
@@ -17,19 +17,20 @@ export const CompletedQuests = ({ profile }: CompletedQuestsProps) => {
                             <th className="p-3 text-left w-[120px]">
                                 Картинка
                             </th>
-                            <th className="p-3 text-left w-[150px]">
-                                Затрачений час
+                            <th className="p-3 text-left w-[100px]">Час</th>
+                            <th className="p-3 text-left w-[120px]">
+                                Зіграно раз
                             </th>
+                            <th className="p-3 text-left w-[120px]">Рейтинг</th>
                             <th className="p-3 text-left w-[150px]">
-                                Правильність
+                                Кількість завдань
                             </th>
-                            <th className="p-3 text-left w-[150px]">Дата</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {profile.completedQuests.map((quest) => (
+                        {profile.createdQuests.map((quest, index) => (
                             <tr
-                                key={quest.id}
+                                key={index}
                                 className="border-t border-gray-700"
                             >
                                 <td className="p-3 font-semibold">
@@ -44,9 +45,10 @@ export const CompletedQuests = ({ profile }: CompletedQuestsProps) => {
                                         className="w-16 h-12 object-cover rounded-md"
                                     />
                                 </td>
-                                <td className="p-3">37 / 60 хв.</td>
-                                <td className="p-3">87 / 100 %</td>
-                                <td className="p-3">08.02.2025</td>
+                                <td className="p-3">{quest.timeLimit} хв.</td>
+                                <td className="p-3">{quest.timesPlayed}</td>
+                                <td className="p-3">⭐ {quest.rating}</td>
+                                <td className="p-3">10</td>
                             </tr>
                         ))}
                     </tbody>
