@@ -8,12 +8,34 @@ import {
 } from "@/api/responses/common/failure.interface";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { INVALID_CONFIRMATION_PASSWORD_MESSAGE } from "@/constants";
+import {
+    INVALID_CONFIRMATION_PASSWORD_MESSAGE,
+    INVALID_INPUTES_MESSAGE,
+    INVALID_PASSWORD_LENGTH_MESSAGE,
+    INVALID_PASSWORD_NUMBER_MESSAGE,
+    INVALID_PASSWORD_SPECIAL_CHARACTER_MESSAGE,
+    INVALID_PASSWORD_UPPERCASE_MESSAGE,
+} from "@/constants";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { setCookie } from "@/helpers/setCookie";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
+
+const translateErrorMessage = (errorMessage: string) => {
+    switch (errorMessage) {
+        case "Password must be at least 8 characters":
+            return INVALID_PASSWORD_LENGTH_MESSAGE;
+        case "Password must contain at least one uppercase letter":
+            return INVALID_PASSWORD_UPPERCASE_MESSAGE;
+        case "Password must contain at least one number":
+            return INVALID_PASSWORD_NUMBER_MESSAGE;
+        case "Password must contain at least one special character":
+            return INVALID_PASSWORD_SPECIAL_CHARACTER_MESSAGE;
+        default:
+            return errorMessage;
+    }
+};
 
 export const RegisterPageComponent = () => {
     const router = useRouter();
@@ -33,7 +55,10 @@ export const RegisterPageComponent = () => {
                 setCookie("token", res.jwtToken);
                 return [];
             }
-            return res.errors;
+            return res.errors.map((error) => ({
+                field: "",
+                message: translateErrorMessage(error.message),
+            }));
         } catch (error) {
             console.error(error);
             return [DEFAULT_FIELD_ERROR];
@@ -47,6 +72,7 @@ export const RegisterPageComponent = () => {
             !formData.password.trim() ||
             !formData.confirmPassword.trim()
         ) {
+            toast.error(INVALID_INPUTES_MESSAGE);
             return;
         }
 
