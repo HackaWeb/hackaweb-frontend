@@ -21,7 +21,7 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
                     </div>
                     <div className="mt-6">
                         <label htmlFor="nickname" className="text-gray">
-                            Ваша нікнейм
+                            Ваш нікнейм
                         </label>
                         <Input
                             type="text"

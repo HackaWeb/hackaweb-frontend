@@ -1,12 +1,16 @@
 import Link from "next/link";
 import { MyQuestsProps } from "./MyQuests.props";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import { Button } from "@/components/ui/Button";
 
 export const MyQuests = ({ profile }: MyQuestsProps) => {
     return (
         <div className="bg-blackOpacity rounded-md">
-            <div className="bg-blackOpacity-dark p-4">
+            <div className="bg-blackOpacity-dark flex justify-between items-center p-4">
                 <h2 className="text-xl font-semibold text-white">Мої тести</h2>
+                <Button color="purpleBorder" className="py-2 px-4">
+                    Створити тест
+                </Button>
             </div>
             <div className="overflow-auto w-[800px] whitespace-nowrap">
                 <table className="min-w-full border-collapse text-gray w-full">
@@ -22,9 +26,9 @@ export const MyQuests = ({ profile }: MyQuestsProps) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {profile.createdQuests.map((quest) => (
+                        {profile.createdQuests.map((quest, index) => (
                             <tr
-                                key={quest.id}
+                                key={index}
                                 className="border-t border-gray-700 bg-blackOpacity-dark"
                             >
                                 <td className="p-3 font-semibold">
