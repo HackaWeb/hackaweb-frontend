@@ -11,7 +11,7 @@ export const CompletedQuests = ({
                 <h2 className="text-xl font-semibold text-white">
                     {isCompletedByMe
                         ? "Пройдені квести"
-                        : `Пройдені квести користувачем ${profile.email}`}
+                        : `Пройдені квести користувачем ${profile.firstName} ${profile.lastName}`}
                 </h2>
             </div>
             <div className="overflow-x-auto">

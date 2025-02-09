@@ -14,7 +14,7 @@ export const fetchApi = async <T>({
     isAuthRequired,
 }: FetchOptions): Promise<T> => {
     const headers: Record<string, string> = {
-        accept: "application/json",
+        accept: "text/plain",
         "Content-Type": "application/json",
     };
 
@@ -28,7 +28,7 @@ export const fetchApi = async <T>({
         {
             method,
             headers,
-            body: body ? JSON.stringify(body) : null,
+            body: body ? JSON.stringify(body) : undefined,
         },
     );
 
