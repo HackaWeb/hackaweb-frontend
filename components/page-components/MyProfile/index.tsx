@@ -2,6 +2,7 @@ import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { LeftColumn } from "./LeftColumn";
 import { LeftColumnProps } from "./LeftColumn/LeftColumn.props";
 import { MiddleColumn } from "./MiddleColumn";
+import { MyQuests } from "./MyQuests";
 
 export const MyProfilePageComponent = ({ profile }: LeftColumnProps) => {
     return (
@@ -11,6 +12,9 @@ export const MyProfilePageComponent = ({ profile }: LeftColumnProps) => {
             <div className="mt-8 grid grid-cols-[240px_330px_auto] gap-6">
                 <LeftColumn profile={profile} />
                 <MiddleColumn profile={profile} />
+                <div>
+                    <MyQuests profile={profile} />
+                </div>
             </div>
         </div>
     );
