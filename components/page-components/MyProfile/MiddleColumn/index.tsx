@@ -1,8 +1,14 @@
+"use client";
+
 import { MiddleColumnProps } from "./MiddleColumn.props";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { useState } from "react";
 
 export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
+    const [firstName, setFirstName] = useState(profile.firstName);
+    const [lastName, setLastName] = useState(profile.lastName);
+
     return (
         <div className="">
             <div className="p-4 bg-blackOpacity rounded-md">
@@ -20,15 +26,28 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
                         />
                     </div>
                     <div className="mt-6">
-                        <label htmlFor="nickname" className="text-gray">
-                            Ваш нікнейм
+                        <label htmlFor="firstName" className="text-gray">
+                            Ваше імʼя
                         </label>
                         <Input
                             type="text"
-                            id="nickname"
-                            placeholder="Ваш нікнейм..."
-                            value={profile.nickname}
-                            disabled
+                            id="firstName"
+                            placeholder="Ваше імʼя..."
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                            className="mt-2"
+                        />
+                    </div>
+                    <div className="mt-6">
+                        <label htmlFor="lastName" className="text-gray">
+                            Ваше прізвище
+                        </label>
+                        <Input
+                            type="text"
+                            id="lastName"
+                            placeholder="Ваше прізвище..."
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
                             className="mt-2"
                         />
                     </div>
