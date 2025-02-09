@@ -4,12 +4,12 @@ export interface User {
     id: string;
     email: string;
     nickname: string;
+    // nickname => first/last name
     rating: number;
     avatar: string;
 }
 
 export interface Profile extends User {
-    questsCompleted: number;
     createdQuests: Quest[];
     completedQuests: CompletedQuest[];
 }
