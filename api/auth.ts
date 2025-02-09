@@ -18,7 +18,7 @@ export const register = async (
     registerOptions: RegisterUserRequest,
 ): Promise<RegisterResponse> =>
     fetchApi({
-        endpoint: "/register",
+        endpoint: "/api/Auth/register",
         isAuthRequired: false,
         method: "POST",
         body: registerOptions,
@@ -28,7 +28,7 @@ export const login = async (
     loginOptions: LoginUserRequest,
 ): Promise<LoginResponse> =>
     fetchApi({
-        endpoint: "/login",
+        endpoint: "/api/Auth/login",
         isAuthRequired: false,
         method: "POST",
         body: loginOptions,

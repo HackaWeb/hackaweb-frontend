@@ -1,13 +1,9 @@
+import { BadRequestResponse } from "./common/badRequest.interface";
 import { UnathorizedResponse } from "./common/unathorized.interface";
 
 interface GetProfileResponseSuccess {
     email: string;
     id: string;
-}
-
-interface RequestResultFailure {
-    isSuccess: boolean;
-    errors: string[];
 }
 
 export interface RegisterUserRequest {
@@ -27,10 +23,8 @@ export interface LoginUserResponseSuccess {
     jwtToken: string;
 }
 
-export type LoginResponse = LoginUserResponseSuccess | RequestResultFailure;
-export type RegisterResponse =
-    | RegisterUserResponseSuccess
-    | RequestResultFailure;
+export type LoginResponse = LoginUserResponseSuccess | BadRequestResponse;
+export type RegisterResponse = RegisterUserResponseSuccess | BadRequestResponse;
 
 export type GetProfileResponse =
     | GetProfileResponseSuccess

@@ -1,6 +1,7 @@
 "use client";
 import { register } from "@/api/auth";
 import { RegisterUserRequest } from "@/api/responses/auth.types";
+import { RequestError } from "@/api/responses/common/failure.interface";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { displayToasts } from "@/helpers/displayToasts";
@@ -12,10 +13,12 @@ import {
     isValidPasswordLength,
 } from "@/helpers/formHelpers";
 import { setCookie } from "@/helpers/setCookie";
+import { useRouter } from "next/navigation";
 import { FormEvent, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 function Register() {
+    const router = useRouter();
     const emailRef = useRef<HTMLInputElement | null>(null);
     const passwordRef = useRef<HTMLInputElement | null>(null);
     const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
@@ -58,12 +61,15 @@ function Register() {
 
         if (results.length === 0) {
             toast.success("Вас успішно зареєстровано!");
+            router.push("profile");
         } else {
-            displayToasts(results);
+            displayToasts(results.map((res) => res.message));
         }
     };
 
-    const registerUser = async (registerOptions: RegisterUserRequest) => {
+    const registerUser = async (
+        registerOptions: RegisterUserRequest,
+    ): Promise<RequestError[]> => {
         try {
             const res = await register(registerOptions);
             if ("jwtToken" in res) {
@@ -73,7 +79,9 @@ function Register() {
             return res.errors;
         } catch (error) {
             console.error(error);
-            return ["Невідома помилка. Зв'яжіться з нами!"];
+            return [
+                { field: "", message: "Невідома помилка. Зв'яжіться з нами!" },
+            ];
         }
     };
 

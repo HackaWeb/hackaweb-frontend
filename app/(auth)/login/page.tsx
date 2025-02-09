@@ -12,10 +12,12 @@ import {
 } from "@/helpers/formHelpers";
 import { setCookie } from "@/helpers/setCookie";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FormEvent, useRef } from "react";
 import { toast } from "react-toastify";
 
 function Login() {
+    const router = useRouter();
     const emailRef = useRef<HTMLInputElement | null>(null);
     const passwordRef = useRef<HTMLInputElement | null>(null);
 
@@ -48,9 +50,10 @@ function Login() {
         });
 
         if (results.length === 0) {
+            router.push("/profile");
             toast.success("Вас успішно авторизовано!");
         } else {
-            displayToasts(results);
+            displayToasts(results.map((res) => res.message));
         }
     };
 
@@ -64,7 +67,9 @@ function Login() {
             return res.errors;
         } catch (error) {
             console.error(error);
-            return ["Невідома помилка. Зв'яжіться з нами!"];
+            return [
+                { field: "", message: "Невідома помилка. Зв'яжіться з нами!" },
+            ];
         }
     };
 
