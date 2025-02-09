@@ -52,7 +52,7 @@ export const Aside = ({ isAuthorized }: AsideProps) => {
             )}
 
             <aside
-                className={`h-full top-0 left-0 bottom-0 w-[300px] fixed lg:relative lg:w-full z-50 lg:z-0 bg-[#10091b] lg:bg-blackOpacity-dark p-4 shadow-lg 
+                className={`min-h-[100vh] h-full top-0 left-0 bottom-0 w-[300px] fixed lg:relative lg:w-full z-50 lg:z-0 bg-[#10091b] lg:bg-blackOpacity-dark p-4 shadow-lg 
                 transition-transform duration-300 ${
                     aside ? "translate-x-0" : "-translate-x-full"
                 } lg:translate-x-0`}
