@@ -10,13 +10,11 @@ import { Button } from "@/components/ui/Button";
 import { AiOutlineClose } from "react-icons/ai";
 import { updateUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
-import { displayToasts } from "@/helpers/displayToasts";
 import {
     DEFAULT_FIELD_ERROR,
     RequestError,
 } from "@/api/responses/common/failure.interface";
-import { BadRequestResponse } from "@/api/responses/common/badRequest.interface";
-import { UnathorizedResponse } from "@/api/responses/common/unathorized.interface";
+import { printToastErrorMessages } from "@/helpers/displayToasts";
 
 export const LeftColumn = ({ profile }: LeftColumnProps) => {
     const achievements = getAchievements(profile);
@@ -30,12 +28,18 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
         const imageUrl = URL.createObjectURL(file);
         setAvatar(imageUrl);
 
-        await updateAvatar(file);
+        const result = await updateAvatar(file);
+
+        if (result.length === 0) {
+            toast.success("Аватар завантажено успішно!");
+        } else {
+            printToastErrorMessages(result.map((res) => res.message));
+        }
     };
 
     const updateAvatar = async (imageData: File): Promise<RequestError[]> => {
         const formData = new FormData();
-        formData.append("avatar", imageData);
+        formData.append("Avatar", imageData);
 
         try {
             const data = await updateUserProfile(formData);
