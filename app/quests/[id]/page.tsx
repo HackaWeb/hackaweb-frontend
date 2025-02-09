@@ -15,33 +15,37 @@ const quest: Quest = {
     imageUrl: "/test.png",
     owner: {
         id: "1",
-        nickname: "Danil Diachenko",
+        firstName: "Danil",
+        lastName: "Diachenko",
+        avatar: null,
         email: "danildiachenko23@gmail.com",
         rating: 4.5,
     },
     createdAt: "2021-10-10",
     timeLimit: 60,
+    questions: [],
+    reviews: [],
 };
 
 const leaderboardData = [
     {
         id: 1,
         nickname: "Danil Diachenko",
-        avatar: "",
+        avatar: null,
         time: "60 хв.",
         score: "100/100",
     },
     {
         id: 2,
         nickname: "Danil Diachenko",
-        avatar: "",
+        avatar: null,
         time: "60 хв.",
         score: "100/100",
     },
     {
         id: 3,
         nickname: "Danil Diachenko",
-        avatar: "",
+        avatar: null,
         time: "60 хв.",
         score: "100/100",
     },
@@ -53,7 +57,7 @@ const reviewsData = [
         user: {
             id: "1",
             name: "Alex Chubak",
-            avatar: "",
+            avatar: null,
         },
         date: "23.12.2024",
         rating: 3.5,
@@ -64,7 +68,7 @@ const reviewsData = [
         user: {
             id: "1",
             name: "Alex Chubak",
-            avatar: "",
+            avatar: null,
         },
         date: "23.12.2024",
         rating: 4.5,
@@ -75,7 +79,7 @@ const reviewsData = [
         user: {
             id: "1",
             name: "Alex Chubak",
-            avatar: "",
+            avatar: null,
         },
         date: "23.12.2024",
         rating: 2.5,

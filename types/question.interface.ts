@@ -9,7 +9,7 @@ export interface Question {
     id: number;
     title: string;
     type: QuestionType;
-    options?: ChoiceOption[];
+    options: ChoiceOption[];
     image?: string;
     video?: string;
 }

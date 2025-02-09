@@ -9,9 +9,9 @@ export interface Quest {
     rating: number;
     imageUrl: string;
     createdAt: string;
-    owner: User;
     timesPlayed: number;
     timeLimit: number;
+    owner: User;
     reviews: Review[];
     questions: Question[];
 }

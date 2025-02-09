@@ -1,11 +1,12 @@
 import { UserProfilePageComponent } from "@/components/page-components/UserProfile";
+import { Profile } from "@/types/user.interface";
 
 const profile: Profile = {
     id: "1",
     email: "testuser@example.com",
-    nickname: "TestUser",
+    firstName: "Test",
+    lastName: "User",
     rating: 5,
-    questsCompleted: 3,
     createdQuests: [
         {
             id: "quest1",
@@ -17,13 +18,15 @@ const profile: Profile = {
             owner: {
                 id: "1",
                 email: "testuser@example.com",
-                nickname: "TestUser",
+                firstName: "Test",
+                lastName: "User",
                 rating: 4.5,
-                avatar: "",
+                avatar: null,
             },
             timesPlayed: 120,
             timeLimit: 30,
             reviews: [],
+            questions: [],
         },
         {
             id: "quest1",
@@ -35,13 +38,15 @@ const profile: Profile = {
             owner: {
                 id: "1",
                 email: "testuser@example.com",
-                nickname: "TestUser",
+                firstName: "Test",
+                lastName: "User",
                 rating: 4.5,
-                avatar: "",
+                avatar: null,
             },
             timesPlayed: 120,
             timeLimit: 30,
             reviews: [],
+            questions: [],
         },
         {
             id: "quest1",
@@ -53,13 +58,15 @@ const profile: Profile = {
             owner: {
                 id: "1",
                 email: "testuser@example.com",
-                nickname: "TestUser",
+                firstName: "Test",
+                lastName: "User",
                 rating: 4.5,
-                avatar: "",
+                avatar: null,
             },
             timesPlayed: 120,
             timeLimit: 30,
             reviews: [],
+            questions: [],
         },
         {
             id: "quest1",
@@ -71,16 +78,18 @@ const profile: Profile = {
             owner: {
                 id: "1",
                 email: "testuser@example.com",
-                nickname: "TestUser",
+                firstName: "Test",
+                lastName: "User",
                 rating: 4.5,
-                avatar: "",
+                avatar: null,
             },
             timesPlayed: 120,
             timeLimit: 30,
             reviews: [],
+            questions: [],
         },
     ],
-    avatar: "",
+    avatar: null,
     completedQuests: [
         {
             id: "quest2",
@@ -92,14 +101,16 @@ const profile: Profile = {
             owner: {
                 id: "2",
                 email: "questowner@example.com",
-                nickname: "QuestMaster",
+                firstName: "Test",
+                lastName: "User",
                 rating: 4.9,
-                avatar: "",
+                avatar: null,
             },
             timesPlayed: 200,
             timeLimit: 45,
             reviews: [],
-            correctness: 85,
+            accuracy: 85,
+            questions: [],
         },
         {
             id: "quest3",
@@ -111,14 +122,16 @@ const profile: Profile = {
             owner: {
                 id: "3",
                 email: "hauntedmaster@example.com",
-                nickname: "GhostHunter",
+                firstName: "Test",
+                lastName: "User",
                 rating: 4.6,
-                avatar: "",
+                avatar: null,
             },
             timesPlayed: 150,
             timeLimit: 60,
             reviews: [],
-            correctness: 72,
+            accuracy: 72,
+            questions: [],
         },
     ],
 };
