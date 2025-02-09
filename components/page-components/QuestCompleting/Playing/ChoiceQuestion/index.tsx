@@ -19,8 +19,6 @@ export const ChoiceQuestion = ({
 }: ChoiceQuestionProps) => {
     const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 
-    if (!question.options) return;
-
     useEffect(() => {
         if (initialAnswer.length > 0) {
             //@ts-ignore
@@ -33,6 +31,8 @@ export const ChoiceQuestion = ({
             setSelectedOptions(restoredIndexes);
         }
     }, [initialAnswer, question.options]);
+
+    if (!question.options) return;
 
     const onOptionSelect = (index: number) => {
         let newSelectedOptions;

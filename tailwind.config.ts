@@ -19,9 +19,6 @@ export default {
                     dark: "#6e3dc7",
                     light: "#a97fff",
                 },
-                blue: {
-                    DEFAULT: "#5584FE",
-                },
                 gray: {
                     DEFAULT: "#bdbdbd",
                     superdark: "#242A4D",
@@ -36,6 +33,7 @@ export default {
                 blue: {
                     DEFAULT: "#161a2e",
                     dark: "#131627",
+                    light: "#5584FE",
                 },
                 blackOpacity: {
                     DEFAULT: "#00000026",

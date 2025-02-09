@@ -5,20 +5,25 @@ import { ReturnBtnProps } from "./ReturnBtn.props";
 import { cn } from "@/helpers/cn";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
-import { toggleModal } from "@/store/slices/modals";
+import { useAppSelector } from "@/store/hooks/useAppSelector";
+import { selectPrev, toggleModal } from "@/store/slices/modals/modals";
 
 export const ReturnBtn = ({ className, modal }: ReturnBtnProps) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
+    const prev = useAppSelector(selectPrev);
 
     const goBack = () => {
-        router.back();
+        if (!modal) return router.back();
+        if (prev) dispatch(toggleModal(prev));
+        dispatch(toggleModal(modal));
     };
+
     return (
         <Button
             color="purpleBorder"
             className={cn("flex gap-2", className)}
-            onClick={() => (modal ? dispatch(toggleModal(modal)) : goBack())}
+            onClick={() => goBack()}
         >
             <TbArrowBackUp size={22} />
             <span>Повернутися назад</span>

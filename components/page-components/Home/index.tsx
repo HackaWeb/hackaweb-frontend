@@ -10,7 +10,7 @@ import { IoCreateOutline } from "react-icons/io5";
 import { HomePageComponentProps } from "./Home.props";
 import { Quest } from "./Quest";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
-import { toggleModal } from "@/store/slices/modals";
+import { toggleModal } from "@/store/slices/modals/modals";
 
 const sortOptions: SelectOption[] = [
     { title: "Рейтингом тесту", value: "testRating" },
