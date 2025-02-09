@@ -11,7 +11,7 @@ export interface Quest {
     owner: User;
     timesPlayed: number;
     timeLimit: number;
-    reviews: Review[];
+    reviews?: Review[];
 }
 
 export interface CompletedQuest extends Quest {

@@ -10,7 +10,6 @@ export interface Question {
     title: string;
     type: QuestionType;
     options?: ChoiceOption[];
-    points: number;
     image?: string;
     video?: string;
 }

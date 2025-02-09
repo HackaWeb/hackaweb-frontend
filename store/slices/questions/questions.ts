@@ -1,34 +1,29 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { QuestionsState } from "./questions.types";
+import { Question } from "@/types/question.interface";
 
 const initialState: QuestionsState = {
-    active: [],
+    questions: [],
 };
 
 const questions = createSlice({
     name: "questions",
     initialState,
     reducers: {
-        toggleModal: (state, action: PayloadAction<QuestionType>) => {
-            const isOpened = state.active.includes(action.payload);
-
-            if (!isOpened)
-                return {
-                    ...state,
-                    active: [...state.active, action.payload],
-                };
-
-            const active = state.active.filter((m) => m !== action.payload);
-            return { ...state, active, prev: action.payload };
+        addQuestion: (state, action: PayloadAction<Question>) => {
+            return {
+                ...state,
+                questions: [...state.questions, action.payload],
+            };
         },
     },
     selectors: {
-        selectModals: (state) => state.active,
-        selectPrev: (state) => state.prev,
+        selectQuestions: (state) => state.questions,
     },
 });
 
-export const { selectModals, selectPrev } = questions.selectors;
+export const { selectQuestions } = questions.selectors;
 
-export const { toggleModal } = questions.actions;
+export const { addQuestion } = questions.actions;
 
 export default questions.reducer;

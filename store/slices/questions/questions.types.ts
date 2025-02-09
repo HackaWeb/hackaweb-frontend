@@ -1,1 +1,5 @@
-export type QuestionsState = {};
+import { Question } from "@/types/question.interface";
+
+export type QuestionsState = {
+    questions: Question[];
+};

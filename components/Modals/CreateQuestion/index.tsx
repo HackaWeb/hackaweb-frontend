@@ -10,14 +10,16 @@ import { toast } from "react-toastify";
 import ModalBg from "../ModalBg";
 import { SelectOption } from "@/types/selectOption.interface";
 import { BsFillImageFill } from "react-icons/bs";
-import { FaVideo } from "react-icons/fa";
 import { QuestionType } from "@/types/question.type";
-import { Select } from "@/components/ui/Select";
-import { Checkbox } from "@/components/ui/Checkbox";
 import { InputAnswer } from "./InputAnswer";
 import { TrueFalseAnswer } from "./TrueFalseAnswer";
 import { Choice } from "./ChoiceAnswer";
 import { selectModals } from "@/store/slices/modals/modals";
+import { useAppDispatch } from "@/store/hooks/useAppDispatch";
+import { addQuestion } from "@/store/slices/questions/questions";
+import { FaVideo } from "react-icons/fa6";
+import { Select } from "@/components/ui/Select";
+import { selectOptions, setOptions } from "@/store/slices/options/options";
 
 interface CustomSelectOption extends SelectOption {
     value: QuestionType;
@@ -39,12 +41,16 @@ const questionTypes: CustomSelectOption[] = [
 ];
 
 export const CreateQuestion = () => {
+    const dispatch = useAppDispatch();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const modals = useAppSelector(selectModals);
+    const options = useAppSelector(selectOptions);
 
     const [questionType, setQuestionType] = useState<SelectOption | null>(null);
     const [file, setFile] = useState<string | null>(null);
     const [fileType, setFileType] = useState<"image" | "video" | null>(null);
+    const [title, setTitle] = useState<string>("");
+    const [type, setType] = useState<QuestionType | null>();
 
     const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const uploadedFile = e.target.files?.[0];
@@ -73,7 +79,23 @@ export const CreateQuestion = () => {
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        toast.info("Створення Питання");
+
+        if (!title && !type) return toast.error("Спочатку заповніть усі поля!");
+
+        if (type)
+            dispatch(
+                addQuestion({
+                    id: 1,
+                    title,
+                    type,
+                    options,
+                    image: file && fileType === "image" ? file : undefined,
+                    video: file && fileType === "video" ? file : undefined,
+                }),
+            );
+
+        dispatch(setOptions([]));
+        toast.info("Питання створено!");
     };
 
     return (
@@ -128,8 +150,12 @@ export const CreateQuestion = () => {
                                 </label>
                                 <Input
                                     id="name"
+                                    value={title}
                                     className="mt-2"
                                     placeholder="Назва питання..."
+                                    onChange={(e) =>
+                                        setTitle(e.currentTarget.value)
+                                    }
                                 />
                             </div>
                             <div className="mt-4">
