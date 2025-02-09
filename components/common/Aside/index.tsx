@@ -4,6 +4,11 @@ import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
 import { AsideProps } from "./Aside.props";
 import { usePathname } from "next/navigation";
+import { useAppSelector } from "@/store/hooks/useAppSelector";
+import { selectAside, setIsAsideOpened } from "@/store/slices/aside/aside";
+import { useAppDispatch } from "@/store/hooks/useAppDispatch";
+import { Button } from "@/components/ui/Button";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 interface LinkItem {
     title: string;
@@ -11,75 +16,93 @@ interface LinkItem {
 }
 
 export const Aside = ({ isAuthorized }: AsideProps) => {
+    const dispatch = useAppDispatch();
+    const pathname = usePathname();
+    const aside = useAppSelector(selectAside);
+
+    const setIsAsideOpenedHandler = (value: boolean) => {
+        dispatch(setIsAsideOpened(value));
+    };
+
     const links: LinkItem[] = [
-        {
-            title: "Квести",
-            link: "/",
-        },
+        { title: "Квести", link: "/" },
         {
             title: "Створити квест",
             link: isAuthorized ? "/create-quest" : "/login",
         },
-        {
-            title: "Мій кабінет",
-            link: isAuthorized ? "/profile" : "/login",
-        },
-        {
-            title: "Я адміністратор",
-            link: "/login",
-        },
+        { title: "Мій кабінет", link: isAuthorized ? "/profile" : "/login" },
+        { title: "Я адміністратор", link: "/login" },
     ];
 
-    const pathname = usePathname();
-
     return (
-        <aside className="w-full min-h-[100vh] h-full bg-blackOpacity-dark">
-            <div className="mt-10">
-                <Link href="/" className="mx-4 text-white text-2xl">
-                    КВЕСТ АПП
-                </Link>
-                <div className="flex mt-8 mx-4 items-center gap-4 bg-blackOpacity p-3">
-                    <div className="p-3 border-purple border-2 rounded-md">
-                        <AiOutlineUser className="text-purple size-6" />
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Link
-                            className="text-yellow hover:text-yellow-light"
-                            href="/login"
-                        >
-                            Увійти
-                        </Link>
-                        <div className="w-[1px] h-8 bg-gray-dark"></div>
-                        <Link href="/register">Реєстрація</Link>
-                    </div>
-                </div>
-                <nav className="mt-8 text-lg">
-                    <ul>
-                        {links.map((link, index) => (
-                            <li
-                                className={
-                                    "relative flex items-center mt-5 transition-all"
-                                }
-                                key={index}
+        <>
+            <Button
+                color="purpleBorder"
+                onClick={() => setIsAsideOpenedHandler(true)}
+                className="absolute top-2 left-2 lg:hidden p-2"
+            >
+                <RxHamburgerMenu className="size-6" />
+            </Button>
+
+            {aside && (
+                <div
+                    className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300"
+                    onClick={() => setIsAsideOpenedHandler(false)}
+                />
+            )}
+
+            <aside
+                className={`h-full top-0 left-0 bottom-0 w-[300px] fixed lg:relative lg:w-full z-50 lg:z-0 bg-[#10091b] lg:bg-blackOpacity-dark p-4 shadow-lg 
+                transition-transform duration-300 ${
+                    aside ? "translate-x-0" : "-translate-x-full"
+                } lg:translate-x-0`}
+            >
+                <div className="mt-10">
+                    <Link href="/" className="mx-4 text-white text-2xl">
+                        КВЕСТ АПП
+                    </Link>
+                    <div className="flex mt-8 mx-4 items-center gap-4 bg-blackOpacity p-3">
+                        <div className="p-3 border-purple border-2 rounded-md">
+                            <AiOutlineUser className="text-purple size-6" />
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Link
+                                className="text-yellow hover:text-yellow-light"
+                                href="/login"
                             >
-                                {pathname === link.link &&
-                                    link.link !== "/login" && (
-                                        <div className="absolute left-0 flex items-center">
-                                            <div className="w-[4px] h-10 bg-purple"></div>
-                                            <div className="w-4 h-6 bg-purple blur-md"></div>
-                                        </div>
-                                    )}
-                                <Link
-                                    href={link.link}
-                                    className="ml-6 text-white"
+                                Увійти
+                            </Link>
+                            <div className="w-[1px] h-8 bg-gray-dark"></div>
+                            <Link href="/register">Реєстрація</Link>
+                        </div>
+                    </div>
+
+                    <nav className="mt-8 text-lg">
+                        <ul>
+                            {links.map((link, index) => (
+                                <li
+                                    className="relative flex items-center mt-5 transition-all"
+                                    key={index}
                                 >
-                                    {link.title}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-            </div>
-        </aside>
+                                    {pathname === link.link &&
+                                        link.link !== "/login" && (
+                                            <div className="absolute left-0 flex items-center">
+                                                <div className="w-[4px] h-10 bg-purple"></div>
+                                                <div className="w-4 h-6 bg-purple blur-md"></div>
+                                            </div>
+                                        )}
+                                    <Link
+                                        href={link.link}
+                                        className="ml-6 text-white"
+                                    >
+                                        {link.title}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+        </>
     );
 };
