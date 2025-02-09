@@ -26,7 +26,7 @@ export const Aside = ({ isAuthorized }: AsideProps) => {
         },
         {
             title: "Я адміністратор",
-            link: "/login",
+            link: isAuthorized ? "/profile" : "/login",
         },
     ];
 

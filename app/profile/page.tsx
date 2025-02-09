@@ -1,7 +1,8 @@
+import { getProfile } from "@/api/auth";
 import { MyProfilePageComponent } from "@/components/page-components/MyProfile";
 import { Profile } from "@/types/user.interface";
 
-const profile: Profile = {
+const defaultProfile: Profile = {
     id: "1",
     email: "testuser@example.com",
     firstName: "Test",
@@ -122,7 +123,19 @@ const profile: Profile = {
     ],
 };
 
-const MyProfile = () => {
+const MyProfile = async () => {
+    let profile;
+    try {
+        profile = await getProfile();
+        if ("statusCode" in profile) {
+            profile = defaultProfile;
+        }
+        console.log(profile);
+    } catch (error) {
+        console.error(error);
+        profile = defaultProfile;
+    }
+
     return <MyProfilePageComponent profile={profile} />;
 };
 

@@ -9,6 +9,7 @@ import { ToastProvider } from "@/components/providers/Toast";
 import { getCookie } from "@/helpers/getCookie";
 import { getPathname } from "@/helpers/getPathname";
 import { Modals } from "@/components/Modals";
+import { getProfile } from "@/api/auth";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -37,14 +38,13 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
         isAuthorized = false;
     } else {
         try {
-            /* const profile = await getProfile(); */
+            const profile = await getProfile();
 
-            /* if ("email" in profile) {
+            if ("email" in profile) {
                 isAuthorized = true;
             } else {
                 isAuthorized = false;
-            } */
-            isAuthorized = false;
+            }
         } catch (error) {
             console.log(error);
             isAuthorized = false;

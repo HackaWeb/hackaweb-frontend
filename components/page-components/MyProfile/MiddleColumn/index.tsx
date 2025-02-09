@@ -1,18 +1,54 @@
 "use client";
 
+import { EditUserRequest } from "@/api/responses/user.types";
 import { MiddleColumnProps } from "./MiddleColumn.props";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useState } from "react";
+import { updateProfile } from "@/api/user";
+import { toast } from "react-toastify";
+import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
+import { displayToasts } from "@/helpers/displayToasts";
 
 export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
     const [firstName, setFirstName] = useState(profile.firstName);
     const [lastName, setLastName] = useState(profile.lastName);
 
+    const onSubmit = async () => {
+        const formData = new FormData();
+        formData.append("firstName", firstName ?? "");
+        formData.append("lastName", lastName ?? "");
+
+        const result = await updateName(formData);
+        if (result.length === 0) {
+            toast.success("Успішно змінено ваші ім'я та прізвище!");
+        } else {
+            displayToasts(result.map((res) => res.message));
+        }
+    };
+
+    const updateName = async (updateForm: EditUserRequest) => {
+        try {
+            const data = await updateProfile(updateForm);
+            if ("statusCode" in data) {
+                if (data.statusCode === 400) {
+                    return data.errors;
+                } else if (data.statusCode === 401) {
+                    return [{ field: "", message: data.message }];
+                }
+                return [DEFAULT_FIELD_ERROR];
+            }
+            return [DEFAULT_FIELD_ERROR];
+        } catch (error) {
+            console.error(error);
+            return [DEFAULT_FIELD_ERROR];
+        }
+    };
+
     return (
         <div className="">
             <div className="p-4 bg-blackOpacity rounded-md">
-                <form action="">
+                <form action={onSubmit}>
                     <div>
                         <label htmlFor="email" className="text-gray">
                             Ваша пошта
@@ -33,7 +69,7 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
                             type="text"
                             id="firstName"
                             placeholder="Ваше імʼя..."
-                            value={firstName}
+                            value={firstName ?? ""}
                             onChange={(e) => setFirstName(e.target.value)}
                             className="mt-2"
                         />
@@ -46,7 +82,7 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
                             type="text"
                             id="lastName"
                             placeholder="Ваше прізвище..."
-                            value={lastName}
+                            value={lastName ?? ""}
                             onChange={(e) => setLastName(e.target.value)}
                             className="mt-2"
                         />
