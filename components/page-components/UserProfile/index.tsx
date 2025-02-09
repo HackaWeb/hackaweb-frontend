@@ -2,11 +2,7 @@ import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { UserProfileProps } from "./UserProfile.props";
 import { LeftColumn } from "./LeftColumn";
 import { UserQuests } from "./UserQuests";
-/* import { LeftColumn } from "./LeftColumn";
-import { LeftColumnProps } from "./LeftColumn/LeftColumn.props";
-import { MiddleColumn } from "./MiddleColumn";
-import { MyQuests } from "./MyQuests";
-import { CompletedQuests } from "./CompletedQuests"; */
+import { CompletedQuests } from "./CompletedQuests";
 
 export const UserProfilePageComponent = ({ profile }: UserProfileProps) => {
     return (
@@ -17,8 +13,7 @@ export const UserProfilePageComponent = ({ profile }: UserProfileProps) => {
                 <LeftColumn profile={profile} />
                 <div>
                     <UserQuests profile={profile} />
-                    {/* <MyQuests profile={profile} />
-                    <CompletedQuests profile={profile} /> */}
+                    <CompletedQuests profile={profile} />
                 </div>
             </div>
         </div>
