@@ -1,13 +1,22 @@
 import Link from "next/link";
-import { UserQuestsProps } from "./UserQuests.props";
+import { OwnQuestsProps } from "./OwnQuests.props";
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import { Button } from "@/components/ui/Button";
 
-export const UserQuests = ({ profile }: UserQuestsProps) => {
+export const OwnQuests = ({ profile, isCreatedByMe }: OwnQuestsProps) => {
     return (
-        <div className="rounded-md bg-blackOpacity-dark">
-            <div className="p-4">
+        <div className="bg-blackOpacity-dark rounded-md">
+            <div className="flex justify-between items-center p-4">
                 <h2 className="text-xl font-semibold text-white">
-                    Тести користувача {profile.nickname}
+                    {isCreatedByMe
+                        ? "Мої квести"
+                        : `Квести користувача ${profile.nickname}`}
                 </h2>
+                {isCreatedByMe && (
+                    <Button color="purpleBorder" className="py-2 px-4">
+                        Створити квест
+                    </Button>
+                )}
             </div>
             <div className="overflow-x-auto">
                 <table className="min-w-full border-collapse text-gray w-full">
@@ -25,6 +34,9 @@ export const UserQuests = ({ profile }: UserQuestsProps) => {
                             <th className="p-3 text-left w-[150px]">
                                 Кількість завдань
                             </th>
+                            {isCreatedByMe && (
+                                <th className="p-3 text-left w-[100px]">Дії</th>
+                            )}
                         </tr>
                     </thead>
                     <tbody>
@@ -49,6 +61,16 @@ export const UserQuests = ({ profile }: UserQuestsProps) => {
                                 <td className="p-3">{quest.timesPlayed}</td>
                                 <td className="p-3">⭐ {quest.rating}</td>
                                 <td className="p-3">10</td>
+                                {isCreatedByMe && (
+                                    <td className="p-3 flex gap-2">
+                                        <button className="p-2 bg-purple-600 rounded-md">
+                                            <AiOutlineEdit className="text-white" />
+                                        </button>
+                                        <button className="p-2 bg-red-600 rounded-md">
+                                            <AiOutlineDelete className="text-white" />
+                                        </button>
+                                    </td>
+                                )}
                             </tr>
                         ))}
                     </tbody>

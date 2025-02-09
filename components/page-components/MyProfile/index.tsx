@@ -1,9 +1,9 @@
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { LeftColumn } from "./LeftColumn";
 import { MiddleColumn } from "./MiddleColumn";
-import { MyQuests } from "./MyQuests";
 import { MyProfileProps } from "./MyProfile.props";
 import { CompletedQuests } from "@/components/common/tables/CompletedQuests";
+import { OwnQuests } from "@/components/common/tables/OwnQuests";
 
 export const MyProfilePageComponent = ({ profile }: MyProfileProps) => {
     return (
@@ -14,7 +14,7 @@ export const MyProfilePageComponent = ({ profile }: MyProfileProps) => {
                 <LeftColumn profile={profile} />
                 <MiddleColumn profile={profile} />
                 <div>
-                    <MyQuests profile={profile} />
+                    <OwnQuests profile={profile} isCreatedByMe={true} />
                     <CompletedQuests profile={profile} isCompletedByMe={true} />
                 </div>
             </div>

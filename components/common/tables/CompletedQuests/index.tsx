@@ -10,8 +10,8 @@ export const CompletedQuests = ({
             <div className="p-4">
                 <h2 className="text-xl font-semibold text-white">
                     {isCompletedByMe
-                        ? "Пройдені тести"
-                        : `Пройдені тести користувачем ${profile.nickname}`}
+                        ? "Пройдені квести"
+                        : `Пройдені квести користувачем ${profile.nickname}`}
                 </h2>
             </div>
             <div className="overflow-x-auto">
