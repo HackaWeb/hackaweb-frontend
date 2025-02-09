@@ -23,7 +23,10 @@ export interface LoginUserResponseSuccess {
     jwtToken: string;
 }
 
-export type LoginResponse = LoginUserResponseSuccess | BadRequestResponse;
+export type LoginResponse =
+    | LoginUserResponseSuccess
+    | BadRequestResponse
+    | UnathorizedResponse;
 export type RegisterResponse = RegisterUserResponseSuccess | BadRequestResponse;
 
 export type GetProfileResponse =

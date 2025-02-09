@@ -19,11 +19,11 @@ export const getProfile = async (): Promise<GetProfileResponse> =>
         method: "GET",
     });
 
-export const editUserProfile = async (
+export const updateUserProfile = async (
     editOptions: EditUserRequest,
 ): Promise<UpdateUserResponse> =>
     fetchApi({
-        endpoint: "/profile/",
+        endpoint: "/api/User/update-profile/",
         isAuthRequired: true,
         method: "POST",
         body: editOptions,
