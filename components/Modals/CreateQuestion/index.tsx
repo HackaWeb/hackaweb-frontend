@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/Input";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import { useDebugValue, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import ModalBg from "../../modals/ModalBg";
 import { SelectOption } from "@/types/selectOption.interface";
@@ -89,24 +89,23 @@ export const CreateQuestion = () => {
 
         const type = questionType?.value;
 
-        if (!title || !type) return toast.error("Спочатку заповніть усі поля!");
+        if (!title.length || !type || !options.length)
+            return toast.error("Спочатку заповніть усі поля!");
 
-        dispatch(
-            addQuestion({
-                id: questions.length + 1,
-                title,
-                type,
-                options: [
-                    ...options.map((o) => ({
-                        title: o.title,
-                        isCorrect: o.isCorrect,
-                    })),
-                ],
-                image: file && fileType === "image" ? file : undefined,
-                video: file && fileType === "video" ? file : undefined,
-            }),
-        );
+        const question = {
+            id: questions.length + 1,
+            title,
+            type,
+            options,
+            image: file && fileType === "image" ? file : undefined,
+            video: file && fileType === "video" ? file : undefined,
+        };
 
+        dispatch(addQuestion(question));
+
+        setTitle("");
+        setFile(null);
+        setQuestionType(null);
         dispatch(setOptions([]));
         dispatch(toggleModal("QuestionCreation"));
         if (prevModal) dispatch(toggleModal(prevModal));
