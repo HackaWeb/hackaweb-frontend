@@ -7,7 +7,7 @@ import { isModalOpened } from "@/helpers/isModalOpened";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import ModalBg from "../ModalBg";
+import ModalBg from "../../modals/ModalBg";
 import { SelectOption } from "@/types/selectOption.interface";
 import { BsFillImageFill } from "react-icons/bs";
 import { QuestionType } from "@/types/question.type";
