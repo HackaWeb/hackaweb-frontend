@@ -1,11 +1,11 @@
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { LeftColumn } from "./LeftColumn";
-import { LeftColumnProps } from "./LeftColumn/LeftColumn.props";
 import { MiddleColumn } from "./MiddleColumn";
 import { MyQuests } from "./MyQuests";
 import { CompletedQuests } from "./CompletedQuests";
+import { MyProfileProps } from "./MyProfile.props";
 
-export const MyProfilePageComponent = ({ profile }: LeftColumnProps) => {
+export const MyProfilePageComponent = ({ profile }: MyProfileProps) => {
     return (
         <div>
             <h1>Мій кабінет</h1>

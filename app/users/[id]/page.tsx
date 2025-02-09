@@ -1,61 +1,130 @@
-/* "use client";
-import React from "react";
-import { IoReturnUpBack, IoTrophyOutline } from "react-icons/io5";
-import { Button } from "@/components/ui/Button";
-import QuestDashboard from "@/components/page-components/Quest/Dashboard";
-import AchievementGroup from "@/components/page-components/MyProfile/Achievement/Group";
-import Achievement from "@/components/page-components/MyProfile/Achievement";
-import UserQuestsDashboard from "@/components/page-components/Quest/Dashboard/User";
-import CompletedQuestsDashboard from "@/components/page-components/Quest/Dashboard/Completed";
-import Avatar from "@/components/page-components/MyProfile/LeftColumn/Avatar";
-import { useRouter } from "next/navigation";
-import {
-    myQuests,
-    questAttempts,
-    recentAchievements,
-    userName,
-} from "@/app/profile/mock"; */
+import { UserProfilePageComponent } from "@/components/page-components/UserProfile";
+
+const profile: Profile = {
+    id: "1",
+    email: "testuser@example.com",
+    nickname: "TestUser",
+    rating: 5,
+    questsCompleted: 3,
+    createdQuests: [
+        {
+            id: "quest1",
+            title: "Adventure in the Forest",
+            description: "Explore the mysterious forest and solve puzzles.",
+            rating: 4.8,
+            imageUrl: "/test.png",
+            createdAt: "2024-02-08T12:00:00Z",
+            owner: {
+                id: "1",
+                email: "testuser@example.com",
+                nickname: "TestUser",
+                rating: 4.5,
+                avatar: "",
+            },
+            timesPlayed: 120,
+            timeLimit: 30,
+            reviews: [],
+        },
+        {
+            id: "quest1",
+            title: "Adventure in the Forest",
+            description: "Explore the mysterious forest and solve puzzles.",
+            rating: 4.8,
+            imageUrl: "/test.png",
+            createdAt: "2024-02-08T12:00:00Z",
+            owner: {
+                id: "1",
+                email: "testuser@example.com",
+                nickname: "TestUser",
+                rating: 4.5,
+                avatar: "",
+            },
+            timesPlayed: 120,
+            timeLimit: 30,
+            reviews: [],
+        },
+        {
+            id: "quest1",
+            title: "Adventure in the Forest",
+            description: "Explore the mysterious forest and solve puzzles.",
+            rating: 4.8,
+            imageUrl: "/test.png",
+            createdAt: "2024-02-08T12:00:00Z",
+            owner: {
+                id: "1",
+                email: "testuser@example.com",
+                nickname: "TestUser",
+                rating: 4.5,
+                avatar: "",
+            },
+            timesPlayed: 120,
+            timeLimit: 30,
+            reviews: [],
+        },
+        {
+            id: "quest1",
+            title: "Adventure in the Forest",
+            description: "Explore the mysterious forest and solve puzzles.",
+            rating: 4.8,
+            imageUrl: "/test.png",
+            createdAt: "2024-02-08T12:00:00Z",
+            owner: {
+                id: "1",
+                email: "testuser@example.com",
+                nickname: "TestUser",
+                rating: 4.5,
+                avatar: "",
+            },
+            timesPlayed: 120,
+            timeLimit: 30,
+            reviews: [],
+        },
+    ],
+    avatar: "",
+    completedQuests: [
+        {
+            id: "quest2",
+            title: "Mystery of the Lost Treasure",
+            description: "Find the lost treasure hidden deep in the mountains.",
+            rating: 4.7,
+            imageUrl: "/test.png",
+            createdAt: "2024-02-07T15:00:00Z",
+            owner: {
+                id: "2",
+                email: "questowner@example.com",
+                nickname: "QuestMaster",
+                rating: 4.9,
+                avatar: "",
+            },
+            timesPlayed: 200,
+            timeLimit: 45,
+            reviews: [],
+            correctness: 85,
+        },
+        {
+            id: "quest3",
+            title: "Escape from the Haunted Mansion",
+            description: "Solve the clues and escape from the haunted mansion.",
+            rating: 4.5,
+            imageUrl: "/test.png",
+            createdAt: "2024-02-06T18:00:00Z",
+            owner: {
+                id: "3",
+                email: "hauntedmaster@example.com",
+                nickname: "GhostHunter",
+                rating: 4.6,
+                avatar: "",
+            },
+            timesPlayed: 150,
+            timeLimit: 60,
+            reviews: [],
+            correctness: 72,
+        },
+    ],
+};
 
 const UserProfile = () => {
-    /* const router = useRouter(); */
-    return (
-    <></>
-        /* <div>
-            <h1>Профіль користувача {userName}</h1>
-            <Button
-                className="mt-4"
-                color="purpleBorder"
-                onClick={() => router.back()}
-            >
-                <IoReturnUpBack /> Повернутися назад
-            </Button>
-            <div className="flex flex-wrap gap-8 mt-8">
-                <div className="flex flex-col gap-8">
-                    <Avatar rating={4} />
-                    <div className="flex flex-col gap-3 w-full">
-                        <AchievementGroup className="relative">
-                            {recentAchievements.map((a) => (
-                                <Achievement key={a.name} achievement={a} />
-                            ))}
-                            <IoTrophyOutline className="w-4 h-4 text-purple absolute right-2 bottom-2" />
-                        </AchievementGroup>
-                        <hr />
-                    </div>
-                </div>
-                <QuestDashboard className="min-w-1/2">
-                    <UserQuestsDashboard
-                        title={`Тести користувача ${userName}`}
-                        quests={myQuests}
-                        isActionable={false}
-                    />
-                    <CompletedQuestsDashboard
-                        title={`Тести, пройдені користувачем ${userName}`}
-                        attempts={questAttempts}
-                    />
-                </QuestDashboard>
-            </div>
-        </div> */
-    );
+    return <UserProfilePageComponent profile={profile} />;
 };
 
 export default UserProfile;
