@@ -1,7 +1,5 @@
 import { QuestCompletingPageComponent } from "@/components/page-components/QuestCompleting";
-import { getPathname } from "@/helpers/getPathname";
-import { CompletingType } from "@/types/completingType.type";
-import { Question, QuestionWhileTesting } from "@/types/question.interface";
+import { QuestionWhileTesting } from "@/types/question.interface";
 
 const questions: QuestionWhileTesting[] = [
     {
@@ -28,22 +26,7 @@ const questions: QuestionWhileTesting[] = [
 ];
 
 const QuestCompleting = async () => {
-    const pathname = await getPathname();
-
-    let completingType: CompletingType | null = null;
-    console.log(pathname);
-    if (pathname.includes("multi")) {
-        completingType = "multi";
-    } else {
-        completingType = "single";
-    }
-
-    return (
-        <QuestCompletingPageComponent
-            questions={questions}
-            completingType={completingType}
-        />
-    );
+    return <QuestCompletingPageComponent questions={questions} />;
 };
 
 export default QuestCompleting;

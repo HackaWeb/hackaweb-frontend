@@ -10,7 +10,6 @@ type Stage = "waiting" | "game" | "results";
 
 export const QuestCompletingPageComponent = ({
     questions,
-    completingType,
 }: QuestCompletingProps) => {
     const [stage, setStage] = useState<Stage>("waiting");
 
@@ -26,7 +25,6 @@ export const QuestCompletingPageComponent = ({
         case "waiting":
             return (
                 <WaitingRoom
-                    completingType={completingType}
                     onStartQuestClick={onStartQuestClick}
                 />
             );

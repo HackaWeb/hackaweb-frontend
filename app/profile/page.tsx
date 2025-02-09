@@ -27,6 +27,7 @@ const profile: Profile = {
             timeLimit: 30,
             reviews: [],
             questions: [],
+            leaderboard: [],
         },
         {
             id: "quest1",
@@ -47,6 +48,7 @@ const profile: Profile = {
             timeLimit: 30,
             reviews: [],
             questions: [],
+            leaderboard: [],
         },
         {
             id: "quest1",
@@ -66,6 +68,7 @@ const profile: Profile = {
             leaderboard: [],
             timeLimit: 30,
             reviews: [],
+            leaderboard: [],
             questions: [],
         },
     ],
