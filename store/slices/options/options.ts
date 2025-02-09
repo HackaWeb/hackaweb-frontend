@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { OptionsState } from "./options.types";
-import { ChoiceOption, Question } from "@/types/question.interface";
+import { ChoiceOption } from "@/types/question.interface";
 
 const initialState: OptionsState = {
     options: [],
@@ -23,20 +23,19 @@ const options = createSlice({
             };
         },
         editOption: (state, action: PayloadAction<ChoiceOption>) => {
-            const options = state.options.filter(
-                (option) => option.title === action.payload.title,
+            const filtered = state.options.filter(
+                (option) => option.index !== action.payload.index,
             );
 
             return {
                 ...state,
-                options: [...options, action.payload],
+                options: [...filtered, action.payload],
             };
         },
-        removeOption: (state, action: PayloadAction<string>) => {
+        removeOption: (state, action: PayloadAction<number>) => {
             const options = state.options.filter(
-                (o) => o.title !== action.payload,
+                (option) => option.index !== action.payload,
             );
-
             return {
                 ...state,
                 options,

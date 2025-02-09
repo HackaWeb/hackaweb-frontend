@@ -13,8 +13,13 @@ import { toast } from "react-toastify";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { BsFillImageFill } from "react-icons/bs";
 import { selectModals, toggleModal } from "@/store/slices/modals/modals";
-import { selectQuestions } from "@/store/slices/questions/questions";
+import {
+    selectQuestions,
+    setEditingId,
+} from "@/store/slices/questions/questions";
 import { FiEdit2 } from "react-icons/fi";
+import Image from "next/image";
+import { IoImageOutline } from "react-icons/io5";
 
 export const CreateQuest = () => {
     const dispatch = useAppDispatch();
@@ -22,15 +27,25 @@ export const CreateQuest = () => {
     const modals = useAppSelector(selectModals);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [file, setFile] = useState<string | null>(null);
+    const [title, setTitle] = useState<string>("");
+    const [description, setDescription] = useState<string>("");
+    const [duration, setDuration] = useState<number>(0);
 
     const onQuestionAddClick = () => {
         dispatch(toggleModal("QuestCreation"));
         dispatch(toggleModal("QuestionCreation"));
     };
 
+    const onQuestionEditClick = (id: number) => {
+        dispatch(setEditingId(id));
+        dispatch(toggleModal("QuestCreation"));
+        dispatch(toggleModal("QuestionEdit"));
+    };
+
     const onCreateQuestSubmit = (e: FormEvent) => {
         e.preventDefault();
-        toast.info("Створення Квесту");
+        if (!file || !title.length || !duration || !description.length)
+            toast.info("Створення Квесту");
     };
 
     const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +80,7 @@ export const CreateQuest = () => {
                                 id="picture"
                                 type="file"
                                 ref={fileInputRef}
-                                className="hidden"
+                                className="hidden "
                                 accept="image/*"
                                 onChange={onImageUpload}
                             />
@@ -88,7 +103,9 @@ export const CreateQuest = () => {
                                 <Input
                                     id="name"
                                     className="mt-2"
+                                    value={title}
                                     placeholder="Назва квесту..."
+                                    onChange={(e) => setTitle(e.target.value)}
                                 />
                             </div>
                             <div className="mt-4">
@@ -99,6 +116,10 @@ export const CreateQuest = () => {
                                     Опис квесту
                                 </label>
                                 <Textarea
+                                    onChange={(e) =>
+                                        setDescription(e.target.value)
+                                    }
+                                    value={description}
                                     id="description"
                                     className="mt-2"
                                     placeholder="Опис квесту..."
@@ -109,6 +130,10 @@ export const CreateQuest = () => {
                                     Тривалість (хв)
                                 </label>
                                 <Input
+                                    value={duration}
+                                    onChange={(e) =>
+                                        setDuration(Number(e.target.value))
+                                    }
                                     id="duration"
                                     type="number"
                                     className="mt-2"
@@ -122,9 +147,37 @@ export const CreateQuest = () => {
                                     </span>
 
                                     {questions.map((question, i) => (
-                                        <div key={i} className="flex gap-2">
-                                            <Input value={question.title} />
-                                            <Button color="purpleBackground">
+                                        <div
+                                            key={i}
+                                            className="flex gap-2 place-items-center"
+                                        >
+                                            {question.image ? (
+                                                <figure className="w-14 h-14 place-content-center">
+                                                    <Image
+                                                        src={question.image}
+                                                        alt="question image"
+                                                        className="rounded-md "
+                                                        sizes="100vw"
+                                                        width={0}
+                                                        height={0}
+                                                    />
+                                                </figure>
+                                            ) : (
+                                                <IoImageOutline size={50} />
+                                            )}
+                                            <Input
+                                                disabled
+                                                defaultValue={question.title}
+                                            />
+                                            <Button
+                                                color="purpleBackground"
+                                                type="button"
+                                                onClick={() =>
+                                                    onQuestionEditClick(
+                                                        question.id,
+                                                    )
+                                                }
+                                            >
                                                 <FiEdit2 size={20} />
                                             </Button>
                                         </div>

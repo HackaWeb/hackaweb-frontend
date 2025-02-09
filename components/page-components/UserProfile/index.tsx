@@ -7,7 +7,9 @@ import { OwnQuests } from "@/components/common/tables/OwnQuests";
 export const UserProfilePageComponent = ({ profile }: UserProfileProps) => {
     return (
         <div>
-            <h1>Профіль користувача {profile.nickname}</h1>
+            <h1>
+                Профіль користувача {profile.firstName} {profile.lastName}
+            </h1>
             <ReturnBtn className="mt-4" />
             <div className="mt-8 grid grid-cols-[240px_auto] gap-6">
                 <LeftColumn profile={profile} />
