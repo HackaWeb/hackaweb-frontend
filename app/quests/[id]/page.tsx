@@ -1,6 +1,6 @@
-import { GeneralInfo } from "@/components/common/profile/Quest/GeneralInfo";
-import { Leaderboard } from "@/components/common/profile/Quest/Leaderboard";
-import { Reviews } from "@/components/common/profile/Quest/Reviews";
+import { GeneralInfo } from "@/components/page-components/Quest/GeneralInfo";
+import { Leaderboard } from "@/components/page-components/Quest/Leaderboard";
+import { Reviews } from "@/components/page-components/Quest/Reviews";
 import { Button } from "@/components/ui/Button";
 import { Quest } from "@/types/quest.interface";
 import Link from "next/link";
@@ -51,42 +51,6 @@ const leaderboardData = [
     },
 ];
 
-const reviewsData = [
-    {
-        id: 1,
-        user: {
-            id: "1",
-            name: "Alex Chubak",
-            avatar: null,
-        },
-        date: "23.12.2024",
-        rating: 3.5,
-        text: "Тест стоподобався хочу ще!",
-    },
-    {
-        id: 2,
-        user: {
-            id: "1",
-            name: "Alex Chubak",
-            avatar: null,
-        },
-        date: "23.12.2024",
-        rating: 4.5,
-        text: "Тест стоподобався хочу ще!",
-    },
-    {
-        id: 3,
-        user: {
-            id: "1",
-            name: "Alex Chubak",
-            avatar: null,
-        },
-        date: "23.12.2024",
-        rating: 2.5,
-        text: "Тест стоподобався хочу ще!",
-    },
-];
-
 const QuestDetails = () => {
     return (
         <div>
@@ -100,7 +64,7 @@ const QuestDetails = () => {
             <div className="grid grid-cols-[0.4fr_0.6fr] mt-6 gap-8 items-start">
                 <div>
                     <GeneralInfo quest={quest} />
-                    <Reviews reviews={reviewsData} />
+                    <Reviews quest={quest} />
                 </div>
                 <Leaderboard data={leaderboardData} />
             </div>
