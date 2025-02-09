@@ -1,12 +1,17 @@
 import Link from "next/link";
 import { CompletedQuestsProps } from "./CompletedQuests.props";
 
-export const CompletedQuests = ({ profile }: CompletedQuestsProps) => {
+export const CompletedQuests = ({
+    profile,
+    isCompletedByMe,
+}: CompletedQuestsProps) => {
     return (
         <div className="bg-blackOpacity-dark rounded-md mt-6">
             <div className="p-4">
                 <h2 className="text-xl font-semibold text-white">
-                    Пройдені тести
+                    {isCompletedByMe
+                        ? "Пройдені тести"
+                        : `Пройдені тести користувачем ${profile.nickname}`}
                 </h2>
             </div>
             <div className="overflow-x-auto">
