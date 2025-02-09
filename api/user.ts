@@ -14,7 +14,7 @@ export const getProfile = async (): Promise<GetProfileResponse> =>
     });
 
 export const updateUserProfile = async (
-    body: UpdateProfileRequestBody,
+    body: UpdateProfileRequestBody | FormData,
 ): Promise<UpdateUserResponse> =>
     fetchApi({
         endpoint: "/User/update-profile/",
