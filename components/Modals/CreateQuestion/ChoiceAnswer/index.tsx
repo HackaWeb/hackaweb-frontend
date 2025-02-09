@@ -1,8 +1,6 @@
 "use client";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Input } from "@/components/ui/Input";
-import { useAppDispatch } from "@/store/hooks/useAppDispatch";
-import { useAppSelector } from "@/store/hooks/useAppSelector";
 import {
     addOption,
     editOption,
@@ -10,23 +8,13 @@ import {
     selectOptions,
     setOptions,
 } from "@/store/slices/options/options";
-import { ChoiceOption } from "@/types/question.interface";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { toast } from "react-toastify";
+import { AnswersProps } from "../Answers.props";
+import { useAnswers } from "@/hooks/useAnswers";
 
-export const Choice = ({
-    fetchedOptions,
-}: {
-    fetchedOptions?: ChoiceOption[];
-}) => {
-    const dispatch = useAppDispatch();
-    const options = useAppSelector(selectOptions);
-
-    const getOption = (index: number) =>
-        options.find((option) => option.index === index);
-
-    const isChecked = (index: number) =>
-        Boolean(getOption(index) && getOption(index)?.isCorrect);
+export const Choice = ({ fetchedOptions }: AnswersProps) => {
+    const { dispatch, getOption, isChecked } = useAnswers();
 
     const checkHandler = (isCorrect: boolean, index: number) => {
         const option = getOption(index);
@@ -69,7 +57,7 @@ export const Choice = ({
                 Оберіть правильну-(і) відповідь-(і)
             </label>
             <div>
-                {[1, 2, 3, 4].map((option, i) => {
+                {[1, 2, 3, 4].map((_, i) => {
                     return (
                         <div className="mt-2" key={i}>
                             <div className="flex justify-between relative">

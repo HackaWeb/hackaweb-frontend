@@ -1,11 +1,5 @@
 import { fetchApi } from "./fetchApi.api";
-import {
-    GetProfileResponse,
-    LoginResponse,
-    LoginUserRequest,
-    RegisterResponse,
-    RegisterUserRequest,
-} from "./responses/auth.types";
+import { GetProfileResponse } from "./responses/auth.types";
 import {
     DeleteUserResponse,
     EditUserRequest,

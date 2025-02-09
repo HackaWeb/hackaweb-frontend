@@ -4,90 +4,38 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { isModalOpened } from "@/helpers/isModalOpened";
-import { useAppSelector } from "@/store/hooks/useAppSelector";
-import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import ModalBg from "../../modals/ModalBg";
-import { SelectOption } from "@/types/selectOption.interface";
 import { BsFillImageFill } from "react-icons/bs";
-import { QuestionType } from "@/types/question.type";
-import { InputAnswer } from "./InputAnswer";
-import { TrueFalseAnswer } from "./TrueFalseAnswer";
-import { Choice } from "./ChoiceAnswer";
-import {
-    selectModals,
-    selectPrev,
-    toggleModal,
-} from "@/store/slices/modals/modals";
-import { useAppDispatch } from "@/store/hooks/useAppDispatch";
-import {
-    addQuestion,
-    selectQuestions,
-} from "@/store/slices/questions/questions";
+import { addQuestion } from "@/store/slices/questions/questions";
 import { FaVideo } from "react-icons/fa6";
 import { Select } from "@/components/ui/Select";
-import { selectOptions, setOptions } from "@/store/slices/options/options";
-
-interface CustomSelectOption extends SelectOption {
-    value: QuestionType;
-}
-
-const questionTypes: CustomSelectOption[] = [
-    {
-        title: "Відкритого типу",
-        value: "input",
-    },
-    {
-        title: "Вибір з варіантами",
-        value: "choice",
-    },
-    {
-        title: "Правда/Брехня",
-        value: "boolean",
-    },
-];
+import { useQuestionModal } from "@/hooks/useQuestionModal";
+import { QuestionType } from "@/types/question.type";
 
 export const CreateQuestion = () => {
-    const dispatch = useAppDispatch();
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const modals = useAppSelector(selectModals);
-    const prevModal = useAppSelector(selectPrev);
-    const questions = useAppSelector(selectQuestions);
-    const options = useAppSelector(selectOptions);
-    const [questionType, setQuestionType] = useState<SelectOption | null>(null);
-    const [file, setFile] = useState<string | null>(null);
-    const [fileType, setFileType] = useState<"image" | "video" | null>(null);
-    const [title, setTitle] = useState<string>("");
-
-    const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const uploadedFile = e.target.files?.[0];
-
-        if (uploadedFile) {
-            const fileURL = URL.createObjectURL(uploadedFile);
-            const isVideo = uploadedFile.type.includes("video");
-
-            setFile(fileURL);
-            setFileType(isVideo ? "video" : "image");
-        }
-    };
-
-    const renderGetAnswer = () => {
-        switch (questionType?.value) {
-            case "input":
-                return <InputAnswer />;
-            case "choice":
-                return <Choice />;
-            case "boolean":
-                return <TrueFalseAnswer />;
-            default:
-                return <></>;
-        }
-    };
+    const {
+        dispatch,
+        file,
+        fileInputRef,
+        fileType,
+        modals,
+        onFileUpload,
+        options,
+        questionType,
+        questionTypes,
+        renderGetAnswer,
+        setQuestionType,
+        setTitle,
+        title,
+        questions,
+        resetOptions,
+    } = useQuestionModal();
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const type = questionType?.value;
+        const type = questionType?.value as QuestionType;
 
         if (!title.length || !type || !options.length)
             return toast.error("Спочатку заповніть усі поля!");
@@ -102,14 +50,7 @@ export const CreateQuestion = () => {
         };
 
         dispatch(addQuestion(question));
-
-        setTitle("");
-        setFile(null);
-        setQuestionType(null);
-        dispatch(setOptions([]));
-        dispatch(toggleModal("QuestionCreation"));
-        if (prevModal) dispatch(toggleModal(prevModal));
-        toast.info("Питання створено!");
+        resetOptions("QuestionCreation", "Питання створено!");
     };
 
     return (
@@ -119,6 +60,7 @@ export const CreateQuestion = () => {
                     <ReturnBtn
                         className="self-start"
                         modal="QuestionCreation"
+                        isPrev
                     />
                     <div className="text-3xl mt-10">Створення Питання</div>
                     <div className="w-full p-4">

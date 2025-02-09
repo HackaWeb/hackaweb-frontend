@@ -1,33 +1,24 @@
 "use client";
 import { Input } from "@/components/ui/Input";
-import { useAppDispatch } from "@/store/hooks/useAppDispatch";
-import { useAppSelector } from "@/store/hooks/useAppSelector";
 import {
     addOption,
     editOption,
     removeOption,
-    selectOptions,
     setOptions,
 } from "@/store/slices/options/options";
-import { ChoiceOption } from "@/types/question.interface";
+import { AnswersProps } from "../Answers.props";
+import { useAnswers } from "@/hooks/useAnswers";
 import { useEffect } from "react";
 
-export const InputAnswer = ({
-    fetchedOptions,
-}: {
-    fetchedOptions?: ChoiceOption[];
-}) => {
-    const dispatch = useAppDispatch();
-    const options = useAppSelector(selectOptions);
-
-    const isAvailable = () => options.find((option) => option.index === 0);
+export const InputAnswer = ({ fetchedOptions }: AnswersProps) => {
+    const { dispatch, getOption } = useAnswers();
 
     const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const title = e.target.value;
 
         if (!title) return dispatch(removeOption(0));
 
-        if (!isAvailable())
+        if (!getOption(0))
             return dispatch(addOption({ index: 0, title, isCorrect: true }));
 
         dispatch(
@@ -52,7 +43,7 @@ export const InputAnswer = ({
                 id="correctAnswer"
                 className="mt-2"
                 placeholder="Правильна відповідь..."
-                value={isAvailable()?.title || ""}
+                value={getOption(0)?.title || ""}
                 onChange={inputHandler}
             />
         </div>
