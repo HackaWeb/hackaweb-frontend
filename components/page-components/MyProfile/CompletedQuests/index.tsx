@@ -9,15 +9,21 @@ export const CompletedQuests = ({ profile }: CompletedQuestsProps) => {
                     Пройдені тести
                 </h2>
             </div>
-            <div className="overflow-auto w-[800px] whitespace-nowrap">
+            <div className="overflow-x-auto">
                 <table className="min-w-full border-collapse text-gray w-full">
                     <thead>
                         <tr className="bg-[#242A4D]">
-                            <th className="p-3 text-left">Назва</th>
-                            <th className="p-3 text-left">Картинка</th>
-                            <th className="p-3 text-left">Затрачений час</th>
-                            <th className="p-3 text-left">Правильність</th>
-                            <th className="p-3 text-left">Дата</th>
+                            <th className="p-3 text-left w-[200px]">Назва</th>
+                            <th className="p-3 text-left w-[120px]">
+                                Картинка
+                            </th>
+                            <th className="p-3 text-left w-[150px]">
+                                Затрачений час
+                            </th>
+                            <th className="p-3 text-left w-[150px]">
+                                Правильність
+                            </th>
+                            <th className="p-3 text-left w-[150px]">Дата</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,7 +33,9 @@ export const CompletedQuests = ({ profile }: CompletedQuestsProps) => {
                                 className="border-t border-gray-700 bg-blackOpacity-dark"
                             >
                                 <td className="p-3 font-semibold">
-                                    <Link href="#">{quest.title}</Link>
+                                    <Link href="#" className="text-purple-400">
+                                        {quest.title}
+                                    </Link>
                                 </td>
                                 <td className="p-3">
                                     <img

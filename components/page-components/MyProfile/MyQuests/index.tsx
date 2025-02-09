@@ -12,17 +12,23 @@ export const MyQuests = ({ profile }: MyQuestsProps) => {
                     Створити тест
                 </Button>
             </div>
-            <div className="overflow-auto w-[800px] whitespace-nowrap">
+            <div className="overflow-x-auto">
                 <table className="min-w-full border-collapse text-gray w-full">
                     <thead>
                         <tr className="bg-[#242A4D]">
-                            <th className="p-3 text-left">Назва</th>
-                            <th className="p-3 text-left">Картинка</th>
-                            <th className="p-3 text-left">Час</th>
-                            <th className="p-3 text-left">Зіграно раз</th>
-                            <th className="p-3 text-left">Рейтинг</th>
-                            <th className="p-3 text-left">Кількість завдань</th>
-                            <th className="p-3 text-left">Дії</th>
+                            <th className="p-3 text-left w-[200px]">Назва</th>
+                            <th className="p-3 text-left w-[120px]">
+                                Картинка
+                            </th>
+                            <th className="p-3 text-left w-[100px]">Час</th>
+                            <th className="p-3 text-left w-[120px]">
+                                Зіграно раз
+                            </th>
+                            <th className="p-3 text-left w-[120px]">Рейтинг</th>
+                            <th className="p-3 text-left w-[150px]">
+                                Кількість завдань
+                            </th>
+                            <th className="p-3 text-left w-[100px]">Дії</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,7 +38,9 @@ export const MyQuests = ({ profile }: MyQuestsProps) => {
                                 className="border-t border-gray-700 bg-blackOpacity-dark"
                             >
                                 <td className="p-3 font-semibold">
-                                    <Link href="#">{quest.title}</Link>
+                                    <Link href="#" className="text-purple-400">
+                                        {quest.title}
+                                    </Link>
                                 </td>
                                 <td className="p-3">
                                     <img

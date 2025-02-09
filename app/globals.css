@@ -44,6 +44,7 @@ body {
     color: var(--white);
     background: var(--background);
     font-family: Inter, sans-serif;
+    overflow-x: hidden;
 }
 
 a {
