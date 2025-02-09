@@ -2,8 +2,7 @@
 
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import { selectModals, toggleModal } from "@/store/slices/modals";
-import ModalBg from "../ModalBg";
+import ModalBg from "../../modals/ModalBg";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { RiEditLine } from "react-icons/ri";
 import { Button } from "@/components/ui/Button";
@@ -11,17 +10,21 @@ import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { FormEvent, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { cn } from "@/helpers/cn";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { BsFillImageFill } from "react-icons/bs";
+import { selectModals, toggleModal } from "@/store/slices/modals/modals";
+import { selectQuestions } from "@/store/slices/questions/questions";
+import { FiEdit2 } from "react-icons/fi";
 
 export const CreateQuest = () => {
     const dispatch = useAppDispatch();
+    const questions = useAppSelector(selectQuestions);
     const modals = useAppSelector(selectModals);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [file, setFile] = useState<string | null>(null);
 
     const onQuestionAddClick = () => {
+        dispatch(toggleModal("QuestCreation"));
         dispatch(toggleModal("QuestionCreation"));
     };
 
@@ -111,11 +114,26 @@ export const CreateQuest = () => {
                                     className="mt-2"
                                 />
                             </div>
-                            <div className="mt-4">
-                                <div className="text-gray">Список питань</div>
+
+                            <div className="mt-6">
+                                <div className="space-y-3">
+                                    <span className="text-gray">
+                                        Список питань
+                                    </span>
+
+                                    {questions.map((question, i) => (
+                                        <div key={i} className="flex gap-2">
+                                            <Input value={question.title} />
+                                            <Button color="purpleBackground">
+                                                <FiEdit2 size={20} />
+                                            </Button>
+                                        </div>
+                                    ))}
+                                </div>
+
                                 <Button
                                     color="yellowBorder"
-                                    className="mt-2"
+                                    className="mt-8"
                                     type="button"
                                     onClick={onQuestionAddClick}
                                 >

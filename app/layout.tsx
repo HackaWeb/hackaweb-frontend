@@ -9,8 +9,8 @@ import { ToastProvider } from "@/components/providers/Toast";
 import { getCookie } from "@/helpers/getCookie";
 import { getProfile } from "@/api/auth";
 import { JoinWithCode } from "@/components/common/JoinWithCode";
-import { Modals } from "@/components/Modals";
 import { getPathname } from "@/helpers/getPathname";
+import { Modals } from "@/components/Modals";
 
 const inter = Inter({
     variable: "--font-inter",

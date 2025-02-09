@@ -1,8 +1,8 @@
 "use client";
 
 import { cn } from "@/helpers/cn";
-import { useState } from "react";
 import { MdCheck } from "react-icons/md";
+import { CheckboxProps } from "./Checkbox.props";
 
 export const Checkbox = ({
     checked = false,
@@ -12,9 +12,6 @@ export const Checkbox = ({
 }: CheckboxProps) => {
     const toggleCheckbox = () => {
         onChange(!checked);
-        if (onChange) {
-            onChange(!checked);
-        }
     };
 
     return (

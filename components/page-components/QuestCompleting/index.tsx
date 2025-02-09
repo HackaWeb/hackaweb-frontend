@@ -6,13 +6,13 @@ import { PlayingGame } from "./Playing";
 import { QuestCompletingProps } from "./QuestCompleting.props";
 import { Results } from "./Results";
 
-type Stage = "waiting-room" | "game" | "results";
+type Stage = "waiting" | "game" | "results";
 
 export const QuestCompletingPageComponent = ({
     questions,
     completingType,
 }: QuestCompletingProps) => {
-    const [stage, setStage] = useState<Stage>("waiting-room");
+    const [stage, setStage] = useState<Stage>("waiting");
 
     const onStartQuestClick = () => {
         setStage("game");
@@ -23,7 +23,7 @@ export const QuestCompletingPageComponent = ({
     };
 
     switch (stage) {
-        case "waiting-room":
+        case "waiting":
             return (
                 <WaitingRoom
                     completingType={completingType}
