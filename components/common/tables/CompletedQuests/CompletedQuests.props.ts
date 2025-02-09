@@ -1,5 +1,6 @@
 import { Profile } from "@/types/user.interface";
 
-export interface MyProfileProps {
+export interface CompletedQuestsProps {
     profile: Profile;
+    isCompletedByMe: boolean;
 }

@@ -1,3 +1,4 @@
+import { Question } from "./question.interface";
 import { Review } from "./review.interface";
 import { User } from "./user.interface";
 
@@ -8,12 +9,13 @@ export interface Quest {
     rating: number;
     imageUrl: string;
     createdAt: string;
-    owner: User;
     timesPlayed: number;
     timeLimit: number;
-    reviews?: Review[];
+    owner: User;
+    reviews: Review[];
+    questions: Question[];
 }
 
 export interface CompletedQuest extends Quest {
-    correctness: number;
+    accuracy: number;
 }

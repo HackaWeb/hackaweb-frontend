@@ -56,7 +56,7 @@ export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
                 />
                 <div className="text-gray mt-3">Створено {quest.createdAt}</div>
                 <Link href={`/users/${quest.owner.id}`}>
-                    {quest.owner.nickname}
+                    {quest.owner.firstName + " " + quest.owner.lastName}
                 </Link>
             </div>
         </div>

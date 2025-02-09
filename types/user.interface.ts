@@ -3,12 +3,13 @@ import { CompletedQuest, Quest } from "./quest.interface";
 export interface User {
     id: string;
     email: string;
-    nickname: string;
+    firstName: string;
+    lastName: string;
     rating: number;
+    avatar: string | null;
 }
 
 export interface Profile extends User {
-    questsCompleted: number;
     createdQuests: Quest[];
     completedQuests: CompletedQuest[];
 }

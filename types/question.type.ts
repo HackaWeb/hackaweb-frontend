@@ -1,1 +1,1 @@
-export type QuestionType = "trueFalse" | "choice" | "input";
+export type QuestionType = "boolean" | "choice" | "input";

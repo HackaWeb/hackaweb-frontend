@@ -1,5 +1,5 @@
 import { Profile } from "@/types/user.interface";
 
-export interface MyProfileProps {
+export interface LeftColumnProps {
     profile: Profile;
 }

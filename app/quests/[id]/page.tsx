@@ -15,71 +15,39 @@ const quest: Quest = {
     imageUrl: "/test.png",
     owner: {
         id: "1",
-        nickname: "Danil Diachenko",
+        firstName: "Danil",
+        lastName: "Diachenko",
+        avatar: null,
         email: "danildiachenko23@gmail.com",
         rating: 4.5,
     },
     createdAt: "2021-10-10",
     timeLimit: 60,
+    questions: [],
+    reviews: [],
 };
 
 const leaderboardData = [
     {
         id: 1,
         nickname: "Danil Diachenko",
-        avatar: "",
+        avatar: null,
         time: "60 хв.",
         score: "100/100",
     },
     {
         id: 2,
         nickname: "Danil Diachenko",
-        avatar: "",
+        avatar: null,
         time: "60 хв.",
         score: "100/100",
     },
     {
         id: 3,
         nickname: "Danil Diachenko",
-        avatar: "",
+        avatar: null,
         time: "60 хв.",
         score: "100/100",
-    },
-];
-
-const reviewsData = [
-    {
-        id: 1,
-        user: {
-            id: "1",
-            name: "Alex Chubak",
-            avatar: "",
-        },
-        date: "23.12.2024",
-        rating: 3.5,
-        text: "Тест стоподобався хочу ще!",
-    },
-    {
-        id: 2,
-        user: {
-            id: "1",
-            name: "Alex Chubak",
-            avatar: "",
-        },
-        date: "23.12.2024",
-        rating: 4.5,
-        text: "Тест стоподобався хочу ще!",
-    },
-    {
-        id: 3,
-        user: {
-            id: "1",
-            name: "Alex Chubak",
-            avatar: "",
-        },
-        date: "23.12.2024",
-        rating: 2.5,
-        text: "Тест стоподобався хочу ще!",
     },
 ];
 
@@ -96,7 +64,7 @@ const QuestDetails = () => {
             <div className="grid grid-cols-[0.4fr_0.6fr] mt-6 gap-8 items-start">
                 <div>
                     <GeneralInfo quest={quest} />
-                    <Reviews reviews={reviewsData} />
+                    <Reviews quest={quest} />
                 </div>
                 <Leaderboard data={leaderboardData} />
             </div>
