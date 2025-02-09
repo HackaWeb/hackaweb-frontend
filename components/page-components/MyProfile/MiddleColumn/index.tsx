@@ -1,14 +1,14 @@
 "use client";
 
-import { EditUserRequest } from "@/api/responses/user.types";
+import { UpdateUserRequest } from "@/api/responses/user.types";
 import { MiddleColumnProps } from "./MiddleColumn.props";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useState } from "react";
-import { updateProfile } from "@/api/user";
+import { updateUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
 import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
-import { displayToasts } from "@/helpers/displayToasts";
+import { printToastErrorMessages } from "@/helpers/displayToasts";
 
 export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
     const [firstName, setFirstName] = useState(profile.firstName);
@@ -23,13 +23,13 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
         if (result.length === 0) {
             toast.success("Успішно змінено ваші ім'я та прізвище!");
         } else {
-            displayToasts(result.map((res) => res.message));
+            printToastErrorMessages(result.map((res) => res.message));
         }
     };
 
-    const updateName = async (updateForm: EditUserRequest) => {
+    const updateName = async (updateForm: UpdateUserRequest) => {
         try {
-            const data = await updateProfile(updateForm);
+            const data = await updateUserProfile(updateForm);
             if ("statusCode" in data) {
                 if (data.statusCode === 400) {
                     return data.errors;

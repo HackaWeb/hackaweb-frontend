@@ -8,7 +8,7 @@ import { getAchievements } from "@/data/getAchievements";
 import { RenderRating } from "@/helpers/RenderRating";
 import { Button } from "@/components/ui/Button";
 import { AiOutlineClose } from "react-icons/ai";
-import { updateProfile } from "@/api/user";
+import { updateUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
 import {
     DEFAULT_FIELD_ERROR,
@@ -42,7 +42,7 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
         formData.append("Avatar", imageData);
 
         try {
-            const data = await updateProfile(formData);
+            const data = await updateUserProfile(formData);
             if ("statusCode" in data) {
                 if (data.statusCode === 400) {
                     return data.errors;

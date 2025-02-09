@@ -2,10 +2,6 @@ import { Profile, User } from "@/types/user.interface";
 import { BadRequestResponse } from "./common/badRequest.interface";
 import { UnathorizedResponse } from "./common/unathorized.interface";
 
-export interface UpdateUserResponseSuccess {
-    user: User;
-}
-
 export interface DeleteUserResponseSuccess {
     resolved: true;
 }
@@ -17,6 +13,8 @@ export interface UpdateUserResponseSuccess {
     lastName: string;
     avatarUrl: string;
 }
+
+export interface UpdateUserRequest extends FormData {}
 
 export interface GetUserResponseSuccess extends Profile {}
 
@@ -36,10 +34,6 @@ interface GetProfileResponseSuccess {
     email: string;
     id: string;
 }
-
-export type GetProfileResponse =
-    | GetProfileResponseSuccess
-    | UnathorizedResponse;
 
 // getProfile(token)
 // Login/token

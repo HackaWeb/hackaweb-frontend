@@ -31,7 +31,7 @@ export const fetchApi = async <T>({
     }
 
     const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api${endpoint}`,
         {
             method,
             headers,

@@ -32,6 +32,7 @@ export const CompletedQuests = ({
                         </tr>
                     </thead>
                     <tbody>
+                        {/*
                         {profile.completedQuests.map((completed) => (
                             <tr
                                 key={completed.quest.id}
@@ -54,6 +55,7 @@ export const CompletedQuests = ({
                                 <td className="p-3">08.02.2025</td>
                             </tr>
                         ))}
+                        */}
                     </tbody>
                 </table>
             </div>
