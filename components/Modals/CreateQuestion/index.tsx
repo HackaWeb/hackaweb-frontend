@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/Input";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import { useRef, useState } from "react";
+import { useDebugValue, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import ModalBg from "../../modals/ModalBg";
 import { SelectOption } from "@/types/selectOption.interface";
@@ -14,9 +14,16 @@ import { QuestionType } from "@/types/question.type";
 import { InputAnswer } from "./InputAnswer";
 import { TrueFalseAnswer } from "./TrueFalseAnswer";
 import { Choice } from "./ChoiceAnswer";
-import { selectModals } from "@/store/slices/modals/modals";
+import {
+    selectModals,
+    selectPrev,
+    toggleModal,
+} from "@/store/slices/modals/modals";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
-import { addQuestion } from "@/store/slices/questions/questions";
+import {
+    addQuestion,
+    selectQuestions,
+} from "@/store/slices/questions/questions";
 import { FaVideo } from "react-icons/fa6";
 import { Select } from "@/components/ui/Select";
 import { selectOptions, setOptions } from "@/store/slices/options/options";
@@ -36,7 +43,7 @@ const questionTypes: CustomSelectOption[] = [
     },
     {
         title: "Правда/Брехня",
-        value: "trueFalse",
+        value: "boolean",
     },
 ];
 
@@ -44,13 +51,13 @@ export const CreateQuestion = () => {
     const dispatch = useAppDispatch();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const modals = useAppSelector(selectModals);
+    const prevModal = useAppSelector(selectPrev);
+    const questions = useAppSelector(selectQuestions);
     const options = useAppSelector(selectOptions);
-
     const [questionType, setQuestionType] = useState<SelectOption | null>(null);
     const [file, setFile] = useState<string | null>(null);
     const [fileType, setFileType] = useState<"image" | "video" | null>(null);
     const [title, setTitle] = useState<string>("");
-    const [type, setType] = useState<QuestionType | null>();
 
     const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const uploadedFile = e.target.files?.[0];
@@ -70,7 +77,7 @@ export const CreateQuestion = () => {
                 return <InputAnswer />;
             case "choice":
                 return <Choice />;
-            case "trueFalse":
+            case "boolean":
                 return <TrueFalseAnswer />;
             default:
                 return <></>;
@@ -80,21 +87,29 @@ export const CreateQuestion = () => {
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!title && !type) return toast.error("Спочатку заповніть усі поля!");
+        const type = questionType?.value;
 
-        if (type)
-            dispatch(
-                addQuestion({
-                    id: 1,
-                    title,
-                    type,
-                    options,
-                    image: file && fileType === "image" ? file : undefined,
-                    video: file && fileType === "video" ? file : undefined,
-                }),
-            );
+        if (!title || !type) return toast.error("Спочатку заповніть усі поля!");
+
+        dispatch(
+            addQuestion({
+                id: questions.length + 1,
+                title,
+                type,
+                options: [
+                    ...options.map((o) => ({
+                        title: o.title,
+                        isCorrect: o.isCorrect,
+                    })),
+                ],
+                image: file && fileType === "image" ? file : undefined,
+                video: file && fileType === "video" ? file : undefined,
+            }),
+        );
 
         dispatch(setOptions([]));
+        dispatch(toggleModal("QuestionCreation"));
+        if (prevModal) dispatch(toggleModal(prevModal));
         toast.info("Питання створено!");
     };
 
@@ -153,9 +168,7 @@ export const CreateQuestion = () => {
                                     value={title}
                                     className="mt-2"
                                     placeholder="Назва питання..."
-                                    onChange={(e) =>
-                                        setTitle(e.currentTarget.value)
-                                    }
+                                    onChange={(e) => setTitle(e.target.value)}
                                 />
                             </div>
                             <div className="mt-4">

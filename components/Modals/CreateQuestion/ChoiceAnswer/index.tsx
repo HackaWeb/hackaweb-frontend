@@ -20,41 +20,69 @@ export const Choice = () => {
     const [option3, setOption3] = useState<string>("");
     const [option4, setOption4] = useState<string>("");
 
-    const isChecked = (option: string) =>
-        Boolean(options.find((o) => o.title === option));
+    const questionOptions = [
+        {
+            value: option1,
+            setValue: setOption1,
+        },
+        {
+            value: option2,
+            setValue: setOption2,
+        },
+        {
+            value: option3,
+            setValue: setOption3,
+        },
+        {
+            value: option4,
+            setValue: setOption4,
+        },
+    ];
 
-    const checkHandler = (value: boolean, option: string) => {
+    const isAvailable = (index: number) =>
+        options.find((option) => option.index === index);
+
+    const isChecked = (index: number) =>
+        Boolean(isAvailable(index) && isAvailable(index)?.isCorrect);
+
+    const checkHandler = (isCorrect: boolean, index: number) => {
+        const option = isAvailable(index);
+
         if (!option) return toast.error("Спочатку напишіть варіант відповіді!");
 
-        if (!value) return dispatch(removeOption(option));
-
         dispatch(
-            addOption({
-                title: option,
-                slug: option.toLowerCase().trim().replace(" ", "_"),
+            editOption({
+                title: option.title,
+                isCorrect,
+                index,
             }),
         );
     };
 
     const inputHandler = (
         e: ChangeEvent<HTMLInputElement>,
-        setOption: (option: string) => void,
-        value: string,
+        setOption: (value: string) => void,
+        index: number,
     ) => {
-        const option = e.currentTarget.value;
-        setOption(option);
+        const title = e.target.value;
 
-        if (!option) return dispatch(removeOption(option));
+        setOption(title);
 
-        if (isChecked(value))
-            dispatch(
-                editOption({
-                    title: option,
-                    slug: option.toLowerCase().trim().replace(" ", "_"),
-                }),
-            );
-        console.log(options);
+        if (!title) return dispatch(removeOption(index));
+
+        if (!isAvailable(index))
+            return dispatch(addOption({ index, title, isCorrect: false }));
+
+        dispatch(
+            editOption({
+                title,
+                index,
+                isCorrect: isChecked(index),
+            }),
+        );
     };
+
+    console.log(options);
 
     return (
         <div className="mt-4">
@@ -62,78 +90,28 @@ export const Choice = () => {
                 Оберіть правильну-(і) відповідь-(і)
             </label>
             <div>
-                <div className="mt-2">
-                    <div className="flex justify-between relative">
-                        <Input
-                            placeholder="Впишіть варіант 1.."
-                            value={option1}
-                            onChange={(e) =>
-                                inputHandler(e, setOption1, option1)
-                            }
-                        />
-                        <Checkbox
-                            checked={isChecked(option1)}
-                            onChange={(value) => {
-                                checkHandler(value, option1);
-                            }}
-                            className="absolute right-4 top-3"
-                        />
-                    </div>
-                </div>
-                <div className="mt-2">
-                    <div className="flex justify-between relative">
-                        <Input
-                            placeholder="Впишіть варіант 2..."
-                            value={option2}
-                            onChange={(e) =>
-                                inputHandler(e, setOption2, option2)
-                            }
-                        />
-                        <Checkbox
-                            checked={isChecked(option2)}
-                            onChange={(value) => {
-                                checkHandler(value, option2);
-                            }}
-                            className="absolute right-4 top-3"
-                        />
-                    </div>
-                </div>
-                <div className="mt-2">
-                    <div className="flex justify-between relative">
-                        <Input
-                            placeholder="Впишіть варіант 3..."
-                            value={option3}
-                            onChange={(e) =>
-                                inputHandler(e, setOption3, option3)
-                            }
-                        />
-                        <Checkbox
-                            checked={isChecked(option3)}
-                            onChange={(value) => {
-                                checkHandler(value, option3);
-                            }}
-                            className="absolute right-4 top-3"
-                        />
-                    </div>
-                </div>
-                <div className="mt-2">
-                    <div className="flex justify-between relative">
-                        <Input
-                            placeholder="Впишіть варіант 4..."
-                            value={option4}
-                            onChange={(e) =>
-                                inputHandler(e, setOption4, option4)
-                            }
-                        />
-                        <Checkbox
-                            checked={isChecked(option4)}
-                            onChange={(value) => {
-                                checkHandler(value, option4);
-                            }}
-                            className="absolute right-4 top-3"
-                        />
-                    </div>
-                </div>
+                {questionOptions.map((option, i) => {
+                    return (
+                        <div className="mt-2" key={i}>
+                            <div className="flex justify-between relative">
+                                <Input
+                                    placeholder={`Впишіть варіант ${i + 1}..`}
+                                    value={option.value}
+                                    onChange={(e) =>
+                                        inputHandler(e, option.setValue, i)
+                                    }
+                                />
+                                <Checkbox
+                                    checked={isChecked(i)}
+                                    onChange={(e) => {
+                                        checkHandler(e, i);
+                                    }}
+                                    className="absolute right-4 top-3"
+                                />
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

@@ -65,7 +65,7 @@ export const CreateQuest = () => {
                                 id="picture"
                                 type="file"
                                 ref={fileInputRef}
-                                className="hidden"
+                                className="hidden "
                                 accept="image/*"
                                 onChange={onImageUpload}
                             />
@@ -123,7 +123,10 @@ export const CreateQuest = () => {
 
                                     {questions.map((question, i) => (
                                         <div key={i} className="flex gap-2">
-                                            <Input value={question.title} />
+                                            <Input
+                                                disabled
+                                                defaultValue={question.title}
+                                            />
                                             <Button color="purpleBackground">
                                                 <FiEdit2 size={20} />
                                             </Button>

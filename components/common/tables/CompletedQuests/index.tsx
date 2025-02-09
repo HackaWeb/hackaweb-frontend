@@ -11,7 +11,7 @@ export const CompletedQuests = ({
                 <h2 className="text-xl font-semibold text-white">
                     {isCompletedByMe
                         ? "Пройдені квести"
-                        : `Пройдені квести користувачем ${profile.nickname}`}
+                        : `Пройдені квести користувачем ${profile.email}`}
                 </h2>
             </div>
             <div className="overflow-x-auto">
@@ -32,20 +32,20 @@ export const CompletedQuests = ({
                         </tr>
                     </thead>
                     <tbody>
-                        {profile.completedQuests.map((quest) => (
+                        {profile.completedQuests.map((completed) => (
                             <tr
-                                key={quest.id}
+                                key={completed.quest.id}
                                 className="border-t border-gray-700"
                             >
                                 <td className="p-3 font-semibold">
                                     <Link href="#" className="text-purple-400">
-                                        {quest.title}
+                                        {completed.quest.title}
                                     </Link>
                                 </td>
                                 <td className="p-3">
                                     <img
-                                        src={quest.imageUrl}
-                                        alt={quest.title}
+                                        src={completed.quest.imageUrl}
+                                        alt={completed.quest.title}
                                         className="w-16 h-12 object-cover rounded-md"
                                     />
                                 </td>

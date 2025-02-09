@@ -1,6 +1,7 @@
 import { QuestionType } from "./question.type";
 
 export interface ChoiceOption {
+    index?: number;
     title: string;
     isCorrect: boolean;
 }
@@ -28,5 +29,5 @@ export interface QuestionWhileTesting {
 }
 
 // якщо тип інпут, options: [{ title: string, isCorrect: true }]
-// якщо тип choice, то choice:  [{ title: string, isCorrect: boolean }]
+// якщо тип choice, то options:  [{ title: string, isCorrect: boolean }]
 // якщо тип boolean, то options: [{ title: "True", isCorrect: false }, { title: "False", isCorrect: true }]

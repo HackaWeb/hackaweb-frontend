@@ -10,7 +10,7 @@ export const OwnQuests = ({ profile, isCreatedByMe }: OwnQuestsProps) => {
                 <h2 className="text-xl font-semibold text-white">
                     {isCreatedByMe
                         ? "Мої квести"
-                        : `Квести користувача ${profile.nickname}`}
+                        : `Квести користувача ${profile.email}`}
                 </h2>
                 {isCreatedByMe && (
                     <Button color="purpleBorder" className="py-2 px-4">
@@ -58,7 +58,9 @@ export const OwnQuests = ({ profile, isCreatedByMe }: OwnQuestsProps) => {
                                     />
                                 </td>
                                 <td className="p-3">{quest.timeLimit} хв.</td>
-                                <td className="p-3">{quest.timesPlayed}</td>
+                                <td className="p-3">
+                                    {quest.leaderboard.length}
+                                </td>
                                 <td className="p-3">⭐ {quest.rating}</td>
                                 <td className="p-3">10</td>
                                 {isCreatedByMe && (
