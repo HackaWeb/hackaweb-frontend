@@ -5,11 +5,19 @@ import { BooleanQuestion } from "./BooleanQuestion";
 import { PlayingProps } from "./Playing.props";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
+import { TbArrowBackUp } from "react-icons/tb";
+import { AiOutlineUser } from "react-icons/ai";
+import { Textarea } from "@/components/ui/Textarea";
+import { Chat } from "./Chat";
+import { ProgressBar } from "./ProgressBar";
+import { InfoBox } from "./InfoBox";
 
 export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<{ [key: number]: any }>({});
     const [questionsCompleted, setQuestionsCompleted] = useState<number[]>([]);
+    const [isChatOpened, setIsChatOpened] = useState(false);
 
     const currentQuestion = questions[currentQuestionIndex];
 
@@ -48,41 +56,57 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
         }
     };
 
+    const renderQuestion = () => {
+        switch (currentQuestion.type) {
+            case "choice":
+                return (
+                    <ChoiceQuestion
+                        question={currentQuestion}
+                        onAnswerChange={onAnswerChange}
+                        initialAnswer={answers[currentQuestionIndex] || []}
+                    />
+                );
+            case "input":
+                return (
+                    <InputQuestion
+                        onAnswerChange={onAnswerChange}
+                        initialAnswer={
+                            (answers[currentQuestionIndex] as string) || ""
+                        }
+                    />
+                );
+            case "boolean":
+                return (
+                    <BooleanQuestion
+                        onAnswerChange={onAnswerChange}
+                        initialAnswer={answers[currentQuestionIndex]}
+                    />
+                );
+            default:
+                return <></>;
+        }
+    };
+
     return (
         <div className="relative">
-            <div
-                className="absolute w-full top-0 left-0 right-0 grid z-10"
-                style={{
-                    gridTemplateColumns: `repeat(${questions.length}, 1fr)`,
-                }}
+            <button
+                className="absolute left-8 top-8 bg-blackOpacity-dark p-3 rounded-md cursor-pointer z-10"
+                onClick={() => setIsChatOpened(true)}
             >
-                {questions.map((_, index) => (
-                    <button
-                        key={index}
-                        className={`h-10 flex items-center justify-center font-semibold transition-all ${
-                            questionsCompleted.includes(index) ||
-                            index === currentQuestionIndex
-                                ? "bg-purple text-white cursor-pointer"
-                                : "text-gray-700 cursor-not-allowed"
-                        }`}
-                        disabled={
-                            !questionsCompleted.includes(index) &&
-                            index !== currentQuestionIndex
-                        }
-                        onClick={() => setCurrentQuestionIndex(index)}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-            </div>
+                <IoChatbubbleEllipsesSharp className="text-purple size-8" />
+            </button>
+            <Chat isOpened={isChatOpened} setIsOpened={setIsChatOpened} />
+            <ProgressBar
+                currentQuestionIndex={currentQuestionIndex}
+                setCurrentQuestionIndex={setCurrentQuestionIndex}
+                questionsCompleted={questionsCompleted}
+                questions={questions}
+            />
             <div className="bg-blackOpacity pt-16 relative">
-                <div className="absolute right-10 top-10 text-gray p-6 rounded-md bg-blackOpacity">
-                    <div>Часу залишилось: 59.59</div>
-                    <div>
-                        Питання №: {currentQuestionIndex + 1} з{" "}
-                        {questions.length}
-                    </div>
-                </div>
+                <InfoBox
+                    questionsLength={questions.length}
+                    currentQuestionIndex={currentQuestionIndex}
+                />
                 <img
                     src="/question.png"
                     alt="Питання"
@@ -92,27 +116,7 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
                     {currentQuestion.title}
                 </h1>
             </div>
-            {currentQuestion.type === "choice" && (
-                <ChoiceQuestion
-                    question={currentQuestion}
-                    onAnswerChange={onAnswerChange}
-                    initialAnswer={answers[currentQuestionIndex] || []}
-                />
-            )}
-            {currentQuestion.type === "input" && (
-                <InputQuestion
-                    onAnswerChange={onAnswerChange}
-                    initialAnswer={
-                        (answers[currentQuestionIndex] as string) || ""
-                    }
-                />
-            )}
-            {currentQuestion.type === "boolean" && (
-                <BooleanQuestion
-                    onAnswerChange={onAnswerChange}
-                    initialAnswer={answers[currentQuestionIndex]}
-                />
-            )}
+            {renderQuestion()}
             <Button
                 color="purpleBackground"
                 className="mt-6 mx-auto max-w-[200px] w-full mb-10"

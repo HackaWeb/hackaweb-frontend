@@ -1,29 +1,66 @@
-import Link from "next/link";
+"use client";
+
+import { useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
+import { IoTrophyOutline } from "react-icons/io5";
 import { LeftColumnProps } from "./LeftColumn.props";
 import { getAchievements } from "@/data/getAchievements";
 import { RenderRating } from "@/helpers/RenderRating";
 import { Button } from "@/components/ui/Button";
-import { IoTrophyOutline } from "react-icons/io5";
+import { AiOutlineClose } from "react-icons/ai";
 
 export const LeftColumn = ({ profile }: LeftColumnProps) => {
     const achievements = getAchievements(profile);
 
+    const [avatar, setAvatar] = useState<string | null>(null);
+
+    const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+
+        if (file) {
+            const imageUrl = URL.createObjectURL(file);
+            setAvatar(imageUrl);
+        }
+    };
+
     return (
-        <div className="">
+        <div>
             <div className="p-4 bg-blackOpacity rounded-md">
                 <div className="w-full h-auto aspect-square border border-purple rounded-md p-2 relative">
                     <RenderRating
                         rating={profile.rating}
                         className="gap-[6px] absolute top-1 left-1"
                     />
-                    <div className="bg-blackOpacity-dark w-full h-full flex items-center justify-center rounded-md">
-                        <AiOutlineUser className="text-purple size-20" />
+                    <div className="bg-blackOpacity-dark w-full h-full flex items-center justify-center rounded-md overflow-hidden">
+                        {avatar ? (
+                            <>
+                                <Button
+                                    className="absolute top-1 right-1 p-1"
+                                    onClick={() => setAvatar(null)}
+                                    color="redBorder"
+                                >
+                                    <AiOutlineClose className="size-5" />
+                                </Button>
+                                <img
+                                    src={avatar}
+                                    alt="Avatar"
+                                    className="w-full h-full object-cover"
+                                />
+                            </>
+                        ) : (
+                            <AiOutlineUser className="text-purple size-20" />
+                        )}
                     </div>
                 </div>
-                <Link href="#" className="underline mt-2 text-center block">
+                <label className="underline text-purple mt-2 text-center block cursor-pointer">
                     Змінити аватар
-                </Link>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={onFileChange}
+                    />
+                </label>
                 <ul className="mt-6 pb-4 border-b-2 border-b-gray-300 border-opacity-10 flex flex-col justify-start gap-2 relative">
                     {achievements.unlocked.map((achiev, index) => (
                         <li
