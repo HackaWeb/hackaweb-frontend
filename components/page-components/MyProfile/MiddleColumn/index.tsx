@@ -38,7 +38,9 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
                 }
                 return [DEFAULT_FIELD_ERROR];
             }
-            return [DEFAULT_FIELD_ERROR];
+            setFirstName(data.firstName);
+            setLastName(data.lastName);
+            return [];
         } catch (error) {
             console.error(error);
             return [DEFAULT_FIELD_ERROR];

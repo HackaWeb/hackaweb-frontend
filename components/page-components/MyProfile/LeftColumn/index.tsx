@@ -19,7 +19,7 @@ import { printToastErrorMessages } from "@/helpers/displayToasts";
 export const LeftColumn = ({ profile }: LeftColumnProps) => {
     // const achievements = getAchievements(profile);
 
-    const [avatar, setAvatar] = useState<string | null>(null);
+    const [avatar, setAvatar] = useState<string | null>(profile.avatar ?? null);
 
     const onFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -49,9 +49,11 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                 } else if (data.statusCode === 401) {
                     return [{ field: "", message: data.message }];
                 }
+                return [DEFAULT_FIELD_ERROR];
+            } else {
+                setAvatar(data.avatarUrl);
                 return [];
             }
-            return [DEFAULT_FIELD_ERROR];
         } catch (error) {
             console.error(error);
             return [DEFAULT_FIELD_ERROR];

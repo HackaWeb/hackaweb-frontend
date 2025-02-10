@@ -17,15 +17,16 @@ export const updateUserProfile = async (
     body: UpdateProfileRequestBody | FormData,
 ): Promise<UpdateUserResponse> =>
     fetchApi({
-        endpoint: "/user/user-profile/update",
+        endpoint: "/user/user-profile",
         isAuthRequired: true,
-        method: "POST",
-        body: body,
+        method: "PUT",
+        body,
     });
 
-export const deleteProfile = async (): Promise<DeleteUserResponse> =>
+export const deleteProfile = async (body): Promise<DeleteUserResponse> =>
     fetchApi({
-        endpoint: "/profile/",
+        endpoint: "/user/user-profile",
         isAuthRequired: true,
         method: "DELETE",
+        body,
     });

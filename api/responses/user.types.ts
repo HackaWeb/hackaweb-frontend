@@ -2,9 +2,7 @@ import { Profile, User } from "@/types/user.interface";
 import { BadRequestResponse } from "./common/badRequest.interface";
 import { UnathorizedResponse } from "./common/unathorized.interface";
 
-export interface DeleteUserResponseSuccess {
-    resolved: true;
-}
+export interface DeleteUserRequestSuccess {}
 
 export interface UpdateUserResponseSuccess {
     userId: string;
@@ -16,7 +14,7 @@ export interface UpdateUserResponseSuccess {
 
 export interface UpdateUserRequest extends FormData {}
 
-export interface GetUserResponseSuccess extends Profile {}
+export interface GetUserResponseSuccess extends User {}
 
 export type GetProfileResponse =
     | GetUserResponseSuccess
