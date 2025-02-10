@@ -2,34 +2,32 @@
 import { Checkbox } from "@/components/ui/Checkbox";
 import { useAnswers } from "@/hooks/useAnswers";
 import { editOption, setOptions } from "@/store/slices/options/options";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { AnswersProps } from "../Answers.props";
 
-export const BooleanAnswer = ({ fetchedOptions }: AnswersProps) => {
+export const BooleanAnswer = () => {
     const { dispatch, getOption } = useAnswers();
 
-    const checkHandler = (isCorrect: boolean, index: number) => {
-        const title = getOption(index)?.title;
+    const checkHandler = (isCorrect: boolean, id: number) => {
+        const title = getOption(id)?.title;
 
         const booleanOptions = [
             {
-                index: 0,
+                id: 0,
                 title: "Хибність",
-                isCorrect: index === 0 && isCorrect,
+                isCorrect: id === 0 && isCorrect,
             },
             {
-                index: 1,
+                id: 1,
                 title: "Істина",
-                isCorrect: index === 1 && isCorrect,
+                isCorrect: id === 1 && isCorrect,
             },
         ];
 
         if (!title) return dispatch(setOptions(booleanOptions));
 
-        if (getOption(index ? 0 : 1)!.isCorrect && isCorrect) {
+        if (getOption(id ? 0 : 1)!.isCorrect && isCorrect) {
             return toast.error("Оберіть одну правильну відповідь!");
-        } else if (!getOption(index ? 0 : 1)!.isCorrect && !isCorrect) {
+        } else if (!getOption(id ? 0 : 1)!.isCorrect && !isCorrect) {
             return dispatch(setOptions([]));
         }
 
@@ -37,14 +35,10 @@ export const BooleanAnswer = ({ fetchedOptions }: AnswersProps) => {
             editOption({
                 title,
                 isCorrect,
-                index,
+                id,
             }),
         );
     };
-
-    useEffect(() => {
-        if (fetchedOptions) dispatch(setOptions(fetchedOptions));
-    }, [fetchedOptions]);
 
     return (
         <div className="mt-4">

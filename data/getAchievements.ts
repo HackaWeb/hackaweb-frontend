@@ -3,14 +3,14 @@ import { Profile } from "@/types/user.interface";
 export const getAchievements = (profile: Profile) => {
     const possibleAchievements = [
         { name: "Топ рейтинг", condition: profile.rating >= 5 },
-        { name: "Квестер", condition: profile.questsCompleted >= 10 },
+        { name: "Квестер", condition: profile.completedQuests.length >= 10 },
         {
             name: "Майстер квестів",
             condition: profile.createdQuests.length >= 5,
         },
         {
             name: "Рекордсмен",
-            condition: profile.completedQuests.some((q) => q.correctness >= 90),
+            condition: profile.completedQuests.some((q) => q.accuracy >= 90),
         },
         { name: "Дослідник", condition: profile.completedQuests.length >= 5 },
     ];

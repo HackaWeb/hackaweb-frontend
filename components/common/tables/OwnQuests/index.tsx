@@ -52,12 +52,12 @@ export const OwnQuests = ({ profile, isCreatedByMe }: OwnQuestsProps) => {
                                 </td>
                                 <td className="p-3">
                                     <img
-                                        src={quest.imageUrl}
+                                        src={quest.file}
                                         alt={quest.title}
                                         className="w-16 h-12 object-cover rounded-md"
                                     />
                                 </td>
-                                <td className="p-3">{quest.timeLimit} хв.</td>
+                                <td className="p-3">{quest.duration} хв.</td>
                                 <td className="p-3">
                                     {quest.leaderboard.length}
                                 </td>

@@ -20,6 +20,7 @@ import {
 import { FiEdit2 } from "react-icons/fi";
 import Image from "next/image";
 import { IoImageOutline } from "react-icons/io5";
+import { createQuest } from "@/api/quests";
 
 export const CreateQuest = () => {
     const dispatch = useAppDispatch();
@@ -29,23 +30,45 @@ export const CreateQuest = () => {
     const [file, setFile] = useState<string | null>(null);
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
-    const [duration, setDuration] = useState<number>(0);
+    const [duration, setDuration] = useState<string>("");
 
     const onQuestionAddClick = () => {
         dispatch(toggleModal("QuestCreation"));
         dispatch(toggleModal("QuestionCreation"));
     };
 
-    const onQuestionEditClick = (id: number) => {
+    const onQuestionEditClick = (id: string) => {
         dispatch(setEditingId(id));
         dispatch(toggleModal("QuestCreation"));
         dispatch(toggleModal("QuestionEdit"));
     };
 
-    const onCreateQuestSubmit = (e: FormEvent) => {
+    const onCreateQuestSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        if (!file || !title.length || !duration || !description.length)
-            toast.info("Створення Квесту");
+        if (
+            !file ||
+            !title.length ||
+            !Number(duration) ||
+            !description.length ||
+            !questions.length
+        )
+            return toast.error("Заповніть коректно усі поля!");
+
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("duration", duration);
+        formData.append("file", file);
+        formData.append("questions", questions.toString());
+
+        try {
+            const res = await createQuest(formData);
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+
+        toast.success("Квест успішно створено!");
     };
 
     const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +104,7 @@ export const CreateQuest = () => {
                                 type="file"
                                 ref={fileInputRef}
                                 className="hidden "
-                                accept="image/*"
+                                accept=".png"
                                 onChange={onImageUpload}
                             />
                             <Button
@@ -132,10 +155,9 @@ export const CreateQuest = () => {
                                 <Input
                                     value={duration}
                                     onChange={(e) =>
-                                        setDuration(Number(e.target.value))
+                                        setDuration(e.target.value)
                                     }
                                     id="duration"
-                                    type="number"
                                     className="mt-2"
                                 />
                             </div>
@@ -151,10 +173,10 @@ export const CreateQuest = () => {
                                             key={index}
                                             className="flex gap-2 place-items-center"
                                         >
-                                            {question.image ? (
+                                            {question.file?.includes(".png") ? (
                                                 <figure className="w-14 h-14 place-content-center">
                                                     <Image
-                                                        src={question.image}
+                                                        src={question.file}
                                                         alt="question image"
                                                         className="rounded-md "
                                                         sizes="100vw"

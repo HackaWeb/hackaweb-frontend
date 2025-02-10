@@ -7,9 +7,9 @@ export interface Quest {
     title: string;
     description: string;
     rating: number;
-    imageUrl: string;
+    file: string;
     createdAt: string;
-    timeLimit: number;
+    duration: number;
     owner: User;
     reviews: Review[];
     questions: Question[] | QuestionWhileTesting[];

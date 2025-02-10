@@ -9,7 +9,7 @@ export const Quest = ({ quest }: QuestProps) => {
     return (
         <div className="bg-blackOpacity-dark hover:scale-105 transition duration-200 rounded-lg">
             <Image
-                src={quest.imageUrl}
+                src={quest.file}
                 alt={quest.title}
                 className="w-full h-auto"
                 width={0}
@@ -35,7 +35,7 @@ export const Quest = ({ quest }: QuestProps) => {
                         {quest.leaderboard.length}
                     </div>
                     <div className="flex items-center gap-1">
-                        {quest.timeLimit} хв.
+                        {quest.duration} хв.
                         <MdOutlineAccessTimeFilled />
                     </div>
                 </div>

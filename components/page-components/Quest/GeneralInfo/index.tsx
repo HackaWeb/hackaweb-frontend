@@ -10,7 +10,7 @@ export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
     return (
         <div className="bg-blackOpacity rounded-md">
             <Image
-                src={quest.imageUrl}
+                src={quest.file}
                 alt="Тест"
                 width={0}
                 height={0}

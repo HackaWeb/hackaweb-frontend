@@ -1,10 +1,7 @@
 import { UserProfilePageComponent } from "@/components/page-components/UserProfile";
 import { Profile } from "@/types/user.interface";
-import { UserProfilePageProps } from "./page.props";
-import { GetServerSideProps } from "next";
 import { getProfile } from "@/api/user";
 import { toast } from "react-toastify";
-import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 import { getPathname } from "@/helpers/getPathname";
 import { getCookie } from "@/helpers/getCookie";
@@ -15,13 +12,14 @@ const defaultProfile: Profile = {
     firstName: "Test",
     lastName: "User",
     rating: 5,
+    isAdmin: false,
     createdQuests: [
         {
             id: "quest1",
             title: "Adventure in the Forest",
             description: "Explore the mysterious forest and solve puzzles.",
             rating: 4.8,
-            imageUrl: "/test.png",
+            file: "/test.png",
             createdAt: "2024-02-08T12:00:00Z",
             owner: {
                 id: "1",
@@ -30,9 +28,10 @@ const defaultProfile: Profile = {
                 lastName: "User",
                 rating: 4.5,
                 avatar: null,
+                isAdmin: false,
             },
             leaderboard: [],
-            timeLimit: 30,
+            duration: 30,
             reviews: [],
             questions: [],
         },
@@ -41,7 +40,7 @@ const defaultProfile: Profile = {
             title: "Adventure in the Forest",
             description: "Explore the mysterious forest and solve puzzles.",
             rating: 4.8,
-            imageUrl: "/test.png",
+            file: "/test.png",
             createdAt: "2024-02-08T12:00:00Z",
             owner: {
                 id: "1",
@@ -50,9 +49,10 @@ const defaultProfile: Profile = {
                 lastName: "User",
                 rating: 4.5,
                 avatar: null,
+                isAdmin: false,
             },
             leaderboard: [],
-            timeLimit: 30,
+            duration: 30,
             reviews: [],
             questions: [],
         },
@@ -61,7 +61,7 @@ const defaultProfile: Profile = {
             title: "Adventure in the Forest",
             description: "Explore the mysterious forest and solve puzzles.",
             rating: 4.8,
-            imageUrl: "/test.png",
+            file: "/test.png",
             createdAt: "2024-02-08T12:00:00Z",
             owner: {
                 id: "1",
@@ -70,9 +70,10 @@ const defaultProfile: Profile = {
                 lastName: "User",
                 rating: 4.5,
                 avatar: null,
+                isAdmin: false,
             },
             leaderboard: [],
-            timeLimit: 30,
+            duration: 30,
             reviews: [],
             questions: [],
         },
@@ -86,7 +87,7 @@ const defaultProfile: Profile = {
                 description:
                     "Find the lost treasure hidden deep in the mountains.",
                 rating: 4.7,
-                imageUrl: "/test.png",
+                file: "/test.png",
                 createdAt: "2024-02-07T15:00:00Z",
                 owner: {
                     id: "2",
@@ -95,8 +96,9 @@ const defaultProfile: Profile = {
                     lastName: "Owner",
                     rating: 4.9,
                     avatar: null,
+                    isAdmin: false,
                 },
-                timeLimit: 45,
+                duration: 45,
                 reviews: [],
                 questions: [],
                 leaderboard: [
@@ -108,6 +110,7 @@ const defaultProfile: Profile = {
                             lastName: "User",
                             rating: 4.5,
                             avatar: null,
+                            isAdmin: false,
                         },
                         accuracy: 90,
                         timeSpent: 45,
@@ -125,6 +128,7 @@ const defaultProfile: Profile = {
                 firstName: "Test",
                 lastName: "User",
                 rating: 4.5,
+                isAdmin: false,
             },
         },
     ],
