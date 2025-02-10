@@ -23,6 +23,7 @@ export const Aside = ({ profile }: AsideProps) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const pathname = usePathname();
+
     const aside = useAppSelector(selectAside);
 
     const setIsAsideOpenedHandler = (value: boolean) => {
