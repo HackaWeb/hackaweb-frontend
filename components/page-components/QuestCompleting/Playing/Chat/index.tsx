@@ -23,7 +23,7 @@ export const Chat = ({ isOpened, setIsOpened }: ChatProps) => {
     return (
         <div
             className={cn(
-                "fixed left-0 top-0 bottom-0 max-w-[550px] w-full bg-[#16192C] p-6 z-20",
+                "fixed left-0 top-0 bottom-0 max-w-[550px] w-auto sm:w-full right-10 sm:right-0 bg-[#16192C] p-3 xsm:p-6 z-20",
                 " duration-300 ease-in-out",
                 isOpened
                     ? "translate-x-0 opacity-100"
@@ -32,13 +32,13 @@ export const Chat = ({ isOpened, setIsOpened }: ChatProps) => {
         >
             <Button
                 color="purpleBorder"
-                className="p-2 absolute right-4 top-4"
+                className="p-2 absolute xsm:right-4 xsm:top-4 top-2 right-2"
                 onClick={() => setIsOpened(false)}
             >
-                <TbArrowBackUp className="size-6" />
+                <TbArrowBackUp className="size-4 xsm:size-6" />
             </Button>
             <div className="flex flex-col h-[100vh] rounded-md">
-                <div className="text-center text-2xl font-semibold mb-4">
+                <div className="text-center text-lg xsm:text-2xl font-semibold mb-4">
                     Чат учасників тесту
                 </div>
                 <ul className="flex-grow overflow-y-auto pr-2">
@@ -47,43 +47,45 @@ export const Chat = ({ isOpened, setIsOpened }: ChatProps) => {
                         .map((_, index) => (
                             <li
                                 key={index}
-                                className="flex justify-between py-4 border-b border-gray-700"
+                                className="py-4 border-b border-gray-700"
                             >
-                                <div className="flex items-start gap-3">
-                                    <div className="rounded-md border border-purple p-3">
-                                        <AiOutlineUser className="text-purple size-6" />
-                                    </div>
-                                    <div>
-                                        <div className="text-lg font-semibold">
-                                            Danil Diachenko
+                                <div className="flex justify-between">
+                                    <div className="flex items-start gap-3">
+                                        <div className="rounded-md border border-purple p-3">
+                                            <AiOutlineUser className="text-purple size-6" />
                                         </div>
-                                        <p className="text-gray mt-2">
-                                            Тест повідомлення
-                                        </p>
+                                        <div>
+                                            <div className="text-base xsm:text-lg font-semibold mt-1">
+                                                Danil Diachenko
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="text-gray-dark text-xs xsm:text-sm">
+                                        1 хв тому
                                     </div>
                                 </div>
-                                <div className="text-gray-dark text-sm">
-                                    1 хв тому
-                                </div>
+                                <p className="text-gray mt-2 text-sm xsm:text-base">
+                                    Тест повідомлення
+                                </p>
                             </li>
                         ))}
                 </ul>
 
                 {/* Форма остается внизу */}
-                <form className="sticky bottom-0 p-4 mt-4">
+                <form className="sticky bottom-0 p-2 xsm:p-4 mt-4">
                     <label htmlFor="message" className="text-white">
                         Ваше повідомлення
                     </label>
                     <Textarea
                         placeholder="Текст повідомлення..."
-                        className="mt-2 h-[100px]"
+                        className="mt-2 text-sm xsm:text-base max-h-[75px] h-full xsm:max-h-none xsm:h-[100px] min-h-0"
                     />
                     <Button
                         color="purpleBackground"
-                        className="mt-4 flex items-center gap-2"
+                        className="mt-4 mb-4 flex items-center gap-2 text-sm xsm:text-base"
                     >
                         <span>Надіслати</span>
-                        <LuSend className="size-5" />
+                        <LuSend className="size-3 xsm:size-5" />
                     </Button>
                 </form>
             </div>

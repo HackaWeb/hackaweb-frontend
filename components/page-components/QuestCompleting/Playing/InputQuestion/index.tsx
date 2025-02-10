@@ -20,11 +20,11 @@ export const InputQuestion = ({
     };
 
     return (
-        <div className="mt-10 max-w-[400px] mx-auto">
-            <div className="text-2xl">Ваша відповідь</div>
+        <div className="mt-10 max-w-[400px] mx-auto px-4">
+            <div className="text-lg md:text-2xl">Ваша відповідь</div>
             <Input
                 placeholder="Впишіть відповідь..."
-                className="mt-3 text-lg"
+                className="mt-3 text-base md:text-lg"
                 value={answer || ""}
                 onChange={onInputChange}
             />

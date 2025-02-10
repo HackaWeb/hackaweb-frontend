@@ -6,7 +6,7 @@ import { WaitingRoomProps } from "./WaitingRoom.props";
 
 export const WaitingRoom = ({ onStartQuestClick }: WaitingRoomProps) => {
     return (
-        <div>
+        <>
             <div className="bg-blackOpacity pt-6">
                 <Link href="#" className="block ml-6">
                     <Button color="purpleBorder">
@@ -21,7 +21,7 @@ export const WaitingRoom = ({ onStartQuestClick }: WaitingRoomProps) => {
                         width={0}
                         height={0}
                         sizes="100vw"
-                        className="mx-auto mt-3 rounded-lg max-w-[800px]"
+                        className="mx-auto mt-3 rounded-lg max-w-[800px] px-6"
                         loading="eager"
                     />
                     <h1 className="py-10 text-center">Назва Квесту</h1>
@@ -34,6 +34,6 @@ export const WaitingRoom = ({ onStartQuestClick }: WaitingRoomProps) => {
             >
                 Почати квест
             </Button>
-        </div>
+        </>
     );
 };
