@@ -9,7 +9,7 @@ import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 import { getPathname } from "@/helpers/getPathname";
 import { getCookie } from "@/helpers/getCookie";
 
-const defaultProfile: Profile = {
+/* const defaultProfile: Profile = {
     id: "1",
     email: "testuser@example.com",
     firstName: "Test",
@@ -128,7 +128,7 @@ const defaultProfile: Profile = {
             },
         },
     ],
-};
+}; */
 
 const UserProfile = async () => {
     const pathname = await getPathname();
