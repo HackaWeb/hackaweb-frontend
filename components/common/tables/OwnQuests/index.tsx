@@ -40,7 +40,6 @@ export const OwnQuests = ({ profile, isCreatedByMe }: OwnQuestsProps) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/*
                         {profile.createdQuests.map((quest, index) => (
                             <tr
                                 key={index}
@@ -76,7 +75,6 @@ export const OwnQuests = ({ profile, isCreatedByMe }: OwnQuestsProps) => {
                                 )}
                             </tr>
                         ))}
-                        */}
                     </tbody>
                 </table>
             </div>

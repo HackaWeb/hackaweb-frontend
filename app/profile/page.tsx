@@ -124,11 +124,13 @@ const defaultProfile: Profile = {
 };
 
 const MyProfile = async () => {
-    let profile;
+    let profile: Profile;
     try {
-        profile = await getProfile();
-        if ("statusCode" in profile) {
+        const data = await getProfile();
+        if ("statusCode" in data) {
             profile = defaultProfile;
+        } else {
+            profile = { ...data, createdQuests: [], completedQuests: [] };
         }
         console.log(profile);
     } catch (error) {

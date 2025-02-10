@@ -26,7 +26,7 @@ export const LoginPageComponent = () => {
             const res = await login(loginRequestBody);
 
             if ("jwtToken" in res) {
-                setCookie("jwtToken", res.jwtToken);
+                setCookie("token", res.jwtToken);
                 return [];
             }
 

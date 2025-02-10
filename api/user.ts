@@ -1,6 +1,7 @@
 import { fetchApi } from "./fetchApi.api";
 import { UpdateProfileRequestBody } from "./requestBodies/profile.interface";
 import {
+    DeleteUserRequest,
     DeleteUserResponse,
     GetProfileResponse,
     UpdateUserResponse,
@@ -23,7 +24,9 @@ export const updateUserProfile = async (
         body,
     });
 
-export const deleteProfile = async (body): Promise<DeleteUserResponse> =>
+export const deleteUserProfile = async (
+    body: DeleteUserRequest = null,
+): Promise<DeleteUserResponse> =>
     fetchApi({
         endpoint: "/user/user-profile",
         isAuthRequired: true,
