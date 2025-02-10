@@ -67,7 +67,7 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
                     )}
                     <main
                         className={
-                            !pathname.includes("quest-completing") ? "p-12" : ""
+                            !pathname.includes("quest-completing") ? "sm:p-12 p-6" : ""
                         }
                     >
                         {children}
