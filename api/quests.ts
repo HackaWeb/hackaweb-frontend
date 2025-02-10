@@ -1,8 +1,5 @@
 import { fetchApi } from "./fetchApi";
-import {
-    CreateQuestBody,
-    GetQuestByOwnerIdBody,
-} from "./requestBodies/quests.interface";
+import { GetQuestByOwnerIdBody } from "./requestBodies/quests.interface";
 import {
     GetQuestByIdResponse,
     GetQuestByOwnerIdResponse,
@@ -28,7 +25,7 @@ export const getQuestsByOwnerId = async (
         body,
     });
 
-export const createQuest = async (body: CreateQuestBody) =>
+export const createQuest = async (body: FormData) =>
     fetchApi({
         endpoint: "/quiz/",
         isAuthRequired: true,

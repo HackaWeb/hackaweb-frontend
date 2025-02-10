@@ -18,7 +18,6 @@ function QuestionEdit() {
         dispatch,
         file,
         fileInputRef,
-        fileType,
         modals,
         onFileUpload,
         options,
@@ -48,8 +47,7 @@ function QuestionEdit() {
             title: title || question.title,
             type: (questionType.value as QuestionType) || question.type,
             options: options.length ? options : question.options,
-            image: file && fileType === "image" ? file : question.image,
-            video: file && fileType === "video" ? file : question.video,
+            file: file ? file : undefined,
         };
 
         dispatch(editQuestion(edited));
@@ -78,16 +76,17 @@ function QuestionEdit() {
                     <div className="text-3xl mt-10">Редагування Питання</div>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
-                            {file || question?.image || question?.video ? (
-                                file || question?.image ? (
+                            {file || question?.file ? (
+                                file?.includes(".png") ||
+                                question?.file?.includes(".png") ? (
                                     <img
-                                        src={file || question?.image}
+                                        src={file || question?.file}
                                         alt="Зображення питання"
                                         className="w-full h-auto aspect-square object-cover"
                                     />
                                 ) : (
                                     <video
-                                        src={file || question?.video}
+                                        src={file || question?.file}
                                         controls
                                         className="w-full h-auto aspect-square object-cover"
                                     />
@@ -102,7 +101,7 @@ function QuestionEdit() {
                                 type="file"
                                 ref={fileInputRef}
                                 className="hidden"
-                                accept="image/*,video/*"
+                                accept=".png, .mp4"
                                 onChange={onFileUpload}
                             />
                             <div

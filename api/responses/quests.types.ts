@@ -1,4 +1,6 @@
-export interface GetQuestByIdResponse {
+import { LeaderboardUser } from "@/types/quest.interface";
+
+export interface GetQuestByOwnerIdResponse {
     pageNumber: number;
     pageSize: number;
     totalItems: number;
@@ -7,39 +9,39 @@ export interface GetQuestByIdResponse {
         {
             id: string;
             title: string;
-            imageUrl: string; //
+            file: string;
             duration: number;
             rate: number;
-            taskCount: number; //
+            taskCount: number;
         },
     ];
 }
-export interface GetQuestByOwnerIdResponse {
+export interface GetQuestByIdResponse {
     quiz: {
         id: string;
         title: string;
         description: string;
         createdAt: string;
-        imageUrl: string; //
+        file: string;
         rate: number;
-        passCount: number; //
         ownerId: string;
         duration: number;
         questions: [
             {
                 id: string;
-                text: string; // title?
+                title: string;
                 mediaUrl: string;
                 type: number;
                 choiceOptions: [
                     {
-                        id: string;
+                        id: number;
                         title: string;
                         isCorrect: boolean;
                     },
                 ];
             },
         ];
+        leaderboard: LeaderboardUser[]; //Чекаємо Фікс від Сергія
         feedbacks: [
             {
                 id: string;

@@ -13,8 +13,8 @@ import { useAnswers } from "@/hooks/useAnswers";
 export const Choice = () => {
     const { dispatch, getOption, isChecked } = useAnswers();
 
-    const checkHandler = (isCorrect: boolean, index: number) => {
-        const option = getOption(index);
+    const checkHandler = (isCorrect: boolean, id: number) => {
+        const option = getOption(id);
 
         if (!option) return toast.error("Спочатку напишіть варіант відповіді!");
 
@@ -22,24 +22,24 @@ export const Choice = () => {
             editOption({
                 title: option.title,
                 isCorrect,
-                index,
+                id,
             }),
         );
     };
 
-    const inputHandler = (e: ChangeEvent<HTMLInputElement>, index: number) => {
+    const inputHandler = (e: ChangeEvent<HTMLInputElement>, id: number) => {
         const title = e.target.value;
 
-        if (!title) return dispatch(removeOption(index));
+        if (!title) return dispatch(removeOption(id));
 
-        if (!getOption(index))
-            return dispatch(addOption({ index, title, isCorrect: false }));
+        if (!getOption(id))
+            return dispatch(addOption({ id, title, isCorrect: false }));
 
         dispatch(
             editOption({
                 title,
-                index,
-                isCorrect: isChecked(index),
+                id,
+                isCorrect: isChecked(id),
             }),
         );
     };
@@ -50,21 +50,19 @@ export const Choice = () => {
                 Оберіть правильну-(і) відповідь-(і)
             </label>
             <div>
-                {[1, 2, 3, 4].map((_, index) => {
+                {[1, 2, 3, 4].map((_, id) => {
                     return (
-                        <div className="mt-2" key={index}>
+                        <div className="mt-2" key={id}>
                             <div className="flex justify-between relative">
                                 <Input
-                                    placeholder={`Впишіть варіант ${
-                                        index + 1
-                                    }..`}
-                                    value={getOption(index)?.title || ""}
-                                    onChange={(e) => inputHandler(e, index)}
+                                    placeholder={`Впишіть варіант ${id + 1}..`}
+                                    value={getOption(id)?.title || ""}
+                                    onChange={(e) => inputHandler(e, id)}
                                 />
                                 <Checkbox
-                                    checked={isChecked(index)}
+                                    checked={isChecked(id)}
                                     onChange={(e) => {
-                                        checkHandler(e, index);
+                                        checkHandler(e, id);
                                     }}
                                     className="absolute right-4 top-3"
                                 />

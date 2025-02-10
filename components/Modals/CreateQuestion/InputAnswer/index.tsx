@@ -16,12 +16,12 @@ export const InputAnswer = () => {
         if (!title) return dispatch(removeOption(0));
 
         if (!getOption(0))
-            return dispatch(addOption({ index: 0, title, isCorrect: true }));
+            return dispatch(addOption({ id: 0, title, isCorrect: true }));
 
         dispatch(
             editOption({
                 title,
-                index: 0,
+                id: 0,
                 isCorrect: true,
             }),
         );

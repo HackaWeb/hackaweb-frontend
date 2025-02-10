@@ -30,14 +30,14 @@ export const CreateQuest = () => {
     const [file, setFile] = useState<string | null>(null);
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
-    const [duration, setDuration] = useState<number>(0);
+    const [duration, setDuration] = useState<string>("");
 
     const onQuestionAddClick = () => {
         dispatch(toggleModal("QuestCreation"));
         dispatch(toggleModal("QuestionCreation"));
     };
 
-    const onQuestionEditClick = (id: number) => {
+    const onQuestionEditClick = (id: string) => {
         dispatch(setEditingId(id));
         dispatch(toggleModal("QuestCreation"));
         dispatch(toggleModal("QuestionEdit"));
@@ -48,22 +48,21 @@ export const CreateQuest = () => {
         if (
             !file ||
             !title.length ||
-            !duration ||
+            !Number(duration) ||
             !description.length ||
             !questions.length
         )
-            return toast.error("Заповніть усі поля!");
+            return toast.error("Заповніть коректно усі поля!");
 
-        const body = {
-            title,
-            description,
-            duration,
-            file,
-            questions,
-        };
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("duration", duration);
+        formData.append("file", file);
+        formData.append("questions", questions.toString());
 
         try {
-            const res = await createQuest(body);
+            const res = await createQuest(formData);
             console.log(res);
         } catch (error) {
             console.log(error);
@@ -105,7 +104,7 @@ export const CreateQuest = () => {
                                 type="file"
                                 ref={fileInputRef}
                                 className="hidden "
-                                accept="image/*"
+                                accept=".png"
                                 onChange={onImageUpload}
                             />
                             <Button
@@ -156,10 +155,9 @@ export const CreateQuest = () => {
                                 <Input
                                     value={duration}
                                     onChange={(e) =>
-                                        setDuration(Number(e.target.value))
+                                        setDuration(e.target.value)
                                     }
                                     id="duration"
-                                    type="number"
                                     className="mt-2"
                                 />
                             </div>
@@ -175,10 +173,10 @@ export const CreateQuest = () => {
                                             key={index}
                                             className="flex gap-2 place-items-center"
                                         >
-                                            {question.image ? (
+                                            {question.file?.includes(".png") ? (
                                                 <figure className="w-14 h-14 place-content-center">
                                                     <Image
-                                                        src={question.image}
+                                                        src={question.file}
                                                         alt="question image"
                                                         className="rounded-md "
                                                         sizes="100vw"

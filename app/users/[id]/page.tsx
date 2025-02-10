@@ -1,10 +1,7 @@
 import { UserProfilePageComponent } from "@/components/page-components/UserProfile";
 import { Profile } from "@/types/user.interface";
-import { UserProfilePageProps } from "./page.props";
-import { GetServerSideProps } from "next";
 import { getProfile } from "@/api/user";
 import { toast } from "react-toastify";
-import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 import { getPathname } from "@/helpers/getPathname";
 import { getCookie } from "@/helpers/getCookie";
@@ -15,6 +12,7 @@ const defaultProfile: Profile = {
     firstName: "Test",
     lastName: "User",
     rating: 5,
+    isAdmin: false,
     createdQuests: [
         {
             id: "quest1",
@@ -30,6 +28,7 @@ const defaultProfile: Profile = {
                 lastName: "User",
                 rating: 4.5,
                 avatar: null,
+                isAdmin: false,
             },
             leaderboard: [],
             duration: 30,
@@ -50,6 +49,7 @@ const defaultProfile: Profile = {
                 lastName: "User",
                 rating: 4.5,
                 avatar: null,
+                isAdmin: false,
             },
             leaderboard: [],
             duration: 30,
@@ -70,6 +70,7 @@ const defaultProfile: Profile = {
                 lastName: "User",
                 rating: 4.5,
                 avatar: null,
+                isAdmin: false,
             },
             leaderboard: [],
             duration: 30,
@@ -95,6 +96,7 @@ const defaultProfile: Profile = {
                     lastName: "Owner",
                     rating: 4.9,
                     avatar: null,
+                    isAdmin: false,
                 },
                 duration: 45,
                 reviews: [],
@@ -108,6 +110,7 @@ const defaultProfile: Profile = {
                             lastName: "User",
                             rating: 4.5,
                             avatar: null,
+                            isAdmin: false,
                         },
                         accuracy: 90,
                         timeSpent: 45,
@@ -125,6 +128,7 @@ const defaultProfile: Profile = {
                 firstName: "Test",
                 lastName: "User",
                 rating: 4.5,
+                isAdmin: false,
             },
         },
     ],

@@ -24,7 +24,7 @@ const options = createSlice({
         },
         editOption: (state, action: PayloadAction<ChoiceOption>) => {
             const filtered = state.options.filter(
-                (option) => option.index !== action.payload.index,
+                (option) => option.id !== action.payload.id,
             );
 
             return {
@@ -34,7 +34,7 @@ const options = createSlice({
         },
         removeOption: (state, action: PayloadAction<number>) => {
             const options = state.options.filter(
-                (option) => option.index !== action.payload,
+                (option) => option.id !== action.payload,
             );
             return {
                 ...state,
