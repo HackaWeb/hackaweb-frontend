@@ -8,7 +8,7 @@ import { cn } from "@/helpers/cn";
 import { ToastProvider } from "@/components/providers/Toast";
 import { getCookie } from "@/helpers/getCookie";
 import { getPathname } from "@/helpers/getPathname";
-import { Modals } from "@/components/modals";
+import { Modals } from "@/components/Modals";
 import { getProfile } from "@/api/user";
 
 const inter = Inter({
