@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { AiOutlineUser } from "react-icons/ai";
+import { AiOutlineUser, AiOutlineClose } from "react-icons/ai";
 import { IoTrophyOutline } from "react-icons/io5";
 import { LeftColumnProps } from "./LeftColumn.props";
 import { getAchievements } from "@/data/getAchievements";
 import { RenderRating } from "@/helpers/RenderRating";
 import { Button } from "@/components/ui/Button";
-import { AiOutlineClose } from "react-icons/ai";
-import { deleteUserProfile, updateUserProfile } from "@/api/user";
+import { updateUserProfile, deleteUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
 import {
     DEFAULT_FIELD_ERROR,
@@ -28,22 +27,17 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
         imageData: File,
     ): Promise<RequestError[]> => {
         const formData = new FormData();
-
         formData.append("Avatar", imageData);
 
         try {
             const data = await updateUserProfile(formData);
-
             if ("statusCode" in data) {
-                if (data.statusCode === 400) {
-                    return data.errors;
-                } else if (data.statusCode === 401) {
-                    return [{ field: "", message: data.message }];
-                }
-
-                return [DEFAULT_FIELD_ERROR];
+                return data.statusCode === 400
+                    ? data.errors
+                    : [{ field: "", message: data.message }];
             } else {
                 setAvatar(data.avatarUrl);
+                toast.success("Аватар успішно змінено!");
                 return [];
             }
         } catch (error) {
@@ -52,55 +46,64 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
         }
     };
 
+    const deleteAvatarHandler = async () => {
+        const body = new FormData();
+        body.append("avatar", "");
+
+        try {
+            const data = await updateUserProfile(body);
+
+            if ("statusCode" in data) {
+                if ("message" in data) {
+                    printToastErrorMessages([data.message]);
+                }
+            } else {
+                setAvatar(null);
+                toast.success("Аватар успішно видалено!");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error(DEFAULT_FIELD_ERROR.message);
+        }
+    };
+
     const onAvatarChange = async (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         const file = event.target.files?.[0];
-
         if (!file) return;
 
-        const imageUrl = URL.createObjectURL(file);
-        setAvatar(imageUrl);
-
+        setAvatar(URL.createObjectURL(file));
         const result = await updateAvatarHandler(file);
 
-        if (result.length === 0) {
-            toast.success("Аватар успішно змінено!");
-        } else {
+        if (result.length > 0) {
             printToastErrorMessages(result.map((res) => res.message));
         }
     };
 
     const deleteProfileHandler = async () => {
-        const data = await deleteUserProfile();
-
-        console.log(data);
-        if ("statusCode" in data) {
-            if (data.statusCode === 400) {
+        try {
+            const data = await deleteUserProfile();
+            if ("statusCode" in data && data.statusCode !== 200) {
                 return data.errors;
-            } else if (data.statusCode === 200) {
-                return [];
             }
+            return [];
+        } catch (error) {
             return [DEFAULT_FIELD_ERROR];
         }
-
-        return [];
     };
 
     const onProfileDelete = async () => {
         try {
             const result = await deleteProfileHandler();
-
             if (result.length === 0) {
                 toast.success("Ваш профіль успішно видалено!");
                 setCookie("token", "");
-                
                 router.push("/");
             } else {
                 printToastErrorMessages(result.map((res) => res.message));
             }
         } catch (error) {
-            console.log(error);
             toast.error(DEFAULT_FIELD_ERROR.message);
         }
     };
@@ -118,7 +121,7 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                             <>
                                 <Button
                                     className="absolute top-1 right-1 p-1"
-                                    onClick={() => setAvatar(null)}
+                                    onClick={deleteAvatarHandler}
                                     color="redBorder"
                                 >
                                     <AiOutlineClose className="size-5" />

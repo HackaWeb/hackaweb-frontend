@@ -126,8 +126,12 @@ import { redirect } from "next/navigation";
 }; */
 
 const MyProfile = async () => {
-    let profile: Profile;
+    const token = await getCookie("token");
+    let profile: Profile | null = null;
 
+    if (!token) {
+        profile = null;
+    }
     try {
         const data = await getProfile();
 

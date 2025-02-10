@@ -2,18 +2,14 @@ import { fetchApi } from "./fetchApi";
 import {
     DeleteUserResponse,
     GetProfileResponse,
-    GetUserRequest,
     UpdateUserResponse,
 } from "./responses/user.types";
 
-export const getProfile = async (
-    body: GetUserRequest = null,
-): Promise<GetProfileResponse> =>
+export const getProfile = async (): Promise<GetProfileResponse> =>
     fetchApi({
         endpoint: "/user/user-profile/",
         isAuthRequired: false,
         method: "GET",
-        body,
     });
 
 export const updateUserProfile = async (
