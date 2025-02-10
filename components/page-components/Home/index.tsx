@@ -21,6 +21,7 @@ const sortOptions: SelectOption[] = [
 
 export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
     const dispatch = useAppDispatch();
+
     const [sortOption, setSortOption] = useState<SelectOption | null>(null);
     const [searchQuest, setSearchQuest] = useState<string>("");
     const [quests, setQuests] = useState(serverQuests);
@@ -38,10 +39,10 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
                     <IoCreateOutline className="size-6" />
                 </Button>
             </Link>
-            <div className="flex gap-4 mt-10">
+            <div className="flex gap-4 mt-10 flex-col xsm:flex-row">
                 <Input
                     placeholder="Пошук за назвою..."
-                    className="max-w-[300px]"
+                    className="sxm:max-w-[300px] max-w-none"
                     value={searchQuest}
                     onChange={(e) => setSearchQuest(e.target.value)}
                 />
@@ -51,7 +52,7 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
                     setActiveOption={setSortOption}
                     id="sort-select"
                     placeholder="Сортувати за..."
-                    className="max-w-[300px]"
+                    className="xsm:max-w-[300px] max-w-none"
                 />
             </div>
             <div className="mt-4 text-gray">
@@ -60,7 +61,7 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
             </div>
             {quests.length ? (
                 <>
-                    <div className="grid grid-cols-5 gap-7 mt-6">
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-7 mt-6">
                         {quests.map((quest) => (
                             <Quest key={quest.id} quest={quest} />
                         ))}
