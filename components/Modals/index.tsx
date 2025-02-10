@@ -1,15 +1,15 @@
 import { CreateQuest } from "./CreateQuest";
-import QuestEdit from "../modals/QuestEdit";
 import { CreateQuestion } from "./CreateQuestion";
-import QuestionEdit from "../modals/QuestionEdit";
+import QuestEdit from "./QuestEdit";
+import QuestionEdit from "./QuestionEdit";
 
 export const Modals = () => {
     return (
         <>
             <CreateQuest />
-            <QuestEdit />
             <CreateQuestion />
             <QuestionEdit />
+            <QuestEdit />
         </>
     );
 };

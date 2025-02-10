@@ -2,7 +2,7 @@
 
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import ModalBg from "../../modals/ModalBg";
+import ModalBg from "../ModalBg";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { RiEditLine } from "react-icons/ri";
 import { Button } from "@/components/ui/Button";
