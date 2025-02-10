@@ -13,11 +13,10 @@ import { Profile } from "@/types/user.interface";
 
 export const UserProfilePageComponent = ({ id, isAdmin }: UserProfileProps) => {
     const [profile, setProfile] = useState<Profile | null>();
-    console.log(id);
     useEffect(() => {
         const getProfileData = async () => {
             try {
-                const data = await getProfile({ userId: id as string });
+                const data = await getProfile(id);
                 if ("statusCode" in data) {
                     if (data.statusCode === 400) {
                         printToastErrorMessages(

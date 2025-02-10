@@ -5,9 +5,11 @@ import {
     UpdateUserResponse,
 } from "./responses/user.types";
 
-export const getProfile = async (): Promise<GetProfileResponse> =>
+export const getProfile = async (
+    userId?: string,
+): Promise<GetProfileResponse> =>
     fetchApi({
-        endpoint: "/user/user-profile/",
+        endpoint: `/user/user-profile${userId ? `?userId=${userId}` : ""}`,
         isAuthRequired: true,
         method: "GET",
     });

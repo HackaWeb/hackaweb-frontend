@@ -1,4 +1,3 @@
-import Block from "@/components/ui/Block";
 import { MdModeEdit } from "react-icons/md";
 import { IoMdTrash } from "react-icons/io";
 import Link from "next/link";
@@ -19,7 +18,7 @@ const UserQuestsDashboard = ({
     isActionable,
 }: MyQuestsDashboardProps) => {
     return (
-        <Block className="p-0 bg-black">
+        <div className="p-0 bg-black">
             <div className="flex justify-between w-full px-4 pt-4 items-center gap-8">
                 <h2 className="font-bold text-xl">{title}</h2>
                 {isActionable && (
@@ -85,7 +84,7 @@ const UserQuestsDashboard = ({
                         ))}
                 </tbody>
             </table>
-        </Block>
+        </div>
     );
 };
 

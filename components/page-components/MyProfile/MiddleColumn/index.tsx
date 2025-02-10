@@ -8,8 +8,11 @@ import { updateUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
 import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
+import { useRouter } from "next/navigation";
 
 export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
+    const router = useRouter();
+
     const [userData, setUserData] = useState({
         firstName: profile.firstName || "",
         lastName: profile.lastName || "",
@@ -44,6 +47,7 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
         const result = await updateUserDataHandler(formData);
 
         if (result.length === 0) {
+            router.refresh();
             toast.success("Ваші дані успішно оновлено");
         } else {
             printToastErrorMessages(result.map((res) => res.message));
