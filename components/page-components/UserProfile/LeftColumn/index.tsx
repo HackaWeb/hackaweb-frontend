@@ -1,11 +1,120 @@
-import { AiOutlineUser } from "react-icons/ai";
+"use client";
+
+import { AiOutlineClose, AiOutlineUser } from "react-icons/ai";
 import { LeftColumnProps } from "./LeftColumn.props";
 import { getAchievements } from "@/data/getAchievements";
 import { RenderRating } from "@/helpers/RenderRating";
 import { IoTrophyOutline } from "react-icons/io5";
+import { Button } from "@/components/ui/Button";
+import { useState } from "react";
+import {
+    DEFAULT_FIELD_ERROR,
+    RequestError,
+} from "@/api/responses/common/failure.interface";
+import { deleteUserProfile, updateUserProfile } from "@/api/user";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { printToastErrorMessages } from "@/helpers/displayToasts";
+import { setCookie } from "@/helpers/setCookie";
 
-export const LeftColumn = ({ profile }: LeftColumnProps) => {
+export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
     const achievements = getAchievements(profile);
+    const [avatar, setAvatar] = useState<string | null>(profile.avatar);
+    const router = useRouter();
+
+    const updateAvatarHandler = async (
+        imageData: File,
+    ): Promise<RequestError[]> => {
+        const formData = new FormData();
+        formData.append("Avatar", imageData);
+        if (id) {
+            formData.append("userId", id);
+        }
+
+        try {
+            const data = await updateUserProfile(formData);
+            if ("statusCode" in data) {
+                return data.statusCode === 400
+                    ? data.errors
+                    : [{ field: "", message: data.message }];
+            } else {
+                setAvatar(data.avatarUrl);
+                router.refresh();
+                toast.success("Аватар успішно змінено!");
+                return [];
+            }
+        } catch (error) {
+            console.error(error);
+            return [DEFAULT_FIELD_ERROR];
+        }
+    };
+
+    const deleteAvatarHandler = async () => {
+        const body = new FormData();
+        body.append("avatar", "");
+        if (id) {
+            body.append("userId", id);
+        }
+
+        try {
+            const data = await updateUserProfile(body);
+
+            if ("statusCode" in data) {
+                if ("message" in data) {
+                    printToastErrorMessages([data.message]);
+                }
+            } else {
+                router.refresh();
+                setAvatar(null);
+                toast.success("Аватар успішно видалено!");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error(DEFAULT_FIELD_ERROR.message);
+        }
+    };
+
+    const onAvatarChange = async (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        setAvatar(URL.createObjectURL(file));
+        const result = await updateAvatarHandler(file);
+
+        if (result.length > 0) {
+            printToastErrorMessages(result.map((res) => res.message));
+        }
+    };
+
+    const deleteProfileHandler = async () => {
+        try {
+            const data = await deleteUserProfile(id);
+            if ("statusCode" in data && data.statusCode !== 200) {
+                return data.errors;
+            }
+            return [];
+        } catch (error) {
+            return [DEFAULT_FIELD_ERROR];
+        }
+    };
+
+    const onProfileDelete = async () => {
+        try {
+            const result = await deleteProfileHandler();
+            if (result.length === 0) {
+                toast.success(
+                    `Профіль користувача ${profile.firstName} ${profile.lastName} успішно видалено!`,
+                );
+                router.back();
+            } else {
+                printToastErrorMessages(result.map((res) => res.message));
+            }
+        } catch (error) {
+            toast.error(DEFAULT_FIELD_ERROR.message);
+        }
+    };
 
     return (
         <div className="">
@@ -15,10 +124,41 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                         rating={profile.rating}
                         className="gap-[6px] absolute top-1 left-1"
                     />
-                    <div className="bg-blackOpacity-dark w-full h-full flex items-center justify-center rounded-md">
-                        <AiOutlineUser className="text-purple size-20" />
+                    <div className="bg-blackOpacity-dark w-full h-full flex items-center justify-center rounded-md overflow-hidden">
+                        {profile.avatar ? (
+                            <>
+                                {id && (
+                                    <Button
+                                        className="absolute top-1 right-1 p-1"
+                                        onClick={deleteAvatarHandler}
+                                        color="redBorder"
+                                    >
+                                        <AiOutlineClose className="size-5" />
+                                    </Button>
+                                )}
+                                <img
+                                    src={profile.avatar} 
+                                    alt="Avatar"
+                                    className="w-full h-full object-cover"
+                                />
+                            </>
+                        ) : (
+                            <AiOutlineUser className="text-purple size-20" />
+                        )}
                     </div>
                 </div>
+                {id && (
+                    <label className="underline text-purple mt-2 text-center block cursor-pointer">
+                        Змінити аватар
+                        <input
+                            type="file"
+                            accept=".png"
+                            className="hidden"
+                            onChange={onAvatarChange}
+                        />
+                    </label>
+                )}
+
                 <div className="mt-2 text-center text-xl font-semibold">
                     {profile.firstName} {profile.lastName}
                 </div>
@@ -44,6 +184,13 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                     ))}
                 </ul>
             </div>
+            <Button
+                className="mt-6 w-full"
+                color="redBorder"
+                onClick={onProfileDelete}
+            >
+                Видалити акаунт
+            </Button>
         </div>
     );
 };

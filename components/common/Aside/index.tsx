@@ -23,11 +23,16 @@ export const Aside = ({ profile }: AsideProps) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const pathname = usePathname();
-
     const aside = useAppSelector(selectAside);
 
     const setIsAsideOpenedHandler = (value: boolean) => {
         dispatch(setIsAsideOpened(value));
+    };
+
+    const onLogoutClick = () => {
+        setCookie("token", "");
+        toast.success("Ви успішно вийшли з акаунту!");
+        router.refresh();
     };
 
     const links: LinkItem[] = [
