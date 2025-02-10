@@ -1,7 +1,15 @@
 import { UserProfilePageComponent } from "@/components/page-components/UserProfile";
 import { Profile } from "@/types/user.interface";
+import { UserProfilePageProps } from "./page.props";
+import { GetServerSideProps } from "next";
+import { getProfile } from "@/api/user";
+import { toast } from "react-toastify";
+import { printToastErrorMessages } from "@/helpers/displayToasts";
+import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
+import { getPathname } from "@/helpers/getPathname";
+import { getCookie } from "@/helpers/getCookie";
 
-const profile: Profile = {
+const defaultProfile: Profile = {
     id: "1",
     email: "testuser@example.com",
     firstName: "Test",
@@ -122,8 +130,25 @@ const profile: Profile = {
     ],
 };
 
-const UserProfile = () => {
-    return <UserProfilePageComponent profile={profile} />;
+const UserProfile = async () => {
+    const pathname = await getPathname();
+    const id = pathname.split("/")[2];
+    const token = await getCookie("token");
+
+    let isAdmin = false;
+    if (token && token.length) {
+        try {
+            const profile = await getProfile();
+            if (!("statusCode" in profile) && profile.isAdmin) {
+                isAdmin = true;
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error(DEFAULT_FIELD_ERROR.message);
+        }
+    }
+
+    return <UserProfilePageComponent id={id} isAdmin={isAdmin} />;
 };
 
 export default UserProfile;

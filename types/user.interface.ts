@@ -7,6 +7,7 @@ export interface User {
     lastName: string | null;
     rating: number;
     avatar: string | null;
+    isAdmin: boolean;
 }
 
 export interface Profile extends User {
