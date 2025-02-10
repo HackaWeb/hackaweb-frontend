@@ -129,6 +129,7 @@ export const RegisterPageComponent = () => {
                     <Input
                         placeholder="Повторіть пароль..."
                         type="password"
+                        name="new-password"
                         value={formData.confirmPassword}
                         onChange={(e) =>
                             setFormData({

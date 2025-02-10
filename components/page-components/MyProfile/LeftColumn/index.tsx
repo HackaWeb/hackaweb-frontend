@@ -98,10 +98,16 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
     const onProfileDelete = async () => {
         try {
             const result = await deleteProfileHandler();
+
             if (result.length === 0) {
                 toast.success("Ваш профіль успішно видалено!");
                 setCookie("token", "");
                 router.push("/");
+
+                const timeout = setTimeout(() => {
+                    router.refresh();
+                    clearTimeout(timeout);
+                });
             } else {
                 printToastErrorMessages(result.map((res) => res.message));
             }
