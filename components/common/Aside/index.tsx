@@ -23,6 +23,7 @@ export const Aside = ({ profile }: AsideProps) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const pathname = usePathname();
+
     const aside = useAppSelector(selectAside);
 
     const setIsAsideOpenedHandler = (value: boolean) => {
@@ -44,14 +45,6 @@ export const Aside = ({ profile }: AsideProps) => {
             link: profile ? "#" : "/login",
         },
     ];
-
-    const onLogoutClick = () => {
-        setCookie("token", "");
-        toast.success("Ви успішно вийшли з акаунту!");
-        router.refresh();
-    };
-
-    console.log(profile);
 
     return (
         <>
