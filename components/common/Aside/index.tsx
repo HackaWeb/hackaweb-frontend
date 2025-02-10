@@ -46,6 +46,12 @@ export const Aside = ({ profile }: AsideProps) => {
         },
     ];
 
+    const onLogoutClick = () => {
+        setCookie("token", "");
+        toast.success("Ви успішно вийшли з акаунту!");
+        router.refresh();
+    };
+
     return (
         <>
             <Button
