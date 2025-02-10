@@ -4,7 +4,6 @@ import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
 import { AsideProps } from "./Aside.props";
 import { usePathname, useRouter } from "next/navigation";
-import { usePathname, useRouter } from "next/navigation";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
 import { selectAside, setIsAsideOpened } from "@/store/slices/aside/aside";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
@@ -24,9 +23,7 @@ export const Aside = ({ profile }: AsideProps) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const pathname = usePathname();
-
     const aside = useAppSelector(selectAside);
-    const router = useRouter();
 
     const setIsAsideOpenedHandler = (value: boolean) => {
         dispatch(setIsAsideOpened(value));
@@ -145,7 +142,6 @@ export const Aside = ({ profile }: AsideProps) => {
                                 <button
                                     onClick={onLogoutClick}
                                     className="text-gray-dark flex items-center gap-1 text-sm mt-1"
-                                    onClick={onLogOut}
                                 >
                                     <RiLogoutBoxLine />
                                     <span>Log out</span>

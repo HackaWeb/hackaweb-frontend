@@ -134,9 +134,8 @@ const defaultProfile: Profile = {
     ],
 };
 
-const UserProfile = async () => {
-    const pathname = await getPathname();
-    const id = pathname.split("/")[2];
+const UserProfile = async ({ params }: { params: { id: string } }) => {
+    const { id } = await params;
     const token = await getCookie("token");
 
     let isAdmin = false;

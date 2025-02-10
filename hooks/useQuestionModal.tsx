@@ -18,9 +18,9 @@ import {
 import { selectOptions, setOptions } from "@/store/slices/options/options";
 import { toast } from "react-toastify";
 import { ModalType } from "@/store/slices/modals/modals.types";
-import { BooleanAnswer } from "@/components/modals/CreateQuestion/BooleanAnswer";
-import { InputAnswer } from "@/components/modals/CreateQuestion/InputAnswer";
-import { Choice } from "@/components/modals/CreateQuestion/ChoiceAnswer";
+import { BooleanAnswer } from "@/components/Modals/CreateQuestion/BooleanAnswer";
+import { InputAnswer } from "@/components/Modals/CreateQuestion/InputAnswer";
+import { Choice } from "@/components/Modals/CreateQuestion/ChoiceAnswer";
 
 const questionTypes: CustomSelectOption[] = [
     {
