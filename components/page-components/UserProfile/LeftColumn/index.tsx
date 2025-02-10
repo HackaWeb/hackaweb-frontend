@@ -1,11 +1,16 @@
-import { AiOutlineUser } from "react-icons/ai";
+"use client";
+
+import { AiOutlineClose, AiOutlineUser } from "react-icons/ai";
 import { LeftColumnProps } from "./LeftColumn.props";
 import { getAchievements } from "@/data/getAchievements";
 import { RenderRating } from "@/helpers/RenderRating";
 import { IoTrophyOutline } from "react-icons/io5";
+import { Button } from "@/components/ui/Button";
+import { useState } from "react";
 
-export const LeftColumn = ({ profile }: LeftColumnProps) => {
+export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
     const achievements = getAchievements(profile);
+    const [avatar, setAvatar] = useState<string | null>(profile.avatar);
 
     return (
         <div className="">
@@ -15,10 +20,28 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                         rating={profile.rating}
                         className="gap-[6px] absolute top-1 left-1"
                     />
-                    <div className="bg-blackOpacity-dark w-full h-full flex items-center justify-center rounded-md">
-                        <AiOutlineUser className="text-purple size-20" />
+                    <div className="bg-blackOpacity-dark w-full h-full flex items-center justify-center rounded-md overflow-hidden">
+                        {profile.avatar ? (
+                            <>
+                                <Button
+                                    className="absolute top-1 right-1 p-1"
+                                    onClick={() => setAvatar(null)}
+                                    color="redBorder"
+                                >
+                                    <AiOutlineClose className="size-5" />
+                                </Button>
+                                <img
+                                    src={avatar ?? ""}
+                                    alt="Avatar"
+                                    className="w-full h-full object-cover"
+                                />
+                            </>
+                        ) : (
+                            <AiOutlineUser className="text-purple size-20" />
+                        )}
                     </div>
                 </div>
+
                 <div className="mt-2 text-center text-xl font-semibold">
                     {profile.firstName} {profile.lastName}
                 </div>
