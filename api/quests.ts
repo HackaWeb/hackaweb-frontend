@@ -7,7 +7,8 @@ import {
     CreateQuestResponse,
     GetQuestByIdResponse,
     GetQuestByOwnerIdResponse,
-    uploadQuestMediaResponse,
+    GetQuestsResponse,
+    uploadMediaResponse,
 } from "./responses/quests.types";
 
 export const getQuestById = async (
@@ -30,6 +31,13 @@ export const getQuestsByOwnerId = async (
         body,
     });
 
+export const getQuests = async (): Promise<GetQuestsResponse> =>
+    fetchApi({
+        endpoint: "/quiz/",
+        isAuthRequired: true,
+        method: "GET",
+    });
+
 export const createQuest = async (
     body: CreateQuestBody,
 ): Promise<CreateQuestResponse> =>
@@ -43,9 +51,20 @@ export const createQuest = async (
 export const uploadQuestMedia = async (
     questId: string,
     body: FormData,
-): Promise<uploadQuestMediaResponse> =>
+): Promise<uploadMediaResponse> =>
     fetchApi({
-        endpoint: `/quiz/media/upload${questId}`,
+        endpoint: `/quiz/media/upload/${questId}`,
+        isAuthRequired: true,
+        method: "POST",
+        body,
+    });
+
+export const uploadQuestionMedia = async (
+    questionId: string,
+    body: FormData,
+): Promise<uploadMediaResponse> =>
+    fetchApi({
+        endpoint: `/quiz/media/question/upload/${questionId}`,
         isAuthRequired: true,
         method: "POST",
         body,

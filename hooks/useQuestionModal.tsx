@@ -98,6 +98,7 @@ export const useQuestionModal = () => {
     const resetOptions = (modal: ModalType, msg: string) => {
         setTitle("");
         setFile(null);
+        setFileType(null);
         setQuestionType(null);
         dispatch(setOptions([]));
         dispatch(setEditingId(null));

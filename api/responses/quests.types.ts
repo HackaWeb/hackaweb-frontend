@@ -28,7 +28,9 @@ export interface CreateQuestResponse {
         createdAt: string;
     }[];
 }
-export interface uploadQuestMediaResponse {
+
+export type GetQuestsResponse = { quizzes: CreateQuestResponse[] };
+export interface uploadMediaResponse {
     isSuccess: boolean;
     errors: string[];
 }

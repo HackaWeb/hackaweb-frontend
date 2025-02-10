@@ -1,3 +1,4 @@
+import { getQuests } from "@/api/quests";
 import { HomePageComponent } from "@/components/page-components/Home";
 import { Quest } from "@/types/quest.interface";
 
@@ -130,7 +131,10 @@ const serverQuests: Quest[] = [
     },
 ];
 
-const Home = () => {
+const Home = async () => {
+    // const quests = await getQuests();
+    // console.log(quests);
+
     return <HomePageComponent serverQuests={serverQuests} />;
 };
 

@@ -6,9 +6,9 @@ export interface Quest {
     id: string;
     title: string;
     description: string;
+    createdAt: string;
     rating: number;
     file: string;
-    createdAt: string;
     duration: number;
     owner: User;
     reviews: Review[];

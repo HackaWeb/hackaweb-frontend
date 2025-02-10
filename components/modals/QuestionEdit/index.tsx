@@ -1,7 +1,6 @@
 "use client";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { isModalOpened } from "@/helpers/isModalOpened";
-import ModalBg from "../ModalBg";
 import { Button } from "@/components/ui/Button";
 import { editQuestion } from "@/store/slices/questions/questions";
 import { toast } from "react-toastify";
@@ -12,6 +11,7 @@ import { Select } from "@/components/ui/Select";
 import { useEffect } from "react";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { QuestionType } from "@/types/question.type";
+import ModalBg from "../ModalBg";
 
 function QuestionEdit() {
     const {
@@ -30,6 +30,7 @@ function QuestionEdit() {
         setTitle,
         title,
         resetOptions,
+        fileType,
     } = useQuestionModal();
 
     const onSubmit = (e: React.FormEvent) => {
@@ -47,7 +48,8 @@ function QuestionEdit() {
             title: title || question.title,
             type: (questionType.value as QuestionType) || question.type,
             options: options.length ? options : question.options,
-            file: file ? file : undefined,
+            file: file || question.file || undefined,
+            fileType: fileType || question.fileType || undefined,
         };
 
         dispatch(editQuestion(edited));
@@ -77,8 +79,8 @@ function QuestionEdit() {
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
                             {file || question?.file ? (
-                                file?.includes(".png") ||
-                                question?.file?.includes(".png") ? (
+                                fileType === "image" ||
+                                question?.fileType === "image" ? (
                                     <img
                                         src={file || question?.file}
                                         alt="Зображення питання"
