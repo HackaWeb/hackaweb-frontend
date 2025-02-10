@@ -21,7 +21,6 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
     const updateUserDataHandler = async (updateForm: FormData) => {
         try {
             const data = await updateUserProfile(updateForm);
-            console.log(data);
 
             if ("statusCode" in data) {
                 if (data.statusCode === 400) {
