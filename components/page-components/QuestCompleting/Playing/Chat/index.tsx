@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Textarea";
 import { AiOutlineUser } from "react-icons/ai";
@@ -10,21 +9,11 @@ import { ChatProps } from "./Chat.props";
 import { cn } from "@/lib/utils";
 
 export const Chat = ({ isOpened, setIsOpened }: ChatProps) => {
-    const [mounted, setMounted] = useState(isOpened);
-
-    useEffect(() => {
-        if (isOpened) {
-            setMounted(true);
-        } else {
-            setTimeout(() => setMounted(false), 300);
-        }
-    }, [isOpened]);
-
     return (
         <div
             className={cn(
                 "fixed left-0 top-0 bottom-0 max-w-[550px] w-auto sm:w-full right-10 sm:right-0 bg-[#16192C] p-3 xsm:p-6 z-20",
-                " duration-300 ease-in-out",
+                "duration-300 ease-in-out",
                 isOpened
                     ? "translate-x-0 opacity-100"
                     : "-translate-x-full opacity-0 pointer-events-none",
