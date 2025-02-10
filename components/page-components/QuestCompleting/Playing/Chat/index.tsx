@@ -6,7 +6,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { LuSend } from "react-icons/lu";
 import { TbArrowBackUp } from "react-icons/tb";
 import { ChatProps } from "./Chat.props";
-import { cn } from "@/lib/utils";
+import { cn } from "@/helpers/cn";
 
 export const Chat = ({ isOpened, setIsOpened }: ChatProps) => {
     return (
