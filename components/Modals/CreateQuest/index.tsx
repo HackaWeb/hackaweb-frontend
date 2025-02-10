@@ -2,7 +2,6 @@
 
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import ModalBg from "../ModalBg";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { RiEditLine } from "react-icons/ri";
 import { Button } from "@/components/ui/Button";
@@ -20,7 +19,8 @@ import {
 import { FiEdit2 } from "react-icons/fi";
 import Image from "next/image";
 import { IoImageOutline } from "react-icons/io5";
-import { createQuest } from "@/api/quests";
+import { createQuest, uploadQuestMedia } from "@/api/quests";
+import ModalBg from "../ModalBg";
 
 export const CreateQuest = () => {
     const dispatch = useAppDispatch();
@@ -43,6 +43,30 @@ export const CreateQuest = () => {
         dispatch(toggleModal("QuestionEdit"));
     };
 
+    const createQuestHandler = async () => {
+        const media = new FormData();
+        media.append("file", file as string);
+
+        const questBody = {
+            title,
+            description,
+            duration,
+            questions: questions.map((question) => {
+                return {};
+            }),
+        };
+
+        try {
+            const data = await createQuest(questBody);
+            const { errors } = await uploadQuestMedia(data.id, media);
+
+            if (errors) console.error(errors);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const onCreateQuestSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (
@@ -53,20 +77,6 @@ export const CreateQuest = () => {
             !questions.length
         )
             return toast.error("Заповніть коректно усі поля!");
-
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("description", description);
-        formData.append("duration", duration);
-        formData.append("file", file);
-        formData.append("questions", questions.toString());
-
-        try {
-            const res = await createQuest(formData);
-            console.log(res);
-        } catch (error) {
-            console.log(error);
-        }
 
         toast.success("Квест успішно створено!");
     };

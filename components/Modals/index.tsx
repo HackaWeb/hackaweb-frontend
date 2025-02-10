@@ -8,8 +8,8 @@ export const Modals = () => {
         <>
             <CreateQuest />
             <CreateQuestion />
-            <QuestionEdit />
             <QuestEdit />
+            <QuestionEdit />
         </>
     );
 };

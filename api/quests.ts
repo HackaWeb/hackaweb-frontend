@@ -1,8 +1,13 @@
 import { fetchApi } from "./fetchApi";
-import { GetQuestByOwnerIdBody } from "./requestBodies/quests.interface";
 import {
+    CreateQuestBody,
+    GetQuestByOwnerIdBody,
+} from "./requestBodies/quests.interface";
+import {
+    CreateQuestResponse,
     GetQuestByIdResponse,
     GetQuestByOwnerIdResponse,
+    uploadQuestMediaResponse,
 } from "./responses/quests.types";
 
 export const getQuestById = async (
@@ -25,9 +30,22 @@ export const getQuestsByOwnerId = async (
         body,
     });
 
-export const createQuest = async (body: FormData) =>
+export const createQuest = async (
+    body: CreateQuestBody,
+): Promise<CreateQuestResponse> =>
     fetchApi({
         endpoint: "/quiz/",
+        isAuthRequired: true,
+        method: "POST",
+        body,
+    });
+
+export const uploadQuestMedia = async (
+    questId: string,
+    body: FormData,
+): Promise<uploadQuestMediaResponse> =>
+    fetchApi({
+        endpoint: `/quiz/media/upload${questId}`,
         isAuthRequired: true,
         method: "POST",
         body,
