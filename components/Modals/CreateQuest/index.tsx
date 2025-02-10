@@ -2,7 +2,6 @@
 
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import { ModalBg } from "../ModalBg";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { RiEditLine } from "react-icons/ri";
 import { Button } from "@/components/ui/Button";
@@ -21,8 +20,8 @@ import { FiEdit2 } from "react-icons/fi";
 import Image from "next/image";
 import { IoImageOutline } from "react-icons/io5";
 import { createQuest, uploadQuestMedia } from "@/api/quests";
-import ModalBg from "../ModalBg";
 import { parseQuestionType } from "@/helpers/parseQuestionType";
+import { ModalBg } from "../ModalBg";
 
 export const CreateQuest = () => {
     const dispatch = useAppDispatch();
