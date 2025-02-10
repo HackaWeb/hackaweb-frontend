@@ -8,18 +8,21 @@ import { getAchievements } from "@/data/getAchievements";
 import { RenderRating } from "@/helpers/RenderRating";
 import { Button } from "@/components/ui/Button";
 import { AiOutlineClose } from "react-icons/ai";
-import { updateUserProfile } from "@/api/user";
+import { deleteUserProfile, updateUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
 import {
     DEFAULT_FIELD_ERROR,
     RequestError,
 } from "@/api/responses/common/failure.interface";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
+import { setCookie } from "@/helpers/setCookie";
+import { useRouter } from "next/navigation";
 
 export const LeftColumn = ({ profile }: LeftColumnProps) => {
+    const router = useRouter();
     const achievements = getAchievements(profile);
 
-    const [avatar, setAvatar] = useState<string | null>(null);
+    const [avatar, setAvatar] = useState<string | null>(profile.avatar ?? null);
 
     const onFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -49,13 +52,47 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                 } else if (data.statusCode === 401) {
                     return [{ field: "", message: data.message }];
                 }
+                return [DEFAULT_FIELD_ERROR];
+            } else {
+                setAvatar(data.avatarUrl);
                 return [];
             }
-            return [DEFAULT_FIELD_ERROR];
         } catch (error) {
             console.error(error);
             return [DEFAULT_FIELD_ERROR];
         }
+    };
+
+    const onDelete = async () => {
+        try {
+            const result = await deleteProfile();
+            if (result.length === 0) {
+                toast.success("Ваш профіль успішно видалено!");
+                setCookie("token", "");
+                router.push("/");
+            } else {
+                printToastErrorMessages(result.map((res) => res.message));
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(DEFAULT_FIELD_ERROR.message);
+        }
+    };
+
+    const deleteProfile = async () => {
+        const data = await deleteUserProfile();
+
+        console.log(data);
+        if ("statusCode" in data) {
+            if (data.statusCode === 400) {
+                return data.errors;
+            } else if (data.statusCode === 200) {
+                return [];
+            }
+            return [DEFAULT_FIELD_ERROR];
+        }
+        
+        return [];
     };
 
     return (
@@ -118,7 +155,11 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                     ))}
                 </ul>
             </div>
-            <Button className="mt-6 w-full" color="redBorder">
+            <Button
+                className="mt-6 w-full"
+                color="redBorder"
+                onClick={onDelete}
+            >
                 Видалити акаунт
             </Button>
         </div>

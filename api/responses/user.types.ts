@@ -1,32 +1,26 @@
 import { User } from "@/types/user.interface";
 import { BadRequestResponse } from "./common/badRequest.interface";
 import { UnathorizedResponse } from "./common/unathorized.interface";
+import { DeleteResponseSuccess } from "./common/deleteSuccess.interface";
 
 export interface UpdateUserResponseSuccess {
-    user: User;
+    userId: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    avatarUrl: string;
 }
 
-export interface DeleteUserResponseSuccess {
-    resolved: true;
-}
+export interface GetUserResponseSuccess extends User {}
+
+export type GetProfileResponse =
+    | GetUserResponseSuccess
+    | BadRequestResponse
+    | UnathorizedResponse;
 
 export type UpdateUserResponse =
     | UpdateUserResponseSuccess
     | BadRequestResponse
     | UnathorizedResponse;
 
-export type DeleteUserResponse = DeleteUserResponseSuccess | BadRequestResponse;
-
-interface GetProfileResponseSuccess {
-    email: string;
-    id: string;
-}
-
-export type GetProfileResponse =
-    | GetProfileResponseSuccess
-    | UnathorizedResponse;
-
-// getProfile(token)
-// Login/token
-// User has isAdmin field
-// If isAdmin, then we can do everything with other's profile
+export type DeleteUserResponse = DeleteResponseSuccess | BadRequestResponse;

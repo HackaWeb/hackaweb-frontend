@@ -1,6 +1,6 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { ReactNode } from "react";
 import { ReduxProvider } from "@/components/providers/Redux";
 import { Aside } from "@/components/common/Aside";
@@ -9,6 +9,7 @@ import { ToastProvider } from "@/components/providers/Toast";
 import { getCookie } from "@/helpers/getCookie";
 import { getPathname } from "@/helpers/getPathname";
 import { Modals } from "@/components/Modals";
+import { getProfile } from "@/api/user";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -37,14 +38,13 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
         isAuthorized = false;
     } else {
         try {
-            /* const profile = await getProfile(); */
+            const profile = await getProfile();
 
-            /* if ("email" in profile) {
+            if ("email" in profile) {
                 isAuthorized = true;
             } else {
                 isAuthorized = false;
-            } */
-            isAuthorized = false;
+            }
         } catch (error) {
             console.log(error);
             isAuthorized = false;
@@ -67,7 +67,9 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
                     )}
                     <main
                         className={
-                            !pathname.includes("quest-completing") ? "sm:p-12 p-6" : ""
+                            !pathname.includes("quest-completing")
+                                ? "sm:p-12 p-6"
+                                : ""
                         }
                     >
                         {children}

@@ -1,5 +1,4 @@
-import { fetchApi } from "./fetchApi.api";
-import { UpdateProfileRequestBody } from "./requestBodies/profile.interface";
+import { fetchApi } from "./fetchApi";
 import {
     DeleteUserResponse,
     GetProfileResponse,
@@ -8,24 +7,26 @@ import {
 
 export const getProfile = async (): Promise<GetProfileResponse> =>
     fetchApi({
-        endpoint: "/profile/",
+        endpoint: "/user/user-profile/",
         isAuthRequired: true,
         method: "GET",
     });
 
 export const updateUserProfile = async (
-    body: UpdateProfileRequestBody | FormData,
+    body: FormData,
 ): Promise<UpdateUserResponse> =>
     fetchApi({
-        endpoint: "/user/user-profile/update",
+        endpoint: "/user/user-profile",
         isAuthRequired: true,
-        method: "POST",
-        body: body,
+        method: "PUT",
+        body,
     });
 
-export const deleteUserProfile = async (): Promise<DeleteUserResponse> =>
+export const deleteUserProfile = async (
+    userId?: string,
+): Promise<DeleteUserResponse> =>
     fetchApi({
-        endpoint: "/profile/",
+        endpoint: `/user/user-profile${userId ? `?userId=${userId}` : ""}`,
         isAuthRequired: true,
         method: "DELETE",
     });

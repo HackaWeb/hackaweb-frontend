@@ -5,12 +5,11 @@ export interface RegisterUserResponseSuccess {
     jwtToken: string;
 }
 
-export interface LoginUserResponseSuccess {
-    jwtToken: string;
-}
+export interface LoginUserResponseSuccess extends RegisterUserResponseSuccess { }
 
 export type LoginResponse =
     | LoginUserResponseSuccess
     | BadRequestResponse
     | UnathorizedResponse;
+
 export type RegisterResponse = RegisterUserResponseSuccess | BadRequestResponse;
