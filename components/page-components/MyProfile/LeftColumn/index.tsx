@@ -39,6 +39,7 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                 setAvatar(data.avatarUrl);
                 router.refresh();
                 toast.success("Аватар успішно змінено!");
+
                 return [];
             }
         } catch (error) {
@@ -61,6 +62,7 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
             } else {
                 router.refresh();
                 setAvatar(null);
+
                 toast.success("Аватар успішно видалено!");
             }
         } catch (error) {
@@ -116,7 +118,7 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                     Змінити аватар
                     <input
                         type="file"
-                        accept=".png"
+                        accept=".png,,.jpeg"
                         className="hidden"
                         onChange={onAvatarChange}
                     />

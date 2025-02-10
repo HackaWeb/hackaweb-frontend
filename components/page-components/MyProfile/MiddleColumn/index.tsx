@@ -44,6 +44,7 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
 
         formData.append("firstName", userData.firstName);
         formData.append("lastName", userData.lastName);
+        formData.append("avatar", new File([], "", { type: "image/png" }));
 
         const result = await updateUserDataHandler(formData);
 
