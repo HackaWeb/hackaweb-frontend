@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SelectOption } from "@/types/selectOption.interface";
 import { SelectProps } from "./Select.props";
 import { AiOutlineDown } from "react-icons/ai";
 import { cn } from "@/helpers/cn";
+import { onOutsideClick } from "@/helpers/onOutsideClick";
 
 export const Select = ({
     options,
@@ -14,18 +15,28 @@ export const Select = ({
     className,
     placeholder,
 }: SelectProps) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const selectRef = useRef<HTMLDivElement>(null);
+
+    const [isOptionsOpened, setIsOptionsOpened] = useState(false);
 
     const onSelectOptionClick = (option: SelectOption) => {
         setActiveOption(option);
-        setIsOpen(false);
+        setIsOptionsOpened(false);
     };
 
+    onOutsideClick(selectRef, () => {
+        setIsOptionsOpened(false);
+    });
+
     return (
-        <div className={cn("relative w-full", className)} id={id}>
+        <div
+            className={cn("relative w-full", className)}
+            id={id}
+            ref={selectRef}
+        >
             <button
                 onClick={() => {
-                    setIsOpen(!isOpen);
+                    setIsOptionsOpened(!isOptionsOpened);
                 }}
                 type="button"
                 className="w-full flex justify-between items-center px-4 py-3 bg-blackOpacity text-white rounded-md focus:outline-none"
@@ -38,11 +49,13 @@ export const Select = ({
                 <AiOutlineDown
                     className="text-gray transition-transform"
                     style={{
-                        transform: isOpen ? "rotate(180deg)" : "rotate(0)",
+                        transform: isOptionsOpened
+                            ? "rotate(180deg)"
+                            : "rotate(0)",
                     }}
                 />
             </button>
-            {isOpen && (
+            {isOptionsOpened && (
                 <ul className="absolute left-0 top-full mt-1 w-full bg-[#201f2d] text-gray rounded-md shadow-lg z-10 overflow-hidden">
                     {options.map((option) => (
                         <li
