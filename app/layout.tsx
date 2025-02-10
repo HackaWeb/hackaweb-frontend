@@ -10,7 +10,6 @@ import { getCookie } from "@/helpers/getCookie";
 import { getPathname } from "@/helpers/getPathname";
 import { Modals } from "@/components/Modals";
 import { getProfile } from "@/api/user";
-import { profile } from "console";
 
 const inter = Inter({
     variable: "--font-inter",
