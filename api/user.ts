@@ -17,9 +17,9 @@ export const updateUserProfile = async (
     body: UpdateProfileRequestBody | FormData,
 ): Promise<UpdateUserResponse> =>
     fetchApi({
-        endpoint: "/User/update-profile/",
+        endpoint: "/user/user-profile/update",
         isAuthRequired: true,
-        method: "PUT",
+        method: "POST",
         body: body,
     });
 

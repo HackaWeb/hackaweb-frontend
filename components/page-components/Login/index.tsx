@@ -11,7 +11,10 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 import { LoginRequestBody } from "@/api/requestBodies/auth.interface";
-import { INVALID_INPUTES_MESSAGE } from "@/constants";
+import {
+    INVALID_EMAIL_OR_PASSWORD_MESSAGE,
+    INVALID_INPUTES_MESSAGE,
+} from "@/constants";
 
 export const LoginPageComponent = () => {
     const router = useRouter();
@@ -31,7 +34,15 @@ export const LoginPageComponent = () => {
                 if (res.statusCode === 400) {
                     return res.errors;
                 } else if (res.statusCode === 401) {
-                    return [{ field: "", message: res.message }];
+                    return [
+                        {
+                            field: "",
+                            message:
+                                res.message === "Invalid email or password."
+                                    ? INVALID_EMAIL_OR_PASSWORD_MESSAGE
+                                    : res.message,
+                        },
+                    ];
                 }
             }
             return [DEFAULT_FIELD_ERROR];

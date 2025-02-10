@@ -8,14 +8,18 @@ import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
 import { selectPrev, toggleModal } from "@/store/slices/modals/modals";
 
-export const ReturnBtn = ({ className, modal }: ReturnBtnProps) => {
+export const ReturnBtn = ({
+    className,
+    modal,
+    isPrev = false,
+}: ReturnBtnProps) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const prev = useAppSelector(selectPrev);
 
     const goBack = () => {
         if (!modal) return router.back();
-        if (prev) dispatch(toggleModal(prev));
+        if (isPrev && prev) dispatch(toggleModal(prev));
         dispatch(toggleModal(modal));
     };
 

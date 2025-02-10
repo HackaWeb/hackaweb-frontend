@@ -19,10 +19,6 @@ export const fetchApi = async <T>({
         accept: "text/plain",
     };
 
-    if (type === "json") {
-        headers["Content-Type"] = "application/json";
-    }
-
     if (isAuthRequired) {
         const token = await getCookie("token");
         headers.Authorization = `Bearer ${token}`;
@@ -30,13 +26,15 @@ export const fetchApi = async <T>({
 
     const isFormData = body instanceof FormData;
 
+    if (!isFormData) {
+        headers["Content-Type"] = "application/json";
+    }
+
     const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`,
         {
             method,
-            headers: isFormData
-                ? headers
-                : { ...headers, "Content-Type": "application/json" },
+            headers,
             body: isFormData
                 ? (body as FormData)
                 : body
