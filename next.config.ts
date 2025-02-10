@@ -3,7 +3,11 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
     crossOrigin: "anonymous",
     images: {
-        domains: ["hackaweb.blob.core.windows.net"],
+        remotePatterns: [
+            {
+                hostname: "hackaweb.blob.core.windows.net",
+            },
+        ],
     },
 };
 

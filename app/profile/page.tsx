@@ -1,5 +1,4 @@
 import { getProfile } from "@/api/user";
-import { getProfile } from "@/api/user";
 import { MyProfilePageComponent } from "@/components/page-components/MyProfile";
 import { getCookie } from "@/helpers/getCookie";
 import { Profile } from "@/types/user.interface";
@@ -127,8 +126,12 @@ import { redirect } from "next/navigation";
 }; */
 
 const MyProfile = async () => {
-    let profile: Profile;
+    const token = await getCookie("token");
+    let profile: Profile | null = null;
 
+    if (!token) {
+        profile = null;
+    }
     try {
         const data = await getProfile();
 
@@ -145,7 +148,7 @@ const MyProfile = async () => {
         redirect("/login");
     }
 
-    return <MyProfilePageComponent profile={profile ?? defaultProfile} />;
+    return <MyProfilePageComponent profile={profile} />;
 };
 
 export default MyProfile;
