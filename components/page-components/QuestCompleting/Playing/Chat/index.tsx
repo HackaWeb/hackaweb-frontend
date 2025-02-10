@@ -70,8 +70,6 @@ export const Chat = ({ isOpened, setIsOpened }: ChatProps) => {
                             </li>
                         ))}
                 </ul>
-
-                {/* Форма остается внизу */}
                 <form className="sticky bottom-0 p-2 xsm:p-4 mt-4">
                     <label htmlFor="message" className="text-white">
                         Ваше повідомлення
