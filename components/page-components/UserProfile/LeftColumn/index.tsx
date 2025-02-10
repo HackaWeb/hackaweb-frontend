@@ -11,25 +11,26 @@ import {
     DEFAULT_FIELD_ERROR,
     RequestError,
 } from "@/api/responses/common/failure.interface";
-import { deleteUserProfile, updateUserProfile } from "@/api/user";
+import { updateUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
-import { setCookie } from "@/helpers/setCookie";
+import { DeleteProfile } from "./DeleteAccount";
 
-export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
+export const LeftColumn = ({ profile, isEditable }: LeftColumnProps) => {
     const achievements = getAchievements(profile);
+
     const [avatar, setAvatar] = useState<string | null>(profile.avatar);
+    
     const router = useRouter();
 
     const updateAvatarHandler = async (
         imageData: File,
     ): Promise<RequestError[]> => {
         const formData = new FormData();
-        formData.append("Avatar", imageData);
-        if (id) {
-            formData.append("userId", id);
-        }
+
+        formData.append("avatar", imageData);
+        formData.append("userId", profile.id);
 
         try {
             const data = await updateUserProfile(formData);
@@ -41,6 +42,7 @@ export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
                 setAvatar(data.avatarUrl);
                 router.refresh();
                 toast.success("Аватар успішно змінено!");
+
                 return [];
             }
         } catch (error) {
@@ -51,10 +53,9 @@ export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
 
     const deleteAvatarHandler = async () => {
         const body = new FormData();
+
         body.append("avatar", "");
-        if (id) {
-            body.append("userId", id);
-        }
+        body.append("userId", profile.id);
 
         try {
             const data = await updateUserProfile(body);
@@ -66,6 +67,7 @@ export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
             } else {
                 router.refresh();
                 setAvatar(null);
+
                 toast.success("Аватар успішно видалено!");
             }
         } catch (error) {
@@ -88,34 +90,6 @@ export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
         }
     };
 
-    const deleteProfileHandler = async () => {
-        try {
-            const data = await deleteUserProfile(id);
-            if ("statusCode" in data && data.statusCode !== 200) {
-                return data.errors;
-            }
-            return [];
-        } catch (error) {
-            return [DEFAULT_FIELD_ERROR];
-        }
-    };
-
-    const onProfileDelete = async () => {
-        try {
-            const result = await deleteProfileHandler();
-            if (result.length === 0) {
-                toast.success(
-                    `Профіль користувача ${profile.firstName} ${profile.lastName} успішно видалено!`,
-                );
-                router.back();
-            } else {
-                printToastErrorMessages(result.map((res) => res.message));
-            }
-        } catch (error) {
-            toast.error(DEFAULT_FIELD_ERROR.message);
-        }
-    };
-
     return (
         <div className="">
             <div className="p-4 bg-blackOpacity rounded-md">
@@ -125,9 +99,9 @@ export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
                         className="gap-[6px] absolute top-1 left-1"
                     />
                     <div className="bg-blackOpacity-dark w-full h-full flex items-center justify-center rounded-md overflow-hidden">
-                        {profile.avatar ? (
+                        {profile.avatar || avatar ? (
                             <>
-                                {id && (
+                                {isEditable && (
                                     <Button
                                         className="absolute top-1 right-1 p-1"
                                         onClick={deleteAvatarHandler}
@@ -137,7 +111,7 @@ export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
                                     </Button>
                                 )}
                                 <img
-                                    src={profile.avatar} 
+                                    src={avatar || profile.avatar || ""}
                                     alt="Avatar"
                                     className="w-full h-full object-cover"
                                 />
@@ -147,7 +121,7 @@ export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
                         )}
                     </div>
                 </div>
-                {id && (
+                {isEditable && (
                     <label className="underline text-purple mt-2 text-center block cursor-pointer">
                         Змінити аватар
                         <input
@@ -158,9 +132,8 @@ export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
                         />
                     </label>
                 )}
-
                 <div className="mt-2 text-center text-xl font-semibold">
-                    {profile.firstName} {profile.lastName}
+                    {profile.firstName || ""} {profile.lastName || ""}
                 </div>
                 <ul className="mt-6 pb-4 border-b-2 border-b-gray-300 border-opacity-10 flex flex-col justify-start gap-2 relative">
                     {achievements.unlocked.map((achiev, index) => (
@@ -184,13 +157,7 @@ export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
                     ))}
                 </ul>
             </div>
-            <Button
-                className="mt-6 w-full"
-                color="redBorder"
-                onClick={onProfileDelete}
-            >
-                Видалити акаунт
-            </Button>
+            {isEditable && <DeleteProfile profile={profile} />}
         </div>
     );
 };

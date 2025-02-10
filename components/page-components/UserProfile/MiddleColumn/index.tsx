@@ -8,8 +8,11 @@ import { updateUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
 import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
+import { useRouter } from "next/navigation";
 
-export const MiddleColumn = ({ profile, id }: MiddleColumnProps) => {
+export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
+    const router = useRouter();
+
     const [userData, setUserData] = useState({
         firstName: profile.firstName || "",
         lastName: profile.lastName || "",
@@ -18,7 +21,6 @@ export const MiddleColumn = ({ profile, id }: MiddleColumnProps) => {
     const updateUserDataHandler = async (updateForm: FormData) => {
         try {
             const data = await updateUserProfile(updateForm);
-            console.log(data);
 
             if ("statusCode" in data) {
                 if (data.statusCode === 400) {
@@ -41,7 +43,8 @@ export const MiddleColumn = ({ profile, id }: MiddleColumnProps) => {
 
         formData.append("firstName", userData.firstName);
         formData.append("lastName", userData.lastName);
-        formData.append("userId", id);
+        formData.append("userId", profile.id);
+        formData.append("avatar", new File([], "", { type: "image/png" }));
 
         const result = await updateUserDataHandler(formData);
 
@@ -49,6 +52,7 @@ export const MiddleColumn = ({ profile, id }: MiddleColumnProps) => {
             toast.success(
                 `Дані користувача ${userData.firstName} ${userData.lastName} успішно оновлено`,
             );
+            router.refresh();
         } else {
             printToastErrorMessages(result.map((res) => res.message));
         }

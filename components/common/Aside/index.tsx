@@ -30,12 +30,6 @@ export const Aside = ({ profile }: AsideProps) => {
         dispatch(setIsAsideOpened(value));
     };
 
-    const onLogoutClick = () => {
-        setCookie("token", "");
-        toast.success("Ви успішно вийшли з акаунту!");
-        router.refresh();
-    };
-
     const links: LinkItem[] = [
         { title: "Усі квести", link: "/" },
         {
@@ -51,6 +45,12 @@ export const Aside = ({ profile }: AsideProps) => {
             link: profile ? "#" : "/login",
         },
     ];
+
+    const onLogoutClick = () => {
+        setCookie("token", "");
+        toast.success("Ви успішно вийшли з акаунту!");
+        router.refresh();
+    };
 
     return (
         <>

@@ -1,6 +1,5 @@
 import { Profile } from "@/types/user.interface";
 
-export interface UserProfileProps {
-    isEditable: boolean;
+export interface DeleteProps {
     profile: Profile;
 }

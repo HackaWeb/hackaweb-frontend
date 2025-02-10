@@ -21,6 +21,7 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
     const updateUserDataHandler = async (updateForm: FormData) => {
         try {
             const data = await updateUserProfile(updateForm);
+            console.log(data);
 
             if ("statusCode" in data) {
                 if (data.statusCode === 400) {
@@ -43,6 +44,7 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
 
         formData.append("firstName", userData.firstName);
         formData.append("lastName", userData.lastName);
+        formData.append("avatar", new File([], "", { type: "image/png" }));
 
         const result = await updateUserDataHandler(formData);
 
