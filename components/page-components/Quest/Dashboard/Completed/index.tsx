@@ -2,10 +2,7 @@ import Block from "@/components/ui/Block";
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import {
-    CompletedQuestsHeader,
-    ActionableUserQuestsHeader,
-} from "../Header/header";
+import { CompletedQuestsHeader } from "../Header/header";
 import DashboardHeader from "../Header";
 import { CompletedQuestsDashboardProps } from "./CompletedQuestsDashboard.props";
 

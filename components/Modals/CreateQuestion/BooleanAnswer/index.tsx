@@ -1,51 +1,36 @@
 "use client";
 import { Checkbox } from "@/components/ui/Checkbox";
-import { useAppDispatch } from "@/store/hooks/useAppDispatch";
-import { useAppSelector } from "@/store/hooks/useAppSelector";
-import {
-    editOption,
-    selectOptions,
-    setOptions,
-} from "@/store/slices/options/options";
-import { ChoiceOption } from "@/types/question.interface";
-import { use, useEffect } from "react";
+import { useAnswers } from "@/hooks/useAnswers";
+import { editOption, setOptions } from "@/store/slices/options/options";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { AnswersProps } from "../Answers.props";
 
-export const TrueFalseAnswer = ({
-    fetchedOptions,
-}: {
-    fetchedOptions?: ChoiceOption[];
-}) => {
-    const dispatch = useAppDispatch();
-    const options = useAppSelector(selectOptions);
-
-    const getOption = (index: number) =>
-        options.find((option) => option.index === index);
+export const BooleanAnswer = ({ fetchedOptions }: AnswersProps) => {
+    const { dispatch, getOption } = useAnswers();
 
     const checkHandler = (isCorrect: boolean, index: number) => {
         const title = getOption(index)?.title;
-        if (!title) {
-            return dispatch(
-                setOptions([
-                    {
-                        index: 0,
-                        title: "Хибність",
-                        isCorrect: index === 0 && isCorrect,
-                    },
-                    {
-                        index: 1,
-                        title: "Істина",
-                        isCorrect: index === 1 && isCorrect,
-                    },
-                ]),
-            );
-        }
 
-        // If both options are correct/incorrect, remove them
-        if (!getOption(index ? 0 : 1)?.isCorrect && !isCorrect) {
-            return dispatch(setOptions([]));
-        } else if (getOption(index ? 0 : 1)?.isCorrect && isCorrect) {
+        const booleanOptions = [
+            {
+                index: 0,
+                title: "Хибність",
+                isCorrect: index === 0 && isCorrect,
+            },
+            {
+                index: 1,
+                title: "Істина",
+                isCorrect: index === 1 && isCorrect,
+            },
+        ];
+
+        if (!title) return dispatch(setOptions(booleanOptions));
+
+        if (getOption(index ? 0 : 1)!.isCorrect && isCorrect) {
             return toast.error("Оберіть одну правильну відповідь!");
+        } else if (!getOption(index ? 0 : 1)!.isCorrect && !isCorrect) {
+            return dispatch(setOptions([]));
         }
 
         dispatch(

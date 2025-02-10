@@ -29,7 +29,7 @@ const questions = createSlice({
             };
         },
 
-        setEditingId: (state, action: PayloadAction<number>) => {
+        setEditingId: (state, action: PayloadAction<number | null>) => {
             return {
                 ...state,
                 ...state.questions,
@@ -40,9 +40,7 @@ const questions = createSlice({
     selectors: {
         selectQuestions: (state) => state.questions,
         selectEditingQuestion: (state) =>
-            state.currentEditingId
-                ? state.questions.find((q) => q.id === state.currentEditingId)
-                : null,
+            state.questions.find((q) => q.id === state.currentEditingId),
     },
 });
 
