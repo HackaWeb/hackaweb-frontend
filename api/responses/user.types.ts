@@ -1,6 +1,7 @@
-import { Profile, User } from "@/types/user.interface";
+import { User } from "@/types/user.interface";
 import { BadRequestResponse } from "./common/badRequest.interface";
 import { UnathorizedResponse } from "./common/unathorized.interface";
+import { DeleteResponseSuccess } from "./common/deleteSuccess.interface";
 
 export interface UpdateUserResponseSuccess {
     userId: string;
@@ -11,15 +12,6 @@ export interface UpdateUserResponseSuccess {
 }
 
 export interface GetUserResponseSuccess extends User {}
-export interface UpdateUserRequest extends FormData {}
-export type DeleteUserRequest = {
-    userId: string;
-} | null;
-
-export interface DeleteUserResponseSuccess {
-    statusCode: 200;
-    message: string;
-}
 
 export type GetProfileResponse =
     | GetUserResponseSuccess
@@ -31,9 +23,4 @@ export type UpdateUserResponse =
     | BadRequestResponse
     | UnathorizedResponse;
 
-export type DeleteUserResponse = DeleteUserResponseSuccess | BadRequestResponse;
-
-// getProfile(token)
-// Login/token
-// User has isAdmin field
-// If isAdmin, then we can do everything with other's profile
+export type DeleteUserResponse = DeleteResponseSuccess | BadRequestResponse;
