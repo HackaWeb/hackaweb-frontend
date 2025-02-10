@@ -12,7 +12,6 @@ import { Select } from "@/components/ui/Select";
 import { useEffect } from "react";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { QuestionType } from "@/types/question.type";
-import ModalBg from "../ModalBg";
 
 function QuestionEdit() {
     const {

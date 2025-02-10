@@ -25,7 +25,9 @@ const questions: QuestionWhileTesting[] = [
     },
 ];
 
-const QuestCompleting = async () => {
+const QuestCompleting = async ({ params }: { params: { id: string } }) => {
+    const questId = params.id;
+
     return <QuestCompletingPageComponent questions={questions} />;
 };
 
