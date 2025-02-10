@@ -4,13 +4,10 @@ import {
     addOption,
     editOption,
     removeOption,
-    setOptions,
 } from "@/store/slices/options/options";
-import { AnswersProps } from "../Answers.props";
 import { useAnswers } from "@/hooks/useAnswers";
-import { useEffect } from "react";
 
-export const InputAnswer = ({ fetchedOptions }: AnswersProps) => {
+export const InputAnswer = () => {
     const { dispatch, getOption } = useAnswers();
 
     const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,10 +26,6 @@ export const InputAnswer = ({ fetchedOptions }: AnswersProps) => {
             }),
         );
     };
-
-    useEffect(() => {
-        if (fetchedOptions) dispatch(setOptions(fetchedOptions));
-    }, [fetchedOptions]);
 
     return (
         <div className="mt-4">

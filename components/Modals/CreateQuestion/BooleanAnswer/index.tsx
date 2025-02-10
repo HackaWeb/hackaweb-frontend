@@ -2,11 +2,9 @@
 import { Checkbox } from "@/components/ui/Checkbox";
 import { useAnswers } from "@/hooks/useAnswers";
 import { editOption, setOptions } from "@/store/slices/options/options";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { AnswersProps } from "../Answers.props";
 
-export const BooleanAnswer = ({ fetchedOptions }: AnswersProps) => {
+export const BooleanAnswer = () => {
     const { dispatch, getOption } = useAnswers();
 
     const checkHandler = (isCorrect: boolean, index: number) => {
@@ -41,10 +39,6 @@ export const BooleanAnswer = ({ fetchedOptions }: AnswersProps) => {
             }),
         );
     };
-
-    useEffect(() => {
-        if (fetchedOptions) dispatch(setOptions(fetchedOptions));
-    }, [fetchedOptions]);
 
     return (
         <div className="mt-4">

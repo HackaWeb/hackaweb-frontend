@@ -64,6 +64,11 @@ export const useQuestionModal = () => {
         }
     };
 
+    useEffect(() => {
+        dispatch(setOptions(question?.options || []));
+        if (question?.type !== questionType?.value) dispatch(setOptions([]));
+    }, [question, questionType]);
+
     const renderQuestionTitle = () => {
         switch (question?.type) {
             case "input":
@@ -80,11 +85,11 @@ export const useQuestionModal = () => {
     const renderGetAnswer = () => {
         switch (questionType?.value) {
             case "input":
-                return <InputAnswer fetchedOptions={options} />;
+                return <InputAnswer />;
             case "choice":
-                return <Choice fetchedOptions={options} />;
+                return <Choice />;
             case "boolean":
-                return <BooleanAnswer fetchedOptions={options} />;
+                return <BooleanAnswer />;
             default:
                 return <></>;
         }
@@ -100,10 +105,6 @@ export const useQuestionModal = () => {
         if (prevModal) dispatch(toggleModal(prevModal));
         toast.success(msg);
     };
-
-    useEffect(() => {
-        dispatch(setOptions([]));
-    }, [questionType]);
 
     return {
         questionTypes,

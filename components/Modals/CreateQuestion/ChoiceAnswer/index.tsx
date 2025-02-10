@@ -5,15 +5,12 @@ import {
     addOption,
     editOption,
     removeOption,
-    selectOptions,
-    setOptions,
 } from "@/store/slices/options/options";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent } from "react";
 import { toast } from "react-toastify";
-import { AnswersProps } from "../Answers.props";
 import { useAnswers } from "@/hooks/useAnswers";
 
-export const Choice = ({ fetchedOptions }: AnswersProps) => {
+export const Choice = () => {
     const { dispatch, getOption, isChecked } = useAnswers();
 
     const checkHandler = (isCorrect: boolean, index: number) => {
@@ -46,10 +43,6 @@ export const Choice = ({ fetchedOptions }: AnswersProps) => {
             }),
         );
     };
-
-    useEffect(() => {
-        if (fetchedOptions) dispatch(setOptions(fetchedOptions));
-    }, [fetchedOptions]);
 
     return (
         <div className="mt-4">
