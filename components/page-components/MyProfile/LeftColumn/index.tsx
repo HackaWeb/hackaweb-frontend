@@ -7,15 +7,15 @@ import { LeftColumnProps } from "./LeftColumn.props";
 import { getAchievements } from "@/data/getAchievements";
 import { RenderRating } from "@/helpers/RenderRating";
 import { Button } from "@/components/ui/Button";
-import { updateUserProfile, deleteUserProfile } from "@/api/user";
+import { updateUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
 import {
     DEFAULT_FIELD_ERROR,
     RequestError,
 } from "@/api/responses/common/failure.interface";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
-import { setCookie } from "@/helpers/setCookie";
 import { useRouter } from "next/navigation";
+import { DeleteProfile } from "./DeleteProfile";
 
 export const LeftColumn = ({ profile }: LeftColumnProps) => {
     const router = useRouter();
@@ -83,38 +83,6 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
         }
     };
 
-    const deleteProfileHandler = async () => {
-        try {
-            const data = await deleteUserProfile();
-            if ("statusCode" in data && data.statusCode !== 200) {
-                return data.errors;
-            }
-            return [];
-        } catch (error) {
-            return [DEFAULT_FIELD_ERROR];
-        }
-    };
-
-    const onProfileDelete = async () => {
-        try {
-            const result = await deleteProfileHandler();
-            if (result.length === 0) {
-                toast.success("Ваш профіль успішно видалено!");
-                setCookie("token", "");
-                router.push("/");
-
-                /* const timeout = setTimeout(() => {
-                    router.refresh();
-                    clearTimeout(timeout);
-                }); */
-            } else {
-                printToastErrorMessages(result.map((res) => res.message));
-            }
-        } catch (error) {
-            toast.error(DEFAULT_FIELD_ERROR.message);
-        }
-    };
-
     return (
         <div>
             <div className="p-4 bg-blackOpacity rounded-md">
@@ -175,13 +143,7 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                     ))}
                 </ul>
             </div>
-            <Button
-                className="mt-6 w-full"
-                color="redBorder"
-                onClick={onProfileDelete}
-            >
-                Видалити акаунт
-            </Button>
+            <DeleteProfile />
         </div>
     );
 };

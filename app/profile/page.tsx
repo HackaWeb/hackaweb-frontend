@@ -138,12 +138,9 @@ const MyProfile = async () => {
 
         if ("statusCode" in data) {
             redirect("/login");
-            /* profile = defaultProfile; */
         } else {
             profile = { ...data, createdQuests: [], completedQuests: [] };
         }
-
-        /* console.log(profile); */
     } catch (error) {
         console.error(error);
         redirect("/login");
