@@ -43,6 +43,7 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
             if ("email" in profileData) {
                 profile = profileData;
             } else {
+                profile = null;
             }
         } catch (error) {
             console.log(error);
