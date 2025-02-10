@@ -1,8 +1,9 @@
-import { getProfile } from "@/api/auth";
+import { getProfile } from "@/api/user";
 import { MyProfilePageComponent } from "@/components/page-components/MyProfile";
 import { Profile } from "@/types/user.interface";
+import { redirect } from "next/navigation";
 
-const defaultProfile: Profile = {
+/* const defaultProfile: Profile = {
     id: "1",
     email: "testuser@example.com",
     firstName: "Test",
@@ -121,21 +122,25 @@ const defaultProfile: Profile = {
             },
         },
     ],
-};
+}; */
 
 const MyProfile = async () => {
     let profile: Profile;
+    
     try {
         const data = await getProfile();
+
         if ("statusCode" in data) {
-            profile = defaultProfile;
+            redirect("/login");
+            /* profile = defaultProfile; */
         } else {
             profile = { ...data, createdQuests: [], completedQuests: [] };
         }
-        console.log(profile);
+
+        /* console.log(profile); */
     } catch (error) {
         console.error(error);
-        profile = defaultProfile;
+        redirect("/login");
     }
 
     return <MyProfilePageComponent profile={profile} />;

@@ -80,7 +80,8 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
     };
 
     const deleteProfile = async () => {
-        const data = await deleteUserProfile({ userId: profile.id });
+        const data = await deleteUserProfile();
+
         console.log(data);
         if ("statusCode" in data) {
             if (data.statusCode === 400) {
@@ -90,6 +91,7 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
             }
             return [DEFAULT_FIELD_ERROR];
         }
+        
         return [];
     };
 

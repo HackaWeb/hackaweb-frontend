@@ -7,7 +7,7 @@ import {
 
 export const getProfile = async (): Promise<GetProfileResponse> =>
     fetchApi({
-        endpoint: "/profile/",
+        endpoint: "/user/user-profile/",
         isAuthRequired: true,
         method: "GET",
     });

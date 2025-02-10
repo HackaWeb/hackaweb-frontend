@@ -67,6 +67,7 @@ export const LoginPageComponent = () => {
 
         if (results.length === 0) {
             toast.success("Вас успішно авторизовано!");
+            
             router.push("/profile");
         } else {
             printToastErrorMessages(results.map((res) => res.message));
