@@ -95,7 +95,7 @@ export const Aside = ({ profile }: AsideProps) => {
                         </div>
                     ) : (
                         <div className="flex mt-4 xsm:mt-8 mx-4 gap-4 bg-blackOpacity p-2">
-                            <div className="p-1 border-purple border-2 rounded-md xsm:p-3">
+                            <div className="p-2 w-12 h-12 border-purple border-2 rounded-md">
                                 {!profile.avatar ? (
                                     <AiOutlineUser className="text-purple size-6" />
                                 ) : (
@@ -109,6 +109,7 @@ export const Aside = ({ profile }: AsideProps) => {
                                         width={0}
                                         height={0}
                                         sizes="100vw"
+                                        className="w-full"
                                     />
                                 )}
                             </div>
