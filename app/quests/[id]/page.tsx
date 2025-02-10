@@ -23,8 +23,91 @@ const quest: Quest = {
     createdAt: "2021-10-10",
     timeLimit: 60,
     questions: [],
-    reviews: [],
+    reviews: [
+        {
+            id: "1",
+            rating: 4,
+            comment: "Good quest",
+            createdAt: "2021-10-10",
+            author: {
+                id: "1",
+                firstName: "Danil",
+                lastName: "Diachenko",
+                avatar: null,
+                rating: 4.5,
+                email: "",
+            },
+        },
+        {
+            id: "2",
+            rating: 5,
+            comment: "Very good quest",
+            createdAt: "2021-10-10",
+            author: {
+                id: "1",
+                firstName: "Danil",
+                lastName: "Diachenko",
+                avatar: null,
+                rating: 4.5,
+                email: "",
+            },
+        },
+        {
+            id: "1",
+            rating: 4,
+            comment: "Good quest",
+            createdAt: "2021-10-10",
+            author: {
+                id: "1",
+                firstName: "Danil",
+                lastName: "Diachenko",
+                avatar: null,
+                rating: 4.5,
+                email: "",
+            },
+        },
+        {
+            id: "2",
+            rating: 5,
+            comment: "Very good quest",
+            createdAt: "2021-10-10",
+            author: {
+                id: "1",
+                firstName: "Danil",
+                lastName: "Diachenko",
+                avatar: null,
+                rating: 4.5,
+                email: "",
+            },
+        },
+    ],
     leaderboard: [
+        {
+            user: {
+                id: "1",
+                email: "",
+                firstName: "Test",
+                lastName: "User",
+                rating: 4.5,
+                avatar: null,
+            },
+            accuracy: 90,
+            timeSpent: 45,
+            dateCompleted: "2024-02-08T15:00:00Z",
+        },
+        {
+            user: {
+                id: "1",
+                email: "",
+                firstName: "Test",
+                lastName: "User",
+                rating: 4.5,
+                avatar: null,
+            },
+            accuracy: 90,
+            timeSpent: 45,
+            dateCompleted: "2024-02-08T15:00:00Z",
+        },
         {
             user: {
                 id: "1",
@@ -52,11 +135,11 @@ const QuestDetails = () => {
                 </Button>
             </Link>
             <div className="grid grid-cols-[0.4fr_0.6fr] mt-6 gap-8 items-start">
+                <GeneralInfo quest={quest} />
                 <div>
-                    <GeneralInfo quest={quest} />
+                    <Leaderboard quest={quest} />
                     <Reviews quest={quest} />
                 </div>
-                <Leaderboard quest={quest} />
             </div>
         </div>
     );

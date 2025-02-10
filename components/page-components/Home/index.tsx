@@ -62,8 +62,8 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
             {quests.length ? (
                 <>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-7 mt-6">
-                        {quests.map((quest) => (
-                            <Quest key={quest.id} quest={quest} />
+                        {quests.map((quest, index) => (
+                            <Quest key={index} quest={quest} />
                         ))}
                     </div>
                     <Button color="purpleBackground" className="mx-auto mt-4">

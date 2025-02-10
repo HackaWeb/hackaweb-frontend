@@ -13,9 +13,9 @@ export const Reviews = ({ quest }: ReviewsProps) => {
                 Відгуки ({quest.reviews.length})
             </h2>
             <div className="flex flex-col gap-4">
-                {quest.reviews.map((review) => (
+                {quest.reviews.map((review, index) => (
                     <div
-                        key={review.id}
+                        key={index}
                         className="bg-blackOpacity-dark p-4 rounded-lg flex gap-4"
                     >
                         <div className="flex flex-col items-center">

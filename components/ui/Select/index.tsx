@@ -57,9 +57,9 @@ export const Select = ({
             </button>
             {isOptionsOpened && (
                 <ul className="absolute left-0 top-full mt-1 w-full bg-[#201f2d] text-gray rounded-md shadow-lg z-10 overflow-hidden">
-                    {options.map((option) => (
+                    {options.map((option, index) => (
                         <li
-                            key={option.value}
+                            key={index}
                             onClick={() => onSelectOptionClick(option)}
                             className="px-4 py-3 cursor-pointer hover:bg-blackOpacity-light transition-colors"
                         >

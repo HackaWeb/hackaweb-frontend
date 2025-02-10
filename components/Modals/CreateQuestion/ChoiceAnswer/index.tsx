@@ -57,19 +57,21 @@ export const Choice = ({ fetchedOptions }: AnswersProps) => {
                 Оберіть правильну-(і) відповідь-(і)
             </label>
             <div>
-                {[1, 2, 3, 4].map((_, i) => {
+                {[1, 2, 3, 4].map((_, index) => {
                     return (
-                        <div className="mt-2" key={i}>
+                        <div className="mt-2" key={index}>
                             <div className="flex justify-between relative">
                                 <Input
-                                    placeholder={`Впишіть варіант ${i + 1}..`}
-                                    value={getOption(i)?.title || ""}
-                                    onChange={(e) => inputHandler(e, i)}
+                                    placeholder={`Впишіть варіант ${
+                                        index + 1
+                                    }..`}
+                                    value={getOption(index)?.title || ""}
+                                    onChange={(e) => inputHandler(e, index)}
                                 />
                                 <Checkbox
-                                    checked={isChecked(i)}
+                                    checked={isChecked(index)}
                                     onChange={(e) => {
-                                        checkHandler(e, i);
+                                        checkHandler(e, index);
                                     }}
                                     className="absolute right-4 top-3"
                                 />
