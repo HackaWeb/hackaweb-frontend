@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { QuestionsState } from "./questions.types";
+import { CurrentEditingIdType, QuestionsState } from "./questions.types";
 import { Question } from "@/types/question.interface";
 
 const initialState: QuestionsState = {
@@ -29,7 +29,7 @@ const questions = createSlice({
             };
         },
 
-        setEditingId: (state, action: PayloadAction<number | null>) => {
+        setEditingId: (state, action: PayloadAction<CurrentEditingIdType>) => {
             return {
                 ...state,
                 ...state.questions,

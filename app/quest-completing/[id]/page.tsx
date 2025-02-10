@@ -3,7 +3,7 @@ import { QuestionWhileTesting } from "@/types/question.interface";
 
 const questions: QuestionWhileTesting[] = [
     {
-        id: 1,
+        id: "12345",
         title: "What is the capital of France?",
         type: "choice",
         options: [
@@ -14,12 +14,12 @@ const questions: QuestionWhileTesting[] = [
         ],
     },
     {
-        id: 2,
+        id: "123456",
         title: "What is the capital of Germany?",
         type: "input",
     },
     {
-        id: 3,
+        id: "1234567",
         title: "Is 2 + 2 = 4?",
         type: "boolean",
     },

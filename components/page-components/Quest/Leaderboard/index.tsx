@@ -77,7 +77,7 @@ export const Leaderboard = ({ quest }: LeaderboardProps) => {
                                     </div>
                                 </td>
                                 <td className="w-[150px] px-4 py-2 text-gray-light">
-                                    {player.timeSpent} / {quest.timeLimit} хв.
+                                    {player.timeSpent} / {quest.duration} хв.
                                 </td>
                                 <td className="w-[120px] px-4 py-2 text-gray-light">
                                     {player.accuracy} / 100

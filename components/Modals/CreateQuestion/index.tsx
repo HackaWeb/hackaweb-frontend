@@ -28,7 +28,6 @@ export const CreateQuestion = () => {
         setQuestionType,
         setTitle,
         title,
-        questions,
         resetOptions,
     } = useQuestionModal();
 
@@ -36,17 +35,15 @@ export const CreateQuestion = () => {
         e.preventDefault();
 
         const type = questionType?.value as QuestionType;
-
         if (!title.length || !type || !options.length)
             return toast.error("Спочатку заповніть усі поля!");
 
         const question = {
-            id: questions.length + 1,
+            id: "12345",
             title,
             type,
             options,
-            image: file && fileType === "image" ? file : undefined,
-            video: file && fileType === "video" ? file : undefined,
+            file: file ? file : undefined,
         };
 
         dispatch(addQuestion(question));
@@ -89,7 +86,7 @@ export const CreateQuestion = () => {
                                 type="file"
                                 ref={fileInputRef}
                                 className="hidden"
-                                accept="image/*,video/*"
+                                accept=".png, .mp4"
                                 onChange={onFileUpload}
                             />
                             <div
