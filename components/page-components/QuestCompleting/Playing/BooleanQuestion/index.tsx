@@ -34,7 +34,7 @@ export const BooleanQuestion = ({
                     <Checkbox
                         checked={selectedOption === true}
                         onChange={() => onOptionSelect(true)}
-                        className="w-10 h-10"
+                        className="sm:w-10 sm:h-10"
                     />
                 </div>
             </div>
@@ -51,7 +51,7 @@ export const BooleanQuestion = ({
                     <Checkbox
                         checked={selectedOption === false}
                         onChange={() => onOptionSelect(false)}
-                        className="w-10 h-10"
+                        className="sm:w-10 sm:h-10"
                     />
                 </div>
             </div>

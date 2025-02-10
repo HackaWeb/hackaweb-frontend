@@ -24,9 +24,9 @@ const CompletedQuestsDashboard = ({
                 </thead>
                 <tbody>
                     {attempts.length !== 0 &&
-                        attempts.map((attempt) => (
+                        attempts.map((attempt, index) => (
                             <tr
-                                key={attempt.questId}
+                                key={index}
                                 className="border-b border-[#242A4D]"
                             >
                                 <td className="px-4 py-2">

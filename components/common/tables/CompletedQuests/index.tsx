@@ -35,7 +35,7 @@ export const CompletedQuests = ({
                         {/*
                         {profile.completedQuests.map((completed) => (
                             <tr
-                                key={completed.quest.id}
+                                key={index}
                                 className="border-t border-gray-700"
                             >
                                 <td className="p-3 font-semibold">

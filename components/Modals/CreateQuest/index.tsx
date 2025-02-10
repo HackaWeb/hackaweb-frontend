@@ -146,9 +146,9 @@ export const CreateQuest = () => {
                                         Список питань
                                     </span>
 
-                                    {questions.map((question, i) => (
+                                    {questions.map((question, index) => (
                                         <div
-                                            key={i}
+                                            key={index}
                                             className="flex gap-2 place-items-center"
                                         >
                                             {question.image ? (

@@ -74,10 +74,10 @@ export const LoginPageComponent = () => {
     };
 
     return (
-        <div className="container mt-12 flex flex-col place-items-center">
+        <div className="container sm:mt-12 mt-6 flex flex-col place-items-center">
             <h1>Авторизація</h1>
-            <form onSubmit={onSubmit} className="flex flex-col">
-                <div className="space-y-2 mt-10">
+            <form onSubmit={onSubmit} className="flex flex-col w-full">
+                <div className="space-y-2 sm:mt-10 mt-6">
                     <Input
                         type="email"
                         value={formData.email}
@@ -104,16 +104,14 @@ export const LoginPageComponent = () => {
                 >
                     Не маєте акаунту? Зареєструйтесь!
                 </Link>
-                <div className="mt-10">
-                    <Button
-                        color="purpleBackground"
-                        type="submit"
-                        className="px-20 text-lg mx-auto"
-                    >
-                        Увійти
-                    </Button>
-                </div>
-                <span className="mt-20 text-center">
+                <Button
+                    color="purpleBackground"
+                    type="submit"
+                    className="px-10 sm:px-20 text-lg mt-5 mx-auto sm:mt-10"
+                >
+                    Увійти
+                </Button>
+                <span className="mt-8 sm:mt-20 text-center">
                     Або увійти через соц. мережі
                 </span>
             </form>

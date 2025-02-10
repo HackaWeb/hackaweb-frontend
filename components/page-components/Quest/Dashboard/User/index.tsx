@@ -39,9 +39,9 @@ const UserQuestsDashboard = ({
                 </thead>
                 <tbody>
                     {quests.length !== 0 &&
-                        quests.map((quest) => (
+                        quests.map((quest, index) => (
                             <tr
-                                key={quest.id}
+                                key={index}
                                 className="border-b border-[#242A4D]"
                             >
                                 <td className="px-4 py-2">

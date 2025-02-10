@@ -95,13 +95,13 @@ export const RegisterPageComponent = () => {
     };
 
     return (
-        <div className="container mt-12 flex flex-col place-items-center">
+        <div className="container sm:mt-12 mt-6 flex flex-col place-items-center">
             <h1>Реєстрація</h1>
             <form
                 onSubmit={onSubmit}
                 className="flex flex-col place-items-center"
             >
-                <div className="space-y-2 mt-10">
+                <div className="space-y-2 sm:mt-10 mt-6">
                     <Input
                         placeholder="Ваша пошта..."
                         type="email"
@@ -133,16 +133,14 @@ export const RegisterPageComponent = () => {
                         }
                     />
                 </div>
-                <div className="mt-10">
-                    <Button
-                        color="purpleBackground"
-                        type="submit"
-                        className="px-20 text-lg"
-                    >
-                        Реєстрація
-                    </Button>
-                </div>
-                <span className="mt-20">
+                <Button
+                    color="purpleBackground"
+                    type="submit"
+                    className="px-10 sm:px-20 text-lg mt-5 sm:mt-10"
+                >
+                    Реєстрація
+                </Button>
+                <span className="mt-8 sm:mt-20">
                     Або зареєструватися через соц. мережі
                 </span>
             </form>

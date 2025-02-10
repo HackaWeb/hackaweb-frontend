@@ -56,7 +56,7 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
             <body
                 className={cn(
                     !pathname.includes("quest-completing")
-                        ? "grid grid-cols-[320px_1fr] relative"
+                        ? "grid grid-cols-[1fr] lg:grid-cols-[320px_1fr] relative"
                         : "",
                     inter.variable,
                 )}
@@ -67,7 +67,7 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
                     )}
                     <main
                         className={
-                            !pathname.includes("quest-completing") ? "p-12" : ""
+                            !pathname.includes("quest-completing") ? "sm:p-12 p-6" : ""
                         }
                     >
                         {children}

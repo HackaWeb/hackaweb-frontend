@@ -13,7 +13,7 @@ export const MakeReview = () => {
     };
 
     return (
-        <div className="bg-blackOpacity p-6 rounded-lg">
+        <div className="bg-blackOpacity p-6 rounded-lg mb-4">
             <div className="text-xl font-bold mb-4">Оцініть цей квест</div>
             <div className="flex">
                 {[...Array(5)].map((_, index) => (

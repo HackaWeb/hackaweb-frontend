@@ -6,9 +6,6 @@ import { PlayingProps } from "./Playing.props";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
-import { TbArrowBackUp } from "react-icons/tb";
-import { AiOutlineUser } from "react-icons/ai";
-import { Textarea } from "@/components/ui/Textarea";
 import { Chat } from "./Chat";
 import { ProgressBar } from "./ProgressBar";
 import { InfoBox } from "./InfoBox";
@@ -90,10 +87,10 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
     return (
         <div className="relative">
             <button
-                className="absolute left-8 top-8 bg-blackOpacity-dark p-3 rounded-md cursor-pointer z-10"
+                className="absolute left-4 top-4 md:left-8 md:top-8 bg-[#261035] p-3 rounded-md cursor-pointer z-20"
                 onClick={() => setIsChatOpened(true)}
             >
-                <IoChatbubbleEllipsesSharp className="text-purple size-8" />
+                <IoChatbubbleEllipsesSharp className="text-purple size-5 md:size-8" />
             </button>
             <Chat isOpened={isChatOpened} setIsOpened={setIsChatOpened} />
             <ProgressBar
@@ -102,7 +99,7 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
                 questionsCompleted={questionsCompleted}
                 questions={questions}
             />
-            <div className="bg-blackOpacity pt-16 relative">
+            <div className="bg-blackOpacity pt-16 px-4 relative">
                 <InfoBox
                     questionsLength={questions.length}
                     currentQuestionIndex={currentQuestionIndex}
@@ -110,9 +107,9 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
                 <img
                     src="/question.png"
                     alt="Питання"
-                    className="mx-auto mt-3 rounded-lg w-auto max-w-[400px]"
+                    className="mx-auto mt-3 rounded-lg w-full max-w-[400px]"
                 />
-                <h1 className="pt-10 pb-5 text-center">
+                <h1 className="pt-10 pb-5 text-center text-xl xsm:text-3xl">
                     {currentQuestion.title}
                 </h1>
             </div>

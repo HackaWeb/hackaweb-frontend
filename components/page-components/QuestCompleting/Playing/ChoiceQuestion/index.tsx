@@ -50,12 +50,12 @@ export const ChoiceQuestion = ({
     };
 
     return (
-        <div className="grid grid-cols-4 gap-4 mt-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10 px-4">
             {question.options.map((option, index) => (
                 <div
                     key={index}
                     className={cn(
-                        "text-white text-xl font-semibold flex items-center justify-center aspect-square relative cursor-pointer rounded-lg transition-all",
+                        "text-white text-base md:text-xl font-semibold flex items-center justify-center aspect-square relative cursor-pointer rounded-lg transition-all p-2 overflow-auto",
                         answersColors[index],
                         selectedOptions.includes(index)
                             ? "opacity-100"
