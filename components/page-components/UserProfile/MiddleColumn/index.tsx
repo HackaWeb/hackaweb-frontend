@@ -10,7 +10,7 @@ import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { useRouter } from "next/navigation";
 
-export const MiddleColumn = ({ profile, id }: MiddleColumnProps) => {
+export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
     const router = useRouter();
 
     const [userData, setUserData] = useState({
@@ -44,7 +44,7 @@ export const MiddleColumn = ({ profile, id }: MiddleColumnProps) => {
 
         formData.append("firstName", userData.firstName);
         formData.append("lastName", userData.lastName);
-        formData.append("userId", id);
+        formData.append("userId", profile.id);
 
         const result = await updateUserDataHandler(formData);
 

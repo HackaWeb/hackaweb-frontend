@@ -11,7 +11,8 @@ const UserProfile = async ({ params }: { params: { id: string } }) => {
 
     let profile: Profile | null = null;
 
-    const getOwnProfileData = async () => {
+    // that, who requests user profile page, (possibly is admin)
+    const getIsReqeusterAdmin = async () => {
         try {
             const profile = await getProfile();
 
@@ -26,7 +27,7 @@ const UserProfile = async ({ params }: { params: { id: string } }) => {
         }
     };
 
-    const getUserProfileData = async () => {
+    const getUserProfileHandler = async () => {
         try {
             const data = await getProfile(id);
 
@@ -52,10 +53,10 @@ const UserProfile = async ({ params }: { params: { id: string } }) => {
 
     let isAdmin = false;
     if (token) {
-        isAdmin = await getOwnProfileData();
+        isAdmin = await getIsReqeusterAdmin();
     }
 
-    profile = await getUserProfileData();
+    profile = await getUserProfileHandler();
 
     console.log("isAdmin", isAdmin);
     console.log("profile", profile);
@@ -65,7 +66,10 @@ const UserProfile = async ({ params }: { params: { id: string } }) => {
     }
 
     return (
-        <UserProfilePageComponent id={id} isAdmin={isAdmin} profile={profile} />
+        <UserProfilePageComponent
+            isEditable={isAdmin}
+            profile={profile}
+        />
     );
 };
 

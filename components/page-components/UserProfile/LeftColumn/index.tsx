@@ -136,7 +136,7 @@ export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
                                     </Button>
                                 )}
                                 <img
-                                    src={avatar || profile.avatar}
+                                    src={avatar || profile.avatar || ""}
                                     alt="Avatar"
                                     className="w-full h-full object-cover"
                                 />
