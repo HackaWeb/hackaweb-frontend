@@ -1,10 +1,10 @@
 "use client";
 
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
-import { ModalBgProps } from "./ModalBg.props";
 import { toggleModal } from "@/store/slices/modals/modals";
+import { ModalBgProps } from "./ModalBg.props";
 
-function ModalBg({ modal }: ModalBgProps) {
+export const ModalBg = ({ modal }: ModalBgProps) => {
     const dispatch = useAppDispatch();
 
     return (
@@ -13,6 +13,4 @@ function ModalBg({ modal }: ModalBgProps) {
             onClick={() => dispatch(toggleModal(modal))}
         />
     );
-}
-
-export default ModalBg;
+};

@@ -1,6 +1,7 @@
 "use client";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { isModalOpened } from "@/helpers/isModalOpened";
+import { ModalBg } from "../ModalBg";
 import { Button } from "@/components/ui/Button";
 import { editQuestion } from "@/store/slices/questions/questions";
 import { toast } from "react-toastify";

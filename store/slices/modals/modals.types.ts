@@ -2,9 +2,11 @@ export type ModalType =
     | "QuestCreation"
     | "QuestEdit"
     | "QuestionCreation"
-    | "QuestionEdit";
+    | "QuestionEdit"
+    | "DeleteConfirmationProfile";
 
 export type ModalState = {
     active: ModalType[];
+    deleteCofirmationTitle?: string;
     prev?: ModalType;
 };

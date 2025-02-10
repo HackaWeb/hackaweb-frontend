@@ -1,6 +1,6 @@
 import { Profile } from "@/types/user.interface";
 
-export interface LeftColumnProps {
+export interface MiddleColumnProps {
     profile: Profile;
-    id?: string;
+    id: string;
 }
