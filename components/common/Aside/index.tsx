@@ -43,41 +43,44 @@ export const Aside = ({ isAuthorized }: AsideProps) => {
             >
                 <RxHamburgerMenu className="size-6" />
             </Button>
-
             {aside && (
                 <div
                     className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300"
                     onClick={() => setIsAsideOpenedHandler(false)}
                 />
             )}
-
             <aside
-                className={`min-h-[100vh] h-full top-0 left-0 bottom-0 w-[300px] fixed lg:relative lg:w-full z-50 lg:z-0 bg-[#10091b] lg:bg-blackOpacity-dark p-4 shadow-lg 
+                className={`min-h-[100vh] h-full top-0 left-0 bottom-0 w-[300px] fixed lg:relative lg:w-full z-50 lg:z-0 bg-[#10091b] lg:bg-blackOpacity-dark p-2 xsm:p-4 shadow-lg 
                 transition-transform duration-300 ${
                     aside ? "translate-x-0" : "-translate-x-full"
                 } lg:translate-x-0`}
             >
-                <div className="mt-10">
+                <div className="xsm:mt-10 mt-4">
                     <Link href="/" className="mx-4 text-white text-2xl">
                         КВЕСТ АПП
                     </Link>
-                    <div className="flex mt-8 mx-4 items-center gap-4 bg-blackOpacity p-3">
-                        <div className="p-3 border-purple border-2 rounded-md">
+                    <div className="flex mt-4 xsm:mt-8 mx-4 items-center gap-4 bg-blackOpacity p-2">
+                        <div className="p-1 border-purple border-2 rounded-md xsm:p-3">
                             <AiOutlineUser className="text-purple size-6" />
                         </div>
                         <div className="flex items-center gap-2">
                             <Link
                                 className="text-yellow hover:text-yellow-light"
                                 href="/login"
+                                onClick={() => setIsAsideOpenedHandler(false)}
                             >
                                 Увійти
                             </Link>
                             <div className="w-[1px] h-8 bg-gray-dark"></div>
-                            <Link href="/register">Реєстрація</Link>
+                            <Link
+                                href="/register"
+                                onClick={() => setIsAsideOpenedHandler(false)}
+                            >
+                                Реєстрація
+                            </Link>
                         </div>
                     </div>
-
-                    <nav className="mt-8 text-lg">
+                    <nav className="mt-4 xsm:mt-8 text-lg">
                         <ul>
                             {links.map((link, index) => (
                                 <li
