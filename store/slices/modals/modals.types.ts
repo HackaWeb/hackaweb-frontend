@@ -7,5 +7,9 @@ export type ModalType =
 
 export type ModalState = {
     active: ModalType[];
+    deletingInfo?: {
+        title: string;
+        callback: () => void;
+    };
     prev?: ModalType;
 };

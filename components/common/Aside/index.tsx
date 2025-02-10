@@ -52,8 +52,6 @@ export const Aside = ({ profile }: AsideProps) => {
         router.refresh();
     };
 
-    console.log(profile);
-
     return (
         <>
             <Button
