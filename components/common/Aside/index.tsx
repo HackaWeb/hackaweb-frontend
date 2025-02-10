@@ -29,8 +29,9 @@ export const Aside = ({ profile }: AsideProps) => {
         dispatch(setIsAsideOpened(value));
     };
 
-    const onLogOut = () => {
+    const onLogoutClick = () => {
         setCookie("token", "");
+        toast.success("Ви успішно вийшли з акаунту!");
         router.refresh();
     };
 
