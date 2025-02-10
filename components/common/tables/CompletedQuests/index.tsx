@@ -45,7 +45,7 @@ export const CompletedQuests = ({
                                 </td>
                                 <td className="p-3">
                                     <img
-                                        src={completed.quest.imageUrl}
+                                        src={completed.quest.file}
                                         alt={completed.quest.title}
                                         className="w-16 h-12 object-cover rounded-md"
                                     />

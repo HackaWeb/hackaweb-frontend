@@ -11,8 +11,9 @@ const quest: Quest = {
     title: "Quest 1",
     description: "Description 1",
     rating: 4,
-    imageUrl: "/test.png",
+    file: "/test.png",
     owner: {
+        isAdmin: false,
         id: "1",
         firstName: "Danil",
         lastName: "Diachenko",
@@ -21,7 +22,7 @@ const quest: Quest = {
         rating: 4.5,
     },
     createdAt: "2021-10-10",
-    timeLimit: 60,
+    duration: 60,
     questions: [],
     reviews: [
         {
@@ -30,6 +31,7 @@ const quest: Quest = {
             comment: "Good quest",
             createdAt: "2021-10-10",
             author: {
+                isAdmin: false,
                 id: "1",
                 firstName: "Danil",
                 lastName: "Diachenko",
@@ -48,6 +50,7 @@ const quest: Quest = {
                 firstName: "Danil",
                 lastName: "Diachenko",
                 avatar: null,
+                isAdmin: false,
                 rating: 4.5,
                 email: "",
             },
@@ -61,6 +64,7 @@ const quest: Quest = {
                 id: "1",
                 firstName: "Danil",
                 lastName: "Diachenko",
+                isAdmin: false,
                 avatar: null,
                 rating: 4.5,
                 email: "",
@@ -76,6 +80,7 @@ const quest: Quest = {
                 firstName: "Danil",
                 lastName: "Diachenko",
                 avatar: null,
+                isAdmin: false,
                 rating: 4.5,
                 email: "",
             },
@@ -89,6 +94,7 @@ const quest: Quest = {
                 firstName: "Test",
                 lastName: "User",
                 rating: 4.5,
+                isAdmin: false,
                 avatar: null,
             },
             accuracy: 90,
@@ -98,6 +104,7 @@ const quest: Quest = {
         {
             user: {
                 id: "1",
+                isAdmin: false,
                 email: "",
                 firstName: "Test",
                 lastName: "User",
@@ -111,6 +118,7 @@ const quest: Quest = {
         {
             user: {
                 id: "1",
+                isAdmin: false,
                 email: "",
                 firstName: "Test",
                 lastName: "User",

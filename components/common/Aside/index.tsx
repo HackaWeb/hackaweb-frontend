@@ -88,7 +88,7 @@ export const Aside = ({ profile }: AsideProps) => {
                     </Link>
                     {!profile ? (
                         <div className="flex mt-4 xsm:mt-8 mx-4 items-center gap-4 bg-blackOpacity p-2">
-                            <div className="p-1 w-12 h-12 border-purple border-2 rounded-md xsm:p-3">
+                            <div className="p-1 w-12 h-12 border-purple border-2 rounded-md xsm:p-3 flex justify-center items-center">
                                 <AiOutlineUser className="text-purple size-6" />
                             </div>
                             <div className="flex items-center gap-2">
@@ -114,16 +114,16 @@ export const Aside = ({ profile }: AsideProps) => {
                         </div>
                     ) : (
                         <div className="flex mt-4 xsm:mt-8 mx-4 gap-4 bg-blackOpacity p-2">
-                            <div className="p-2 w-12 h-12 border-purple border-2 rounded-md">
+                            <div className="p-2 w-12 h-12 border-purple border-2 rounded-md flex justify-center items-center">
                                 {!profile.avatar ? (
                                     <AiOutlineUser className="text-purple size-6" />
                                 ) : (
                                     <Image
                                         src={profile.avatar}
                                         alt={
-                                            profile.firstName +
+                                            (profile.firstName || "") +
                                             " " +
-                                            profile.lastName
+                                            (profile.lastName || "")
                                         }
                                         width={0}
                                         height={0}
@@ -134,7 +134,13 @@ export const Aside = ({ profile }: AsideProps) => {
                             </div>
                             <div>
                                 <Link href="/profile" className="text-white">
-                                    {`${profile.firstName} ${profile.lastName}`}
+                                    {!profile.firstName && !profile.lastName ? (
+                                        "Користувач"
+                                    ) : (
+                                        <>{`${profile.firstName || ""} ${
+                                            profile.lastName || ""
+                                        }`}</>
+                                    )}
                                 </Link>
                                 <button
                                     onClick={onLogoutClick}

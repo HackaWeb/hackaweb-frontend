@@ -1,5 +1,3 @@
-import { InputAnswer } from "@/components/Modals/CreateQuestion/InputAnswer";
-import { Choice } from "@/components/Modals/CreateQuestion/ChoiceAnswer/index";
 import {
     CustomSelectOption,
     SelectOption,
@@ -20,7 +18,9 @@ import {
 import { selectOptions, setOptions } from "@/store/slices/options/options";
 import { toast } from "react-toastify";
 import { ModalType } from "@/store/slices/modals/modals.types";
-import { BooleanAnswer } from "@/components/Modals/CreateQuestion/BooleanAnswer";
+import { BooleanAnswer } from "@/components/modals/CreateQuestion/BooleanAnswer";
+import { InputAnswer } from "@/components/modals/CreateQuestion/InputAnswer";
+import { Choice } from "@/components/modals/CreateQuestion/ChoiceAnswer";
 
 const questionTypes: CustomSelectOption[] = [
     {
@@ -64,6 +64,11 @@ export const useQuestionModal = () => {
         }
     };
 
+    useEffect(() => {
+        dispatch(setOptions(question?.options || []));
+        if (question?.type !== questionType?.value) dispatch(setOptions([]));
+    }, [question, questionType]);
+
     const renderQuestionTitle = () => {
         switch (question?.type) {
             case "input":
@@ -80,11 +85,11 @@ export const useQuestionModal = () => {
     const renderGetAnswer = () => {
         switch (questionType?.value) {
             case "input":
-                return <InputAnswer fetchedOptions={options} />;
+                return <InputAnswer />;
             case "choice":
-                return <Choice fetchedOptions={options} />;
+                return <Choice />;
             case "boolean":
-                return <BooleanAnswer fetchedOptions={options} />;
+                return <BooleanAnswer />;
             default:
                 return <></>;
         }
@@ -100,10 +105,6 @@ export const useQuestionModal = () => {
         if (prevModal) dispatch(toggleModal(prevModal));
         toast.success(msg);
     };
-
-    useEffect(() => {
-        dispatch(setOptions([]));
-    }, [questionType]);
 
     return {
         questionTypes,
