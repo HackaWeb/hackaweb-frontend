@@ -30,8 +30,14 @@ export const Aside = ({ isAuthorized }: AsideProps) => {
             title: "Створити квест",
             link: isAuthorized ? "/create-quest" : "/login",
         },
-        { title: "Мій кабінет", link: isAuthorized ? "/profile" : "/login" },
-        { title: "Я адміністратор", link: "/login" },
+        {
+            title: "Мій кабінет",
+            link: isAuthorized ? "/profile" : "/login",
+        },
+        {
+            title: "Я адміністратор",
+            link: isAuthorized ? "/profile" : "/login",
+        },
     ];
 
     return (

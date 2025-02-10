@@ -26,7 +26,7 @@ export const LoginPageComponent = () => {
             const res = await login(loginRequestBody);
 
             if ("jwtToken" in res) {
-                setCookie("jwtToken", res.jwtToken);
+                setCookie("token", res.jwtToken);
                 return [];
             }
 
@@ -67,6 +67,7 @@ export const LoginPageComponent = () => {
 
         if (results.length === 0) {
             toast.success("Вас успішно авторизовано!");
+            
             router.push("/profile");
         } else {
             printToastErrorMessages(results.map((res) => res.message));

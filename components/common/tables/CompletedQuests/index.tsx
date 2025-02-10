@@ -32,7 +32,8 @@ export const CompletedQuests = ({
                         </tr>
                     </thead>
                     <tbody>
-                        {profile.completedQuests.map((completed, index) => (
+                        {/*
+                        {profile.completedQuests.map((completed) => (
                             <tr
                                 key={index}
                                 className="border-t border-gray-700"
@@ -54,6 +55,7 @@ export const CompletedQuests = ({
                                 <td className="p-3">08.02.2025</td>
                             </tr>
                         ))}
+                        */}
                     </tbody>
                 </table>
             </div>
