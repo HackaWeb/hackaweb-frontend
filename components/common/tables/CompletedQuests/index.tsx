@@ -32,9 +32,9 @@ export const CompletedQuests = ({
                         </tr>
                     </thead>
                     <tbody>
-                        {profile.completedQuests.map((completed) => (
+                        {profile.completedQuests.map((completed, index) => (
                             <tr
-                                key={completed.quest.id}
+                                key={index}
                                 className="border-t border-gray-700"
                             >
                                 <td className="p-3 font-semibold">

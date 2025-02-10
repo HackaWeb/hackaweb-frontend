@@ -4,8 +4,8 @@ import { FaGoogle } from "react-icons/fa6";
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
     return (
-        <main className="flex place-content-center place-items-center h-full">
-            <div className="container p-8 bg-blackOpacity rounded-lg flex flex-col max-w-xl">
+        <div className="flex place-content-center place-items-center h-full">
+            <div className="container p-4 sm:p-8 bg-blackOpacity rounded-lg flex flex-col max-w-xl">
                 <div>
                     <ReturnBtn />
                 </div>
@@ -19,7 +19,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
                     </button>
                 </div>
             </div>
-        </main>
+        </div>
     );
 };
 
