@@ -10,6 +10,7 @@ import { getCookie } from "@/helpers/getCookie";
 import { getPathname } from "@/helpers/getPathname";
 import { Modals } from "@/components/Modals";
 import { getProfile } from "@/api/user";
+import { profile } from "console";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -32,22 +33,20 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
     const token = await getCookie("token");
     const pathname = await getPathname();
 
-    let isAuthorized;
+    let profile = null;
 
     if (!token || !token.length) {
-        isAuthorized = false;
+        profile = null;
     } else {
         try {
-            const profile = await getProfile();
+            const profileData = await getProfile();
 
-            if ("email" in profile) {
-                isAuthorized = true;
+            if ("email" in profileData) {
+                profile = profileData;
             } else {
-                isAuthorized = false;
             }
         } catch (error) {
             console.log(error);
-            isAuthorized = false;
         }
     }
 
@@ -63,7 +62,7 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
             >
                 <ReduxProvider>
                     {!pathname.includes("quest-completing") && (
-                        <Aside isAuthorized={isAuthorized} />
+                        <Aside profile={profile} />
                     )}
                     <main
                         className={

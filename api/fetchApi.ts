@@ -3,7 +3,6 @@ import { getCookie } from "@/helpers/getCookie";
 interface FetchOptions {
     endpoint: string;
     method: "GET" | "POST" | "PUT" | "DELETE";
-    type?: "form" | "json";
     body?: unknown;
     isAuthRequired?: boolean;
 }
@@ -13,7 +12,6 @@ export const fetchApi = async <T>({
     method,
     body,
     isAuthRequired,
-    type = "json",
 }: FetchOptions): Promise<T> => {
     const headers: Record<string, string> = {
         accept: "text/plain",
