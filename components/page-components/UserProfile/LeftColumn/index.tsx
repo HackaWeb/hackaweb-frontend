@@ -11,14 +11,17 @@ import {
     DEFAULT_FIELD_ERROR,
     RequestError,
 } from "@/api/responses/common/failure.interface";
-import { deleteUserProfile, updateUserProfile } from "@/api/user";
+import { updateUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
+import { DeleteProfile } from "./DeleteAccount";
 
 export const LeftColumn = ({ profile, isEditable }: LeftColumnProps) => {
     const achievements = getAchievements(profile);
+
     const [avatar, setAvatar] = useState<string | null>(profile.avatar);
+    
     const router = useRouter();
 
     const updateAvatarHandler = async (
@@ -39,7 +42,7 @@ export const LeftColumn = ({ profile, isEditable }: LeftColumnProps) => {
                 setAvatar(data.avatarUrl);
                 router.refresh();
                 toast.success("Аватар успішно змінено!");
-                
+
                 return [];
             }
         } catch (error) {
@@ -84,37 +87,6 @@ export const LeftColumn = ({ profile, isEditable }: LeftColumnProps) => {
 
         if (result.length > 0) {
             printToastErrorMessages(result.map((res) => res.message));
-        }
-    };
-
-    const deleteUserProfileHandler = async () => {
-        try {
-            const data = await deleteUserProfile(profile.id);
-
-            if ("statusCode" in data && data.statusCode !== 200) {
-                return data.errors;
-            }
-
-            return [];
-        } catch (error) {
-            return [DEFAULT_FIELD_ERROR];
-        }
-    };
-
-    const onProfileDelete = async () => {
-        try {
-            const result = await deleteUserProfileHandler();
-
-            if (result.length === 0) {
-                toast.success(
-                    `Профіль користувача ${profile.firstName} ${profile.lastName} успішно видалено!`,
-                );
-                router.back();
-            } else {
-                printToastErrorMessages(result.map((res) => res.message));
-            }
-        } catch (error) {
-            toast.error(DEFAULT_FIELD_ERROR.message);
         }
     };
 
@@ -185,15 +157,7 @@ export const LeftColumn = ({ profile, isEditable }: LeftColumnProps) => {
                     ))}
                 </ul>
             </div>
-            {isEditable && (
-                <Button
-                    className="mt-6 w-full"
-                    color="redBorder"
-                    onClick={onProfileDelete}
-                >
-                    Видалити акаунт
-                </Button>
-            )}
+            {isEditable && <DeleteProfile profile={profile} />}
         </div>
     );
 };

@@ -4,6 +4,7 @@ import { LeftColumn } from "./LeftColumn";
 import { CompletedQuests } from "@/components/common/tables/CompletedQuests";
 import { OwnQuests } from "@/components/common/tables/OwnQuests";
 import { MiddleColumn } from "./MiddleColumn";
+import { cn } from "@/helpers/cn";
 
 export const UserProfilePageComponent = ({
     isEditable,
@@ -16,7 +17,14 @@ export const UserProfilePageComponent = ({
                     Профіль користувача {profile.firstName} {profile.lastName}
                 </h1>
                 <ReturnBtn className="mt-4" />
-                <div className="mt-8 grid grid-cols-[240px_auto] gap-6">
+                <div
+                    className={cn(
+                        "mt-8 grid gap-6",
+                        isEditable
+                            ? "grid grid-cols-[240px_330px_auto]"
+                            : "grid-cols-[240px_auto]",
+                    )}
+                >
                     <LeftColumn profile={profile} isEditable={isEditable} />
                     {isEditable && <MiddleColumn profile={profile} />}
                     <div>
