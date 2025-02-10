@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 import { useEffect, useState } from "react";
 import { Profile } from "@/types/user.interface";
+import { MiddleColumn } from "./MiddleColumn";
 
 export const UserProfilePageComponent = ({ id, isAdmin }: UserProfileProps) => {
     const [profile, setProfile] = useState<Profile | null>();
@@ -45,7 +46,8 @@ export const UserProfilePageComponent = ({ id, isAdmin }: UserProfileProps) => {
                 </h1>
                 <ReturnBtn className="mt-4" />
                 <div className="mt-8 grid grid-cols-[240px_auto] gap-6">
-                    <LeftColumn profile={profile} />
+                    <LeftColumn profile={profile} id={id} />
+                    {isAdmin && <MiddleColumn id={id} profile={profile} />}
                     <div>
                         <OwnQuests profile={profile} isCreatedByMe={false} />
                         <CompletedQuests

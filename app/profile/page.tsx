@@ -132,6 +132,7 @@ const MyProfile = async () => {
     if (!token) {
         profile = null;
     }
+
     try {
         const data = await getProfile();
 
