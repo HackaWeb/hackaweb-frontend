@@ -25,10 +25,10 @@ export const Aside = ({ isAuthorized }: AsideProps) => {
     };
 
     const links: LinkItem[] = [
-        { title: "Квести", link: "/" },
+        { title: "Усі квести", link: "/" },
         {
             title: "Створити квест",
-            link: isAuthorized ? "/create-quest" : "/login",
+            link: isAuthorized ? "/profile" : "/login",
         },
         {
             title: "Мій кабінет",
@@ -36,7 +36,7 @@ export const Aside = ({ isAuthorized }: AsideProps) => {
         },
         {
             title: "Я адміністратор",
-            link: isAuthorized ? "/profile" : "/login",
+            link: isAuthorized ? "#" : "/login",
         },
     ];
 
@@ -95,14 +95,14 @@ export const Aside = ({ isAuthorized }: AsideProps) => {
                                 >
                                     {pathname === link.link &&
                                         link.link !== "/login" && (
-                                            <div className="absolute left-0 flex items-center">
+                                            <div className="absolute -left-2 xsm:-left-4 flex items-center">
                                                 <div className="w-[4px] h-10 bg-purple"></div>
                                                 <div className="w-4 h-6 bg-purple blur-md"></div>
                                             </div>
                                         )}
                                     <Link
                                         href={link.link}
-                                        className="ml-6 text-white"
+                                        className="ml-2 text-white"
                                     >
                                         {link.title}
                                     </Link>
