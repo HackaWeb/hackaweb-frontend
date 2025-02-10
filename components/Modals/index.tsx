@@ -8,8 +8,8 @@ export const Modals = () => {
     return (
         <>
             <CreateQuest />
-            <QuestEdit />
             <CreateQuestion />
+            <QuestEdit />
             <QuestionEdit />
             <DeleteConfirmation />
         </>

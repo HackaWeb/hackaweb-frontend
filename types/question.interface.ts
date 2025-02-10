@@ -16,6 +16,7 @@ export interface Question {
     type: QuestionType;
     options: ChoiceOption[];
     file?: string;
+    fileType?: "image" | "video";
 }
 
 export interface QuestionWhileTesting {

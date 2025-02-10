@@ -47,7 +47,7 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
                 profile = null;
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 

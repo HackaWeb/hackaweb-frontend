@@ -1,12 +1,14 @@
+"use client";
 import Image from "next/image";
 import { GeneraInfoProps } from "./GeneralInfo.props";
 import { Button } from "@/components/ui/Button";
 import { FaUser } from "react-icons/fa6";
-import { HiUsers } from "react-icons/hi2";
 import { RenderRating } from "@/helpers/RenderRating";
 import Link from "next/link";
+import { useRedirect } from "@/hooks/useRedirect";
 
 export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
+    const redirect = useRedirect();
     return (
         <div className="bg-blackOpacity rounded-md">
             <Image
@@ -22,15 +24,14 @@ export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
                     {quest.title}
                 </div>
                 <div className="flex gap-5 mt-4">
-                    <Link href="/quest-completing/1?type=single">
-                        <Button
-                            className="bg-purple gap-2"
-                            color="purpleBackground"
-                        >
-                            <FaUser className="size-4" />
-                            <span>Грати наодинці</span>
-                        </Button>
-                    </Link>
+                    <Button
+                        className="bg-purple gap-2"
+                        color="purpleBackground"
+                        onClick={() => redirect("/quest-completing/1")}
+                    >
+                        <FaUser className="size-4" />
+                        <span>Грати</span>
+                    </Button>
                 </div>
                 <div className="text-gray mt-2">
                     <span className="font-semibold text-white">112</span> разів

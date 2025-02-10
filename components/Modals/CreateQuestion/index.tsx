@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/Input";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { toast } from "react-toastify";
-import { ModalBg } from "../ModalBg";
+import ModalBg from "../ModalBg";
 import { BsFillImageFill } from "react-icons/bs";
 import { addQuestion } from "@/store/slices/questions/questions";
 import { FaVideo } from "react-icons/fa6";
@@ -27,6 +27,7 @@ export const CreateQuestion = () => {
         renderGetAnswer,
         setQuestionType,
         setTitle,
+        question,
         title,
         resetOptions,
     } = useQuestionModal();
@@ -39,11 +40,12 @@ export const CreateQuestion = () => {
             return toast.error("Спочатку заповніть усі поля!");
 
         const question = {
-            id: "12345",
+            id: crypto.randomUUID(),
             title,
             type,
             options,
             file: file ? file : undefined,
+            fileType: fileType ? fileType : undefined,
         };
 
         dispatch(addQuestion(question));
@@ -65,13 +67,13 @@ export const CreateQuestion = () => {
                             {file ? (
                                 fileType === "image" ? (
                                     <img
-                                        src={file}
+                                        src={file || question?.file}
                                         alt="Зображення питання"
                                         className="w-full h-auto aspect-square object-cover"
                                     />
                                 ) : (
                                     <video
-                                        src={file}
+                                        src={file || question?.file}
                                         controls
                                         className="w-full h-auto aspect-square object-cover"
                                     />

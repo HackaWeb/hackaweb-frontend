@@ -20,7 +20,9 @@ import {
 import { FiEdit2 } from "react-icons/fi";
 import Image from "next/image";
 import { IoImageOutline } from "react-icons/io5";
-import { createQuest } from "@/api/quests";
+import { createQuest, uploadQuestMedia } from "@/api/quests";
+import ModalBg from "../ModalBg";
+import { parseQuestionType } from "@/helpers/parseQuestionType";
 
 export const CreateQuest = () => {
     const dispatch = useAppDispatch();
@@ -43,6 +45,52 @@ export const CreateQuest = () => {
         dispatch(toggleModal("QuestionEdit"));
     };
 
+    const createQuestHandler = async () => {
+        const questMedia = new FormData();
+        questMedia.append("file", file as string);
+
+        const questBody = {
+            title,
+            description,
+            duration: Number(duration),
+            questions: questions.map((question) => {
+                return {
+                    id: question.id,
+                    title: question.title,
+                    type: parseQuestionType(question.type),
+                    options: question.options.map((o) => {
+                        return {
+                            title: o.title
+                                .trim()
+                                .replace(" ", "_")
+                                .toLowerCase(),
+                            isCorrect: o.isCorrect,
+                        };
+                    }),
+                };
+            }),
+        };
+
+        try {
+            const data = await createQuest({ quiz: questBody });
+            const { errors } = await uploadQuestMedia(data.id, questMedia);
+            for (let backQ of data.questions) {
+                for (let localQ of questions) {
+                    if (localQ.id === backQ.id) {
+                        const questionMedia = new FormData();
+                        questionMedia.append("file", localQ.file as string);
+                        await uploadQuestMedia(localQ.id, questionMedia);
+                    }
+                }
+            }
+
+            if (errors) console.error(errors);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const onCreateQuestSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (
@@ -54,20 +102,8 @@ export const CreateQuest = () => {
         )
             return toast.error("Заповніть коректно усі поля!");
 
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("description", description);
-        formData.append("duration", duration);
-        formData.append("file", file);
-        formData.append("questions", questions.toString());
-
-        try {
-            const res = await createQuest(formData);
-            console.log(res);
-        } catch (error) {
-            console.log(error);
-        }
-
+        const data = await createQuestHandler();
+        console.log(data);
         toast.success("Квест успішно створено!");
     };
 
@@ -173,10 +209,10 @@ export const CreateQuest = () => {
                                             key={index}
                                             className="flex gap-2 place-items-center"
                                         >
-                                            {question.file?.includes(".png") ? (
+                                            {question.fileType === "image" ? (
                                                 <figure className="w-14 h-14 place-content-center">
                                                     <Image
-                                                        src={question.file}
+                                                        src={question.file!}
                                                         alt="question image"
                                                         className="rounded-md "
                                                         sizes="100vw"
