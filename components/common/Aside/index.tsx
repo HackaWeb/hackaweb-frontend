@@ -9,13 +9,15 @@ import { selectAside, setIsAsideOpened } from "@/store/slices/aside/aside";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { Button } from "@/components/ui/Button";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { RiLogoutBoxLine } from "react-icons/ri";
+import Image from "next/image";
 
 interface LinkItem {
     title: string;
     link: string;
 }
 
-export const Aside = ({ isAuthorized }: AsideProps) => {
+export const Aside = ({ profile }: AsideProps) => {
     const dispatch = useAppDispatch();
     const pathname = usePathname();
     const aside = useAppSelector(selectAside);
@@ -25,18 +27,18 @@ export const Aside = ({ isAuthorized }: AsideProps) => {
     };
 
     const links: LinkItem[] = [
-        { title: "Квести", link: "/" },
+        { title: "Усі квести", link: "/" },
         {
             title: "Створити квест",
-            link: isAuthorized ? "/create-quest" : "/login",
+            link: profile ? "/profile" : "/login",
         },
         {
             title: "Мій кабінет",
-            link: isAuthorized ? "/profile" : "/login",
+            link: profile ? "/profile" : "/login",
         },
         {
             title: "Я адміністратор",
-            link: isAuthorized ? "/profile" : "/login",
+            link: profile ? "#" : "/login",
         },
     ];
 
@@ -65,27 +67,66 @@ export const Aside = ({ isAuthorized }: AsideProps) => {
                     <Link href="/" className="mx-4 text-white text-2xl">
                         КВЕСТ АПП
                     </Link>
-                    <div className="flex mt-4 xsm:mt-8 mx-4 items-center gap-4 bg-blackOpacity p-2">
-                        <div className="p-1 border-purple border-2 rounded-md xsm:p-3">
-                            <AiOutlineUser className="text-purple size-6" />
+                    {!profile ? (
+                        <div className="flex mt-4 xsm:mt-8 mx-4 items-center gap-4 bg-blackOpacity p-2">
+                            <div className="p-1 border-purple border-2 rounded-md xsm:p-3">
+                                <AiOutlineUser className="text-purple size-6" />
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Link
+                                    className="text-yellow hover:text-yellow-light"
+                                    href="/login"
+                                    onClick={() =>
+                                        setIsAsideOpenedHandler(false)
+                                    }
+                                >
+                                    Увійти
+                                </Link>
+                                <div className="w-[1px] h-8 bg-gray-dark"></div>
+                                <Link
+                                    href="/register"
+                                    onClick={() =>
+                                        setIsAsideOpenedHandler(false)
+                                    }
+                                >
+                                    Реєстрація
+                                </Link>
+                            </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <Link
-                                className="text-yellow hover:text-yellow-light"
-                                href="/login"
-                                onClick={() => setIsAsideOpenedHandler(false)}
-                            >
-                                Увійти
-                            </Link>
-                            <div className="w-[1px] h-8 bg-gray-dark"></div>
-                            <Link
-                                href="/register"
-                                onClick={() => setIsAsideOpenedHandler(false)}
-                            >
-                                Реєстрація
-                            </Link>
+                    ) : (
+                        <div className="flex mt-4 xsm:mt-8 mx-4 gap-4 bg-blackOpacity p-2">
+                            <div className="p-2 w-12 h-12 border-purple border-2 rounded-md">
+                                {!profile.avatar ? (
+                                    <AiOutlineUser className="text-purple size-6" />
+                                ) : (
+                                    <Image
+                                        src={profile.avatar}
+                                        alt={
+                                            profile.firstName +
+                                            " " +
+                                            profile.lastName
+                                        }
+                                        width={0}
+                                        height={0}
+                                        sizes="100vw"
+                                        className="w-full"
+                                    />
+                                )}
+                            </div>
+                            <div>
+                                <Link href="/profile" className="text-white">
+                                    {profile.firstName + " " + profile.lastName}
+                                </Link>
+                                <Link
+                                    href="#"
+                                    className="text-gray-dark flex items-center gap-1 text-sm mt-1"
+                                >
+                                    <RiLogoutBoxLine />
+                                    <span>Log out</span>
+                                </Link>
+                            </div>
                         </div>
-                    </div>
+                    )}
                     <nav className="mt-4 xsm:mt-8 text-lg">
                         <ul>
                             {links.map((link, index) => (
@@ -95,14 +136,14 @@ export const Aside = ({ isAuthorized }: AsideProps) => {
                                 >
                                     {pathname === link.link &&
                                         link.link !== "/login" && (
-                                            <div className="absolute left-0 flex items-center">
+                                            <div className="absolute -left-2 xsm:-left-4 flex items-center">
                                                 <div className="w-[4px] h-10 bg-purple"></div>
                                                 <div className="w-4 h-6 bg-purple blur-md"></div>
                                             </div>
                                         )}
                                     <Link
                                         href={link.link}
-                                        className="ml-6 text-white"
+                                        className="ml-2 text-white"
                                     >
                                         {link.title}
                                     </Link>

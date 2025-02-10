@@ -3,7 +3,6 @@ import { getCookie } from "@/helpers/getCookie";
 interface FetchOptions {
     endpoint: string;
     method: "GET" | "POST" | "PUT" | "DELETE";
-    type?: "form" | "json";
     body?: unknown;
     isAuthRequired?: boolean;
 }
