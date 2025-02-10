@@ -1,6 +1,5 @@
 "use client";
 
-import { UpdateUserRequest } from "@/api/responses/user.types";
 import { MiddleColumnProps } from "./MiddleColumn.props";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -11,25 +10,15 @@ import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
 
 export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
-    const [firstName, setFirstName] = useState(profile.firstName);
-    const [lastName, setLastName] = useState(profile.lastName);
+    const [userData, setUserData] = useState({
+        firstName: profile.firstName || "",
+        lastName: profile.lastName || "",
+    });
 
-    const onSubmit = async () => {
-        const formData = new FormData();
-        formData.append("firstName", firstName ?? "");
-        formData.append("lastName", lastName ?? "");
-
-        const result = await updateName(formData);
-        if (result.length === 0) {
-            toast.success("Успішно змінено ваші ім'я та прізвище!");
-        } else {
-            printToastErrorMessages(result.map((res) => res.message));
-        }
-    };
-
-    const updateName = async (updateForm: UpdateUserRequest) => {
+    const updateUserDataHandler = async (updateForm: FormData) => {
         try {
             const data = await updateUserProfile(updateForm);
+
             if ("statusCode" in data) {
                 if (data.statusCode === 400) {
                     return data.errors;
@@ -38,8 +27,7 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
                 }
                 return [DEFAULT_FIELD_ERROR];
             }
-            setFirstName(data.firstName);
-            setLastName(data.lastName);
+
             return [];
         } catch (error) {
             console.error(error);
@@ -47,10 +35,25 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
         }
     };
 
+    const onUpdateProfileSubmit = async () => {
+        const formData = new FormData();
+
+        formData.append("firstName", userData.firstName);
+        formData.append("lastName", userData.lastName);
+
+        const result = await updateUserDataHandler(formData);
+
+        if (result.length === 0) {
+            toast.success("Ваші дані успішно оновлено");
+        } else {
+            printToastErrorMessages(result.map((res) => res.message));
+        }
+    };
+
     return (
         <div className="">
             <div className="p-4 bg-blackOpacity rounded-md">
-                <form action={onSubmit}>
+                <form action={onUpdateProfileSubmit}>
                     <div>
                         <label htmlFor="email" className="text-gray">
                             Ваша пошта
@@ -71,8 +74,13 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
                             type="text"
                             id="firstName"
                             placeholder="Ваше імʼя..."
-                            value={firstName ?? ""}
-                            onChange={(e) => setFirstName(e.target.value)}
+                            value={userData.firstName}
+                            onChange={(e) =>
+                                setUserData({
+                                    ...userData,
+                                    firstName: e.target.value,
+                                })
+                            }
                             className="mt-2"
                         />
                     </div>
@@ -84,8 +92,13 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
                             type="text"
                             id="lastName"
                             placeholder="Ваше прізвище..."
-                            value={lastName ?? ""}
-                            onChange={(e) => setLastName(e.target.value)}
+                            value={userData.lastName}
+                            onChange={(e) =>
+                                setUserData({
+                                    ...userData,
+                                    lastName: e.target.value,
+                                })
+                            }
                             className="mt-2"
                         />
                     </div>

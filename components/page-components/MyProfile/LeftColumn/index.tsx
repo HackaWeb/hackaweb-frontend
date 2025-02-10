@@ -24,34 +24,23 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
 
     const [avatar, setAvatar] = useState<string | null>(profile.avatar ?? null);
 
-    const onFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-
-        if (!file) return;
-        const imageUrl = URL.createObjectURL(file);
-        setAvatar(imageUrl);
-
-        const result = await updateAvatar(file);
-
-        if (result.length === 0) {
-            toast.success("Аватар завантажено успішно!");
-        } else {
-            printToastErrorMessages(result.map((res) => res.message));
-        }
-    };
-
-    const updateAvatar = async (imageData: File): Promise<RequestError[]> => {
+    const updateAvatarHandler = async (
+        imageData: File,
+    ): Promise<RequestError[]> => {
         const formData = new FormData();
+
         formData.append("Avatar", imageData);
 
         try {
             const data = await updateUserProfile(formData);
+
             if ("statusCode" in data) {
                 if (data.statusCode === 400) {
                     return data.errors;
                 } else if (data.statusCode === 401) {
                     return [{ field: "", message: data.message }];
                 }
+
                 return [DEFAULT_FIELD_ERROR];
             } else {
                 setAvatar(data.avatarUrl);
@@ -63,23 +52,26 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
         }
     };
 
-    const onDelete = async () => {
-        try {
-            const result = await deleteProfile();
-            if (result.length === 0) {
-                toast.success("Ваш профіль успішно видалено!");
-                setCookie("token", "");
-                router.push("/");
-            } else {
-                printToastErrorMessages(result.map((res) => res.message));
-            }
-        } catch (error) {
-            console.log(error);
-            toast.error(DEFAULT_FIELD_ERROR.message);
+    const onAvatarChange = async (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        const file = event.target.files?.[0];
+
+        if (!file) return;
+
+        const imageUrl = URL.createObjectURL(file);
+        setAvatar(imageUrl);
+
+        const result = await updateAvatarHandler(file);
+
+        if (result.length === 0) {
+            toast.success("Аватар успішно змінено!");
+        } else {
+            printToastErrorMessages(result.map((res) => res.message));
         }
     };
 
-    const deleteProfile = async () => {
+    const deleteProfileHandler = async () => {
         const data = await deleteUserProfile();
 
         console.log(data);
@@ -91,8 +83,26 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
             }
             return [DEFAULT_FIELD_ERROR];
         }
-        
+
         return [];
+    };
+
+    const onProfileDelete = async () => {
+        try {
+            const result = await deleteProfileHandler();
+
+            if (result.length === 0) {
+                toast.success("Ваш профіль успішно видалено!");
+                setCookie("token", "");
+                
+                router.push("/");
+            } else {
+                printToastErrorMessages(result.map((res) => res.message));
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(DEFAULT_FIELD_ERROR.message);
+        }
     };
 
     return (
@@ -128,9 +138,9 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                     Змінити аватар
                     <input
                         type="file"
-                        accept="image/*"
+                        accept=".png"
                         className="hidden"
-                        onChange={onFileChange}
+                        onChange={onAvatarChange}
                     />
                 </label>
                 <ul className="mt-6 pb-4 border-b-2 border-b-gray-300 border-opacity-10 flex flex-col justify-start gap-2 relative">
@@ -158,7 +168,7 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
             <Button
                 className="mt-6 w-full"
                 color="redBorder"
-                onClick={onDelete}
+                onClick={onProfileDelete}
             >
                 Видалити акаунт
             </Button>
