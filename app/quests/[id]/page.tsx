@@ -11,7 +11,7 @@ const quest: Quest = {
     title: "Quest 1",
     description: "Description 1",
     rating: 4,
-    imageUrl: "/test.png",
+    file: "/test.png",
     owner: {
         id: "1",
         firstName: "Danil",
@@ -21,7 +21,7 @@ const quest: Quest = {
         rating: 4.5,
     },
     createdAt: "2021-10-10",
-    timeLimit: 60,
+    duration: 60,
     questions: [],
     reviews: [
         {

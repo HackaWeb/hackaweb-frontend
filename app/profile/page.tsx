@@ -15,7 +15,7 @@ import { redirect } from "next/navigation";
             title: "Adventure in the Forest",
             description: "Explore the mysterious forest and solve puzzles.",
             rating: 4.8,
-            imageUrl: "/test.png",
+            file: "/test.png",
             createdAt: "2024-02-08T12:00:00Z",
             owner: {
                 id: "1",
@@ -26,7 +26,7 @@ import { redirect } from "next/navigation";
                 avatar: null,
             },
             leaderboard: [],
-            timeLimit: 30,
+            duration: 30,
             reviews: [],
             questions: [],
         },
@@ -35,7 +35,7 @@ import { redirect } from "next/navigation";
             title: "Adventure in the Forest",
             description: "Explore the mysterious forest and solve puzzles.",
             rating: 4.8,
-            imageUrl: "/test.png",
+            file: "/test.png",
             createdAt: "2024-02-08T12:00:00Z",
             owner: {
                 id: "1",
@@ -46,7 +46,7 @@ import { redirect } from "next/navigation";
                 avatar: null,
             },
             leaderboard: [],
-            timeLimit: 30,
+            duration: 30,
             reviews: [],
             questions: [],
         },
@@ -55,7 +55,7 @@ import { redirect } from "next/navigation";
             title: "Adventure in the Forest",
             description: "Explore the mysterious forest and solve puzzles.",
             rating: 4.8,
-            imageUrl: "/test.png",
+            file: "/test.png",
             createdAt: "2024-02-08T12:00:00Z",
             owner: {
                 id: "1",
@@ -66,7 +66,7 @@ import { redirect } from "next/navigation";
                 avatar: null,
             },
             leaderboard: [],
-            timeLimit: 30,
+            duration: 30,
             reviews: [],
             questions: [],
         },
@@ -80,7 +80,7 @@ import { redirect } from "next/navigation";
                 description:
                     "Find the lost treasure hidden deep in the mountains.",
                 rating: 4.7,
-                imageUrl: "/test.png",
+                file: "/test.png",
                 createdAt: "2024-02-07T15:00:00Z",
                 owner: {
                     id: "2",
@@ -90,7 +90,7 @@ import { redirect } from "next/navigation";
                     rating: 4.9,
                     avatar: null,
                 },
-                timeLimit: 45,
+                duration: 45,
                 reviews: [],
                 questions: [],
                 leaderboard: [
@@ -126,7 +126,7 @@ import { redirect } from "next/navigation";
 
 const MyProfile = async () => {
     let profile: Profile;
-    
+
     try {
         const data = await getProfile();
 

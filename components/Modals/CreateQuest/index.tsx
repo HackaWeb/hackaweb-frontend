@@ -20,6 +20,7 @@ import {
 import { FiEdit2 } from "react-icons/fi";
 import Image from "next/image";
 import { IoImageOutline } from "react-icons/io5";
+import { createQuest } from "@/api/quests";
 
 export const CreateQuest = () => {
     const dispatch = useAppDispatch();
@@ -42,10 +43,33 @@ export const CreateQuest = () => {
         dispatch(toggleModal("QuestionEdit"));
     };
 
-    const onCreateQuestSubmit = (e: FormEvent) => {
+    const onCreateQuestSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        if (!file || !title.length || !duration || !description.length)
-            toast.info("Створення Квесту");
+        if (
+            !file ||
+            !title.length ||
+            !duration ||
+            !description.length ||
+            !questions.length
+        )
+            return toast.error("Заповніть усі поля!");
+
+        const body = {
+            title,
+            description,
+            duration,
+            file,
+            questions,
+        };
+
+        try {
+            const res = await createQuest(body);
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+
+        toast.success("Квест успішно створено!");
     };
 
     const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {

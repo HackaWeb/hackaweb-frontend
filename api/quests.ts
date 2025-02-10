@@ -1,29 +1,37 @@
-import { UpdateProfileRequestBody } from "./requestBodies/profile.interface";
-import { GetProfileResponse, UpdateUserResponse } from "./responses/user.types";
+import { fetchApi } from "./fetchApi";
+import {
+    CreateQuestBody,
+    GetQuestByOwnerIdBody,
+} from "./requestBodies/quests.interface";
+import {
+    GetQuestByIdResponse,
+    GetQuestByOwnerIdResponse,
+} from "./responses/quests.types";
 
-export const getQuest = async (): Promise<GetProfileResponse> =>
+export const getQuestById = async (
+    questId: string,
+): Promise<GetQuestByIdResponse> =>
     fetchApi({
-        endpoint: "/quiz/",
+        endpoint: `/quiz/${questId}`,
         isAuthRequired: true,
         method: "GET",
     });
 
-export const updateUserProfile = async (
-    body: UpdateProfileRequestBody | FormData,
-): Promise<UpdateUserResponse> =>
+export const getQuestsByOwnerId = async (
+    userId: string,
+    body: GetQuestByOwnerIdBody,
+): Promise<GetQuestByOwnerIdResponse> =>
     fetchApi({
-        endpoint: "/user/user-profile/update",
+        endpoint: `/quiz/${userId}}`,
         isAuthRequired: true,
         method: "POST",
-        body: body,
+        body,
     });
 
-export const createQuest = async (
-    body: LoginRequestBody,
-): Promise<LoginResponse> =>
+export const createQuest = async (body: CreateQuestBody) =>
     fetchApi({
-        endpoint: "/Auth/login",
-        isAuthRequired: false,
+        endpoint: "/quiz/",
+        isAuthRequired: true,
         method: "POST",
-        body: body,
+        body,
     });

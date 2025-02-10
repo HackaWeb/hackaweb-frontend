@@ -13,7 +13,6 @@ export const fetchApi = async <T>({
     method,
     body,
     isAuthRequired,
-    type = "json",
 }: FetchOptions): Promise<T> => {
     const headers: Record<string, string> = {
         accept: "text/plain",

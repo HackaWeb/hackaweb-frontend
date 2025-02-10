@@ -13,7 +13,7 @@ const profile: Profile = {
             title: "Adventure in the Forest",
             description: "Explore the mysterious forest and solve puzzles.",
             rating: 4.8,
-            imageUrl: "/test.png",
+            file: "/test.png",
             createdAt: "2024-02-08T12:00:00Z",
             owner: {
                 id: "1",
@@ -24,7 +24,7 @@ const profile: Profile = {
                 avatar: null,
             },
             leaderboard: [],
-            timeLimit: 30,
+            duration: 30,
             reviews: [],
             questions: [],
         },
@@ -33,7 +33,7 @@ const profile: Profile = {
             title: "Adventure in the Forest",
             description: "Explore the mysterious forest and solve puzzles.",
             rating: 4.8,
-            imageUrl: "/test.png",
+            file: "/test.png",
             createdAt: "2024-02-08T12:00:00Z",
             owner: {
                 id: "1",
@@ -44,7 +44,7 @@ const profile: Profile = {
                 avatar: null,
             },
             leaderboard: [],
-            timeLimit: 30,
+            duration: 30,
             reviews: [],
             questions: [],
         },
@@ -53,7 +53,7 @@ const profile: Profile = {
             title: "Adventure in the Forest",
             description: "Explore the mysterious forest and solve puzzles.",
             rating: 4.8,
-            imageUrl: "/test.png",
+            file: "/test.png",
             createdAt: "2024-02-08T12:00:00Z",
             owner: {
                 id: "1",
@@ -64,7 +64,7 @@ const profile: Profile = {
                 avatar: null,
             },
             leaderboard: [],
-            timeLimit: 30,
+            duration: 30,
             reviews: [],
             questions: [],
         },
@@ -78,7 +78,7 @@ const profile: Profile = {
                 description:
                     "Find the lost treasure hidden deep in the mountains.",
                 rating: 4.7,
-                imageUrl: "/test.png",
+                file: "/test.png",
                 createdAt: "2024-02-07T15:00:00Z",
                 owner: {
                     id: "2",
@@ -88,7 +88,7 @@ const profile: Profile = {
                     rating: 4.9,
                     avatar: null,
                 },
-                timeLimit: 45,
+                duration: 45,
                 reviews: [],
                 questions: [],
                 leaderboard: [

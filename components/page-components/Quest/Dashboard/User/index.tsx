@@ -51,14 +51,14 @@ const UserQuestsDashboard = ({
                                 </td>
                                 <td className="px-4 py-2">
                                     <Image
-                                        src={quest.imageUrl}
+                                        src={quest.file}
                                         alt="quest image"
                                         width={64}
                                         height={64}
                                     />
                                 </td>
                                 <td className="px-4 py-2">
-                                    <p>{quest.timeLimit} хв.</p>
+                                    <p>{quest.duration} хв.</p>
                                 </td>
                                 <td className="px-4 py-2">
                                     <p>100</p>
