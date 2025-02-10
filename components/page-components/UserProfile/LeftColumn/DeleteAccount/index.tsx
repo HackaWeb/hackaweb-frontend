@@ -1,8 +1,10 @@
+'use client';
+
 import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 import { deleteUserProfile } from "@/api/user";
 import { Button } from "@/components/ui/Button";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { DeleteProps } from "./DeleteAccount.props";
 
