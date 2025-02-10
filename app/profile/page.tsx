@@ -131,25 +131,24 @@ const MyProfile = async () => {
 
     if (!token) {
         profile = null;
-    }
+    } else {
+        try {
+            const data = await getProfile();
+            if ("statusCode" in data) {
+                redirect("/login");
+                /* profile = defaultProfile; */
+            } else {
+                profile = { ...data, createdQuests: [], completedQuests: [] };
+            }
 
-    try {
-        const data = await getProfile();
-
-        if ("statusCode" in data) {
+            /* console.log(profile); */
+        } catch (error) {
+            console.error(error);
             redirect("/login");
-            /* profile = defaultProfile; */
-        } else {
-            profile = { ...data, createdQuests: [], completedQuests: [] };
         }
-
-        /* console.log(profile); */
-    } catch (error) {
-        console.error(error);
-        redirect("/login");
     }
 
-    return <MyProfilePageComponent profile={profile} />;
+    return profile && <MyProfilePageComponent profile={profile} />;
 };
 
 export default MyProfile;

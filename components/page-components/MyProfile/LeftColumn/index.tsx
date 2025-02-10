@@ -103,10 +103,10 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                 setCookie("token", "");
                 router.push("/");
 
-                /* const timeout = setTimeout(() => {
+                const timeout = setTimeout(() => {
                     router.refresh();
                     clearTimeout(timeout);
-                }); */
+                });
             } else {
                 printToastErrorMessages(result.map((res) => res.message));
             }

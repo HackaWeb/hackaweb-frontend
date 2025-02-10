@@ -15,7 +15,6 @@ import { deleteUserProfile, updateUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
-import { setCookie } from "@/helpers/setCookie";
 
 export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
     const achievements = getAchievements(profile);
@@ -125,7 +124,7 @@ export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
                         className="gap-[6px] absolute top-1 left-1"
                     />
                     <div className="bg-blackOpacity-dark w-full h-full flex items-center justify-center rounded-md overflow-hidden">
-                        {profile.avatar ? (
+                        {profile.avatar || avatar ? (
                             <>
                                 {id && (
                                     <Button
@@ -137,7 +136,7 @@ export const LeftColumn = ({ profile, id }: LeftColumnProps) => {
                                     </Button>
                                 )}
                                 <img
-                                    src={profile.avatar} 
+                                    src={avatar || profile.avatar}
                                     alt="Avatar"
                                     className="w-full h-full object-cover"
                                 />

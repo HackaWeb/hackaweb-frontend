@@ -5,7 +5,10 @@ import { toast } from "react-toastify";
 import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 import { getPathname } from "@/helpers/getPathname";
 import { getCookie } from "@/helpers/getCookie";
+import { printToastErrorMessages } from "@/helpers/displayToasts";
+import { notFound } from "next/navigation";
 
+/*
 const defaultProfile: Profile = {
     id: "1",
     email: "testuser@example.com",
@@ -133,25 +136,63 @@ const defaultProfile: Profile = {
         },
     ],
 };
+*/
 
 const UserProfile = async ({ params }: { params: { id: string } }) => {
     const { id } = await params;
     const token = await getCookie("token");
 
-    let isAdmin = false;
-    if (token && token.length) {
+    let profile: Profile | null = null;
+    const getOwnProfileData = async () => {
         try {
             const profile = await getProfile();
             if (!("statusCode" in profile) && profile.isAdmin) {
-                isAdmin = true;
+                return true;
             }
+            return false;
         } catch (error) {
             console.error(error);
             toast.error(DEFAULT_FIELD_ERROR.message);
+            return false;
         }
+    };
+    const getUserProfileData = async () => {
+        try {
+            const data = await getProfile(id);
+            console.log(data);
+            if ("statusCode" in data) {
+                if (data.statusCode === 400) {
+                    printToastErrorMessages(
+                        data.errors.map((err) => err.message),
+                    );
+                    return null;
+                } else if (data.statusCode === 401) {
+                    return null;
+                }
+                return null;
+            }
+            return { ...data, createdQuests: [], completedQuests: [] };
+        } catch (error) {
+            console.error(error);
+            toast.error(DEFAULT_FIELD_ERROR.message);
+            return null;
+        }
+    };
+
+    let isAdmin = false;
+    if (token && token.length) {
+        isAdmin = await getOwnProfileData();
+        profile = await getUserProfileData();
+        console.log(isAdmin, profile);
     }
 
-    return <UserProfilePageComponent id={id} isAdmin={isAdmin} />;
+    if (!profile) {
+        notFound();
+    }
+
+    return (
+        <UserProfilePageComponent id={id} isAdmin={isAdmin} profile={profile} />
+    );
 };
 
 export default UserProfile;
