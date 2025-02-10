@@ -15,6 +15,7 @@ import {
     INVALID_EMAIL_OR_PASSWORD_MESSAGE,
     INVALID_INPUTES_MESSAGE,
 } from "@/constants";
+import { revalidatePath } from "next/cache";
 
 export const LoginPageComponent = () => {
     const router = useRouter();
@@ -67,8 +68,12 @@ export const LoginPageComponent = () => {
 
         if (results.length === 0) {
             toast.success("Вас успішно авторизовано!");
-            
-            router.push("/profile");
+
+            router.refresh();
+            const timeout = setTimeout(() => {
+                router.push("/profile");
+                clearTimeout(timeout);
+            }, 1000);
         } else {
             printToastErrorMessages(results.map((res) => res.message));
         }

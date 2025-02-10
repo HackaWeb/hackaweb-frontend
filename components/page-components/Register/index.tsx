@@ -87,8 +87,13 @@ export const RegisterPageComponent = () => {
         });
 
         if (results.length === 0) {
-            router.push("profile");
             toast.success("Вас успішно зареєстровано!");
+            router.refresh();
+
+            const timeout = setTimeout(() => {
+                router.push("/profile");
+                clearTimeout(timeout);
+            }, 1000);
         } else {
             printToastErrorMessages(results.map((res) => res.message));
         }

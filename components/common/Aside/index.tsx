@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
 import { AsideProps } from "./Aside.props";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
 import { selectAside, setIsAsideOpened } from "@/store/slices/aside/aside";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/Button";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import Image from "next/image";
+import { setCookie } from "@/helpers/setCookie";
+import { toast } from "react-toastify";
 
 interface LinkItem {
     title: string;
@@ -18,8 +20,10 @@ interface LinkItem {
 }
 
 export const Aside = ({ profile }: AsideProps) => {
+    const router = useRouter();
     const dispatch = useAppDispatch();
     const pathname = usePathname();
+
     const aside = useAppSelector(selectAside);
 
     const setIsAsideOpenedHandler = (value: boolean) => {
@@ -41,6 +45,14 @@ export const Aside = ({ profile }: AsideProps) => {
             link: profile ? "#" : "/login",
         },
     ];
+
+    const onLogoutClick = () => {
+        setCookie("token", "");
+        toast.success("Ви успішно вийшли з акаунту!");
+        router.refresh();
+    };
+
+    console.log(profile);
 
     return (
         <>
@@ -69,7 +81,7 @@ export const Aside = ({ profile }: AsideProps) => {
                     </Link>
                     {!profile ? (
                         <div className="flex mt-4 xsm:mt-8 mx-4 items-center gap-4 bg-blackOpacity p-2">
-                            <div className="p-1 border-purple border-2 rounded-md xsm:p-3">
+                            <div className="p-1 w-12 h-12 border-purple border-2 rounded-md xsm:p-3">
                                 <AiOutlineUser className="text-purple size-6" />
                             </div>
                             <div className="flex items-center gap-2">
@@ -115,15 +127,15 @@ export const Aside = ({ profile }: AsideProps) => {
                             </div>
                             <div>
                                 <Link href="/profile" className="text-white">
-                                    {profile.firstName + " " + profile.lastName}
+                                    {`${profile.firstName} ${profile.lastName}`}
                                 </Link>
-                                <Link
-                                    href="#"
+                                <button
+                                    onClick={onLogoutClick}
                                     className="text-gray-dark flex items-center gap-1 text-sm mt-1"
                                 >
                                     <RiLogoutBoxLine />
                                     <span>Log out</span>
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     )}
