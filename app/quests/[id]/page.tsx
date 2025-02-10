@@ -134,9 +134,9 @@ const QuestDetails = () => {
                     <span>Повернутися назад</span>
                 </Button>
             </Link>
-            <div className="grid grid-cols-[0.4fr_0.6fr] mt-6 gap-8 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-[0.4fr_0.6fr] mt-6 gap-8 items-start">
                 <GeneralInfo quest={quest} />
-                <div>
+                <div className="grid ">
                     <Leaderboard quest={quest} />
                     <Reviews quest={quest} />
                 </div>

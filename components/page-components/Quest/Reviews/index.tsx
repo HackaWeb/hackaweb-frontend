@@ -16,38 +16,40 @@ export const Reviews = ({ quest }: ReviewsProps) => {
                 {quest.reviews.map((review, index) => (
                     <div
                         key={index}
-                        className="bg-blackOpacity-dark p-4 rounded-lg flex gap-4"
+                        className="bg-blackOpacity-dark p-4 rounded-lg flex flex-col sm:flex-row justify-between gap-4"
                     >
-                        <div className="flex flex-col items-center">
-                            <div className="w-12 h-12 rounded-md border border-purple flex items-center justify-center">
-                                {review.author.avatar ? (
-                                    <Image
-                                        src={review.author.avatar}
-                                        alt="Avatar"
-                                        width={24}
-                                        height={24}
-                                    />
-                                ) : (
-                                    <AiOutlineUser className="text-purple size-6" />
-                                )}
+                        <div className="flex gap-4">
+                            <div className="flex flex-col items-center">
+                                <div className="w-12 h-12 rounded-md border border-purple flex items-center justify-center">
+                                    {review.author.avatar ? (
+                                        <Image
+                                            src={review.author.avatar}
+                                            alt="Avatar"
+                                            width={24}
+                                            height={24}
+                                        />
+                                    ) : (
+                                        <AiOutlineUser className="text-purple size-6" />
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex-1">
-                            <Link
-                                className="font-semibold"
-                                href={`/users/${review.author.id}`}
-                            >
-                                {review.author.firstName +
-                                    " " +
-                                    review.author.lastName}
-                            </Link>
-                            <div className="text-gray-light text-sm">
-                                {review.createdAt}
+                            <div className="flex-1">
+                                <Link
+                                    className="font-semibold"
+                                    href={`/users/${review.author.id}`}
+                                >
+                                    {review.author.firstName +
+                                        " " +
+                                        review.author.lastName}
+                                </Link>
+                                <div className="text-gray-light text-sm">
+                                    {review.createdAt}
+                                </div>
+                                <RenderRating
+                                    rating={review.rating}
+                                    className="mt-2"
+                                />
                             </div>
-                            <RenderRating
-                                rating={review.rating}
-                                className="mt-2"
-                            />
                         </div>
                         <div className="text-gray-light">{review.comment}</div>
                     </div>
