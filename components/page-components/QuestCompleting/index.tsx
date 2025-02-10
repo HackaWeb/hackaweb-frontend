@@ -23,11 +23,7 @@ export const QuestCompletingPageComponent = ({
 
     switch (stage) {
         case "waiting":
-            return (
-                <WaitingRoom
-                    onStartQuestClick={onStartQuestClick}
-                />
-            );
+            return <WaitingRoom onStartQuestClick={onStartQuestClick} />;
         case "game":
             return (
                 <PlayingGame
@@ -37,5 +33,7 @@ export const QuestCompletingPageComponent = ({
             );
         case "results":
             return <Results />;
+        default:
+            return <></>;
     }
 };
