@@ -41,11 +41,7 @@ export interface uploadMediaResponse {
     errors: string[];
 }
 export interface GetQuestByOwnerIdResponse {
-    pageNumber: number;
-    pageSize: number;
-    totalItems: number;
-    totalPages: number;
-    items: Quest[];
+    quizzes: Quest[];
 }
 
 export type GetCompletedQuestByOwnerIdResponse = Quest[];
