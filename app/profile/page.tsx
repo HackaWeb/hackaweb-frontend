@@ -37,7 +37,7 @@ const MyProfile = async () => {
             },
             profile.id,
         );
-        return data;
+        return data.items;
     };
 
     if (!token) {

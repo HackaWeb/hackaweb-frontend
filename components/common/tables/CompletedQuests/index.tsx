@@ -5,6 +5,7 @@ import { getCompletedQuestsByOwnerId, getQuestsByOwnerId } from "@/api/quests";
 export const CompletedQuests = async ({
     profile,
     isCompletedByMe,
+    completedQuests,
 }: CompletedQuestsProps) => {
     return (
         completedQuests && (

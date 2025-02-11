@@ -4,19 +4,11 @@ import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { Button } from "@/components/ui/Button";
 import { getQuestsByOwnerId } from "@/api/quests";
 
-export const OwnQuests = async ({ profile, isCreatedByMe }: OwnQuestsProps) => {
-    const getOwnQuests = async () => {
-        const data = await getQuestsByOwnerId(
-            {
-                pageNumber: 0,
-                pageSize: 20,
-            },
-            profile.id,
-        );
-        return data.items;
-    };
-    const ownQuests = await getOwnQuests();
-
+export const OwnQuests = async ({
+    profile,
+    isCreatedByMe,
+    ownQuests,
+}: OwnQuestsProps) => {
     return (
         ownQuests && (
             <div className="bg-blackOpacity-dark rounded-md">

@@ -1,6 +1,5 @@
 import { Feedback } from "./feedback.interface";
 import { Question, QuestionWhileTesting } from "./question.interface";
-import { Feedback } from "./feedback.interface";
 import { User } from "./user.interface";
 
 export interface Quest {
