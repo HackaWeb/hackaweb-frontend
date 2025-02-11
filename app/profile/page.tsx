@@ -44,7 +44,7 @@ const MyProfile = async () => {
         return data.items;
     }; */
 
-    if (!token || !token.length) {
+    if (!token) {
         redirect("/login");
     }
 
