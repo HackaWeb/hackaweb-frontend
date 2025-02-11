@@ -1,4 +1,4 @@
-import { LeaderboardUser } from "@/types/quest.interface";
+import { LeaderboardUser, Quest } from "@/types/quest.interface";
 import { User } from "@/types/user.interface";
 
 export interface CreateQuestResponse {
@@ -40,17 +40,10 @@ export interface GetQuestByOwnerIdResponse {
     pageSize: number;
     totalItems: number;
     totalPages: number;
-    items: [
-        {
-            id: string;
-            title: string;
-            file: string;
-            duration: number;
-            rate: number;
-            taskCount: number;
-        },
-    ];
+    items: Quest[];
 }
+
+export type GetCompletedQuestByOwnerIdResponse = Quest[];
 export interface GetQuestByIdResponse {
     quiz: {
         id: string;

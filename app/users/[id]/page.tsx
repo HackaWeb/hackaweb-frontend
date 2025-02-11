@@ -1,11 +1,13 @@
 import { UserProfilePageComponent } from "@/components/page-components/UserProfile";
 import { Profile } from "@/types/user.interface";
-import { getProfile } from "@/api/user";
+import { getMyProfile } from "@/api/user";
+import { getUserProfile } from "@/api/user";
 import { getCookie } from "@/helpers/getCookie";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { notFound } from "next/navigation";
+import { toast } from "react-toastify";
 
-const UserProfile = async ({ params }: { params: { id: string } }) => {
+const UserProfile = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params;
     const token = await getCookie("token");
 
@@ -14,7 +16,8 @@ const UserProfile = async ({ params }: { params: { id: string } }) => {
     // that, who requests user profile page, (possibly is admin)
     const getIsReqeusterAdmin = async () => {
         try {
-            const profile = await getProfile();
+            const profile = await getMyProfile();
+            console.log("My profile:", profile);
 
             if (!("statusCode" in profile) && profile.isAdmin) {
                 return true;
@@ -29,7 +32,8 @@ const UserProfile = async ({ params }: { params: { id: string } }) => {
 
     const getUserProfileHandler = async () => {
         try {
-            const data = await getProfile(id);
+            const data = await getUserProfile(id);
+            console.log(data);
 
             if ("statusCode" in data) {
                 if (data.statusCode === 400) {

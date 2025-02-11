@@ -7,7 +7,7 @@ import { LeftColumnProps } from "./LeftColumn.props";
 import { getAchievements } from "@/data/getAchievements";
 import { RenderRating } from "@/helpers/RenderRating";
 import { Button } from "@/components/ui/Button";
-import { updateUserProfile } from "@/api/user";
+import { deleteUserAvatar, updateUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
 import {
     DEFAULT_FIELD_ERROR,
@@ -19,7 +19,7 @@ import { DeleteProfile } from "./DeleteProfile";
 
 export const LeftColumn = ({ profile }: LeftColumnProps) => {
     const router = useRouter();
-    const achievements = getAchievements(profile);
+    // const achievements = getAchievements(profile);
 
     const [avatar, setAvatar] = useState<string | null>(profile.avatar ?? null);
 
@@ -53,22 +53,18 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
         body.append("avatar", "");
 
         try {
-            const data = await updateUserProfile(body);
-
-            if ("statusCode" in data) {
-                if ("message" in data) {
-                    printToastErrorMessages([data.message]);
-                }
-            } else {
-                router.refresh();
-                setAvatar(null);
-
-                toast.success("Аватар успішно видалено!");
+            const data = await deleteUserAvatar(profile.id);
+            if (!data.isSuccess) {
+                printToastErrorMessages(data.errors);
+                return;
             }
+            toast.success("Аватар видалено успішно!");
+            setAvatar(null);
         } catch (error) {
             console.error(error);
             toast.error(DEFAULT_FIELD_ERROR.message);
         }
+        router.refresh();
     };
 
     const onAvatarChange = async (
@@ -90,7 +86,7 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
             <div className="p-4 bg-blackOpacity rounded-md">
                 <div className="w-full h-auto aspect-square border border-purple rounded-md p-2 relative">
                     <RenderRating
-                        rating={profile.rating}
+                        rating={0}
                         className="gap-[6px] absolute top-1 left-1"
                     />
                     <div className="bg-blackOpacity-dark w-full h-full flex items-center justify-center rounded-md overflow-hidden">
@@ -123,7 +119,7 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                         onChange={onAvatarChange}
                     />
                 </label>
-                <ul className="mt-6 pb-4 border-b-2 border-b-gray-300 border-opacity-10 flex flex-col justify-start gap-2 relative">
+                {/*<ul className="mt-6 pb-4 border-b-2 border-b-gray-300 border-opacity-10 flex flex-col justify-start gap-2 relative">
                     {achievements.unlocked.map((achiev, index) => (
                         <li
                             key={index}
@@ -144,6 +140,7 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                         </li>
                     ))}
                 </ul>
+               */}
             </div>
             <DeleteProfile />
         </div>
