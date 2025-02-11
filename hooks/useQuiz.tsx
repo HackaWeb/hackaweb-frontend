@@ -25,8 +25,8 @@ export const useQuiz = () => {
 
         newConnection.on(
             "QuizStarted",
-            (quizId: string, startTime: string, duration: number) => {
-                console.log("Quiz started:", quizId);
+            (_quizId: string, _startTime: string, duration: number) => {
+                console.log("Quiz started");
                 setQuizStatus("started");
                 setQuizTime(duration);
             },
@@ -34,25 +34,25 @@ export const useQuiz = () => {
 
         newConnection.on(
             "UpdateQuizTime",
-            (quizId: string, remainingTime: number) => {
+            (_quizId: string, remainingTime: number) => {
                 setQuizTime(remainingTime);
             },
         );
 
-        newConnection.on("QuizEnded", (quizId: string) => {
-            console.log("Quiz ended:", quizId);
+        newConnection.on("QuizEnded", (_quizId: string) => {
+            console.log("Quiz ended");
             setQuizStatus("ended");
         });
 
         newConnection.on(
             "QuizCompleted",
             (
-                quizId: string,
+                _quizId: string,
                 correctAnswers: number,
                 totalQuestions: number,
                 score: number,
             ) => {
-                console.log("Quiz completed:", quizId);
+                console.log("Quiz completed");
                 setResult({ correctAnswers, totalQuestions, score });
                 setQuizStatus("completed");
             },
@@ -77,26 +77,19 @@ export const useQuiz = () => {
         }
     };
 
-    const getQuizTime = (quizId: string) => {
-        if (connection) {
-            connection.invoke("GetQuizTime", quizId).catch(console.error);
-        }
-    };
-
-    const submitAnswers = (quizId: string, userId: string, answers: any[]) => {
+    const submitAnswers = (quizId: string, answers: Record<string, string>) => {
         if (connection) {
             connection
-                .invoke("SubmitAnswers", quizId, userId, answers)
+                .invoke("SubmitAnswers", quizId, answers)
                 .catch(console.error);
         }
     };
 
     return {
-        quizTime,
-        quizStatus,
+        time: quizTime,
+        status: quizStatus,
         result,
         startQuiz,
-        getQuizTime,
         submitAnswers,
     };
 };

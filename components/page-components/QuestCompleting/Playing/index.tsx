@@ -1,18 +1,32 @@
+import { useState } from "react";
+import { QuestionWhileTesting } from "@/types/question.interface";
 import { Button } from "@/components/ui/Button";
 import { ChoiceQuestion } from "./ChoiceQuestion";
 import { InputQuestion } from "./InputQuestion";
 import { BooleanQuestion } from "./BooleanQuestion";
-import { PlayingProps } from "./Playing.props";
-import { useState } from "react";
-import { toast } from "react-toastify";
-import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
-import { Chat } from "./Chat";
 import { ProgressBar } from "./ProgressBar";
 import { InfoBox } from "./InfoBox";
+import { Chat } from "./Chat";
+import { toast } from "react-toastify";
+import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 
-export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
+interface PlayingGameProps {
+    questions: QuestionWhileTesting[];
+    onCompleteTest: () => void;
+    setUserAnswers: React.Dispatch<
+        React.SetStateAction<Record<string, string>>
+    >;
+    timeLeft: number | null;
+}
+
+export const PlayingGame = ({
+    questions,
+    onCompleteTest,
+    setUserAnswers,
+    timeLeft,
+}: PlayingGameProps) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [answers, setAnswers] = useState<{ [key: number]: any }>({});
+    const [answers, setAnswers] = useState<Record<number, any>>({});
     const [questionsCompleted, setQuestionsCompleted] = useState<number[]>([]);
     const [isChatOpened, setIsChatOpened] = useState(false);
 
@@ -21,6 +35,7 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
     const onAnswerChange = (answer: any) => {
         setAnswers((prev) => {
             const newAnswers = { ...prev, [currentQuestionIndex]: answer };
+            setUserAnswers(newAnswers);
 
             setQuestionsCompleted((prevCompleted) => {
                 return prevCompleted.includes(currentQuestionIndex)
@@ -33,23 +48,16 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
     };
 
     const onNextQuestionClick = () => {
-        if (
-            answers[currentQuestionIndex] == null ||
-            answers[currentQuestionIndex].length === 0
-        ) {
+        if (!answers[currentQuestionIndex]) {
             toast.error("Ви не обрали відповідь!");
             return;
         }
 
         if (currentQuestionIndex < questions.length - 1) {
             setCurrentQuestionIndex((prev) => prev + 1);
-        }
-
-        if (currentQuestionIndex === questions.length - 1) {
+        } else {
             onCompleteTest();
             toast.success("Тест успішно завершено!");
-
-            console.log(answers);
         }
     };
 
@@ -79,9 +87,8 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
                         }
                     />
                 );
-
             default:
-                return <></>;
+                return null;
         }
     };
 
@@ -100,6 +107,7 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
                 questionsCompleted={questionsCompleted}
                 questions={questions}
             />
+
             <div className="bg-blackOpacity pt-16 px-4 relative">
                 <InfoBox
                     questionsLength={questions.length}
@@ -113,8 +121,14 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
                 <h1 className="pt-10 pb-5 text-center text-xl xsm:text-3xl">
                     {currentQuestion.title}
                 </h1>
+                <p className="text-center text-red-500">
+                    Час:{" "}
+                    {timeLeft !== null ? `${timeLeft} сек.` : "Загрузка..."}
+                </p>
             </div>
+
             {renderQuestion()}
+
             <Button
                 color="purpleBackground"
                 className="mt-6 mx-auto max-w-[200px] w-full mb-10"
