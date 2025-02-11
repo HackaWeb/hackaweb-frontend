@@ -1,3 +1,4 @@
+import { Feedback } from "@/types/feedback.interface";
 import { LeaderboardUser, Quest } from "@/types/quest.interface";
 import { User } from "@/types/user.interface";
 
@@ -30,7 +31,7 @@ export interface CreateQuestResponse {
     }[];
 }
 
-export type GetQuestsResponse = { quizzes: CreateQuestResponse[] };
+export type GetQuestsResponse = { quizzes: Quest[] };
 export interface uploadMediaResponse {
     isSuccess: boolean;
     errors: string[];
@@ -45,38 +46,5 @@ export interface GetQuestByOwnerIdResponse {
 
 export type GetCompletedQuestByOwnerIdResponse = Quest[];
 export interface GetQuestByIdResponse {
-    quiz: {
-        id: string;
-        title: string;
-        description: string;
-        createdAt: string;
-        imageUrl: string;
-        rate: number;
-        owner: User;
-        duration: number;
-        questions?: [
-            {
-                id: string;
-                text: string;
-                mediaUrl: string;
-                type: number;
-                choiceOptions: [
-                    {
-                        id: string;
-                        title: string;
-                        isCorrect: boolean;
-                    },
-                ];
-            },
-        ];
-        leaderboard: LeaderboardUser[]; //Чекаємо Фікс від Сергія
-        feedbacks: [
-            {
-                id: string;
-                text: string;
-                rate: number;
-                createdAt: string;
-            },
-        ];
-    };
+    quiz: Quest;
 }

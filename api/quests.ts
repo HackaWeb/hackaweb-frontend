@@ -43,8 +43,8 @@ export const getCompletedQuestsByOwnerId = async (
 
 export const getQuests = async (): Promise<GetQuestsResponse> =>
     fetchApi({
-        endpoint: "/quiz/",
-        isAuthRequired: true,
+        endpoint: "/quiz/all",
+        isAuthRequired: false,
         method: "GET",
     });
 

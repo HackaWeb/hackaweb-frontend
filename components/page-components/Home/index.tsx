@@ -26,6 +26,8 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
     const [searchQuest, setSearchQuest] = useState<string>("");
     const [quests, setQuests] = useState(serverQuests);
 
+    console.log(quests);
+
     return (
         <>
             <h1>Квести</h1>
@@ -66,9 +68,6 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
                             <Quest key={index} quest={quest} />
                         ))}
                     </div>
-                    <Button color="purpleBackground" className="mx-auto mt-4">
-                        Завантажити ще
-                    </Button>
                 </>
             ) : (
                 <div className="text-gray text-sm">Квестів не знайдено</div>
