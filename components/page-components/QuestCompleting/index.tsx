@@ -38,6 +38,7 @@ const mockQuestions: QuestionWhileTesting[] = [
 
 export const QuestCompletingPageComponent = ({
     quest,
+    user,
 }: QuestCompletingProps) => {
     const [stage, setStage] = useState<Stage>("waiting");
     const [questions, setQuestions] = useState<QuestionWhileTesting[]>([]);
@@ -97,6 +98,7 @@ export const QuestCompletingPageComponent = ({
         case "game":
             return (
                 <PlayingGame
+                    user={user}
                     questions={questions}
                     onCompleteTest={onCompleteTest}
                     setUserAnswers={setUserAnswers}

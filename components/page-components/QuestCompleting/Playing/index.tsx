@@ -15,6 +15,7 @@ export const PlayingGame = ({
     onCompleteTest,
     setUserAnswers,
     timeLeft,
+    user,
 }: PlayingProps) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<Record<number, any>>({});
@@ -92,7 +93,11 @@ export const PlayingGame = ({
             >
                 <IoChatbubbleEllipsesSharp className="text-purple size-5 md:size-8" />
             </button>
-            <Chat isOpened={isChatOpened} setIsOpened={setIsChatOpened} />
+            <Chat
+                isOpened={isChatOpened}
+                setIsOpened={setIsChatOpened}
+                user={user}
+            />
             <ProgressBar
                 currentQuestionIndex={currentQuestionIndex}
                 setCurrentQuestionIndex={setCurrentQuestionIndex}
