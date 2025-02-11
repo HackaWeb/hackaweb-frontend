@@ -1,5 +1,5 @@
-import { QuestionWhileTesting } from "@/types/question.interface";
+import { Quest } from "@/types/quest.interface";
 
 export interface QuestCompletingProps {
-    questions: QuestionWhileTesting[];
+    quest: Quest;
 }

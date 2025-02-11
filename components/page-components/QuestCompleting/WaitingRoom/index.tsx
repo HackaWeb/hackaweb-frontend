@@ -4,7 +4,7 @@ import Link from "next/link";
 import { TbArrowBackUp } from "react-icons/tb";
 import { WaitingRoomProps } from "./WaitingRoom.props";
 
-export const WaitingRoom = ({ onStartQuestClick }: WaitingRoomProps) => {
+export const WaitingRoom = ({ onStartQuestClick, quest }: WaitingRoomProps) => {
     return (
         <>
             <div className="bg-blackOpacity pt-6">
@@ -16,7 +16,7 @@ export const WaitingRoom = ({ onStartQuestClick }: WaitingRoomProps) => {
                 </Link>
                 <div>
                     <Image
-                        src="/test.png"
+                        src={quest.file}
                         alt="Квест"
                         width={0}
                         height={0}
@@ -24,7 +24,7 @@ export const WaitingRoom = ({ onStartQuestClick }: WaitingRoomProps) => {
                         className="mx-auto mt-3 rounded-lg max-w-[800px] px-6"
                         loading="eager"
                     />
-                    <h1 className="py-10 text-center">Назва Квесту</h1>
+                    <h1 className="py-10 text-center">{quest.title}</h1>
                 </div>
             </div>
             <Button

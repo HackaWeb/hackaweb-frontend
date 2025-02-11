@@ -8,6 +8,7 @@ export interface ChoiceOption {
 
 export interface ChoiceOptionWhileTesting {
     title: string;
+    id: string;
 }
 
 export interface Question {
@@ -22,7 +23,7 @@ export interface Question {
 export interface QuestionWhileTesting {
     id: string;
     title: string;
-    type: QuestionType;
+    type: number;
     options?: ChoiceOptionWhileTesting[];
     file?: string;
 }
