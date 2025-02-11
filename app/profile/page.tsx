@@ -47,7 +47,7 @@ const MyProfile = async () => {
             toast.error(DEFAULT_FIELD_ERROR.message);
             return [];
         }
-    };
+    }; */
 
     const profile = await getProfile();
     if (!profile) {
