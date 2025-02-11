@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { TbArrowBackUp } from "react-icons/tb";
 import { WaitingRoomProps } from "./WaitingRoom.props";
+import { FaImage } from "react-icons/fa";
 
 export const WaitingRoom = ({ onStartQuestClick, quest }: WaitingRoomProps) => {
     return (
@@ -15,14 +16,19 @@ export const WaitingRoom = ({ onStartQuestClick, quest }: WaitingRoomProps) => {
                     </Button>
                 </Link>
                 <div>
-                    <Image
-                        src={quest.imageUrl}
-                        alt="Квест"
-                        width={0}
-                        height={0}
-                        sizes="100vw"
-                        className="mx-auto mt-3 rounded-lg max-w-[800px] px-6"
-                    />
+                    {quest.imageUrl ? (
+                        <Image
+                            src={quest.imageUrl}
+                            alt="Квест"
+                            width={0}
+                            height={0}
+                            sizes="100vw"
+                            className="mx-auto mt-3 rounded-lg max-w-[800px] px-6"
+                        />
+                    ) : (
+                        <FaImage className="max-w-[400px] w-full h-auto px-6 mt-3 mx-auto" />
+                    )}
+
                     <h1 className="py-10 text-center">{quest.title}</h1>
                 </div>
             </div>

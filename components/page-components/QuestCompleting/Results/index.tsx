@@ -3,7 +3,7 @@ import { GeneralResults } from "./GeneralResults";
 import { Actions } from "./Actions";
 import { ResultsProps } from "./Results.props";
 
-export const Results = ({ quest }: ResultsProps) => {
+export const Results = ({ quest, result }: ResultsProps) => {
     return (
         <div className="relative">
             <div className="pt-2 sm:pt-16 px-4 relative bg-[url(/results-bg.png)] bg-cover bg-center">
