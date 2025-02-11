@@ -32,23 +32,21 @@ export const getQuestByIdWithoutQuestions = async (
     });
 
 export const getQuestsByOwnerId = async (
-    body: GetQuestByOwnerIdBody,
     userId?: string,
 ): Promise<GetQuestByOwnerIdResponse> =>
     fetchApi({
         endpoint: `/quiz/${userId}`,
         isAuthRequired: false,
-        method: "POST",
-        body,
+        method: "GET",
     });
 
 export const getCompletedQuestsByOwnerId = async (
     userId?: string,
 ): Promise<GetCompletedQuestByOwnerIdResponse> =>
     fetchApi({
-        endpoint: `/quiz/${userId}`,
+        endpoint: `/quiz/completed/${userId}`,
         isAuthRequired: false,
-        method: "POST",
+        method: "GET",
     });
 
 export const getQuests = async (): Promise<GetQuestsResponse> =>
