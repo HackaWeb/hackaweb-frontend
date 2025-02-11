@@ -41,11 +41,7 @@ export const Quest = ({ quest }: QuestProps) => {
                             quest.owner.lastName,
                         )}
                     </Link>{" "}
-                    (
-                    <span className="text-purple">
-                        {quest.owner.rating || 0}
-                    </span>{" "}
-                    з 5)
+                    ({quest.owner.rating || 0} з 5)
                 </div>
                 <div className="flex items-center justify-between text-gray mt-10">
                     <span className="flex items-center gap-1">
