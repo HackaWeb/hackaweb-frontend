@@ -2,7 +2,6 @@ import Image from "next/image";
 import { QuestProps } from "./Quest.props";
 import Link from "next/link";
 import { RenderRating } from "@/helpers/RenderRating";
-import { FaUser } from "react-icons/fa6";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
 import { printUserNickname } from "@/helpers/printUserNickname";
 import { FaImage } from "react-icons/fa";
@@ -27,13 +26,16 @@ export const Quest = ({ quest }: QuestProps) => {
             )}
 
             <div className="p-3">
-                <Link href="/quests/1" className="font-semibold text-lg">
+                <Link
+                    href={`/quests/${quest.id}`}
+                    className="font-semibold text-lg"
+                >
                     {quest.title}
                 </Link>
                 <RenderRating rating={4} className="mt-1 gap-[4px]" />
                 <div className="mt-3 text-sm">
                     від{" "}
-                    <Link href="/users/1">
+                    <Link href={`/users/${quest.owner.id}`}>
                         {printUserNickname(
                             quest.owner.firstName,
                             quest.owner.lastName,
