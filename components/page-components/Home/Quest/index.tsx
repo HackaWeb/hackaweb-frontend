@@ -4,6 +4,7 @@ import Link from "next/link";
 import { RenderRating } from "@/helpers/RenderRating";
 import { FaUser } from "react-icons/fa6";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
+import { printUserNickname } from "@/helpers/printUserNickname";
 
 export const Quest = ({ quest }: QuestProps) => {
     return (
@@ -24,7 +25,10 @@ export const Quest = ({ quest }: QuestProps) => {
                 <div className="mt-3 text-sm">
                     від{" "}
                     <Link href="/users/1">
-                        {quest.owner.firstName + " " + quest.owner.lastName}
+                        {printUserNickname(
+                            quest.owner.firstName,
+                            quest.owner.lastName,
+                        )}
                     </Link>{" "}
                     (<span className="text-purple">{quest.owner.rating}</span> з
                     5)
