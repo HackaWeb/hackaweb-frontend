@@ -14,17 +14,17 @@ export const UserProfilePageComponent = ({
 }: UserProfileProps) => {
     return (
         profile && (
-            <div>
+            <div className="mt-8">
                 <h1>
                     Профіль користувача {profile.firstName} {profile.lastName}
                 </h1>
                 <ReturnBtn className="mt-4" />
                 <div
                     className={cn(
-                        "mt-8 grid gap-6",
+                        "mt-8 grid gap-6 grid-cols-1",
                         isEditable
-                            ? "grid grid-cols-[240px_330px_auto]"
-                            : "grid-cols-[240px_auto]",
+                            ? "sm:grid-cols-[240px_auto] 2xl:grid-cols-[240px_330px_auto]"
+                            : "grid-cols-1 xl:grid-cols-[240px_auto]",
                     )}
                 >
                     <LeftColumn profile={profile} isEditable={isEditable} />
