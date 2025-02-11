@@ -11,13 +11,13 @@ export const MyProfilePageComponent = ({
     ownQuests,
 }: MyProfileProps) => {
     return (
-        <div>
+        <div className="mt-8 ml-8 md:ml-0">
             <h1>Мій кабінет</h1>
             <ReturnBtn className="mt-4" />
-            <div className="mt-8 grid grid-cols-[240px_330px_auto] gap-6">
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-[240px_auto] 2xl:grid-cols-[240px_330px_auto] gap-6">
                 <LeftColumn profile={profile} />
                 <MiddleColumn profile={profile} />
-                <div>
+                <div className="sm:col-span-2 2xl:col-auto">
                     <OwnQuests
                         ownQuests={ownQuests}
                         profile={profile}

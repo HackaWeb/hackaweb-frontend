@@ -57,7 +57,7 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
     };
 
     return (
-        <div className="">
+        <div>
             <div className="p-4 bg-blackOpacity rounded-md">
                 <form action={onUpdateProfileSubmit}>
                     <div>
