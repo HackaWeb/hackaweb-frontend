@@ -9,8 +9,7 @@ import { ToastProvider } from "@/components/providers/Toast";
 import { getCookie } from "@/helpers/getCookie";
 import { getPathname } from "@/helpers/getPathname";
 import { Modals } from "@/components/Modals";
-import { getProfile } from "@/api/user";
-import { setCookie } from "@/helpers/setCookie";
+import { getMyProfile } from "@/api/user";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -39,7 +38,7 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
         profile = null;
     } else {
         try {
-            const profileData = await getProfile();
+            const profileData = await getMyProfile();
 
             if ("email" in profileData) {
                 profile = profileData;

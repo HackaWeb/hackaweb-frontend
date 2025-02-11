@@ -1,16 +1,15 @@
-import { CompletedQuest, Quest } from "./quest.interface";
-
 export interface User {
-    id: string;
+    avatar: string | null;
     email: string;
     firstName: string | null;
-    lastName: string | null;
-    rating: number;
-    avatar: string | null;
     isAdmin: boolean;
+    lastName: string;
 }
 
 export interface Profile extends User {
-    createdQuests: Quest[];
-    completedQuests: CompletedQuest[];
+    avatar: string | null;
+    email: string;
+    firstName: string | null;
+    isAdmin: boolean;
+    lastName: string;
 }
