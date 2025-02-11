@@ -24,7 +24,6 @@ export const Quest = ({ quest }: QuestProps) => {
                     <FaImage className="text-white size-12" />
                 </div>
             )}
-
             <div className="p-3">
                 <Link
                     href={`/quests/${quest.id}`}

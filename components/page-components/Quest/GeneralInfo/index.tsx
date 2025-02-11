@@ -7,20 +7,29 @@ import { FaUser } from "react-icons/fa6";
 import { RenderRating } from "@/helpers/RenderRating";
 import Link from "next/link";
 import { useRedirect } from "@/hooks/useRedirect";
+import { FaImage } from "react-icons/fa";
+import { printUserNickname } from "@/helpers/printUserNickname";
+import { formatDate } from "@/helpers/formatDate";
 
-export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
+export const GeneralInfo = ({ quest, timesPlayed }: GeneraInfoProps) => {
     const redirect = useRedirect();
 
     return (
         <div className="bg-blackOpacity rounded-md">
-            <Image
-                src={quest.imageUrl}
-                alt={quest.title}
-                width={0}
-                height={0}
-                sizes="100vw"
-                className="rounded-t-md"
-            />
+            {quest.imageUrl ? (
+                <Image
+                    src={quest.imageUrl}
+                    alt={quest.title}
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    className="rounded-t-md"
+                />
+            ) : (
+                <div className="w-full h-[250px] bg-gray-dark flex items-center justify-center rounded-t-lg">
+                    <FaImage className="text-white size-12" />
+                </div>
+            )}
             <div className="p-4">
                 <div className="text-purple text-lg font-bold">
                     {quest.title}
@@ -29,29 +38,34 @@ export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
                     <Button
                         className="bg-purple gap-2"
                         color="purpleBackground"
-                        onClick={() => redirect("/quest-completing/1")}
+                        onClick={() =>
+                            redirect(`/quest-completing/${quest.id}`)
+                        }
                     >
                         <FaUser className="size-4" />
                         <span>Грати зараз</span>
                     </Button>
                 </div>
                 <div className="text-gray mt-2">
-                    <span className="font-semibold text-white">112</span> разів
-                    зіграно
+                    <span className="font-semibold text-white">
+                        {timesPlayed}
+                    </span>{" "}
+                    разів зіграно
                 </div>
-                <p className="text-gray mt-6">
-                    Тест опис опис опис опис опис опис опис описописопи Тест
-                    опис опис опис опис опис опис опис описописопис Тест опис
-                    опис опис опис опис опис опис описописописс
-                </p>
-                <RenderRating
-                    rating={quest.rate}
-                    className="mt-3 gap-[6px]"
-                />
-                <div className="text-gray mt-3">Створено {quest.createdAt}</div>
-                <Link href={`/users/${quest.owner.id}`}>
-                    {quest.owner.firstName + " " + quest.owner.lastName}
-                </Link>
+                <p className="text-gray mt-6">{quest.description}</p>
+                <RenderRating rating={quest.rate} className="mt-3 gap-[6px]" />
+                <div className="text-gray mt-3">
+                    Створено {formatDate(quest.createdAt)}
+                </div>
+                <div>
+                    <span className="text-gray">від </span>
+                    <Link href={`/users/${quest.owner.id}`}>
+                        {printUserNickname(
+                            quest.owner.firstName,
+                            quest.owner.lastName,
+                        )}
+                    </Link>
+                </div>
             </div>
         </div>
     );
