@@ -66,6 +66,7 @@ export const QuestCompletingPageComponent = ({
                 },
             ];
 
+            setStage("game");
             setQuestions(questions);
             /* getting questions by quest id */
 
@@ -95,7 +96,7 @@ export const QuestCompletingPageComponent = ({
                 />
             );
         case "results":
-            return <Results />;
+            return <Results quest={quest} />;
         default:
             return <></>;
     }
