@@ -2,6 +2,7 @@ import { Profile, User } from "@/types/user.interface";
 import { BadRequestResponse } from "./common/badRequest.interface";
 import { UnathorizedResponse } from "./common/unathorized.interface";
 import { DeleteResponseSuccess } from "./common/deleteSuccess.interface";
+import { RequestErrorDelete } from "./common/failure.interface";
 
 export interface UpdateUserResponseSuccess {
     userId: string;
@@ -25,4 +26,6 @@ export type UpdateUserResponse =
 
 export type DeleteUserResponse = DeleteResponseSuccess | BadRequestResponse;
 
-export type DeleteUserAvatarResponse = DeleteResponseSuccess | BadRequestResponse;
+export type DeleteUserAvatarResponse =
+    | DeleteResponseSuccess
+    | RequestErrorDelete;

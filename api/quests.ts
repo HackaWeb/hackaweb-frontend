@@ -5,6 +5,7 @@ import {
 } from "./requestBodies/quests.interface";
 import {
     CreateQuestResponse,
+    GetCompletedQuestByOwnerIdResponse,
     GetQuestByIdResponse,
     GetQuestByOwnerIdResponse,
     GetQuestsResponse,
@@ -25,10 +26,19 @@ export const getQuestsByOwnerId = async (
     userId?: string,
 ): Promise<GetQuestByOwnerIdResponse> =>
     fetchApi({
-        endpoint: `/quiz/${userId}}`,
-        isAuthRequired: true,
+        endpoint: `/quiz/${userId}`,
+        isAuthRequired: false,
         method: "POST",
         body,
+    });
+
+export const getCompletedQuestsByOwnerId = async (
+    userId?: string,
+): Promise<GetCompletedQuestByOwnerIdResponse> =>
+    fetchApi({
+        endpoint: `/quiz/${userId}`,
+        isAuthRequired: false,
+        method: "POST",
     });
 
 export const getQuests = async (): Promise<GetQuestsResponse> =>

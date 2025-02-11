@@ -40,17 +40,10 @@ export interface GetQuestByOwnerIdResponse {
     pageSize: number;
     totalItems: number;
     totalPages: number;
-    items: [
-        {
-            id: string;
-            title: string;
-            file: string;
-            duration: number;
-            rate: number;
-            taskCount: number;
-        },
-    ];
+    items: Quest[];
 }
+
+export type GetCompletedQuestByOwnerIdResponse = Quest[];
 export interface GetQuestByIdResponse {
     quiz: {
         id: string;
