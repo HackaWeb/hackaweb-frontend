@@ -19,9 +19,13 @@ export const useQuiz = () => {
 
     useEffect(() => {
         const newConnection = new signalR.HubConnectionBuilder()
-            .withUrl(`${process.env.NEXT_PUBLIC_SOCKET_URL}/quizTimerHub`)
+            .withUrl(`${process.env.NEXT_PUBLIC_SOCKET_URL}/quizTimerHub`, {
+                transport: signalR.HttpTransportType.WebSockets,
+                skipNegotiation: true,
+            })
             .withAutomaticReconnect()
             .build();
+
 
         newConnection.on(
             "QuizStarted",

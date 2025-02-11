@@ -12,6 +12,30 @@ import { toast } from "react-toastify";
 
 type Stage = "waiting" | "game" | "results";
 
+const mockQuestions: QuestionWhileTesting[] = [
+    {
+        id: "1",
+        title: "Скільки буде 2+2?",
+        type: 1,
+        options: [
+            { id: "1", title: "4" },
+            { id: "2", title: "5" },
+            { id: "3", title: "6" },
+            { id: "4", title: "7" },
+        ],
+    },
+    {
+        id: "1",
+        title: "Правда, що 2+2 буде 4?",
+        type: 0,
+    },
+    {
+        id: "3",
+        title: "Скільки буде 2-3?",
+        type: 2,
+    },
+];
+
 export const QuestCompletingPageComponent = ({
     quest,
 }: QuestCompletingProps) => {
@@ -20,12 +44,12 @@ export const QuestCompletingPageComponent = ({
     const [userAnswers, setUserAnswers] = useState<Record<string, string>>({});
     const [timeLeft, setTimeLeft] = useState<number | null>(null);
 
-    // WebSocket-контроллер викторины
     const { startQuiz, submitAnswers, time, result, status } = useQuiz();
 
     useEffect(() => {
         setTimeLeft(time);
     }, [time]);
+    console.log(timeLeft);
 
     useEffect(() => {
         if (status === "completed" && result) {
@@ -35,14 +59,14 @@ export const QuestCompletingPageComponent = ({
 
     const onStartQuestClick = async () => {
         try {
-            const response = await getQuestQuestionsByQuestId(quest.id);
-            const data: QuestionWhileTesting[] = await response.json();
+            /* const response = await getQuestQuestionsByQuestId(quest.id);
+            console.log(response);
+            const data: QuestionWhileTesting[] = await response.json(); */
 
-            if (data && data.length > 0) {
-                setQuestions(data);
+            if (mockQuestions && mockQuestions.length > 0) {
+                setQuestions(mockQuestions);
                 setStage("game");
 
-                // Запускаем квиз по ID
                 startQuiz(quest.id);
             } else {
                 toast.error(
@@ -50,7 +74,10 @@ export const QuestCompletingPageComponent = ({
                 );
             }
         } catch (error) {
-            console.error("Ошибка при получении вопросов:", error);
+            console.error(error);
+            toast.error(
+                "Помилка при отриманні питань, спробуйте пізніше ще раз",
+            );
         }
     };
 

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { QuestionWhileTesting } from "@/types/question.interface";
 import { Button } from "@/components/ui/Button";
 import { ChoiceQuestion } from "./ChoiceQuestion";
 import { InputQuestion } from "./InputQuestion";
@@ -9,22 +8,14 @@ import { InfoBox } from "./InfoBox";
 import { Chat } from "./Chat";
 import { toast } from "react-toastify";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
-
-interface PlayingGameProps {
-    questions: QuestionWhileTesting[];
-    onCompleteTest: () => void;
-    setUserAnswers: React.Dispatch<
-        React.SetStateAction<Record<string, string>>
-    >;
-    timeLeft: number | null;
-}
+import { PlayingProps } from "./Playing.props";
 
 export const PlayingGame = ({
     questions,
     onCompleteTest,
     setUserAnswers,
     timeLeft,
-}: PlayingGameProps) => {
+}: PlayingProps) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<Record<number, any>>({});
     const [questionsCompleted, setQuestionsCompleted] = useState<number[]>([]);
@@ -48,7 +39,8 @@ export const PlayingGame = ({
     };
 
     const onNextQuestionClick = () => {
-        if (!answers[currentQuestionIndex]) {
+        console.log(answers[currentQuestionIndex]);
+        if (answers[currentQuestionIndex] === undefined) {
             toast.error("Ви не обрали відповідь!");
             return;
         }
@@ -110,6 +102,7 @@ export const PlayingGame = ({
 
             <div className="bg-blackOpacity pt-16 px-4 relative">
                 <InfoBox
+                    timeLeft={timeLeft as number}
                     questionsLength={questions.length}
                     currentQuestionIndex={currentQuestionIndex}
                 />
@@ -121,10 +114,6 @@ export const PlayingGame = ({
                 <h1 className="pt-10 pb-5 text-center text-xl xsm:text-3xl">
                     {currentQuestion.title}
                 </h1>
-                <p className="text-center text-red-500">
-                    Час:{" "}
-                    {timeLeft !== null ? `${timeLeft} сек.` : "Загрузка..."}
-                </p>
             </div>
 
             {renderQuestion()}

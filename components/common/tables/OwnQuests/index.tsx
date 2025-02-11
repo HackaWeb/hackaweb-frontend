@@ -62,7 +62,7 @@ export const OwnQuests = async ({
                                     >
                                         <td className="p-3 font-semibold">
                                             <Link
-                                                href="#"
+                                                href={`/quests/${quest.id}`}
                                                 className="text-purple-400"
                                             >
                                                 {quest.title}
