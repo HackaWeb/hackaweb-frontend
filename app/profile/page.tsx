@@ -23,32 +23,50 @@ const MyProfile = async () => {
         }
     };
 
-    /*const getCompletedQuests = async () => {
-        const data = await getCompletedQuestsByOwnerId(profile.id);
-        
-        return data;
-    }; */
-
-    /* const getOwnQuests = async () => {
-        const data = await getQuestsByOwnerId(
-            {
-                pageNumber: 0,
-                pageSize: 20,
-            },
-            profile.id,
-        );
+    const getCompletedQuests = async () => {
+        /* try {
+            const res = fetch(
+                `https://hackawebquiz.ashycoast-bbbe20af.westus2.azurecontainerapps.io/api/quests/completed/${"3577b43d-8d91-4cd3-9c4c-280c38490d2a"}`,
+                {},
+            )
+                .then((res) => console.log(res))
+                .then((data) => {
+                    console.log(data);
+                });
+        } catch (error) {
+            console.error(error);
+        } */
+        try {
+            const res = await fetch(
+                `https://hackawebquiz.ashycoast-bbbe20af.westus2.azurecontainerapps.io/api/quiz/completed/3577b43d-8d91-4cd3-9c4c-280c38490d2a`,
+            );
+            console.log(res);
+        } catch (er) {}
+        /* const data = await getCompletedQuestsByOwnerId(profile.id);
         console.log(data);
+        
+        return data; */
+    };
+    getCompletedQuests();
 
-        return data.items;
-    }; */
+    const getOwnQuests = async () => {
+        try {
+            const data = await getQuestsByOwnerId(profile.id);
+            console.log(data);
+
+            /* return data.items; */
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     if (!token) {
         redirect("/login");
     }
 
     const profile = await getProfile();
-    /* const ownQuests = await getOwnQuests(); */
-    /* const completedQuests = await getCompletedQuests(); */
+    const ownQuests = await getOwnQuests();
+    const completedQuests = await getCompletedQuests();
 
     return (
         <MyProfilePageComponent

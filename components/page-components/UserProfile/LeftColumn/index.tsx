@@ -85,7 +85,7 @@ export const LeftColumn = ({ profile, isEditable }: LeftColumnProps) => {
     };
 
     return (
-        <div className="">
+        <div className="max-w-[400px]">
             <div className="p-4 bg-blackOpacity rounded-md">
                 <div className="w-full h-auto aspect-square border border-purple rounded-md p-2 relative">
                     <RenderRating
