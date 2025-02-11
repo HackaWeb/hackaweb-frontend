@@ -9,7 +9,7 @@ export const Quest = ({ quest }: QuestProps) => {
     return (
         <div className="bg-blackOpacity-dark hover:scale-105 transition duration-200 rounded-lg">
             <Image
-                src={quest.file}
+                src={quest.imageUrl}
                 alt={quest.title}
                 className="w-full h-auto"
                 width={0}

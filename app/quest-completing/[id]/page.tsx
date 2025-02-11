@@ -1,3 +1,4 @@
+import { PageProps } from "@/.next/types/app/page";
 import { getQuestById } from "@/api/quests";
 import { getMyProfile } from "@/api/user";
 import { QuestCompletingPageComponent } from "@/components/page-components/QuestCompleting";
@@ -6,9 +7,9 @@ import { Quest } from "@/types/quest.interface";
 import { QuestionWhileTesting } from "@/types/question.interface";
 import { redirect } from "next/navigation";
 
-const QuestCompleting = async ({ params }: { params: { id: string } }) => {
+const QuestCompleting = async ({ params }: PageProps) => {
     const token = await getCookie("token");
-    const questId = params.id;
+    const { id } = await params;
     let isAuthorized;
 
     if (!token) {
@@ -79,9 +80,17 @@ const QuestCompleting = async ({ params }: { params: { id: string } }) => {
         title: "Quest 1",
         description: "Description",
         createdAt: "2022-01-01",
-        file: "/test.png",
+        imageUrl: "/test.png",
         rate: 5,
-        ownerId: "1",
+        owner: {
+            id: "1",
+            email: "danildiachenko23@gmail.com",
+            firstName: "Danil",
+            lastName: "Diachenko",
+            avatar: null,
+            rating: 4.5,
+            isAdmin: false,
+        },
         duration: 60,
         leaderboard: [],
         feedbacks: [],

@@ -65,12 +65,7 @@ const UserProfile = async ({ params }: { params: { id: string } }) => {
         notFound();
     }
 
-    return (
-        <UserProfilePageComponent
-            isEditable={isAdmin}
-            profile={profile}
-        />
-    );
+    return <UserProfilePageComponent isEditable={isAdmin} profile={profile} />;
 };
 
 export default UserProfile;

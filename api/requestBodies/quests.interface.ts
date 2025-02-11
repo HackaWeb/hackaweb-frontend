@@ -9,6 +9,7 @@ export interface CreateQuestBody {
         description: string;
         duration: number;
         questions: {
+            questionId: string;
             title: string;
             type: number;
             options: {
