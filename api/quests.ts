@@ -1,6 +1,7 @@
 import { fetchApi } from "./fetchApi";
 import {
     CreateQuestBody,
+    GetQuestsQuery,
     GetQuestByOwnerIdBody,
 } from "./requestBodies/quests.interface";
 import {
@@ -35,7 +36,7 @@ export const getQuestsByOwnerId = async (
     userId?: string,
 ): Promise<GetQuestByOwnerIdResponse> =>
     fetchApi({
-        endpoint: `/quiz/${userId}`,
+        endpoint: `/user/${userId}`,
         isAuthRequired: false,
         method: "GET",
     });
@@ -49,9 +50,16 @@ export const getCompletedQuestsByOwnerId = async (
         method: "GET",
     });
 
-export const getQuests = async (): Promise<GetQuestsResponse> =>
+export const getQuests = async ({
+    sortType,
+    titleFilter,
+}: GetQuestsQuery): Promise<GetQuestsResponse> =>
     fetchApi({
-        endpoint: "/quiz/all",
+        endpoint: `/quiz/all${sortType ? `?sortType=${sortType}` : ""}${
+            titleFilter && titleFilter.length > 2
+                ? (sortType ? "&" : "?") + `titleFilter=${titleFilter}`
+                : ""
+        }`,
         isAuthRequired: false,
         method: "GET",
     });

@@ -2,6 +2,12 @@ import { Feedback } from "./feedback.interface";
 import { Question, QuestionWhileTesting } from "./question.interface";
 import { User } from "./user.interface";
 
+export enum SortType {
+    Rating = 0,
+    NumberOfPasses = 1,
+    Alphabet = 2,
+    AuthorRating = 3,
+}
 export interface Quest {
     id: string;
     title: string;

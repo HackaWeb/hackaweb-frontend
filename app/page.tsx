@@ -6,7 +6,7 @@ const Home = async () => {
     let quests: Quest[] = [];
 
     try {
-        const response = await getQuests();
+        const response = await getQuests({});
 
         if (response.quizzes) {
             quests = response.quizzes;
