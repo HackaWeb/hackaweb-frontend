@@ -45,6 +45,4 @@ export interface GetQuestByOwnerIdResponse {
 }
 
 export type GetCompletedQuestByOwnerIdResponse = Quest[];
-export interface GetQuestByIdResponse {
-    quiz: Quest;
-}
+export interface GetQuestByIdResponse extends Quest {}

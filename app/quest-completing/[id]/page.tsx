@@ -5,7 +5,7 @@ import { QuestCompletingPageComponent } from "@/components/page-components/Quest
 import { getCookie } from "@/helpers/getCookie";
 import { Quest } from "@/types/quest.interface";
 import { QuestionWhileTesting } from "@/types/question.interface";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 const QuestCompleting = async ({ params }: PageProps) => {
     const token = await getCookie("token");
@@ -36,66 +36,18 @@ const QuestCompleting = async ({ params }: PageProps) => {
     let quest: Quest | null = null;
 
     try {
-        /* quest = await getQuestById(questId); */
-        // if not found => notFound()
-        console.log(quest);
+        const response = await getQuestById(id);
+        if (response.id) {
+            quest = response;
+        } else {
+            notFound();
+        }
     } catch (error) {
         console.error(error);
+        notFound();
     }
 
-    quest = {
-        /* id: string;
-                title: string;
-                description: string;
-                createdAt: string;
-                file: string;
-                rate: number;
-                ownerId: string;
-                duration: number;
-                questions: [
-                    {
-                        id: string;
-                        title: string;
-                        mediaUrl: string;
-                        type: number;
-                        choiceOptions: [
-                            {
-                                id: number;
-                                title: string;
-                                isCorrect: boolean;
-                            },
-                        ];
-                    },
-                ];
-                leaderboard: LeaderboardUser[]; //Чекаємо Фікс від Сергія
-                feedbacks: [
-                    {
-                        id: string;
-                        text: string;
-                        rate: number;
-                        createdAt: string;
-                    },
-                ]; */
-        id: "1",
-        title: "Quest 1",
-        description: "Description",
-        createdAt: "2022-01-01",
-        imageUrl: "/test.png",
-        rate: 5,
-        owner: {
-            id: "1",
-            email: "danildiachenko23@gmail.com",
-            firstName: "Danil",
-            lastName: "Diachenko",
-            avatar: null,
-            rating: 4.5,
-            isAdmin: false,
-        },
-        duration: 60,
-        leaderboard: [],
-        feedbacks: [],
-        questions: undefined,
-    };
+    console.log(quest);
 
     return <QuestCompletingPageComponent quest={quest} />;
 };
