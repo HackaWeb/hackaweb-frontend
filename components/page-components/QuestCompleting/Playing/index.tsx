@@ -55,7 +55,14 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
 
     const renderQuestion = () => {
         switch (currentQuestion.type) {
-            case "choice":
+            case 0:
+                return (
+                    <BooleanQuestion
+                        onAnswerChange={onAnswerChange}
+                        initialAnswer={answers[currentQuestionIndex]}
+                    />
+                );
+            case 1:
                 return (
                     <ChoiceQuestion
                         question={currentQuestion}
@@ -63,7 +70,7 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
                         initialAnswer={answers[currentQuestionIndex] || []}
                     />
                 );
-            case "input":
+            case 2:
                 return (
                     <InputQuestion
                         onAnswerChange={onAnswerChange}
@@ -72,13 +79,7 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
                         }
                     />
                 );
-            case "boolean":
-                return (
-                    <BooleanQuestion
-                        onAnswerChange={onAnswerChange}
-                        initialAnswer={answers[currentQuestionIndex]}
-                    />
-                );
+
             default:
                 return <></>;
         }

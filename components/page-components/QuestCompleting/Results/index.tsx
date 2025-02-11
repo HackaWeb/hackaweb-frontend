@@ -1,8 +1,9 @@
 import { MakeReview } from "./MakeReview";
 import { GeneralResults } from "./GeneralResults";
 import { Actions } from "./Actions";
+import { ResultsProps } from "./Results.props";
 
-export const Results = () => {
+export const Results = ({ quest }: ResultsProps) => {
     return (
         <div className="relative">
             <div className="pt-2 sm:pt-16 px-4 relative bg-[url(/results-bg.png)] bg-cover bg-center">
@@ -19,7 +20,7 @@ export const Results = () => {
             <div className="mt-6 grid grid-cols-1 xl:grid-cols-3 gap-6 w-full 2xl:px-20 px-4 items-start">
                 <GeneralResults />
                 <Actions />
-                <MakeReview />
+                <MakeReview quest={quest} />
             </div>
         </div>
     );

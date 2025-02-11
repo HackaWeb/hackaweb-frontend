@@ -1,6 +1,6 @@
 import { User } from "./user.interface";
 
-export interface Review {
+export interface Feedback {
     id: string;
     rating: number;
     comment: string;
