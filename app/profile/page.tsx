@@ -1,48 +1,60 @@
-import { getQuestsByOwnerId } from "@/api/quests";
+import { getCompletedQuestsByOwnerId, getQuestsByOwnerId } from "@/api/quests";
 import { getMyProfile } from "@/api/user";
 import { MyProfilePageComponent } from "@/components/page-components/MyProfile";
 import { getCookie } from "@/helpers/getCookie";
+import { Quest } from "@/types/quest.interface";
 import { Profile } from "@/types/user.interface";
 import { redirect } from "next/navigation";
 
 const MyProfile = async () => {
     const token = await getCookie("token");
-    let profile: Profile | null = null;
 
-    if (!token) {
-        redirect("/login");
-    } else {
+    const getProfile = async () => {
         try {
             const data = await getMyProfile();
 
             if ("statusCode" in data) {
                 redirect("/login");
             } else {
-                profile = data;
+                return data;
             }
         } catch (error) {
             console.error(error);
             redirect("/login");
         }
+    };
 
-        try {
-            const data = await getQuestsByOwnerId({
-                pageNumber: 1,
+    const getCompletedQuests = async () => {
+        const data = await getCompletedQuestsByOwnerId(profile.id);
+        return data;
+    };
+
+    const getOwnQuests = async () => {
+        const data = await getQuestsByOwnerId(
+            {
+                pageNumber: 0,
                 pageSize: 20,
-            });
-            console.log(data);
+            },
+            profile.id,
+        );
+        return data;
+    };
 
-            /* if ("statusCode" in data) {
-                console.log(data);
-            } else {
-                console.log(data);
-            } */
-        } catch (error) {
-            console.log(error);
-        }
+    if (!token) {
+        redirect("/login");
     }
 
-    return <MyProfilePageComponent profile={profile} />;
+    const profile = await getProfile();
+    const ownQuests = await getOwnQuests();
+    const completedQuests = await getCompletedQuests();
+
+    return (
+        <MyProfilePageComponent
+            profile={profile}
+            ownQuests={ownQuests}
+            completedQuests={completedQuests}
+        />
+    );
 };
 
 export default MyProfile;

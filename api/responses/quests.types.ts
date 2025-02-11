@@ -51,6 +51,8 @@ export interface GetQuestByOwnerIdResponse {
         },
     ];
 }
+
+export type GetCompletedQuestByOwnerIdResponse = Quest[];
 export interface GetQuestByIdResponse {
     quiz: {
         id: string;

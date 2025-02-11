@@ -11,7 +11,7 @@ import {
     DEFAULT_FIELD_ERROR,
     RequestError,
 } from "@/api/responses/common/failure.interface";
-import { updateUserProfile } from "@/api/user";
+import { deleteUserAvatar, updateUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
@@ -21,7 +21,7 @@ export const LeftColumn = ({ profile, isEditable }: LeftColumnProps) => {
     const achievements = getAchievements(profile);
 
     const [avatar, setAvatar] = useState<string | null>(profile.avatar);
-    
+
     const router = useRouter();
 
     const updateAvatarHandler = async (
@@ -53,27 +53,21 @@ export const LeftColumn = ({ profile, isEditable }: LeftColumnProps) => {
 
     const deleteAvatarHandler = async () => {
         const body = new FormData();
-
         body.append("avatar", "");
-        body.append("userId", profile.id);
 
         try {
-            const data = await updateUserProfile(body);
-
-            if ("statusCode" in data) {
-                if ("message" in data) {
-                    printToastErrorMessages([data.message]);
-                }
-            } else {
-                router.refresh();
-                setAvatar(null);
-
-                toast.success("Аватар успішно видалено!");
+            const data = await deleteUserAvatar(profile.id);
+            if (!data.isSuccess) {
+                printToastErrorMessages(data.errors);
+                return;
             }
+            toast.success("Аватар видалено успішно!");
+            setAvatar(null);
         } catch (error) {
             console.error(error);
             toast.error(DEFAULT_FIELD_ERROR.message);
         }
+        router.refresh();
     };
 
     const onAvatarChange = async (

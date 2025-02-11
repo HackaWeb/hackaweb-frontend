@@ -2,82 +2,108 @@ import Link from "next/link";
 import { OwnQuestsProps } from "./OwnQuests.props";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { Button } from "@/components/ui/Button";
+import { getQuestsByOwnerId } from "@/api/quests";
 
-export const OwnQuests = ({ profile, isCreatedByMe }: OwnQuestsProps) => {
+export const OwnQuests = async ({ profile, isCreatedByMe }: OwnQuestsProps) => {
+    const getOwnQuests = async () => {
+        const data = await getQuestsByOwnerId(
+            {
+                pageNumber: 0,
+                pageSize: 20,
+            },
+            profile.id,
+        );
+        return data.items;
+    };
+    const ownQuests = await getOwnQuests();
+
     return (
-        <div className="bg-blackOpacity-dark rounded-md">
-            <div className="flex justify-between items-center p-4">
-                <h2 className="text-xl font-semibold text-white">
-                    {isCreatedByMe
-                        ? "Мої квести"
-                        : `Квести користувача ${profile.firstName} ${profile.lastName}`}
-                </h2>
-                {isCreatedByMe && (
-                    <Button color="purpleBorder" className="py-2 px-4">
-                        Створити квест
-                    </Button>
-                )}
-            </div>
-            <div className="overflow-x-auto">
-                <table className="min-w-full border-collapse text-gray w-full">
-                    <thead>
-                        <tr className="bg-[#242A4D]">
-                            <th className="p-3 text-left w-[200px]">Назва</th>
-                            <th className="p-3 text-left w-[120px]">
-                                Картинка
-                            </th>
-                            <th className="p-3 text-left w-[100px]">Час</th>
-                            <th className="p-3 text-left w-[120px]">
-                                Зіграно раз
-                            </th>
-                            <th className="p-3 text-left w-[120px]">Рейтинг</th>
-                            <th className="p-3 text-left w-[150px]">
-                                Кількість завдань
-                            </th>
-                            {isCreatedByMe && (
-                                <th className="p-3 text-left w-[100px]">Дії</th>
-                            )}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {profile.createdQuests.map((quest, index) => (
-                            <tr
-                                key={index}
-                                className="border-t border-gray-700"
-                            >
-                                <td className="p-3 font-semibold">
-                                    <Link href="#" className="text-purple-400">
-                                        {quest.title}
-                                    </Link>
-                                </td>
-                                <td className="p-3">
-                                    <img
-                                        src={quest.file}
-                                        alt={quest.title}
-                                        className="w-16 h-12 object-cover rounded-md"
-                                    />
-                                </td>
-                                <td className="p-3">{quest.duration} хв.</td>
-                                <td className="p-3">
-                                    {quest.leaderboard.length}
-                                </td>
-                                <td className="p-3">⭐ {quest.rating}</td>
-                                <td className="p-3">10</td>
+        ownQuests && (
+            <div className="bg-blackOpacity-dark rounded-md">
+                <div className="flex justify-between items-center p-4">
+                    <h2 className="text-xl font-semibold text-white">
+                        {isCreatedByMe
+                            ? "Мої квести"
+                            : `Квести користувача ${profile.firstName} ${profile.lastName}`}
+                    </h2>
+                    {isCreatedByMe && (
+                        <Button color="purpleBorder" className="py-2 px-4">
+                            Створити квест
+                        </Button>
+                    )}
+                </div>
+                <div className="overflow-x-auto">
+                    <table className="min-w-full border-collapse text-gray w-full">
+                        <thead>
+                            <tr className="bg-[#242A4D]">
+                                <th className="p-3 text-left w-[200px]">
+                                    Назва
+                                </th>
+                                <th className="p-3 text-left w-[120px]">
+                                    Картинка
+                                </th>
+                                <th className="p-3 text-left w-[100px]">Час</th>
+                                <th className="p-3 text-left w-[120px]">
+                                    Зіграно раз
+                                </th>
+                                <th className="p-3 text-left w-[120px]">
+                                    Рейтинг
+                                </th>
+                                <th className="p-3 text-left w-[150px]">
+                                    Кількість завдань
+                                </th>
                                 {isCreatedByMe && (
-                                    <td className="p-3 flex gap-2">
-                                        <button className="p-2 bg-purple-600 rounded-md">
-                                            <AiOutlineEdit className="text-white" />
-                                        </button>
-                                        <button className="p-2 bg-red-600 rounded-md">
-                                            <AiOutlineDelete className="text-white" />
-                                        </button>
-                                    </td>
+                                    <th className="p-3 text-left w-[100px]">
+                                        Дії
+                                    </th>
                                 )}
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {ownQuests.map((quest, index) => (
+                                <tr
+                                    key={index}
+                                    className="border-t border-gray-700"
+                                >
+                                    <td className="p-3 font-semibold">
+                                        <Link
+                                            href="#"
+                                            className="text-purple-400"
+                                        >
+                                            {quest.title}
+                                        </Link>
+                                    </td>
+                                    <td className="p-3">
+                                        <img
+                                            src={quest.file}
+                                            alt={quest.title}
+                                            className="w-16 h-12 object-cover rounded-md"
+                                        />
+                                    </td>
+                                    <td className="p-3">
+                                        {quest.duration} хв.
+                                    </td>
+                                    <td className="p-3">
+                                        {quest.leaderboard.length}
+                                    </td>
+                                    <td className="p-3">⭐ {quest.rating}</td>
+                                    <td className="p-3">10</td>
+                                    {isCreatedByMe && (
+                                        <td className="p-3 flex gap-2">
+                                            <button className="p-2 bg-purple-600 rounded-md">
+                                                <AiOutlineEdit className="text-white" />
+                                            </button>
+                                            <button className="p-2 bg-red-600 rounded-md">
+                                                <AiOutlineDelete className="text-white" />
+                                            </button>
+                                        </td>
+                                    )}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        )
     );
 };

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/Input";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { toast } from "react-toastify";
-import { ModalBg } from "../ModalBg";
+import { ModalBg } from "../../modals/ModalBg";
 import { BsFillImageFill } from "react-icons/bs";
 import { addQuestion } from "@/store/slices/questions/questions";
 import { FaVideo } from "react-icons/fa6";

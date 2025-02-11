@@ -1,8 +1,8 @@
 import { CreateQuest } from "./CreateQuest";
 import { CreateQuestion } from "./CreateQuestion";
 import { DeleteConfirmation } from "./DeleteConfirmation";
-import QuestEdit from "./QuestEdit";
-import QuestionEdit from "./QuestionEdit";
+import QuestEdit from "../modals/QuestEdit";
+import QuestionEdit from "../modals/QuestionEdit";
 
 export const Modals = () => {
     return (
