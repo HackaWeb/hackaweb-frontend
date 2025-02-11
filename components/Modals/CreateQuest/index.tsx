@@ -122,19 +122,25 @@ export const CreateQuest = () => {
     return (
         isModalOpened("QuestCreation", modals) && (
             <>
-                <div className="absolute left-[50%] -translate-x-[50%] max-w-[700px] w-full top-10 z-10 flex flex-col place-content-center place-items-center bg-blue p-6">
-                    <ReturnBtn className="self-start" modal="QuestCreation" />
-                    <div className="text-3xl mt-10">Створення Квесту</div>
+                <div className="max-h-[90vh] overflow-y-auto pt-72 absolute left-[50%] -translate-x-[50%] max-w-[700px] w-full top-10 z-10 bg-blue p-6 mx-4 flex flex-col place-content-center place-items-center rounded-lg">
+                    <ReturnBtn
+                        className="self-start mt-2 mb-10"
+                        modal="QuestCreation"
+                    />
+                    <div className="text-3xl">Створення Квесту</div>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
                             {media ? (
-                                <img
+                                <Image
                                     src={media}
                                     alt="Зображення квесту"
-                                    className="w-full h-auto aspect-square object-cover"
+                                    className="h-[30rem] aspect-square object-cover"
+                                    sizes="100vw"
+                                    height={0}
+                                    width={0}
                                 />
                             ) : (
-                                <div className="w-full h-auto border-2 border-purple aspect-square flex items-center justify-center">
+                                <div className="w-full border-2 border-purple aspect-square flex items-center justify-center">
                                     <BsFillImageFill className="size-20 text-gray" />
                                 </div>
                             )}
@@ -206,7 +212,6 @@ export const CreateQuest = () => {
                                     <span className="text-gray">
                                         Список питань
                                     </span>
-
                                     {questions.map((question, index) => (
                                         <div
                                             key={index}

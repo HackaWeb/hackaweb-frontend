@@ -13,6 +13,8 @@ import { Select } from "@/components/ui/Select";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { QuestionType } from "@/types/question.type";
 import { Question } from "@/types/question.interface";
+import { useEffect, useRef } from "react";
+import { VIDEO_DURATION } from "@/constants";
 
 export const CreateQuestion = () => {
     const {
@@ -31,7 +33,11 @@ export const CreateQuestion = () => {
         title,
         resetOptions,
         media,
+        setFileType,
+        setMedia,
     } = useQuestionModal();
+
+    const videoRef = useRef<HTMLVideoElement>(null);
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -53,12 +59,33 @@ export const CreateQuestion = () => {
         resetOptions("QuestionCreation", "Питання створено!");
     };
 
+    useEffect(() => {
+        if (fileType === "video" && videoRef.current) {
+            const video = videoRef.current;
+            const handleMetadataLoad = () => {
+                if (video.duration > VIDEO_DURATION) {
+                    setMedia(null);
+                    setFileType(null);
+                    toast.error(
+                        "Тривалість відео неповинна перевищувати 60 секунд!",
+                    );
+                }
+            };
+
+            video.addEventListener("loadedmetadata", handleMetadataLoad);
+
+            return () => {
+                video.removeEventListener("loadedmetadata", handleMetadataLoad);
+            };
+        }
+    }, [media, fileType]);
+
     return (
         isModalOpened("QuestionCreation", modals) && (
             <>
-                <div className="absolute left-[50%] -translate-x-[50%] max-w-[700px] w-full top-10 z-10 flex flex-col place-content-center place-items-center bg-blue p-6">
+                <div className="max-h-[90vh] overflow-y-auto absolute left-[50%] -translate-x-[50%] max-w-[700px] w-full top-10 z-10 flex flex-col place-content-center place-items-center bg-blue p-6 mx-4 rounded-lg">
                     <ReturnBtn
-                        className="self-start"
+                        className="self-start mt-2 mb-10"
                         modal="QuestionCreation"
                         isPrev
                     />
@@ -76,6 +103,7 @@ export const CreateQuestion = () => {
                                     <video
                                         src={media || question?.mediaUrl}
                                         controls
+                                        ref={videoRef}
                                         className="w-full h-auto aspect-square object-cover"
                                     />
                                 )

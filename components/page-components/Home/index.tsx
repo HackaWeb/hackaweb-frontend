@@ -11,6 +11,9 @@ import { HomePageComponentProps } from "./Home.props";
 import { Quest } from "./Quest";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { toggleModal } from "@/store/slices/modals/modals";
+import { getMyProfile } from "@/api/user";
+import { getCookie } from "@/helpers/getCookie";
+import { toast } from "react-toastify";
 
 const sortOptions: SelectOption[] = [
     { title: "Рейтингом тесту", value: "testRating" },
@@ -26,16 +29,20 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
     const [searchQuest, setSearchQuest] = useState<string>("");
     const [quests, setQuests] = useState(serverQuests);
 
-    console.log(quests);
+    const clickHandler = async () => {
+        const token = await getCookie("token");
+        if (!token) return toast.error("Спочатку увійдіть в аккаунт!");
+        dispatch(toggleModal("QuestCreation"));
+    };
 
     return (
         <>
-            <h1>Квести</h1>
+            <h1 className="mt-12">Квести</h1>
             <Link href="#" className="mt-3 duration-0">
                 <Button
                     color="purpleBorder"
                     className="mt-3"
-                    onClick={() => dispatch(toggleModal("QuestCreation"))}
+                    onClick={clickHandler}
                 >
                     <span>Створити свій квест</span>
                     <IoCreateOutline className="size-6" />

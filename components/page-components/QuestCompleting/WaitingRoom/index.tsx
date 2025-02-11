@@ -16,7 +16,7 @@ export const WaitingRoom = ({ onStartQuestClick, quest }: WaitingRoomProps) => {
                 </Link>
                 <div>
                     <Image
-                        src={quest.file}
+                        src={quest.imageUrl}
                         alt="Квест"
                         width={0}
                         height={0}

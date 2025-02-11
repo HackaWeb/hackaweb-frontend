@@ -2,7 +2,6 @@
 
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import { ModalBg } from "../ModalBg";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import {
     selectDeleteConfirmationTitle,
@@ -18,6 +17,7 @@ import { setCookie } from "@/helpers/setCookie";
 import { useRouter } from "next/navigation";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
+import { ModalBg } from "../ModalBg";
 
 export const DeleteConfirmation = () => {
     const router = useRouter();

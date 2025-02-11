@@ -126,5 +126,7 @@ export const useQuestionModal = () => {
         setTitle,
         resetOptions,
         media,
+        setMedia,
+        setFileType,
     };
 };

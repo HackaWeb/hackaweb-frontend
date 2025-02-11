@@ -2,8 +2,6 @@ import { getCompletedQuestsByOwnerId, getQuestsByOwnerId } from "@/api/quests";
 import { getMyProfile } from "@/api/user";
 import { MyProfilePageComponent } from "@/components/page-components/MyProfile";
 import { getCookie } from "@/helpers/getCookie";
-import { Quest } from "@/types/quest.interface";
-import { Profile } from "@/types/user.interface";
 import { redirect } from "next/navigation";
 
 const MyProfile = async () => {

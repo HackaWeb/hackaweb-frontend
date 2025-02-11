@@ -70,9 +70,9 @@ function QuestionEdit() {
     return (
         isModalOpened("QuestionEdit", modals) && (
             <>
-                <div className="absolute left-[50%] -translate-x-[50%] max-w-[700px] w-full top-10 z-10 flex flex-col place-content-center place-items-center bg-blue p-6">
+                <div className="max-h-[90vh] overflow-y-auto pt-72 absolute left-[50%] -translate-x-[50%] max-w-[700px] w-full top-10 z-10 flex flex-col place-content-center place-items-center bg-blue p-6 mx-4 rounded-lg">
                     <ReturnBtn
-                        className="self-start"
+                        className="self-start mt-2 mb-10"
                         modal="QuestionEdit"
                         isPrev
                     />

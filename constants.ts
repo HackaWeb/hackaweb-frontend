@@ -18,3 +18,5 @@ export const INVALID_PASSWORD_SPECIAL_CHARACTER_MESSAGE =
     "Пароль повинен містити принаймні один спеціальний символ";
 
 export const validateEmail = (email: string) => emailRegex.test(email);
+
+export const VIDEO_DURATION = 60; // 60 seconds
