@@ -14,7 +14,7 @@ export const UserProfilePageComponent = ({
 }: UserProfileProps) => {
     return (
         profile && (
-            <div className="mt-8 ml-8 md:ml-0">
+            <div className="mt-8">
                 <h1>
                     Профіль користувача {profile.firstName} {profile.lastName}
                 </h1>
