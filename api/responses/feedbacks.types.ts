@@ -2,7 +2,11 @@ import { BadRequestResponse } from "./common/badRequest.interface";
 import { UnathorizedResponse } from "./common/unathorized.interface";
 
 export interface CreateFeedbackResponseSuccess {
-    success: true;
+    createdAt: string;
+    feedbackId: string;
+    quizId: string;
+    rate: number;
+    text: string;
 }
 
 export type CreateFeedbackResponse =

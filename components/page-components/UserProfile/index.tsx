@@ -9,6 +9,8 @@ import { cn } from "@/helpers/cn";
 export const UserProfilePageComponent = ({
     isEditable,
     profile,
+    ownQuests,
+    completedQuests,
 }: UserProfileProps) => {
     return (
         profile && (
@@ -28,10 +30,15 @@ export const UserProfilePageComponent = ({
                     <LeftColumn profile={profile} isEditable={isEditable} />
                     {isEditable && <MiddleColumn profile={profile} />}
                     <div>
-                        <OwnQuests profile={profile} isCreatedByMe={false} />
+                        <OwnQuests
+                            profile={profile}
+                            ownQuests={ownQuests}
+                            isCreatedByMe={false}
+                        />
                         <CompletedQuests
                             profile={profile}
                             isCompletedByMe={false}
+                            completedQuests={completedQuests}
                         />
                     </div>
                 </div>

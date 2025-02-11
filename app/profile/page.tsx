@@ -10,6 +10,7 @@ const MyProfile = async () => {
     const getProfile = async () => {
         try {
             const data = await getMyProfile();
+            console.log(data);
 
             if ("statusCode" in data) {
                 redirect("/login");
@@ -22,12 +23,13 @@ const MyProfile = async () => {
         }
     };
 
-    const getCompletedQuests = async () => {
+    /*const getCompletedQuests = async () => {
         const data = await getCompletedQuestsByOwnerId(profile.id);
+        
         return data;
-    };
+    }; */
 
-    const getOwnQuests = async () => {
+    /* const getOwnQuests = async () => {
         const data = await getQuestsByOwnerId(
             {
                 pageNumber: 0,
@@ -35,22 +37,24 @@ const MyProfile = async () => {
             },
             profile.id,
         );
+        console.log(data);
+
         return data.items;
-    };
+    }; */
 
     if (!token) {
         redirect("/login");
     }
 
     const profile = await getProfile();
-    const ownQuests = await getOwnQuests();
-    const completedQuests = await getCompletedQuests();
+    /* const ownQuests = await getOwnQuests(); */
+    /* const completedQuests = await getCompletedQuests(); */
 
     return (
         <MyProfilePageComponent
             profile={profile}
-            ownQuests={ownQuests}
-            completedQuests={completedQuests}
+            ownQuests={[]}
+            completedQuests={[]}
         />
     );
 };

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { CompletedQuestsProps } from "./CompletedQuests.props";
-import { getCompletedQuestsByOwnerId, getQuestsByOwnerId } from "@/api/quests";
 
 export const CompletedQuests = async ({
     profile,
@@ -54,7 +53,7 @@ export const CompletedQuests = async ({
                                     </td>
                                     <td className="p-3">
                                         <img
-                                            src={completed.file}
+                                            src={completed.imageUrl}
                                             alt={completed.title}
                                             className="w-16 h-12 object-cover rounded-md"
                                         />

@@ -7,6 +7,7 @@ import {
     CreateQuestResponse,
     GetCompletedQuestByOwnerIdResponse,
     GetQuestByIdResponse,
+    GetQuestByIdWithoutQuestionsResponse,
     GetQuestByOwnerIdResponse,
     GetQuestsResponse,
     uploadMediaResponse,
@@ -17,6 +18,15 @@ export const getQuestById = async (
 ): Promise<GetQuestByIdResponse> =>
     fetchApi({
         endpoint: `/quiz/${questId}`,
+        isAuthRequired: true,
+        method: "GET",
+    });
+
+export const getQuestByIdWithoutQuestions = async (
+    questId: string,
+): Promise<GetQuestByIdWithoutQuestionsResponse> =>
+    fetchApi({
+        endpoint: `/quiz/without-questions/${questId}`,
         isAuthRequired: true,
         method: "GET",
     });
