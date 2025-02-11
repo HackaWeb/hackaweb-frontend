@@ -1,5 +1,5 @@
 import { Quest } from "@/types/quest.interface";
 
-export interface QuestCompletingProps {
+export interface MakeReviewProps {
     quest: Quest;
 }

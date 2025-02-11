@@ -1,15 +1,38 @@
+"use client";
+
 import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Textarea";
 import { useState } from "react";
 import { IoStar } from "react-icons/io5";
 import { IoIosSend } from "react-icons/io";
+import { MakeReviewProps } from "./MakeReview.props";
+import { toast } from "react-toastify";
+import { createFeedback } from "@/api/feedbacks";
 
-export const MakeReview = () => {
+export const MakeReview = ({ quest }: MakeReviewProps) => {
     const [rating, setRating] = useState<number>(0);
     const [review, setReview] = useState<string>("");
 
     const handleStarClick = (starIndex: number) => {
         setRating(starIndex + 1);
+    };
+
+    const onReviewSubmitClick = () => {
+        if (!rating || !review.trim()) {
+            toast.error("Заповніть текст відгуку та рейтинг!");
+            return;
+        }
+
+        try {
+            const response = createFeedback({
+                rate: rating,
+                text: review,
+                quizId: quest.id,
+            });
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -32,7 +55,11 @@ export const MakeReview = () => {
                 value={review}
                 onChange={(e) => setReview(e.target.value)}
             />
-            <Button color="purpleBackground" className="mt-6">
+            <Button
+                color="purpleBackground"
+                className="mt-6"
+                onClick={onReviewSubmitClick}
+            >
                 <IoIosSend className="size-6" />
                 <span>Надіслати</span>
             </Button>
