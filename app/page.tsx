@@ -136,14 +136,13 @@ const Home = async () => {
 
     try {
         const response = await getQuests();
-        console.log(response);
+
+        if (response.quizzes) {
+            quests = response.quizzes;
+        }
     } catch (error) {
         console.log(error);
     }
-    // const quests = await getQuests();
-    // console.log(quests);
-    // const quest = await getQuestById("ea355316-f01c-4dff-926c-0856d8b5cdb2");
-    // console.log(quest);
 
     return <HomePageComponent serverQuests={serverQuests} />;
 };

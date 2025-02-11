@@ -1,4 +1,4 @@
-import { LeaderboardUser } from "@/types/quest.interface";
+import { LeaderboardUser, Quest } from "@/types/quest.interface";
 import { User } from "@/types/user.interface";
 
 export interface CreateQuestResponse {
@@ -30,7 +30,7 @@ export interface CreateQuestResponse {
     }[];
 }
 
-export type GetQuestsResponse = { quizzes: CreateQuestResponse[] };
+export type GetQuestsResponse = { quizzes: Quest[] };
 export interface uploadMediaResponse {
     isSuccess: boolean;
     errors: string[];
