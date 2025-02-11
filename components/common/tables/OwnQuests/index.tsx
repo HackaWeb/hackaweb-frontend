@@ -2,12 +2,14 @@ import Link from "next/link";
 import { OwnQuestsProps } from "./OwnQuests.props";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { Button } from "@/components/ui/Button";
+import { printUserNickname } from "@/helpers/printUserNickname";
 
 export const OwnQuests = async ({
     profile,
     isCreatedByMe,
     ownQuests,
 }: OwnQuestsProps) => {
+    console.log(ownQuests);
     return (
         ownQuests && (
             <div className="bg-blackOpacity rounded-md overflow-x-auto w-full">
@@ -15,7 +17,10 @@ export const OwnQuests = async ({
                     <h2 className="text-xl font-semibold text-white">
                         {isCreatedByMe
                             ? "Мої квести"
-                            : `Квести користувача ${profile.firstName} ${profile.lastName}`}
+                            : `Квести користувача ${printUserNickname(
+                                  profile.firstName,
+                                  profile.lastName,
+                              )}`}
                     </h2>
                     {isCreatedByMe && (
                         <Button color="purpleBorder" className="py-2 px-4">
@@ -43,9 +48,9 @@ export const OwnQuests = async ({
                                     <th className="p-3 text-left w-[120px]">
                                         Рейтинг
                                     </th>
-                                    <th className="p-3 text-left w-[150px]">
+                                    {/* <th className="p-3 text-left w-[150px]">
                                         Кількість завдань
-                                    </th>
+                                    </th> */}
                                     {isCreatedByMe && (
                                         <th className="p-3 text-left w-[100px]">
                                             Дії
@@ -61,7 +66,7 @@ export const OwnQuests = async ({
                                     >
                                         <td className="p-3 font-semibold">
                                             <Link
-                                                href="#"
+                                                href={`/quests/${quest.id}`}
                                                 className="text-purple-400"
                                             >
                                                 {quest.title}
@@ -78,10 +83,14 @@ export const OwnQuests = async ({
                                             {quest.duration} хв.
                                         </td>
                                         <td className="p-3">
-                                            {quest.leaderboard.length}
+                                            {quest.passCount}
                                         </td>
-                                        <td className="p-3">⭐ {quest.rate}</td>
-                                        <td className="p-3">10</td>
+                                        <td className="p-3">
+                                            {quest.rate || 0}
+                                        </td>
+                                        {/* <td className="p-3">
+                                            {quest.questions?.length}
+                                        </td> */}
                                         {isCreatedByMe && (
                                             <td className="p-3 flex gap-2">
                                                 <button className="p-2 bg-purple-600 rounded-md">

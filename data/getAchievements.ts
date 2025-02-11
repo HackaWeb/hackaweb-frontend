@@ -1,18 +1,25 @@
+import { Quest } from "@/types/quest.interface";
 import { Profile } from "@/types/user.interface";
 
-export const getAchievements = (profile: Profile) => {
+export const getAchievements = (
+    profile: Profile,
+    completedQuests: Quest[],
+    ownQuests: Quest[],
+) => {
     const possibleAchievements = [
         { name: "Топ рейтинг", condition: profile.rating >= 5 },
-        { name: "Квестер", condition: profile.completedQuests.length >= 10 },
+        { name: "Квестер", condition: completedQuests.length >= 10 },
         {
             name: "Майстер квестів",
-            condition: profile.createdQuests.length >= 5,
+            condition: ownQuests.length >= 5,
         },
+        /*
         {
             name: "Рекордсмен",
-            condition: profile.completedQuests.some((q) => q.accuracy >= 90),
+            condition: completedQuests.some((q) => q.accuracy >= 90),
         },
-        { name: "Дослідник", condition: profile.completedQuests.length >= 5 },
+        */ // How do we get accuracy?
+        { name: "Дослідник", condition: completedQuests.length >= 5 },
     ];
 
     const unlockedAchievements = possibleAchievements

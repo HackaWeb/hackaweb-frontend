@@ -36,8 +36,17 @@ export const getQuestsByOwnerId = async (
     userId?: string,
 ): Promise<GetQuestByOwnerIdResponse> =>
     fetchApi({
-        endpoint: `/user/${userId}`,
+        endpoint: `/quiz/user/${userId}`,
         isAuthRequired: false,
+        method: "GET",
+    });
+
+export const getQuestQuestionsByQuestId = async (
+    questId: string,
+): Promise<any> =>
+    fetchApi({
+        endpoint: `/quiz/questions/${questId}`,
+        isAuthRequired: true,
         method: "GET",
     });
 
