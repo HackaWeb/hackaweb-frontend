@@ -13,7 +13,6 @@ export interface Quest {
     owner: User;
     feedbacks: Feedback[];
     questions: Question[] | QuestionWhileTesting[] | undefined;
-    leaderboard: LeaderboardUser[];
 }
 
 export interface CompletedQuest {

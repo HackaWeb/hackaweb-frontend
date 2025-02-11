@@ -27,7 +27,7 @@ export const Leaderboard = ({ quest }: LeaderboardProps) => {
                                 Час
                             </th>
                             <th className="w-[120px] px-4 py-3 text-left">
-                                Бали
+                                Правильність
                             </th>
                         </tr>
                     </thead>
@@ -63,7 +63,7 @@ export const Leaderboard = ({ quest }: LeaderboardProps) => {
                                     </Link>
                                 </td>
                                 <td className="w-[80px] px-4 py-2">
-                                    <div className="w-10 h-10 rounded-md border border-purple flex items-center justify-center">
+                                    <div className="w-10 h-10 rounded-md border border-purple flex items-center justify-center p-1">
                                         {player.user.avatar ? (
                                             <Image
                                                 src={player.user.avatar}
@@ -80,7 +80,7 @@ export const Leaderboard = ({ quest }: LeaderboardProps) => {
                                     {player.timeSpent} / {quest.duration} хв.
                                 </td>
                                 <td className="w-[120px] px-4 py-2 text-gray-light">
-                                    {player.accuracy} / 100
+                                    {player.accuracy} / 100 %
                                 </td>
                             </tr>
                         ))}
