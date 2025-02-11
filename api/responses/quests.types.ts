@@ -1,5 +1,9 @@
 import { Feedback } from "@/types/feedback.interface";
-import { LeaderboardUser, Quest } from "@/types/quest.interface";
+import {
+    LeaderboardUser,
+    Quest,
+    QuestWithoutQuestions,
+} from "@/types/quest.interface";
 import { User } from "@/types/user.interface";
 
 export interface CreateQuestResponse {
@@ -48,3 +52,6 @@ export type GetCompletedQuestByOwnerIdResponse = Quest[];
 export interface GetQuestByIdResponse {
     quiz: Quest;
 }
+
+export interface GetQuestByIdWithoutQuestionsResponse
+    extends QuestWithoutQuestions {}

@@ -16,13 +16,12 @@ export const WaitingRoom = ({ onStartQuestClick, quest }: WaitingRoomProps) => {
                 </Link>
                 <div>
                     <Image
-                        src={quest.file}
+                        src={quest.imageUrl}
                         alt="Квест"
                         width={0}
                         height={0}
                         sizes="100vw"
                         className="mx-auto mt-3 rounded-lg max-w-[800px] px-6"
-                        loading="eager"
                     />
                     <h1 className="py-10 text-center">{quest.title}</h1>
                 </div>
