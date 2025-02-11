@@ -24,3 +24,5 @@ export type UpdateUserResponse =
     | UnathorizedResponse;
 
 export type DeleteUserResponse = DeleteResponseSuccess | BadRequestResponse;
+
+export type DeleteUserAvatarResponse = DeleteResponseSuccess | BadRequestResponse;

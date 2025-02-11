@@ -1,5 +1,6 @@
 import { fetchApi } from "./fetchApi";
 import {
+    DeleteUserAvatarResponse,
     DeleteUserResponse,
     GetProfileResponse,
     UpdateUserResponse,
@@ -36,7 +37,16 @@ export const deleteUserProfile = async (
     userId?: string,
 ): Promise<DeleteUserResponse> =>
     fetchApi({
-        endpoint: `/user/user-profile/${userId}`,
+        endpoint: `/user/user-profile/${userId ? userId : ""}`,
+        isAuthRequired: true,
+        method: "DELETE",
+    });
+
+export const deleteUserAvatar = async (
+    userId?: string,
+): Promise<DeleteUserAvatarResponse> =>
+    fetchApi({
+        endpoint: `/user/user-profile${userId ? `/${userId}` : ""}/image`,
         isAuthRequired: true,
         method: "DELETE",
     });
