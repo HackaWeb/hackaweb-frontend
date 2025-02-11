@@ -6,6 +6,15 @@ import { SelectProps } from "./Select.props";
 import { AiOutlineDown } from "react-icons/ai";
 import { cn } from "@/helpers/cn";
 import { onOutsideClick } from "@/helpers/onOutsideClick";
+import { Variants, motion } from "framer-motion";
+
+const selectVariants: Variants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: {
+        opacity: 1,
+        y: 0,
+    },
+};
 
 export const Select = ({
     options,
@@ -56,7 +65,19 @@ export const Select = ({
                 />
             </button>
             {isOptionsOpened && (
-                <ul className="absolute left-0 top-full mt-1 w-full bg-[#201f2d] text-gray rounded-md shadow-lg z-10 overflow-hidden">
+                <motion.ul
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={selectVariants}
+                    className="absolute left-0 top-full mt-1 w-full bg-[#201f2d] text-gray rounded-md shadow-lg z-10 overflow-hidden"
+                    transition={{
+                        transition: {
+                            type: "tween",
+                            duration: 0.2,
+                        },
+                    }}
+                >
                     {options.map((option, index) => (
                         <li
                             key={index}
@@ -66,7 +87,7 @@ export const Select = ({
                             {option.title}
                         </li>
                     ))}
-                </ul>
+                </motion.ul>
             )}
         </div>
     );

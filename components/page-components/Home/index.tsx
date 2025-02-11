@@ -11,6 +11,7 @@ import { HomePageComponentProps } from "./Home.props";
 import { Quest } from "./Quest";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { toggleModal } from "@/store/slices/modals/modals";
+import { motion, Variants } from "framer-motion";
 
 const sortOptions: SelectOption[] = [
     { title: "Рейтингом тесту", value: "testRating" },
@@ -19,6 +20,14 @@ const sortOptions: SelectOption[] = [
     { title: "Рейтингом автора", value: "authorRating" },
 ];
 
+const bounceAnimation: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { type: "spring", stiffness: 200, damping: 10 },
+    },
+};
 export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
     const dispatch = useAppDispatch();
 
@@ -65,7 +74,15 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
                 <>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-7 mt-6">
                         {quests.map((quest, index) => (
-                            <Quest key={index} quest={quest} />
+                            <motion.div
+                                key={index}
+                                initial="hidden"
+                                animate="visible"
+                                variants={bounceAnimation}
+                                transition={{ delay: index * 0.1 }}
+                            >
+                                <Quest key={index} quest={quest} />
+                            </motion.div>
                         ))}
                     </div>
                 </>

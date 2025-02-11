@@ -18,9 +18,13 @@ import { useRouter } from "next/navigation";
 import { DeleteProfile } from "./DeleteProfile";
 import Image from "next/image";
 
-export const LeftColumn = ({ profile }: LeftColumnProps) => {
+export const LeftColumn = ({
+    profile,
+    completedQuests,
+    ownQuests,
+}: LeftColumnProps) => {
     const router = useRouter();
-    // const achievements = getAchievements(profile);
+    const achievements = getAchievements(profile, completedQuests, ownQuests);
 
     const [avatar, setAvatar] = useState<string | null>(profile.avatar ?? null);
 
@@ -123,7 +127,7 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                         onChange={onAvatarChange}
                     />
                 </label>
-                {/*<ul className="mt-6 pb-4 border-b-2 border-b-gray-300 border-opacity-10 flex flex-col justify-start gap-2 relative">
+                <ul className="mt-6 pb-4 border-b-2 border-b-gray-300 border-opacity-10 flex flex-col justify-start gap-2 relative">
                     {achievements.unlocked.map((achiev, index) => (
                         <li
                             key={index}
@@ -144,7 +148,6 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                         </li>
                     ))}
                 </ul>
-               */}
             </div>
             <DeleteProfile />
         </div>
