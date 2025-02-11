@@ -9,7 +9,7 @@ const MyProfile = async () => {
     let profile: Profile | null = null;
 
     if (!token) {
-        profile = null;
+        redirect("/login");
     } else {
         try {
             const data = await getMyProfile();
@@ -25,7 +25,7 @@ const MyProfile = async () => {
         }
     }
 
-    return profile && <MyProfilePageComponent profile={profile} />;
+    return <MyProfilePageComponent profile={profile} />;
 };
 
 export default MyProfile;
