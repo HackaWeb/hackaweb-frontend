@@ -11,6 +11,7 @@ import { getPathname } from "@/helpers/getPathname";
 import { Modals } from "@/components/Modals";
 import { getMyProfile } from "@/api/user";
 import { setCookie } from "@/helpers/setCookie";
+import Background from "@/components/common/Background";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -62,6 +63,7 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
                     inter.variable,
                 )}
             >
+                <Background />
                 <ReduxProvider>
                     {!pathname.includes("quest-completing") && (
                         <Aside profile={profile} />

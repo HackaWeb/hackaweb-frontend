@@ -15,7 +15,11 @@ export const MyProfilePageComponent = ({
             <h1>Мій кабінет</h1>
             <ReturnBtn className="mt-4" />
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-[240px_auto] 2xl:grid-cols-[240px_330px_auto] gap-6 items-start">
-                <LeftColumn profile={profile} />
+                <LeftColumn
+                    profile={profile}
+                    completedQuests={completedQuests}
+                    ownQuests={ownQuests}
+                />
                 <MiddleColumn profile={profile} />
                 <div className="grid-cols-1 grid items-start -col-start-3 -col-end-1 2xl:col-start-auto 2xl:col-end-auto">
                     <OwnQuests
