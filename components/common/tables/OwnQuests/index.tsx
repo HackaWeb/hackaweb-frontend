@@ -2,7 +2,6 @@ import Link from "next/link";
 import { OwnQuestsProps } from "./OwnQuests.props";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { Button } from "@/components/ui/Button";
-import { getQuestsByOwnerId } from "@/api/quests";
 
 export const OwnQuests = async ({
     profile,

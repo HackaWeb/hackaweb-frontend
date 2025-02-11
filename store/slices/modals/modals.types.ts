@@ -2,8 +2,7 @@ export type ModalType =
     | "QuestCreation"
     | "QuestEdit"
     | "QuestionCreation"
-    | "QuestionEdit"
-    | "DeleteConfirmationProfile";
+    | "QuestionEdit";
 
 export type ModalState = {
     active: ModalType[];

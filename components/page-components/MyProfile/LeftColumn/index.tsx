@@ -16,7 +16,6 @@ import {
 import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { useRouter } from "next/navigation";
 import { DeleteProfile } from "./DeleteProfile";
-import Image from "next/image";
 
 export const LeftColumn = ({ profile }: LeftColumnProps) => {
     const router = useRouter();
@@ -100,13 +99,10 @@ export const LeftColumn = ({ profile }: LeftColumnProps) => {
                                 >
                                     <AiOutlineClose className="size-5" />
                                 </Button>
-                                <Image
+                                <img
                                     src={avatar}
                                     alt="Avatar"
                                     className="w-full h-full object-cover"
-                                    width={0}
-                                    height={0}
-                                    sizes="100vw"
                                 />
                             </>
                         ) : (

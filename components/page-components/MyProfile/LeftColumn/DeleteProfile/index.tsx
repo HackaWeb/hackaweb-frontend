@@ -1,22 +1,51 @@
 "use client";
-
+import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
+import { deleteUserProfile } from "@/api/user";
 import { Button } from "@/components/ui/Button";
-import { useAppDispatch } from "@/store/hooks/useAppDispatch";
-import {
-    setDeletingConfirmationTitle,
-    toggleModal,
-} from "@/store/slices/modals/modals";
+import { printToastErrorMessages } from "@/helpers/displayToasts";
+import { setCookie } from "@/helpers/setCookie";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export const DeleteProfile = () => {
-    const dispatch = useAppDispatch();
+    const router = useRouter();
 
-    const onDeleteButtonClick = () => {
-        dispatch(
-            setDeletingConfirmationTitle(
-                "Ви впевнені, що хочете видалити акаунт?",
-            ),
-        );
-        dispatch(toggleModal("DeleteConfirmationProfile"));
+    const deleteProfileHandler = async () => {
+        try {
+            const result = await deleteProfileFetchHandler();
+
+            if (result.length === 0) {
+                toast.success("Ваш профіль успішно видалено!");
+                setCookie("token", "");
+                router.push("/");
+
+                const timeout = setTimeout(() => {
+                    router.refresh();
+                    clearTimeout(timeout);
+                });
+            } else {
+                printToastErrorMessages(result.map((res) => res.message));
+            }
+        } catch (error) {
+            toast.error(DEFAULT_FIELD_ERROR.message);
+        }
+    };
+
+    const deleteProfileFetchHandler = async () => {
+        try {
+            const data = await deleteUserProfile();
+
+            if ("statusCode" in data && data.statusCode !== 200) {
+                return data.errors;
+            }
+            return [];
+        } catch (error) {
+            return [DEFAULT_FIELD_ERROR];
+        }
+    };
+
+    const onDeleteButtonClick = async () => {
+        await deleteProfileHandler();
     };
 
     return (
