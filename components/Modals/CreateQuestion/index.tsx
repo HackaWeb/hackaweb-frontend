@@ -5,13 +5,17 @@ import { Input } from "@/components/ui/Input";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { toast } from "react-toastify";
+<<<<<<< Updated upstream
 import { ModalBg } from "../ModalBg";
+=======
+>>>>>>> Stashed changes
 import { BsFillImageFill } from "react-icons/bs";
 import { addQuestion } from "@/store/slices/questions/questions";
 import { FaVideo } from "react-icons/fa6";
 import { Select } from "@/components/ui/Select";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { QuestionType } from "@/types/question.type";
+import { ModalBg } from "../ModalBg";
 
 export const CreateQuestion = () => {
     const {

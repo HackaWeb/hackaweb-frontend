@@ -56,19 +56,19 @@ export interface GetQuestByIdResponse {
         title: string;
         description: string;
         createdAt: string;
-        file: string;
+        imageUrl: string;
         rate: number;
         ownerId: string;
         duration: number;
-        questions: [
+        questions?: [
             {
                 id: string;
-                title: string;
+                text: string;
                 mediaUrl: string;
                 type: number;
                 choiceOptions: [
                     {
-                        id: number;
+                        id: string;
                         title: string;
                         isCorrect: boolean;
                     },

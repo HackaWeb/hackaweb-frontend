@@ -19,7 +19,15 @@ import {
 import { FiEdit2 } from "react-icons/fi";
 import Image from "next/image";
 import { IoImageOutline } from "react-icons/io5";
+<<<<<<< Updated upstream
 import { createQuest, uploadQuestMedia } from "@/api/quests";
+=======
+import {
+    createQuest,
+    uploadQuestionMedia,
+    uploadQuestMedia,
+} from "@/api/quests";
+>>>>>>> Stashed changes
 import { parseQuestionType } from "@/helpers/parseQuestionType";
 import { ModalBg } from "../ModalBg";
 
@@ -54,7 +62,7 @@ export const CreateQuest = () => {
             duration: Number(duration),
             questions: questions.map((question) => {
                 return {
-                    id: question.id,
+                    questionId: question.id,
                     title: question.title,
                     type: parseQuestionType(question.type),
                     options: question.options.map((o) => {
@@ -78,7 +86,7 @@ export const CreateQuest = () => {
                     if (localQ.id === backQ.id) {
                         const questionMedia = new FormData();
                         questionMedia.append("file", localQ.file as string);
-                        await uploadQuestMedia(localQ.id, questionMedia);
+                        await uploadQuestionMedia(localQ.id, questionMedia);
                     }
                 }
             }
