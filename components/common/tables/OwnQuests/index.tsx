@@ -2,6 +2,7 @@ import Link from "next/link";
 import { OwnQuestsProps } from "./OwnQuests.props";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { Button } from "@/components/ui/Button";
+import { printUserNickname } from "@/helpers/printUserNickname";
 
 export const OwnQuests = async ({
     profile,
@@ -16,7 +17,10 @@ export const OwnQuests = async ({
                     <h2 className="text-xl font-semibold text-white">
                         {isCreatedByMe
                             ? "Мої квести"
-                            : `Квести користувача ${profile.firstName} ${profile.lastName}`}
+                            : `Квести користувача ${printUserNickname(
+                                  profile.firstName,
+                                  profile.lastName,
+                              )}`}
                     </h2>
                     {isCreatedByMe && (
                         <Button color="purpleBorder" className="py-2 px-4">
