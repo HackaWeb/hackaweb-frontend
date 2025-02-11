@@ -30,7 +30,7 @@ export const OwnQuests = async ({
                                 <th className="p-3 text-left w-[200px]">
                                     Назва
                                 </th>
-                                <th className="p-3 text-left w-[220px]">
+                                <th className="p-3 text-left w-[80px]">
                                     Картинка
                                 </th>
                                 <th className="p-3 text-left w-[100px]">Час</th>

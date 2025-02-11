@@ -17,7 +17,7 @@ export const MyProfilePageComponent = ({
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-[240px_auto] 2xl:grid-cols-[240px_330px_auto] gap-6 items-start">
                 <LeftColumn profile={profile} />
                 <MiddleColumn profile={profile} />
-                <div className="grid-cols-1 grid items-start">
+                <div className="grid-cols-1 grid items-start -col-start-3 -col-end-1 2xl:col-start-auto 2xl:col-end-auto">
                     <OwnQuests
                         ownQuests={ownQuests}
                         profile={profile}
