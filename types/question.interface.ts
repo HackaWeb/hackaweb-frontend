@@ -16,7 +16,7 @@ export interface Question {
     title: string;
     type: QuestionType;
     options: ChoiceOption[];
-    file?: string;
+    mediaUrl?: string;
     fileType?: "image" | "video";
 }
 

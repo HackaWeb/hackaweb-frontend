@@ -1,5 +1,5 @@
+import { Feedback } from "./feedback.interface";
 import { Question, QuestionWhileTesting } from "./question.interface";
-import { Feedback } from "./Feedback.interface";
 import { User } from "./user.interface";
 
 export interface Quest {
@@ -7,10 +7,10 @@ export interface Quest {
     title: string;
     description: string;
     createdAt: string;
-    file: string;
     rate: number;
+    imageUrl: string;
     duration: number;
-    ownerId: string;
+    owner: User;
     feedbacks: Feedback[];
     questions: Question[] | QuestionWhileTesting[] | undefined;
     leaderboard: LeaderboardUser[];

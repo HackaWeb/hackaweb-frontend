@@ -19,15 +19,11 @@ import {
 import { FiEdit2 } from "react-icons/fi";
 import Image from "next/image";
 import { IoImageOutline } from "react-icons/io5";
-<<<<<<< Updated upstream
-import { createQuest, uploadQuestMedia } from "@/api/quests";
-=======
 import {
     createQuest,
     uploadQuestionMedia,
     uploadQuestMedia,
 } from "@/api/quests";
->>>>>>> Stashed changes
 import { parseQuestionType } from "@/helpers/parseQuestionType";
 import { ModalBg } from "../ModalBg";
 
@@ -36,7 +32,7 @@ export const CreateQuest = () => {
     const questions = useAppSelector(selectQuestions);
     const modals = useAppSelector(selectModals);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [file, setFile] = useState<string | null>(null);
+    const [media, setMedia] = useState<string | null>(null);
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [duration, setDuration] = useState<string>("");
@@ -54,7 +50,8 @@ export const CreateQuest = () => {
 
     const createQuestHandler = async () => {
         const questMedia = new FormData();
-        questMedia.append("file", file as string);
+        const file = await fetch(media!).then((r) => r.blob());
+        questMedia.append("file", file as File);
 
         const questBody = {
             title,
@@ -81,14 +78,13 @@ export const CreateQuest = () => {
         try {
             const data = await createQuest({ quiz: questBody });
             const { errors } = await uploadQuestMedia(data.id, questMedia);
-            for (let backQ of data.questions) {
-                for (let localQ of questions) {
-                    if (localQ.id === backQ.id) {
-                        const questionMedia = new FormData();
-                        questionMedia.append("file", localQ.file as string);
-                        await uploadQuestionMedia(localQ.id, questionMedia);
-                    }
-                }
+            for (let question of questions) {
+                const questionMedia = new FormData();
+                const file = await fetch(question.mediaUrl!).then((r) =>
+                    r.blob(),
+                );
+                questionMedia.append("file", file as File);
+                await uploadQuestionMedia(question.id, questionMedia);
             }
 
             if (errors) console.error(errors);
@@ -101,7 +97,7 @@ export const CreateQuest = () => {
     const onCreateQuestSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (
-            !file ||
+            !media ||
             !title.length ||
             !Number(duration) ||
             !description.length ||
@@ -119,7 +115,7 @@ export const CreateQuest = () => {
 
         if (uploadedFile) {
             const fileURL = URL.createObjectURL(uploadedFile);
-            setFile(fileURL);
+            setMedia(fileURL);
         }
     };
 
@@ -131,9 +127,9 @@ export const CreateQuest = () => {
                     <div className="text-3xl mt-10">Створення Квесту</div>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
-                            {file ? (
+                            {media ? (
                                 <img
-                                    src={file}
+                                    src={media}
                                     alt="Зображення квесту"
                                     className="w-full h-auto aspect-square object-cover"
                                 />
@@ -219,7 +215,7 @@ export const CreateQuest = () => {
                                             {question.fileType === "image" ? (
                                                 <figure className="w-14 h-14 place-content-center">
                                                     <Image
-                                                        src={question.file!}
+                                                        src={question.mediaUrl!}
                                                         alt="question image"
                                                         className="rounded-md "
                                                         sizes="100vw"

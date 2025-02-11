@@ -1,4 +1,5 @@
 import { LeaderboardUser } from "@/types/quest.interface";
+import { User } from "@/types/user.interface";
 
 export interface CreateQuestResponse {
     id: string;
@@ -58,7 +59,7 @@ export interface GetQuestByIdResponse {
         createdAt: string;
         imageUrl: string;
         rate: number;
-        ownerId: string;
+        owner: User;
         duration: number;
         questions?: [
             {

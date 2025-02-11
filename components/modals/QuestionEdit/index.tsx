@@ -12,11 +12,11 @@ import { Select } from "@/components/ui/Select";
 import { useEffect } from "react";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { QuestionType } from "@/types/question.type";
+import { Question } from "@/types/question.interface";
 
 function QuestionEdit() {
     const {
         dispatch,
-        file,
         fileInputRef,
         modals,
         onFileUpload,
@@ -31,6 +31,7 @@ function QuestionEdit() {
         title,
         resetOptions,
         fileType,
+        media,
     } = useQuestionModal();
 
     const onSubmit = (e: React.FormEvent) => {
@@ -43,12 +44,12 @@ function QuestionEdit() {
         if (!title.length || !type)
             return toast.error("Спочатку заповніть усі поля!");
 
-        const edited = {
+        const edited: Question = {
             id: question.id,
             title: title || question.title,
             type: (questionType.value as QuestionType) || question.type,
             options: options.length ? options : question.options,
-            file: file || question.file || undefined,
+            mediaUrl: media || question.mediaUrl || undefined,
             fileType: fileType || question.fileType || undefined,
         };
 
@@ -78,17 +79,17 @@ function QuestionEdit() {
                     <div className="text-3xl mt-10">Редагування Питання</div>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
-                            {file || question?.file ? (
+                            {media || question?.mediaUrl ? (
                                 fileType === "image" ||
                                 question?.fileType === "image" ? (
                                     <img
-                                        src={file || question?.file}
+                                        src={media || question?.mediaUrl}
                                         alt="Зображення питання"
                                         className="w-full h-auto aspect-square object-cover"
                                     />
                                 ) : (
                                     <video
-                                        src={file || question?.file}
+                                        src={media || question?.mediaUrl}
                                         controls
                                         className="w-full h-auto aspect-square object-cover"
                                     />
