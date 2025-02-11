@@ -1,5 +1,6 @@
-import { Quest } from "@/types/quest.interface";
+import { LeaderboardUser } from "@/types/quest.interface";
 
 export interface LeaderboardProps {
-    quest: Quest;
+    leaderboard: LeaderboardUser[];
+    questDuration: number;
 }
