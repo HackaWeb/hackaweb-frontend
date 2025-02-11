@@ -1,5 +1,5 @@
 import { PageProps } from "@/.next/types/app/page";
-import { getQuestById } from "@/api/quests";
+import { getQuestById, getQuestByIdWithoutQuestions } from "@/api/quests";
 import { getMyProfile } from "@/api/user";
 import { QuestCompletingPageComponent } from "@/components/page-components/QuestCompleting";
 import { getCookie } from "@/helpers/getCookie";
@@ -36,7 +36,8 @@ const QuestCompleting = async ({ params }: PageProps) => {
     let quest: Quest | null = null;
 
     try {
-        const response = await getQuestById(id);
+        const response = await getQuestByIdWithoutQuestions(id);
+
         if (response.id) {
             quest = response;
         } else {

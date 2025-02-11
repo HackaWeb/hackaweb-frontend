@@ -15,6 +15,10 @@ export interface Quest {
     questions: Question[] | QuestionWhileTesting[] | undefined;
 }
 
+export interface QuestWithoutQuestions extends Quest {
+    questions: undefined;
+}
+
 export interface CompletedQuest {
     user: User;
     quest: Quest;

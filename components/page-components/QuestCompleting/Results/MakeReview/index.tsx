@@ -8,28 +8,48 @@ import { IoIosSend } from "react-icons/io";
 import { MakeReviewProps } from "./MakeReview.props";
 import { toast } from "react-toastify";
 import { createFeedback } from "@/api/feedbacks";
+import { printToastErrorMessages } from "@/helpers/displayToasts";
 
 export const MakeReview = ({ quest }: MakeReviewProps) => {
     const [rating, setRating] = useState<number>(0);
     const [review, setReview] = useState<string>("");
+    const [isSended, setIsSended] = useState<boolean>(false);
 
     const handleStarClick = (starIndex: number) => {
         setRating(starIndex + 1);
     };
 
-    const onReviewSubmitClick = () => {
+    const onReviewSubmitClick = async () => {
+        isSended && toast.error("Ви вже надіслали відгук!");
+
         if (!rating || !review.trim()) {
             toast.error("Заповніть текст відгуку та рейтинг!");
             return;
         }
 
         try {
-            const response = createFeedback({
+            const response = await createFeedback({
                 rate: rating,
                 text: review,
                 quizId: quest.id,
             });
-            console.log(response);
+
+            if ("quizId" in response) {
+                setIsSended(true);
+                toast.success("Відгук успішно надіслано!");
+
+                return;
+            }
+            if ("errors" in response) {
+                printToastErrorMessages(
+                    response.errors.map((error) => error.message),
+                );
+                return;
+            }
+            if ("message" in response) {
+                toast.error(response.message);
+                return;
+            }
         } catch (error) {
             console.log(error);
         }
