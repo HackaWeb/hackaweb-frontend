@@ -1,138 +1,50 @@
+import { PageProps } from "@/.next/types/app/page";
+import { getLeaderboardByQuestId } from "@/api/leaderboard";
+import { getQuestById } from "@/api/quests";
 import { GeneralInfo } from "@/components/page-components/Quest/GeneralInfo";
 import { Leaderboard } from "@/components/page-components/Quest/Leaderboard";
 import { Reviews } from "@/components/page-components/Quest/Reviews";
 import { Button } from "@/components/ui/Button";
-import { Quest } from "@/types/quest.interface";
+import { LeaderboardUser, Quest } from "@/types/quest.interface";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { TbArrowBackUp } from "react-icons/tb";
 
-const quest: Quest = {
-    id: "1",
-    title: "Quest 1",
-    description: "Description 1",
-    rating: 4,
-    file: "/test.png",
-    owner: {
-        isAdmin: false,
-        id: "1",
-        firstName: "Danil",
-        lastName: "Diachenko",
-        avatar: null,
-        email: "danildiachenko23@gmail.com",
-        rating: 4.5,
-    },
-    createdAt: "2021-10-10",
-    duration: 60,
-    questions: [],
-    reviews: [
-        {
-            id: "1",
-            rating: 4,
-            comment: "Good quest",
-            createdAt: "2021-10-10",
-            author: {
-                isAdmin: false,
-                id: "1",
-                firstName: "Danil",
-                lastName: "Diachenko",
-                avatar: null,
-                rating: 4.5,
-                email: "",
-            },
-        },
-        {
-            id: "2",
-            rating: 5,
-            comment: "Very good quest",
-            createdAt: "2021-10-10",
-            author: {
-                id: "1",
-                firstName: "Danil",
-                lastName: "Diachenko",
-                avatar: null,
-                isAdmin: false,
-                rating: 4.5,
-                email: "",
-            },
-        },
-        {
-            id: "1",
-            rating: 4,
-            comment: "Good quest",
-            createdAt: "2021-10-10",
-            author: {
-                id: "1",
-                firstName: "Danil",
-                lastName: "Diachenko",
-                isAdmin: false,
-                avatar: null,
-                rating: 4.5,
-                email: "",
-            },
-        },
-        {
-            id: "2",
-            rating: 5,
-            comment: "Very good quest",
-            createdAt: "2021-10-10",
-            author: {
-                id: "1",
-                firstName: "Danil",
-                lastName: "Diachenko",
-                avatar: null,
-                isAdmin: false,
-                rating: 4.5,
-                email: "",
-            },
-        },
-    ],
-    leaderboard: [
-        {
-            user: {
-                id: "1",
-                email: "",
-                firstName: "Test",
-                lastName: "User",
-                rating: 4.5,
-                isAdmin: false,
-                avatar: null,
-            },
-            accuracy: 90,
-            timeSpent: 45,
-            dateCompleted: "2024-02-08T15:00:00Z",
-        },
-        {
-            user: {
-                id: "1",
-                isAdmin: false,
-                email: "",
-                firstName: "Test",
-                lastName: "User",
-                rating: 4.5,
-                avatar: null,
-            },
-            accuracy: 90,
-            timeSpent: 45,
-            dateCompleted: "2024-02-08T15:00:00Z",
-        },
-        {
-            user: {
-                id: "1",
-                isAdmin: false,
-                email: "",
-                firstName: "Test",
-                lastName: "User",
-                rating: 4.5,
-                avatar: null,
-            },
-            accuracy: 90,
-            timeSpent: 45,
-            dateCompleted: "2024-02-08T15:00:00Z",
-        },
-    ],
-};
+const QuestDetails = async ({ params }: PageProps) => {
+    const questId = (await params).id;
+    let quest: Quest | null = null;
+    let leaderboard: LeaderboardUser[] = [];
 
-const QuestDetails = () => {
+    try {
+        const response = await getQuestById(questId);
+
+        if (response.quiz) {
+            quest = response.quiz;
+            console.log(quest);
+        }
+    } catch (error) {
+        console.log(error);
+        notFound();
+    }
+
+    if (!quest) {
+        notFound();
+    }
+
+    if (quest) {
+        try {
+            const response = await getLeaderboardByQuestId(questId);
+            if ("error" in response) {
+                console.log(response.error);
+                return;
+            }
+
+            leaderboard = response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div>
             <h1>Деталі квесту</h1>
@@ -143,9 +55,12 @@ const QuestDetails = () => {
                 </Button>
             </Link>
             <div className="grid grid-cols-1 lg:grid-cols-[0.4fr_0.6fr] mt-6 gap-8 items-start">
-                <GeneralInfo quest={quest} />
+                <GeneralInfo quest={quest} timesPlayed={0} />
                 <div className="grid ">
-                    <Leaderboard quest={quest} />
+                    <Leaderboard
+                        leaderboard={leaderboard}
+                        questDuration={quest.duration}
+                    />
                     <Reviews quest={quest} />
                 </div>
             </div>
