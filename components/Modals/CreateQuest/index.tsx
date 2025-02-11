@@ -26,27 +26,21 @@ import {
 } from "@/api/quests";
 import { parseQuestionType } from "@/helpers/parseQuestionType";
 import { ModalBg } from "../ModalBg";
+import { useQuestModals } from "@/hooks/useQuestModals";
 
 export const CreateQuest = () => {
-    const dispatch = useAppDispatch();
-    const questions = useAppSelector(selectQuestions);
-    const modals = useAppSelector(selectModals);
+    const {
+        media,
+        modals,
+        onImageUpload,
+        onQuestionAddClick,
+        onQuestionEditClick,
+        questions,
+    } = useQuestModals();
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [media, setMedia] = useState<string | null>(null);
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [duration, setDuration] = useState<string>("");
-
-    const onQuestionAddClick = () => {
-        dispatch(toggleModal("QuestCreation"));
-        dispatch(toggleModal("QuestionCreation"));
-    };
-
-    const onQuestionEditClick = (id: string) => {
-        dispatch(setEditingId(id));
-        dispatch(toggleModal("QuestCreation"));
-        dispatch(toggleModal("QuestionEdit"));
-    };
 
     const createQuestHandler = async () => {
         const questMedia = new FormData();
@@ -108,15 +102,6 @@ export const CreateQuest = () => {
         const data = await createQuestHandler();
         console.log(data);
         toast.success("Квест успішно створено!");
-    };
-
-    const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const uploadedFile = e.target.files?.[0];
-
-        if (uploadedFile) {
-            const fileURL = URL.createObjectURL(uploadedFile);
-            setMedia(fileURL);
-        }
     };
 
     return (
@@ -240,6 +225,7 @@ export const CreateQuest = () => {
                                                 type="button"
                                                 onClick={() =>
                                                     onQuestionEditClick(
+                                                        "QuestCreation",
                                                         question.id,
                                                     )
                                                 }
@@ -254,7 +240,9 @@ export const CreateQuest = () => {
                                     color="yellowBorder"
                                     className="mt-8"
                                     type="button"
-                                    onClick={onQuestionAddClick}
+                                    onClick={() =>
+                                        onQuestionAddClick("QuestCreation")
+                                    }
                                 >
                                     Додати питання
                                 </Button>

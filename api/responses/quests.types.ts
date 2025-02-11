@@ -14,7 +14,7 @@ export interface CreateQuestResponse {
     imageUrl: string;
     rate: number;
     passCount: number;
-    ownerId: string;
+    owner: User;
     duration: number;
     questions: {
         id: string;
@@ -32,6 +32,7 @@ export interface CreateQuestResponse {
         text: string;
         rate: number;
         createdAt: string;
+        author: User;
     }[];
 }
 
@@ -50,7 +51,7 @@ export interface GetQuestByOwnerIdResponse {
 
 export type GetCompletedQuestByOwnerIdResponse = Quest[];
 export interface GetQuestByIdResponse {
-    quiz: Quest;
+    quiz: CreateQuestResponse;
 }
 
 export interface GetQuestByIdWithoutQuestionsResponse

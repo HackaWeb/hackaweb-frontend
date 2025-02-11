@@ -3,7 +3,6 @@ import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { ModalBg } from "../ModalBg";
 import { Button } from "@/components/ui/Button";
-import { editQuestion } from "@/store/slices/questions/questions";
 import { toast } from "react-toastify";
 import { BsFillImageFill } from "react-icons/bs";
 import { Input } from "@/components/ui/Input";
@@ -11,8 +10,8 @@ import { FaVideo } from "react-icons/fa6";
 import { Select } from "@/components/ui/Select";
 import { useEffect } from "react";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
-import { QuestionType } from "@/types/question.type";
 import { Question } from "@/types/question.interface";
+import { editQuestion } from "@/store/slices/quests/editQuests";
 
 function QuestionEdit() {
     const {
@@ -27,8 +26,8 @@ function QuestionEdit() {
         renderGetAnswer,
         renderQuestionTitle,
         setQuestionType,
-        setTitle,
-        title,
+        setText,
+        text,
         resetOptions,
         fileType,
         media,
@@ -41,19 +40,19 @@ function QuestionEdit() {
 
         const type = questionType?.value;
 
-        if (!title.length || !type)
+        if (!text.length || !type)
             return toast.error("Спочатку заповніть усі поля!");
 
         const edited: Question = {
             id: question.id,
-            title: title || question.title,
-            type: (questionType.value as QuestionType) || question.type,
-            options: options.length ? options : question.options,
+            text: text || question.text,
+            type: Number(questionType.value) || question.type,
+            choiceOptions: options?.length ? options : question.choiceOptions,
             mediaUrl: media || question.mediaUrl || undefined,
             fileType: fileType || question.fileType || undefined,
         };
 
-        dispatch(editQuestion(edited));
+        dispatch(editQuestion({ id: question.id, body: edited }));
         resetOptions("QuestionEdit", "Питання відредаговано!");
     };
 
@@ -61,9 +60,9 @@ function QuestionEdit() {
         if (question) {
             setQuestionType({
                 title: renderQuestionTitle(),
-                value: question.type,
+                value: question.type.toString(),
             });
-            setTitle(question.title);
+            setText(question.text);
         }
     }, [question]);
 
@@ -121,10 +120,10 @@ function QuestionEdit() {
                                 </label>
                                 <Input
                                     id="name"
-                                    value={title}
+                                    value={text}
                                     className="mt-2"
                                     placeholder="Назва питання..."
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    onChange={(e) => setText(e.target.value)}
                                 />
                             </div>
                             <div className="mt-4">

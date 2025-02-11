@@ -1,11 +1,6 @@
 "use client";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Input } from "@/components/ui/Input";
-import {
-    addOption,
-    editOption,
-    removeOption,
-} from "@/store/slices/options/options";
 import { ChangeEvent } from "react";
 import { toast } from "react-toastify";
 import { useAnswers } from "@/hooks/useAnswers";
@@ -13,7 +8,7 @@ import { useAnswers } from "@/hooks/useAnswers";
 export const Choice = () => {
     const { dispatch, getOption, isChecked } = useAnswers();
 
-    const checkHandler = (isCorrect: boolean, id: number) => {
+    const checkHandler = (isCorrect: boolean, id: string) => {
         const option = getOption(id);
 
         if (!option) return toast.error("Спочатку напишіть варіант відповіді!");
@@ -27,7 +22,7 @@ export const Choice = () => {
         );
     };
 
-    const inputHandler = (e: ChangeEvent<HTMLInputElement>, id: number) => {
+    const inputHandler = (e: ChangeEvent<HTMLInputElement>, id: string) => {
         const title = e.target.value;
 
         if (!title) return dispatch(removeOption(id));

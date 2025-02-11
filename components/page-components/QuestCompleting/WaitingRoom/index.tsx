@@ -1,19 +1,23 @@
+"use client";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
-import Link from "next/link";
 import { TbArrowBackUp } from "react-icons/tb";
 import { WaitingRoomProps } from "./WaitingRoom.props";
+import { useRedirect } from "@/hooks/useRedirect";
 
 export const WaitingRoom = ({ onStartQuestClick, quest }: WaitingRoomProps) => {
+    const redirect = useRedirect();
     return (
         <>
             <div className="bg-blackOpacity pt-6">
-                <Link href="#" className="block ml-6">
-                    <Button color="purpleBorder">
-                        <TbArrowBackUp className="size-6" />
-                        <span>Повернутися назад</span>
-                    </Button>
-                </Link>
+                <Button
+                    color="purpleBorder"
+                    onClick={() => redirect("/")}
+                    className="ml-5"
+                >
+                    <TbArrowBackUp className="size-6" />
+                    <span>Повернутися назад</span>
+                </Button>
                 <div>
                     <Image
                         src={quest.imageUrl}

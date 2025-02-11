@@ -7,14 +7,13 @@ import { isModalOpened } from "@/helpers/isModalOpened";
 import { toast } from "react-toastify";
 import { ModalBg } from "../ModalBg";
 import { BsFillImageFill } from "react-icons/bs";
-import { addQuestion } from "@/store/slices/questions/questions";
 import { FaVideo } from "react-icons/fa6";
 import { Select } from "@/components/ui/Select";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
-import { QuestionType } from "@/types/question.type";
 import { Question } from "@/types/question.interface";
 import { useEffect, useRef } from "react";
 import { VIDEO_DURATION } from "@/constants";
+import { addQuestion } from "@/store/slices/quests/editQuests";
 
 export const CreateQuestion = () => {
     const {
@@ -28,13 +27,13 @@ export const CreateQuestion = () => {
         questionTypes,
         renderGetAnswer,
         setQuestionType,
-        setTitle,
         question,
-        title,
+        text,
         resetOptions,
         media,
         setFileType,
         setMedia,
+        setText,
     } = useQuestionModal();
 
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -42,15 +41,15 @@ export const CreateQuestion = () => {
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const type = questionType?.value as QuestionType;
-        if (!title.length || !type || !options.length)
+        const type = Number(questionType?.value);
+        if (!text.length || !type || !options?.length)
             return toast.error("Спочатку заповніть усі поля!");
 
         const question: Question = {
             id: crypto.randomUUID(),
-            title,
+            text,
             type,
-            options,
+            choiceOptions: options,
             mediaUrl: media ? media : undefined,
             fileType: fileType ? fileType : undefined,
         };
@@ -134,10 +133,10 @@ export const CreateQuestion = () => {
                                 </label>
                                 <Input
                                     id="name"
-                                    value={title}
+                                    value={text}
                                     className="mt-2"
                                     placeholder="Назва питання..."
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    onChange={(e) => setText(e.target.value)}
                                 />
                             </div>
                             <div className="mt-4">

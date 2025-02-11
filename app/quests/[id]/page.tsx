@@ -6,7 +6,6 @@ import { Leaderboard } from "@/components/page-components/Quest/Leaderboard";
 import { Reviews } from "@/components/page-components/Quest/Reviews";
 import { Button } from "@/components/ui/Button";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
-import { Quest } from "@/types/quest.interface";
 import { LeaderboardUser, Quest } from "@/types/quest.interface";
 import Link from "next/link";
 import { notFound } from "next/navigation";
