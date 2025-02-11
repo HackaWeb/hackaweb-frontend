@@ -8,7 +8,7 @@ export const CompletedQuests = async ({
 }: CompletedQuestsProps) => {
     return (
         completedQuests && (
-            <div className="bg-blackOpacity-dark rounded-md mt-6">
+            <div className="bg-blackOpacity-dark rounded-md mt-6 overflow-x-auto w-full">
                 <div className="p-4">
                     <h2 className="text-xl font-semibold text-white">
                         {isCompletedByMe
@@ -16,8 +16,8 @@ export const CompletedQuests = async ({
                             : `Пройдені квести користувачем ${profile.firstName} ${profile.lastName}`}
                     </h2>
                 </div>
-                <div className="overflow-x-auto">
-                    <table className="min-w-full border-collapse text-gray w-full">
+                <div className="overflow-x-auto w-full">
+                    <table className="min-w-max border-collapse text-gray w-full">
                         <thead>
                             <tr className="bg-[#242A4D]">
                                 <th className="p-3 text-left w-[200px]">
