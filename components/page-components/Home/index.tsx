@@ -36,12 +36,12 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
     const [quests, setQuests] = useState(serverQuests);
 
     const processQuestsHandler = async () => {
+        const sortType = sortOption
+            ? sortOptionActionMap[sortOption.value]
+            : undefined;
+        const titleFilter = searchQuest.length >= 3 ? searchQuest : undefined;
+
         try {
-            const sortType = sortOption
-                ? sortOptionActionMap[sortOption.value]
-                : undefined;
-            const titleFilter =
-                searchQuest.length >= 3 ? searchQuest : undefined;
             const response = await getQuests({ sortType, titleFilter });
 
             if (response.quizzes) {
@@ -56,6 +56,7 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
         const timeoutId = setTimeout(() => {
             processQuestsHandler();
         }, 500);
+
         return () => clearTimeout(timeoutId);
     }, [sortOption, searchQuest]);
 
@@ -68,7 +69,7 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
                 <Button
                     color="purpleBorder"
                     className="mt-3"
-                    onClick={clickHandler}
+                    /* onClick={clickHandler} */
                 >
                     <span>Створити свій квест</span>
                     <IoCreateOutline className="size-6" />
