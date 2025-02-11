@@ -99,7 +99,9 @@ export const OwnQuests = async ({
                     </div>
                 ) : (
                     <div className="bg-blackOpacity-dark text-gray p-4 rounded-lg">
-                        Ви ще не створили жодного квесту
+                        {isCreatedByMe
+                            ? `Ви ще не створили жодного квесту`
+                            : `Користувач ще не створив жодного квесту`}
                     </div>
                 )}
             </div>

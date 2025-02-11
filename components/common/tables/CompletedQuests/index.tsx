@@ -69,7 +69,9 @@ export const CompletedQuests = async ({
                     </div>
                 ) : (
                     <div className="bg-blackOpacity-dark text-gray p-4 rounded-lg">
-                        Ви ще не пройшли жодного квесту
+                        {isCompletedByMe
+                            ? `Ви ще не пройшли жодного квесту`
+                            : `Користувач ще не пройшов жодного квесту`}
                     </div>
                 )}
             </div>
