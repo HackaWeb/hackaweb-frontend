@@ -51,27 +51,27 @@ const MyProfile = async () => {
     };
     getCompletedQuests();
 
-    const getOwnQuests = async () => {
+    /* const getOwnQuests = async () => {
         try {
-            /* const data = await getQuestsByOwnerId(profile.id); */
+            const data = await getQuestsByOwnerId(profile.id);
             const res = await fetch(
                 `https://hackawebquiz.ashycoast-bbbe20af.westus2.azurecontainerapps.io/api/quiz/3577b43d-8d91-4cd3-9c4c-280c38490d2a`,
             );
             console.log("own", await res.json());
-            /* console.log(data); */
+            console.log(data);
 
-            /* return data.items; */
+            return data.items;
         } catch (error) {
             console.error(error);
         }
-    };
+    }; */
 
     if (!token) {
         redirect("/login");
     }
 
     const profile = await getProfile();
-    const ownQuests = await getOwnQuests();
+    /* const ownQuests = await getOwnQuests(); */
     const completedQuests = await getCompletedQuests();
 
     return (
