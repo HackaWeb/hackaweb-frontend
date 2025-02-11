@@ -5,12 +5,14 @@ import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { SelectOption } from "@/types/selectOption.interface";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoCreateOutline } from "react-icons/io5";
 import { HomePageComponentProps } from "./Home.props";
 import { Quest } from "./Quest";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { toggleModal } from "@/store/slices/modals/modals";
+import { getQuests } from "@/api/quests";
+import { SortType } from "@/types/quest.interface";
 
 const sortOptions: SelectOption[] = [
     { title: "Рейтингом тесту", value: "testRating" },
@@ -19,12 +21,43 @@ const sortOptions: SelectOption[] = [
     { title: "Рейтингом автора", value: "authorRating" },
 ];
 
+const sortOptionActionMap: Record<string, SortType> = {
+    testRating: SortType.Rating,
+    completedQuantity: SortType.NumberOfPasses,
+    alphabet: SortType.Alphabet,
+    authorRating: SortType.AuthorRating,
+};
+
 export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
     const dispatch = useAppDispatch();
 
     const [sortOption, setSortOption] = useState<SelectOption | null>(null);
     const [searchQuest, setSearchQuest] = useState<string>("");
     const [quests, setQuests] = useState(serverQuests);
+
+    const processQuestsHandler = async () => {
+        try {
+            const sortType = sortOption
+                ? sortOptionActionMap[sortOption.value]
+                : undefined;
+            const titleFilter =
+                searchQuest.length >= 3 ? searchQuest : undefined;
+            const response = await getQuests({ sortType, titleFilter });
+
+            if (response.quizzes) {
+                setQuests(response.quizzes);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            processQuestsHandler();
+        }, 500);
+        return () => clearTimeout(timeoutId);
+    }, [sortOption, searchQuest]);
 
     console.log(quests);
 
