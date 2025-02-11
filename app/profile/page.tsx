@@ -1,3 +1,4 @@
+import { getQuestsByOwnerId } from "@/api/quests";
 import { getMyProfile } from "@/api/user";
 import { MyProfilePageComponent } from "@/components/page-components/MyProfile";
 import { getCookie } from "@/helpers/getCookie";
@@ -22,6 +23,22 @@ const MyProfile = async () => {
         } catch (error) {
             console.error(error);
             redirect("/login");
+        }
+
+        try {
+            const data = await getQuestsByOwnerId({
+                pageNumber: 1,
+                pageSize: 20,
+            });
+            console.log(data);
+
+            /* if ("statusCode" in data) {
+                console.log(data);
+            } else {
+                console.log(data);
+            } */
+        } catch (error) {
+            console.log(error);
         }
     }
 
