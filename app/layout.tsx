@@ -10,6 +10,7 @@ import { getCookie } from "@/helpers/getCookie";
 import { getPathname } from "@/helpers/getPathname";
 import { Modals } from "@/components/Modals";
 import { getMyProfile } from "@/api/user";
+import { setCookie } from "@/helpers/setCookie";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -44,6 +45,7 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
                 profile = profileData;
             } else {
                 profile = null;
+                setCookie("token", "");
             }
         } catch (error) {
             console.error(error);
