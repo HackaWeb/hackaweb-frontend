@@ -25,7 +25,7 @@ const MyProfile = async () => {
         }
     };
 
-    /* const getCompletedQuests = async () => {
+    /*const getCompletedQuests = async () => {
         const data = await getCompletedQuestsByOwnerId(profile.id);
         
         return data;

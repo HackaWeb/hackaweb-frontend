@@ -5,7 +5,6 @@ import { getUserProfile } from "@/api/user";
 import { getCookie } from "@/helpers/getCookie";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { notFound } from "next/navigation";
-import { toast } from "react-toastify";
 
 const UserProfile = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params;
@@ -17,7 +16,6 @@ const UserProfile = async ({ params }: { params: Promise<{ id: string }> }) => {
     const getIsReqeusterAdmin = async () => {
         try {
             const profile = await getMyProfile();
-            console.log("My profile:", profile);
 
             if (!("statusCode" in profile) && profile.isAdmin) {
                 return true;
@@ -33,7 +31,6 @@ const UserProfile = async ({ params }: { params: Promise<{ id: string }> }) => {
     const getUserProfileHandler = async () => {
         try {
             const data = await getUserProfile(id);
-            console.log(data);
 
             if ("statusCode" in data) {
                 if (data.statusCode === 400) {
@@ -69,7 +66,36 @@ const UserProfile = async ({ params }: { params: Promise<{ id: string }> }) => {
         notFound();
     }
 
-    return <UserProfilePageComponent isEditable={isAdmin} profile={profile} />;
+    /*const getCompletedQuests = async () => {
+        const data = await getCompletedQuestsByOwnerId(profile.id);
+        
+        return data;
+    }; */
+
+    /* const getOwnQuests = async () => {
+        const data = await getQuestsByOwnerId(
+            {
+                pageNumber: 0,
+                pageSize: 20,
+            },
+            profile.id,
+        );
+        console.log(data);
+
+        return data.items;
+    }; */
+
+    /* const ownQuests = await getOwnQuests(); */
+    /* const completedQuests = await getCompletedQuests(); */
+
+    return (
+        <UserProfilePageComponent
+            ownQuests={[]}
+            completedQuests={[]}
+            isEditable={isAdmin}
+            profile={profile}
+        />
+    );
 };
 
 export default UserProfile;
