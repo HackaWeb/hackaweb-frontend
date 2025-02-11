@@ -5,18 +5,27 @@ import { RenderRating } from "@/helpers/RenderRating";
 import { FaUser } from "react-icons/fa6";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
 import { printUserNickname } from "@/helpers/printUserNickname";
+import { FaImage } from "react-icons/fa";
+import { formatDate } from "@/helpers/formatDate";
 
 export const Quest = ({ quest }: QuestProps) => {
     return (
         <div className="bg-blackOpacity-dark hover:scale-105 transition duration-200 rounded-lg">
-            <Image
-                src={quest.imageUrl}
-                alt={quest.title}
-                className="w-full h-auto"
-                width={0}
-                height={0}
-                sizes="100vw"
-            />
+            {quest.imageUrl ? (
+                <Image
+                    src={quest.imageUrl}
+                    alt={quest.title}
+                    className="w-full h-[150px] object-cover rounded-t-lg"
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                />
+            ) : (
+                <div className="w-full h-[150px] bg-gray-dark flex items-center justify-center rounded-t-lg">
+                    <FaImage className="text-white size-12" />
+                </div>
+            )}
+
             <div className="p-3">
                 <Link href="/quests/1" className="font-semibold text-lg">
                     {quest.title}
@@ -30,18 +39,18 @@ export const Quest = ({ quest }: QuestProps) => {
                             quest.owner.lastName,
                         )}
                     </Link>{" "}
-                    (<span className="text-purple">{quest.owner.rating}</span> з
-                    5)
+                    (
+                    <span className="text-purple">
+                        {quest.owner.rating || 0}
+                    </span>{" "}
+                    з 5)
                 </div>
                 <div className="flex items-center justify-between text-gray mt-10">
-                    <div className="flex items-center gap-2">
-                        <FaUser />
-                        {quest.leaderboard.length}
-                    </div>
-                    <div className="flex items-center gap-1">
-                        {quest.duration} хв.
+                    <span className="flex items-center gap-1">
                         <MdOutlineAccessTimeFilled />
-                    </div>
+                        {quest.duration} хв.
+                    </span>
+                    <span>{formatDate(quest.createdAt)}</span>
                 </div>
             </div>
         </div>

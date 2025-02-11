@@ -25,7 +25,7 @@ import {
     uploadQuestMedia,
 } from "@/api/quests";
 import { parseQuestionType } from "@/helpers/parseQuestionType";
-import { ModalBg } from "./Modals/ModalBg";
+import { ModalBg } from "../ModalBg";
 
 export const CreateQuest = () => {
     const dispatch = useAppDispatch();
