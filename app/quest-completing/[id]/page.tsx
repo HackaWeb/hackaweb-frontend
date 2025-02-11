@@ -12,7 +12,7 @@ const QuestCompleting = async ({ params }: PageProps) => {
     const { id } = await params;
     let isAuthorized;
 
-    if (!token) {
+    if (!token || !token.length) {
         redirect("/login");
     }
 
