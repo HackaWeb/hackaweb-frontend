@@ -67,7 +67,7 @@ export const OwnQuests = async ({
                                     </td>
                                     <td className="p-3">
                                         <img
-                                            src={quest.file}
+                                            src={quest.imageUrl}
                                             alt={quest.title}
                                             className="w-16 h-12 object-cover rounded-md"
                                         />
@@ -78,7 +78,7 @@ export const OwnQuests = async ({
                                     <td className="p-3">
                                         {quest.leaderboard.length}
                                     </td>
-                                    <td className="p-3">⭐ {quest.rating}</td>
+                                    <td className="p-3">⭐ {quest.rate}</td>
                                     <td className="p-3">10</td>
                                     {isCreatedByMe && (
                                         <td className="p-3 flex gap-2">
