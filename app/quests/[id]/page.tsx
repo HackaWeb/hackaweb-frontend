@@ -1,3 +1,5 @@
+import { PageProps } from "@/.next/types/app/page";
+import { getQuestById } from "@/api/quests";
 import { GeneralInfo } from "@/components/page-components/Quest/GeneralInfo";
 import { Leaderboard } from "@/components/page-components/Quest/Leaderboard";
 import { Reviews } from "@/components/page-components/Quest/Reviews";
@@ -6,12 +8,12 @@ import { Quest } from "@/types/quest.interface";
 import Link from "next/link";
 import { TbArrowBackUp } from "react-icons/tb";
 
-const quest: Quest = {
+const questData: Quest = {
     id: "1",
     title: "Quest 1",
     description: "Description 1",
-    rating: 4,
-    file: "/test.png",
+    rate: 4,
+    imageUrl: "/test.png",
     owner: {
         isAdmin: false,
         id: "1",
@@ -24,7 +26,7 @@ const quest: Quest = {
     createdAt: "2021-10-10",
     duration: 60,
     questions: [],
-    reviews: [
+    feedbacks: [
         {
             id: "1",
             rating: 4,
@@ -132,7 +134,18 @@ const quest: Quest = {
     ],
 };
 
-const QuestDetails = () => {
+const QuestDetails = async ({ params }: PageProps) => {
+    const questId = (await params).id;
+    let quest: Quest | null = null;
+
+    try {
+        const response = await getQuestById(questId);
+        console.log(response);
+    } catch (error) {
+        console.log(error);
+    }
+    quest = questData;
+
     return (
         <div>
             <h1>Деталі квесту</h1>

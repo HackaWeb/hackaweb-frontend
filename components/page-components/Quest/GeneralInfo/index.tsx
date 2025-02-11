@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import { GeneraInfoProps } from "./GeneralInfo.props";
 import { Button } from "@/components/ui/Button";
@@ -9,11 +10,12 @@ import { useRedirect } from "@/hooks/useRedirect";
 
 export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
     const redirect = useRedirect();
+
     return (
         <div className="bg-blackOpacity rounded-md">
             <Image
-                src={quest.file}
-                alt="Тест"
+                src={quest.imageUrl}
+                alt={quest.title}
                 width={0}
                 height={0}
                 sizes="100vw"
@@ -30,7 +32,7 @@ export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
                         onClick={() => redirect("/quest-completing/1")}
                     >
                         <FaUser className="size-4" />
-                        <span>Грати</span>
+                        <span>Грати зараз</span>
                     </Button>
                 </div>
                 <div className="text-gray mt-2">
@@ -43,7 +45,7 @@ export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
                     опис опис опис опис опис опис описописописс
                 </p>
                 <RenderRating
-                    rating={quest.rating}
+                    rating={quest.rate}
                     className="mt-3 gap-[6px]"
                 />
                 <div className="text-gray mt-3">Створено {quest.createdAt}</div>
