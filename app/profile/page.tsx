@@ -42,7 +42,7 @@ const MyProfile = async () => {
             const res = await fetch(
                 `https://hackawebquiz.ashycoast-bbbe20af.westus2.azurecontainerapps.io/api/quiz/completed/3577b43d-8d91-4cd3-9c4c-280c38490d2a`,
             );
-            console.log(res);
+            console.log(await res.json());
         } catch (er) {}
         /* const data = await getCompletedQuestsByOwnerId(profile.id);
         console.log(data);
@@ -53,8 +53,12 @@ const MyProfile = async () => {
 
     const getOwnQuests = async () => {
         try {
-            const data = await getQuestsByOwnerId(profile.id);
-            console.log(data);
+            /* const data = await getQuestsByOwnerId(profile.id); */
+            const res = await fetch(
+                `https://hackawebquiz.ashycoast-bbbe20af.westus2.azurecontainerapps.io/api/quiz/3577b43d-8d91-4cd3-9c4c-280c38490d2a`,
+            );
+            console.log("own", await res.json());
+            /* console.log(data); */
 
             /* return data.items; */
         } catch (error) {
