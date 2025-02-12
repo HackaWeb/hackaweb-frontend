@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { WaitingRoom } from "./WaitingRoom";
 import { PlayingGame } from "./Playing";
 import { Results } from "./Results";
-import { useQuiz } from "@/hooks/useQuiz";
 import { QuestCompletingProps } from "./QuestCompleting.props";
 import { QuestionWhileTesting } from "@/types/question.interface";
 import { getQuestionsByQuestId } from "@/api/quests";
@@ -18,21 +17,11 @@ export const QuestCompletingPageComponent = ({
 }: QuestCompletingProps) => {
     const [stage, setStage] = useState<Stage>("waiting");
     const [questions, setQuestions] = useState<QuestionWhileTesting[]>([]);
-    const [userAnswers, setUserAnswers] = useState<Record<string, string>>({});
-    const [timeLeft, setTimeLeft] = useState<number | null>(null);
-
-    const { startQuiz, submitAnswers, time, result, status } = useQuiz();
-
-    // Оновлюємо залишковий час з хука
-    useEffect(() => {
-        setTimeLeft(time);
-    }, [time]);
-
-    useEffect(() => {
-        if (status === "completed" && result) {
-            setStage("results");
-        }
-    }, [status, result]);
+    const [userAnswers, setUserAnswers] = useState<Record<number, any>>({});
+    const [timeLeft, setTimeLeft] = useState<number>(0);
+    const [timerInterval, setTimerInterval] = useState<NodeJS.Timeout | null>(
+        null,
+    );
 
     const onStartQuestClick = async () => {
         try {
@@ -42,8 +31,21 @@ export const QuestCompletingPageComponent = ({
                 setQuestions(response);
                 setStage("game");
 
-                // Передаємо quest.id як quizId
-                startQuiz(quest.id, user.id); // Тепер це правильно
+                const durationInSeconds = quest.duration * 60;
+                setTimeLeft(durationInSeconds);
+
+                const interval = setInterval(() => {
+                    setTimeLeft((prevTime) => {
+                        const newTime = Math.max(prevTime - 1, 0);
+                        if (newTime <= 0) {
+                            clearInterval(interval);
+                            onCompleteTest();
+                        }
+                        return newTime;
+                    });
+                }, 1000);
+
+                setTimerInterval(interval);
             } else {
                 toast.error(
                     "Помилка при отриманні питань, спробуйте пізніше ще раз",
@@ -57,10 +59,66 @@ export const QuestCompletingPageComponent = ({
         }
     };
 
-    const onCompleteTest = () => {
-        // Передаємо quest.id як quizId для надсилання відповідей
-        submitAnswers(quest.id, userAnswers, user.id); // Тепер це правильно
+    console.log(userAnswers);
+
+    const onCompleteTest = async () => {
+        try {
+            const formattedAnswers = {
+                quizId: quest.id,
+                userId: user.id,
+                userAnswers: questions.map((question, index) => {
+                    const userAnswer = userAnswers[index];
+
+                    return {
+                        questionType: question.type,
+                        options: Array.isArray(userAnswer)
+                            ? userAnswer.map((option) => ({
+                                  optionId: option.id,
+                                  text: undefined,
+                              }))
+                            : typeof userAnswer === "boolean"
+                            ? [
+                                  {
+                                      optionId:
+                                          question.options?.[userAnswer ? 0 : 1]
+                                              ?.id,
+                                      text: undefined,
+                                  },
+                              ]
+                            : [
+                                  {
+                                      optionId: undefined,
+                                      text: userAnswer?.toString() || "",
+                                  },
+                              ],
+                    };
+                }),
+            };
+
+            console.log("Отправляем ответы:", formattedAnswers);
+            return;
+
+            if (true) {
+                toast.success("Тест успішно завершено!");
+                setStage("results");
+            } else {
+                toast.error("Помилка при завершенні тестування");
+            }
+
+            /* const response = await submitAnswer(formattedAnswers); */
+            /* console.log("Ответы отправлены:", response); */
+        } catch (error) {
+            console.error("Помилка при відправленні відповідей", error);
+        }
     };
+
+    useEffect(() => {
+        return () => {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+        };
+    }, [timerInterval]);
 
     switch (stage) {
         case "waiting":
@@ -77,13 +135,14 @@ export const QuestCompletingPageComponent = ({
                     user={user}
                     questions={questions}
                     onCompleteTest={onCompleteTest}
+                    userAnswers={userAnswers}
                     setUserAnswers={setUserAnswers}
                     timeLeft={timeLeft}
                 />
             );
 
         case "results":
-            return <Results quest={quest} result={result} />;
+            return <Results quest={quest} result={null} />;
 
         default:
             return <></>;

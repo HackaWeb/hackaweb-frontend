@@ -35,7 +35,7 @@ export const useChat = () => {
         newConnection
             .start()
             .then(() => {
-                console.log("Підключено до чату");
+                /* console.log("Підключено до чату"); */
                 setIsConnected(true);
                 setConnection(newConnection);
             })
@@ -45,7 +45,7 @@ export const useChat = () => {
             if (newConnection.state === signalR.HubConnectionState.Connected) {
                 newConnection
                     .stop()
-                    .then(() => console.log("Відключено від чату"));
+                    /* .then(() => console.log("Відключено від чату")); */
             }
         };
     }, [connection]);
@@ -55,7 +55,7 @@ export const useChat = () => {
             !connection ||
             connection.state !== signalR.HubConnectionState.Connected
         ) {
-            console.error("Немає підключення до чату");
+            /* console.error("Немає підключення до чату"); */
             return;
         }
 
