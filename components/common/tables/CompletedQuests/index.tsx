@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CompletedQuestsProps } from "./CompletedQuests.props";
 import { printUserNickname } from "@/helpers/printUserNickname";
 import { motion } from "framer-motion";
-import { slideAnimation } from "@/helpers/animation";
+import { slideFromSidesAnimation } from "@/helpers/animation";
 
 export const CompletedQuests = ({
     profile,
@@ -12,14 +12,7 @@ export const CompletedQuests = ({
 }: CompletedQuestsProps) => {
     return (
         completedQuests && (
-            <motion.div
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                custom={1}
-                variants={slideAnimation}
-                className="bg-blackOpacity rounded-md mt-6 overflow-x-auto w-full"
-            >
+            <div className="bg-blackOpacity rounded-md mt-6 overflow-x-auto w-full">
                 <div className="p-4">
                     <h2 className="text-xl font-semibold text-white">
                         {isCompletedByMe
@@ -88,7 +81,7 @@ export const CompletedQuests = ({
                             : `Користувач ще не пройшов жодного квесту`}
                     </div>
                 )}
-            </motion.div>
+            </div>
         )
     );
 };

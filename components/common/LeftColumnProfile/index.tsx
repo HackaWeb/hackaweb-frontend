@@ -19,7 +19,7 @@ import Image from "next/image";
 import { LeftColumnProfileProps } from "./LeftColumnProfile.props";
 import { setCookie } from "@/helpers/setCookie";
 import { motion } from "framer-motion";
-import { defaultAnimation } from "@/helpers/animation";
+import { popAnimation } from "@/helpers/animation";
 
 export const LeftColumnProfile = ({
     profile,
@@ -67,7 +67,6 @@ export const LeftColumnProfile = ({
             }
             toast.success("Аватар видалено успішно!");
             setAvatar(null);
-            setCookie("token", "");
         } catch (error) {
             console.error(error);
             toast.error(DEFAULT_FIELD_ERROR.message);
@@ -97,22 +96,22 @@ export const LeftColumnProfile = ({
                         rating={profile.rating}
                         className="gap-[6px] absolute top-1 left-1"
                     />
+                    {isEditable && avatar && (
+                        <Button
+                            className="absolute top-1 right-1 p-1 z-10"
+                            onClick={deleteAvatarHandler}
+                            color="redBorder"
+                        >
+                            <AiOutlineClose className="size-5" />
+                        </Button>
+                    )}
                     <motion.div
                         key={avatar}
-                        {...defaultAnimation}
+                        {...popAnimation}
                         className="bg-blackOpacity-dark w-full h-full flex items-center justify-center rounded-md overflow-hidden"
                     >
                         {avatar ? (
                             <>
-                                {isEditable && (
-                                    <Button
-                                        className="absolute top-1 right-1 p-1"
-                                        onClick={deleteAvatarHandler}
-                                        color="redBorder"
-                                    >
-                                        <AiOutlineClose className="size-5" />
-                                    </Button>
-                                )}
                                 <Image
                                     src={avatar}
                                     alt="Avatar"

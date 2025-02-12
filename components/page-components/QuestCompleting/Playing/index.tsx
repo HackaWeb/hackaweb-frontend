@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import { PlayingProps } from "./Playing.props";
 import { motion } from "framer-motion";
-import { slideAnimation } from "@/helpers/animation";
+import { slideFromSidesAnimation } from "@/helpers/animation";
 import { BiDirections } from "react-icons/bi";
 
 export const PlayingGame = ({
@@ -129,7 +129,7 @@ export const PlayingGame = ({
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                variants={slideAnimation}
+                variants={slideFromSidesAnimation}
             >
                 <div className="bg-blackOpacity pt-16 px-4 relative">
                     <InfoBox
