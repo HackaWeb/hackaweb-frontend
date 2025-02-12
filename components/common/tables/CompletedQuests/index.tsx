@@ -3,7 +3,6 @@ import Link from "next/link";
 import { CompletedQuestsProps } from "./CompletedQuests.props";
 import { printUserNickname } from "@/helpers/printUserNickname";
 import { motion } from "framer-motion";
-import { slideAnimation } from "@/helpers/animation";
 import Image from "next/image";
 
 export const CompletedQuests = ({

@@ -12,7 +12,6 @@ import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { slideAnimation } from "@/helpers/animation";
 import Image from "next/image";
 import { formatDate } from "@/helpers/formatDate";
 

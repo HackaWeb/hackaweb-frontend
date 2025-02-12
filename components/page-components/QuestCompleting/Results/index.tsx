@@ -3,7 +3,6 @@ import { GeneralResults } from "./GeneralResults";
 import { Actions } from "./Actions";
 import { ResultsProps } from "./Results.props";
 import Image from "next/image";
-import Image from "next/image";
 
 export const Results = ({ quest, result, timeSpent }: ResultsProps) => {
     console.log(result);

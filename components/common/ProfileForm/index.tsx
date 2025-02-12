@@ -74,7 +74,7 @@ export const ProfileForm = ({
 
     return (
         <div className="p-4 bg-blackOpacity rounded-md">
-            <form action={onUpdateProfileSubmit}>
+            <form onSubmit={onUpdateProfileSubmit}>
                 <div>
                     <label htmlFor="email" className="text-gray">
                         {isEditSelfProfile
