@@ -27,6 +27,9 @@ export const QuestCompletingPageComponent = ({
         null,
     );
 
+    // Время, которое прошло
+    const timeSpent = quest.duration * 60 - timeLeft;
+
     const onStartQuestClick = async () => {
         try {
             const response = await getQuestionsByQuestId(quest.id);
@@ -148,7 +151,9 @@ export const QuestCompletingPageComponent = ({
             );
 
         case "results":
-            return <Results quest={quest} result={result} />;
+            return (
+                <Results quest={quest} result={result} timeSpent={timeSpent} />
+            );
 
         default:
             return <></>;

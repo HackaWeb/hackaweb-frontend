@@ -3,7 +3,7 @@ import { getQuestById, getQuestByIdWithoutQuestions } from "@/api/quests";
 import { getMyProfile } from "@/api/user";
 import { QuestCompletingPageComponent } from "@/components/page-components/QuestCompleting";
 import { getCookie } from "@/helpers/getCookie";
-import { Quest } from "@/types/quest.interface";
+import { Quest, QuestWithoutQuestions } from "@/types/quest.interface";
 import { QuestionWhileTesting } from "@/types/question.interface";
 import { Profile } from "@/types/user.interface";
 import { notFound, redirect } from "next/navigation";
@@ -32,7 +32,7 @@ const QuestCompleting = async ({ params }: PageProps) => {
         redirect("/login");
     }
 
-    let quest: Quest | null = null;
+    let quest: QuestWithoutQuestions | null = null;
 
     try {
         const response = await getQuestByIdWithoutQuestions(id);

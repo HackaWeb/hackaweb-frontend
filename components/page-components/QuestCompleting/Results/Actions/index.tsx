@@ -7,6 +7,7 @@ import Link from "next/link";
 
 export const Actions = ({ quest }: QuestProps) => {
     const redirect = useRedirect();
+    console.log("QQ", quest);
 
     return (
         <div className="max-w-[300px] mx-auto">
@@ -29,7 +30,7 @@ export const Actions = ({ quest }: QuestProps) => {
             <Button
                 color="yellowBorder"
                 className="mt-3 w-full"
-                onClick={() => redirect(`/users/${quest.owner.id}`)}
+                onClick={() => redirect(`/users/${quest.ownerId}`)}
             >
                 Пройти інший квест цього автора
             </Button>

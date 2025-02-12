@@ -1,7 +1,8 @@
 import { SubmitQuestResponseSuccess } from "@/api/responses/quest.type";
-import { Quest } from "@/types/quest.interface";
+import { Quest, QuestWithoutQuestions } from "@/types/quest.interface";
 
 export interface GeneralResultsProps {
-    quest: Quest;
+    quest: QuestWithoutQuestions;
     result: SubmitQuestResponseSuccess | null;
+    timeSpent: number;
 }

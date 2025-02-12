@@ -1,6 +1,6 @@
-import { Quest } from "@/types/quest.interface";
+import { QuestWithoutQuestions } from "@/types/quest.interface";
 
 export interface WaitingRoomProps {
     onStartQuestClick: () => void;
-    quest: Quest;
+    quest: QuestWithoutQuestions;
 }

@@ -2,24 +2,33 @@ import { MakeReview } from "./MakeReview";
 import { GeneralResults } from "./GeneralResults";
 import { Actions } from "./Actions";
 import { ResultsProps } from "./Results.props";
+import Image from "next/image";
 
-export const Results = ({ quest, result }: ResultsProps) => {
+export const Results = ({ quest, result, timeSpent }: ResultsProps) => {
     console.log(result);
     return (
         <div className="relative">
             <div className="pt-2 sm:pt-16 px-4 relative bg-[url(/results-bg.png)] bg-cover bg-center">
-                <img
-                    src="/test.png"
-                    alt="Питання"
-                    className="mx-auto mt-3 rounded-lg w-full max-w-[400px]"
+                <Image
+                    src={quest.imageUrl}
+                    alt={quest.title}
+                    className="mx-auto mt-3 rounded-lg w-full max-w-[400px] max-h-[400px]"
+                    width={0}
+                    height={0}
+                    sizes="100vw"
                 />
                 <h1 className="pt-10 pb-5 text-center text-xl xsm:text-3xl">
-                    Вітаємо з проходженням <br />
+                    Вітаємо з проходженням квізу
+                    <br />
                     <span className="text-purple">{quest.title}</span>
                 </h1>
             </div>
             <div className="mt-6 grid grid-cols-1 xl:grid-cols-3 gap-6 w-full 2xl:px-20 px-4 items-start">
-                <GeneralResults result={result} quest={quest} />
+                <GeneralResults
+                    result={result}
+                    quest={quest}
+                    timeSpent={timeSpent}
+                />
                 <Actions quest={quest} />
                 <MakeReview quest={quest} />
             </div>

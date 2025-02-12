@@ -1,5 +1,5 @@
-import { Quest } from "@/types/quest.interface";
+import { QuestWithoutQuestions } from "@/types/quest.interface";
 
 export interface ActionsProps {
-    quest: Quest;
+    quest: QuestWithoutQuestions;
 }
