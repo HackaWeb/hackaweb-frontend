@@ -31,7 +31,7 @@ export const Quest = ({ quest }: QuestProps) => {
                 >
                     {quest.title}
                 </Link>
-                <RenderRating rating={4} className="mt-1 gap-[4px]" />
+                <RenderRating rating={quest.rate} className="mt-1 gap-[4px]" />
                 <div className="mt-3 text-sm">
                     від{" "}
                     <Link href={`/users/${quest.owner.id}`}>

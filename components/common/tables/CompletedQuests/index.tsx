@@ -1,8 +1,8 @@
 "use client";
+
 import Link from "next/link";
 import { CompletedQuestsProps } from "./CompletedQuests.props";
 import { printUserNickname } from "@/helpers/printUserNickname";
-import { motion } from "framer-motion";
 import Image from "next/image";
 
 export const CompletedQuests = ({
@@ -53,7 +53,7 @@ export const CompletedQuests = ({
                                     >
                                         <td className="p-3 font-semibold">
                                             <Link
-                                                href="#"
+                                                href={`/quests/${completed.id}`}
                                                 className="text-purple-400"
                                             >
                                                 {completed.title}
@@ -69,9 +69,9 @@ export const CompletedQuests = ({
                                                 width={0}
                                             />
                                         </td>
-                                        <td className="p-3">37 / 60 хв.</td>
-                                        <td className="p-3">87 / 100 %</td>
-                                        <td className="p-3">08.02.2025</td>
+                                        <td className="p-3">"37 / 60 хв."</td>
+                                        <td className="p-3">"87 / 100 %"</td>
+                                        <td className="p-3">"13.02.2025"</td>
                                     </tr>
                                 ))}
                             </tbody>
