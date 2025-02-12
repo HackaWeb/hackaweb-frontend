@@ -12,21 +12,6 @@ import { toast } from "react-toastify";
 
 type Stage = "waiting" | "game" | "results";
 
-/* const mockQuestions: QuestionWhileTesting[] = [
-    {
-        id: "1",
-        text: "Скільки буде 2+2?",
-        quizId: "123re32fdfd",
-        type: 1,
-        options: [
-            { questionId: "1", title: "4", id: "13dasfds" },
-            { id: "2fd34fds", title: "5", questionId: "13dasfds" },
-            { id: "3", title: "6", questionId: "13dasfds" },
-            { id: "4", title: "7", questionId: "13dasfds" },
-        ],
-    },
-]; */
-
 export const QuestCompletingPageComponent = ({
     quest,
     user,
@@ -38,10 +23,10 @@ export const QuestCompletingPageComponent = ({
 
     const { startQuiz, submitAnswers, time, result, status } = useQuiz();
 
+    // Оновлюємо залишковий час з хука
     useEffect(() => {
         setTimeLeft(time);
     }, [time]);
-    console.log(timeLeft);
 
     useEffect(() => {
         if (status === "completed" && result) {
@@ -57,7 +42,8 @@ export const QuestCompletingPageComponent = ({
                 setQuestions(response);
                 setStage("game");
 
-                startQuiz(quest.id);
+                // Передаємо quest.id як quizId
+                startQuiz(quest.id, user.id); // Тепер це правильно
             } else {
                 toast.error(
                     "Помилка при отриманні питань, спробуйте пізніше ще раз",
@@ -72,7 +58,8 @@ export const QuestCompletingPageComponent = ({
     };
 
     const onCompleteTest = () => {
-        submitAnswers(quest.id, userAnswers);
+        // Передаємо quest.id як quizId для надсилання відповідей
+        submitAnswers(quest.id, userAnswers, user.id); // Тепер це правильно
     };
 
     switch (stage) {
