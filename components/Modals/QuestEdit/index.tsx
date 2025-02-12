@@ -15,7 +15,7 @@ import { ModalBg } from "../ModalBg";
 import {
     deleteQuestion,
     editQuest,
-    editQuestion,
+    editQuestions,
     uploadQuestionMedia,
     uploadQuestMedia,
 } from "@/api/quests";
@@ -67,13 +67,26 @@ export const QuestEdit = () => {
             }
 
             //Upload Questions
-            for (let question of questions) {
-                await editQuestion(question.id, {
-                    text: question.text,
-                    type: question.type,
-                });
+            const editedQuestions = questions.map((q) => {
+                return {
+                    id: q.id,
+                    quizId: quest!.id,
+                    options: q.choiceOptions.map((o) => {
+                        return {
+                            title: o.title,
+                            isCorrect: o.isCorrect,
+                            questionId: q.id,
+                        };
+                    }),
+                    text: q.text,
+                    type: q.type,
+                };
+            });
 
-                //Upload Media(if available)
+            await editQuestions(quest!.id, editedQuestions);
+
+            //Upload Media(if available)
+            for (let question of questions) {
                 if (question.mediaUrl) {
                     const questionMedia = new FormData();
                     const file = await fetch(question.mediaUrl!).then((r) =>
@@ -223,14 +236,10 @@ export const QuestEdit = () => {
                                             key={index}
                                             className="flex gap-2 place-items-center"
                                         >
-                                            {(question.mediaUrl &&
-                                                question.mediaUrl.includes(
-                                                    ".png",
-                                                )) ||
-                                            question.fileType === "image" ? (
+                                            {question.mediaUrl ? (
                                                 <figure className="w-14 h-14 place-content-center">
                                                     <Image
-                                                        src={question.mediaUrl!}
+                                                        src={question.mediaUrl}
                                                         alt="question image"
                                                         className="rounded-md "
                                                         sizes="100vw"

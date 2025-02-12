@@ -217,7 +217,7 @@ export const CreateQuest = () => {
                                             key={index}
                                             className="flex gap-2 place-items-center"
                                         >
-                                            {question.fileType === "image" ? (
+                                            {question.mediaUrl ? (
                                                 <figure className="w-14 h-14 place-content-center">
                                                     <Image
                                                         src={question.mediaUrl!}

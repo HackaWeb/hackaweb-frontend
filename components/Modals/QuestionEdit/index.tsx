@@ -6,12 +6,12 @@ import { Button } from "@/components/ui/Button";
 import { toast } from "react-toastify";
 import { BsFillImageFill } from "react-icons/bs";
 import { Input } from "@/components/ui/Input";
-import { FaVideo } from "react-icons/fa6";
 import { Select } from "@/components/ui/Select";
 import { useEffect, useRef } from "react";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { Question } from "@/types/question.interface";
 import { editQuestion } from "@/store/slices/quests";
+import { FaImage } from "react-icons/fa";
 
 export const QuestionEdit = () => {
     const {
@@ -29,13 +29,8 @@ export const QuestionEdit = () => {
         setText,
         text,
         resetOptions,
-        fileType,
         media,
-        setMedia,
-        setFileType,
     } = useQuestionModal();
-
-    const videoRef = useRef<HTMLVideoElement>(null);
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -53,7 +48,6 @@ export const QuestionEdit = () => {
             type: type?.length ? Number(type) : question.type,
             choiceOptions: options?.length ? options : question.choiceOptions,
             mediaUrl: media || question.mediaUrl || undefined,
-            fileType: fileType || question.fileType || undefined,
         };
 
         dispatch(editQuestion(edited));
@@ -68,32 +62,7 @@ export const QuestionEdit = () => {
             });
             setText(question.text);
         }
-        setFileType(question?.mediaUrl?.includes("png") ? "image" : "video");
     }, [question]);
-
-    useEffect(() => {
-        if (videoRef.current) {
-            const video = videoRef.current;
-            const handleMetadataLoad = () => {
-                if (
-                    video.duration >
-                    Number(process.env.NEXT_PUBLIC_MAX_VIDEO_DURATION)
-                ) {
-                    setMedia(null);
-                    setFileType(null);
-                    toast.error(
-                        `Тривалість відео неповинна перевищувати ${process.env.NEXT_PUBLIC_MAX_VIDEO_DURATION} секунд!`,
-                    );
-                }
-            };
-
-            video.addEventListener("loadedmetadata", handleMetadataLoad);
-
-            return () => {
-                video.removeEventListener("loadedmetadata", handleMetadataLoad);
-            };
-        }
-    }, [media, fileType]);
 
     return (
         isModalOpened("QuestionEdit", modals) && (
@@ -110,21 +79,11 @@ export const QuestionEdit = () => {
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
                             {media || question?.mediaUrl ? (
-                                fileType === "image" ||
-                                question?.fileType === "image" ? (
-                                    <img
-                                        src={media || question?.mediaUrl}
-                                        alt="Зображення питання"
-                                        className="w-full h-auto aspect-square object-cover"
-                                    />
-                                ) : (
-                                    <video
-                                        src={media || question?.mediaUrl}
-                                        controls
-                                        ref={videoRef}
-                                        className="w-full h-auto aspect-square object-cover"
-                                    />
-                                )
+                                <img
+                                    src={media || question?.mediaUrl}
+                                    alt="Зображення питання"
+                                    className="w-full h-auto aspect-square object-cover"
+                                />
                             ) : (
                                 <div className="w-full h-auto border-2 border-purple aspect-square flex items-center justify-center">
                                     <BsFillImageFill className="size-20 text-gray" />
@@ -135,14 +94,14 @@ export const QuestionEdit = () => {
                                 type="file"
                                 ref={fileInputRef}
                                 className="hidden"
-                                accept=".png, .mp4"
+                                accept=".png"
                                 onChange={onFileUpload}
                             />
                             <div
                                 onClick={() => fileInputRef.current?.click()}
                                 className="text-purple underline cursor-pointer text-center mt-2 flex items-center justify-center gap-2"
                             >
-                                <FaVideo size={18} /> Змінити відео/картинку
+                                <FaImage size={18} /> Змінити картинку
                             </div>
                         </div>
                         <form className="w-full mt-6" onSubmit={onSubmit}>
