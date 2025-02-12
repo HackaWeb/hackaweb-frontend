@@ -24,6 +24,8 @@ import { toast } from "react-toastify";
 import { toggleModal } from "@/store/slices/modals";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { defaultAnimationWithTransform } from "../../../helpers/animation";
 
 export const QuestEdit = () => {
     const router = useRouter();
@@ -139,7 +141,10 @@ export const QuestEdit = () => {
     return (
         isModalOpened("QuestEdit", modals) && (
             <>
-                <div className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4">
+                <motion.div
+                    {...defaultAnimationWithTransform}
+                    className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4"
+                >
                     <ReturnBtn
                         className="self-start mt-2 mb-10 ml-2 sm:ml-4"
                         modal="QuestEdit"
@@ -305,7 +310,7 @@ export const QuestEdit = () => {
                             </Button>
                         </form>
                     </div>
-                </div>
+                </motion.div>
                 <ModalBg modal="QuestEdit" />
             </>
         )
