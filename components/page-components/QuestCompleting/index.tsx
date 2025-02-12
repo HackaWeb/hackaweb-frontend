@@ -7,34 +7,25 @@ import { Results } from "./Results";
 import { useQuiz } from "@/hooks/useQuiz";
 import { QuestCompletingProps } from "./QuestCompleting.props";
 import { QuestionWhileTesting } from "@/types/question.interface";
-import { getQuestQuestionsByQuestId } from "@/api/quests";
+import { getQuestionsByQuestId } from "@/api/quests";
 import { toast } from "react-toastify";
 
 type Stage = "waiting" | "game" | "results";
 
-const mockQuestions: QuestionWhileTesting[] = [
+/* const mockQuestions: QuestionWhileTesting[] = [
     {
         id: "1",
-        title: "Скільки буде 2+2?",
+        text: "Скільки буде 2+2?",
+        quizId: "123re32fdfd",
         type: 1,
         options: [
-            { id: "1", title: "4" },
-            { id: "2", title: "5" },
-            { id: "3", title: "6" },
-            { id: "4", title: "7" },
+            { questionId: "1", title: "4", id: "13dasfds" },
+            { id: "2fd34fds", title: "5", questionId: "13dasfds" },
+            { id: "3", title: "6", questionId: "13dasfds" },
+            { id: "4", title: "7", questionId: "13dasfds" },
         ],
     },
-    {
-        id: "1",
-        title: "Правда, що 2+2 буде 4?",
-        type: 0,
-    },
-    {
-        id: "3",
-        title: "Скільки буде 2-3?",
-        type: 2,
-    },
-];
+]; */
 
 export const QuestCompletingPageComponent = ({
     quest,
@@ -60,12 +51,10 @@ export const QuestCompletingPageComponent = ({
 
     const onStartQuestClick = async () => {
         try {
-            /* const response = await getQuestQuestionsByQuestId(quest.id);
-            console.log(response);
-            const data: QuestionWhileTesting[] = await response.json(); */
+            const response = await getQuestionsByQuestId(quest.id);
 
-            if (mockQuestions && mockQuestions.length > 0) {
-                setQuestions(mockQuestions);
+            if (response && response.length) {
+                setQuestions(response);
                 setStage("game");
 
                 startQuiz(quest.id);
