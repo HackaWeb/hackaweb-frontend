@@ -8,10 +8,11 @@ import { BsFillImageFill } from "react-icons/bs";
 import { Input } from "@/components/ui/Input";
 import { FaVideo } from "react-icons/fa6";
 import { Select } from "@/components/ui/Select";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { Question } from "@/types/question.interface";
-import { editQuestion } from "@/store/slices/quests/editQuests";
+import { editQuestion } from "@/store/slices/quests/quests";
+import { VIDEO_DURATION } from "@/constants";
 
 function QuestionEdit() {
     const {
@@ -31,7 +32,11 @@ function QuestionEdit() {
         resetOptions,
         fileType,
         media,
+        setMedia,
+        setFileType,
     } = useQuestionModal();
+
+    const videoRef = useRef<HTMLVideoElement>(null);
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -40,19 +45,19 @@ function QuestionEdit() {
 
         const type = questionType?.value;
 
-        if (!text.length || !type)
+        if (!text.length || !options?.length)
             return toast.error("Спочатку заповніть усі поля!");
 
         const edited: Question = {
             id: question.id,
             text: text || question.text,
-            type: Number(questionType.value) || question.type,
+            type: type?.length ? Number(type) : question.type,
             choiceOptions: options?.length ? options : question.choiceOptions,
             mediaUrl: media || question.mediaUrl || undefined,
             fileType: fileType || question.fileType || undefined,
         };
 
-        dispatch(editQuestion({ id: question.id, body: edited }));
+        dispatch(editQuestion(edited));
         resetOptions("QuestionEdit", "Питання відредаговано!");
     };
 
@@ -64,7 +69,29 @@ function QuestionEdit() {
             });
             setText(question.text);
         }
+        setFileType(question?.mediaUrl?.includes("png") ? "image" : "video");
     }, [question]);
+
+    useEffect(() => {
+        if (videoRef.current) {
+            const video = videoRef.current;
+            const handleMetadataLoad = () => {
+                if (video.duration > VIDEO_DURATION) {
+                    setMedia(null);
+                    setFileType(null);
+                    toast.error(
+                        "Тривалість відео неповинна перевищувати 60 секунд!",
+                    );
+                }
+            };
+
+            video.addEventListener("loadedmetadata", handleMetadataLoad);
+
+            return () => {
+                video.removeEventListener("loadedmetadata", handleMetadataLoad);
+            };
+        }
+    }, [media, fileType]);
 
     return (
         isModalOpened("QuestionEdit", modals) && (
@@ -90,6 +117,7 @@ function QuestionEdit() {
                                     <video
                                         src={media || question?.mediaUrl}
                                         controls
+                                        ref={videoRef}
                                         className="w-full h-auto aspect-square object-cover"
                                     />
                                 )

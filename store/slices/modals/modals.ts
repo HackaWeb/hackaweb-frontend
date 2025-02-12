@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ModalState, ModalType } from "./modals.types";
 
 const initialState: ModalState = {
-    active: ["QuestEdit"],
+    active: [],
 };
 
 const modals = createSlice({

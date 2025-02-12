@@ -1,11 +1,15 @@
 import { fetchApi } from "./fetchApi";
 import {
     CreateQuestBody,
+    EditQuestBody,
+    EditQuestionBody,
     GetQuestsQuery,
-    GetQuestByOwnerIdBody,
 } from "./requestBodies/quests.interface";
+import { DeleteResponseSuccess } from "./responses/common/deleteSuccess.interface";
 import {
     CreateQuestResponse,
+    EditQuestionResponse,
+    EditQuestResponse,
     GetCompletedQuestByOwnerIdResponse,
     GetQuestByIdResponse,
     GetQuestByIdWithoutQuestionsResponse,
@@ -81,6 +85,46 @@ export const createQuest = async (
         isAuthRequired: true,
         method: "POST",
         body,
+    });
+
+export const editQuest = async (
+    questId: string,
+    body: EditQuestBody,
+): Promise<EditQuestResponse> =>
+    fetchApi({
+        endpoint: `/quiz/${questId}`,
+        isAuthRequired: true,
+        method: "PUT",
+        body,
+    });
+
+export const editQuestion = async (
+    questionId: string,
+    body: EditQuestionBody,
+): Promise<EditQuestionResponse> =>
+    fetchApi({
+        endpoint: `/questions/${questionId}`,
+        isAuthRequired: true,
+        method: "PUT",
+        body,
+    });
+
+export const deleteQuestion = async (
+    questionId: string,
+): Promise<DeleteResponseSuccess> =>
+    fetchApi({
+        endpoint: `/questions/${questionId}`,
+        isAuthRequired: true,
+        method: "DELETE",
+    });
+
+export const deleteQuest = async (
+    questId: string,
+): Promise<DeleteResponseSuccess> =>
+    fetchApi({
+        endpoint: `/quiz/${questId}`,
+        isAuthRequired: true,
+        method: "DELETE",
     });
 
 export const uploadQuestMedia = async (

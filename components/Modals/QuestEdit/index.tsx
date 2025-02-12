@@ -6,43 +6,118 @@ import { Textarea } from "@/components/ui/Textarea";
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { useQuestModals } from "@/hooks/useQuestModals";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { BsFillImageFill } from "react-icons/bs";
 import { FiEdit2 } from "react-icons/fi";
 import { IoImageOutline } from "react-icons/io5";
 import { RiEditLine } from "react-icons/ri";
 import { ModalBg } from "../ModalBg";
-import { getQuestById } from "@/api/quests";
-import { setEditingQuest } from "@/store/slices/quests/editQuests";
+import {
+    deleteQuestion,
+    editQuest,
+    editQuestion,
+    uploadQuestionMedia,
+    uploadQuestMedia,
+} from "@/api/quests";
+import { EditQuestBody } from "@/api/requestBodies/quests.interface";
+import { toast } from "react-toastify";
+import { toggleModal } from "@/store/slices/modals/modals";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 function QuestEdit() {
     const {
-        dispatch,
         modals,
         onImageUpload,
         onQuestionAddClick,
         onQuestionEditClick,
         quest,
         media,
+        questions,
+        dispatch,
+        removedQuestions,
+        deleteQuestionHandler,
     } = useQuestModals();
-
     const [title, setTitle] = useState<string>("");
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [description, setDescription] = useState<string>("");
     const [duration, setDuration] = useState<string>("");
 
-    const getQuest = async (id: string) => {
-        const data = await getQuestById(id);
-        dispatch(setEditingQuest(data.quiz));
+    const editQuestHandler = async () => {
+        if (!questions) return;
 
-        setTitle(data.quiz.title);
-        setDescription(data.quiz.description);
-        setDuration(data.quiz.duration.toString());
+        const questBody: EditQuestBody = {
+            title,
+            description,
+            duration: Number(duration),
+        };
+
+        try {
+            //Upload Quest
+            const data = await editQuest(quest!.id, questBody);
+
+            if (media) {
+                const questMedia = new FormData();
+                const file = await fetch(media!).then((r) => r.blob());
+                questMedia.append("file", file as File);
+
+                await uploadQuestMedia(data.id, questMedia);
+            }
+
+            //Upload Questions
+            for (let question of questions) {
+                await editQuestion(question.id, {
+                    text: question.text,
+                    type: question.type,
+                });
+
+                //Upload Media(if available)
+                if (question.mediaUrl) {
+                    const questionMedia = new FormData();
+                    const file = await fetch(question.mediaUrl!).then((r) =>
+                        r.blob(),
+                    );
+                    questionMedia.append("file", file as File);
+                    await uploadQuestionMedia(question.id, questionMedia);
+                }
+            }
+
+            //Remove Questions(if available)
+            if (removedQuestions) {
+                for (let id of removedQuestions) {
+                    await deleteQuestion(id);
+                }
+            }
+
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const onEditQuestSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+        if (
+            (!media && !quest?.imageUrl) ||
+            !title.length ||
+            !Number(duration) ||
+            !description.length ||
+            !questions?.length
+        )
+            return toast.error("Заповніть коректно усі поля!");
+
+        const data = await editQuestHandler();
+        console.log(data);
+        toast.success("Квест успішно відредаговано!");
+        dispatch(toggleModal("QuestEdit"));
     };
 
     useEffect(() => {
-        getQuest("f43735d6-5c9c-47ae-b41e-e4774df121f7");
-    }, []);
+        if (!quest) return;
+
+        setTitle(quest.title);
+        setDescription(quest.description);
+        setDuration(quest.duration.toString());
+    }, [quest]);
 
     return (
         isModalOpened("QuestEdit", modals) && (
@@ -85,7 +160,10 @@ function QuestEdit() {
                                 <RiEditLine size={24} />
                             </Button>
                         </div>
-                        <form className="w-full mt-6">
+                        <form
+                            className="w-full mt-6"
+                            onSubmit={onEditQuestSubmit}
+                        >
                             <div>
                                 <label htmlFor="name" className="text-gray">
                                     Назва квесту
@@ -134,18 +212,19 @@ function QuestEdit() {
                                     <span className="text-gray">
                                         Список питань
                                     </span>
-                                    {quest?.questions.map((question, index) => (
+                                    {questions?.map((question, index) => (
                                         <div
                                             key={index}
                                             className="flex gap-2 place-items-center"
                                         >
-                                            {question.mediaUrl &&
-                                            question.mediaUrl.includes(
-                                                ".png",
-                                            ) ? (
+                                            {(question.mediaUrl &&
+                                                question.mediaUrl.includes(
+                                                    ".png",
+                                                )) ||
+                                            question.fileType === "image" ? (
                                                 <figure className="w-14 h-14 place-content-center">
                                                     <Image
-                                                        src={question.mediaUrl}
+                                                        src={question.mediaUrl!}
                                                         alt="question image"
                                                         className="rounded-md "
                                                         sizes="100vw"
@@ -171,6 +250,21 @@ function QuestEdit() {
                                                 }
                                             >
                                                 <FiEdit2 size={20} />
+                                            </Button>
+                                            <Button
+                                                color="redBorder"
+                                                className="bg-red"
+                                                type="button"
+                                                onClick={() =>
+                                                    deleteQuestionHandler(
+                                                        question.id,
+                                                    )
+                                                }
+                                            >
+                                                <FaRegTrashAlt
+                                                    size={20}
+                                                    color="white"
+                                                />
                                             </Button>
                                         </div>
                                     ))}
