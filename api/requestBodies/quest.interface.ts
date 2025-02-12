@@ -22,6 +22,17 @@ export interface CreateQuestBody {
     };
 }
 
+interface SubmitQuestOptionAnswerOption {
+    optionId: string | undefined;
+    text: string | undefined;
+}
+interface SubmitQuestOption {
+    questionId: string;
+    questionType: number;
+    answers: SubmitQuestOptionAnswerOption[];
+}
+export type SubmitQuestRequestBody = SubmitQuestOption[];
+
 export interface EditQuestBody {
     title: string;
     description: string;

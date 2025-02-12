@@ -5,4 +5,5 @@ export interface OwnQuestsProps {
     profile: Profile;
     isCreatedByMe: boolean;
     ownQuests?: Omit<Quest, "createdAt">[];
+    isEditable: boolean;
 }

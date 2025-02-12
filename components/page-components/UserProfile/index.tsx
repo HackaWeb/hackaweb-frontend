@@ -1,3 +1,4 @@
+"use client";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { UserProfileProps } from "./UserProfile.props";
 import { CompletedQuests } from "@/components/common/tables/CompletedQuests";
@@ -5,6 +6,8 @@ import { OwnQuests } from "@/components/common/tables/OwnQuests";
 import { cn } from "@/helpers/cn";
 import { ProfileForm } from "@/components/common/ProfileForm";
 import { LeftColumnProfile } from "@/components/common/LeftColumnProfile";
+import { motion } from "framer-motion";
+import { slideFromRightAnimation } from "@/helpers/animation";
 
 export const UserProfilePageComponent = ({
     isEditable,
@@ -14,7 +17,7 @@ export const UserProfilePageComponent = ({
 }: UserProfileProps) => {
     return (
         profile && (
-            <div className="mt-8">
+            <motion.div {...slideFromRightAnimation} className="mt-8">
                 <h1>
                     Профіль користувача {profile.firstName} {profile.lastName}
                 </h1>
@@ -45,6 +48,7 @@ export const UserProfilePageComponent = ({
                             profile={profile}
                             ownQuests={ownQuests}
                             isCreatedByMe={false}
+                            isEditable={isEditable}
                         />
                         <CompletedQuests
                             profile={profile}
@@ -53,7 +57,7 @@ export const UserProfilePageComponent = ({
                         />
                     </div>
                 </div>
-            </div>
+            </motion.div>
         )
     );
 };

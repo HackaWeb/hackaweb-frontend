@@ -25,8 +25,8 @@ import { toggleModal } from "@/store/slices/modals";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import {
-    defaultAnimation,
-    defaultAnimationWithTransform,
+    popAnimation,
+    popAnimationWithTransform,
 } from "../../../helpers/animation";
 import {
     MAX_DESCRIPTION_LENGTH,
@@ -138,7 +138,7 @@ export const CreateQuest = () => {
         isModalOpened("QuestCreation", modals) && (
             <>
                 <motion.div
-                    {...defaultAnimationWithTransform}
+                    {...popAnimationWithTransform}
                     className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-1/2 md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4"
                 >
                     <ReturnBtn
@@ -153,7 +153,7 @@ export const CreateQuest = () => {
                             {media ? (
                                 <motion.div
                                     key={media}
-                                    {...defaultAnimation}
+                                    {...popAnimation}
                                     className="w-full"
                                 >
                                     <Image

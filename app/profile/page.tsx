@@ -1,10 +1,8 @@
 import { getCompletedQuestsByOwnerId, getQuestsByOwnerId } from "@/api/quests";
-import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 import { getMyProfile } from "@/api/user";
 import { MyProfilePageComponent } from "@/components/page-components/MyProfile";
 import { getCookie } from "@/helpers/getCookie";
 import { redirect } from "next/navigation";
-import { toast } from "react-toastify";
 
 const MyProfile = async () => {
     const token = await getCookie("token");
@@ -35,7 +33,7 @@ const MyProfile = async () => {
             if (data.quizzes) {
                 return data.quizzes;
             }
-            
+
             return [];
         } catch (error) {
             console.error(error);

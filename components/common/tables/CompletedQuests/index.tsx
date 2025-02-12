@@ -13,14 +13,7 @@ export const CompletedQuests = ({
 }: CompletedQuestsProps) => {
     return (
         completedQuests && (
-            <motion.div
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                custom={1}
-                variants={slideAnimation}
-                className="bg-blackOpacity rounded-md mt-6 overflow-x-auto w-full"
-            >
+            <div className="bg-blackOpacity rounded-md mt-6 overflow-x-auto w-full">
                 <div className="p-4">
                     <h2 className="text-xl font-semibold text-white">
                         {isCompletedByMe
@@ -92,7 +85,7 @@ export const CompletedQuests = ({
                             : `Користувач ще не пройшов жодного квесту`}
                     </div>
                 )}
-            </motion.div>
+            </div>
         )
     );
 };

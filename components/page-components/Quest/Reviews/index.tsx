@@ -5,6 +5,7 @@ import { RenderRating } from "@/helpers/RenderRating";
 import { AiOutlineUser } from "react-icons/ai";
 import Link from "next/link";
 import { ReviewsProps } from "./Reviews.props";
+import { printUserNickname } from "@/helpers/printUserNickname";
 
 export const Reviews = ({ quest }: ReviewsProps) => {
     return (
@@ -12,7 +13,7 @@ export const Reviews = ({ quest }: ReviewsProps) => {
             <h2 className="text-white text-lg font-semibold mb-4">
                 Відгуки ({quest.feedbacks.length})
             </h2>
-            <div className="flex flex-col gap-4">
+            {/* <div className="flex flex-col gap-4">
                 {quest.feedbacks.length ? (
                     quest.feedbacks.map((review, index) => (
                         <div
@@ -22,7 +23,8 @@ export const Reviews = ({ quest }: ReviewsProps) => {
                             <div className="flex gap-4">
                                 <div className="flex flex-col items-center">
                                     <div className="w-12 h-12 rounded-md border border-purple flex items-center justify-center p-1">
-                                        {review.author.avatar ? (
+                                        {review.author &&
+                                        review.author.avatar ? (
                                             <Image
                                                 src={review.author.avatar}
                                                 alt="Avatar"
@@ -39,9 +41,10 @@ export const Reviews = ({ quest }: ReviewsProps) => {
                                         className="font-semibold"
                                         href={`/users/${review.author.id}`}
                                     >
-                                        {review.author.firstName +
-                                            " " +
-                                            review.author.lastName}
+                                        {printUserNickname(
+                                            review.author.firstName,
+                                            review.author.lastName,
+                                        )}
                                     </Link>
                                     <div className="text-gray-light text-sm">
                                         {review.createdAt}
@@ -52,9 +55,7 @@ export const Reviews = ({ quest }: ReviewsProps) => {
                                     />
                                 </div>
                             </div>
-                            <div className="text-gray-light">
-                                {review.text}
-                            </div>
+                            <div className="text-gray-light">{review.text}</div>
                         </div>
                     ))
                 ) : (
@@ -62,7 +63,7 @@ export const Reviews = ({ quest }: ReviewsProps) => {
                         Цей квест ще не має відгуків
                     </div>
                 )}
-            </div>
+            </div> */}
         </div>
     );
 };

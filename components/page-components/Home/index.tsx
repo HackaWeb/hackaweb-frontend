@@ -81,7 +81,7 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
             <h1 className="mt-12">Квести</h1>
             <div className="flex items-center gap-8">
                 <Link href="/profile" className="mt-3 duration-0">
-                    <Button color="purpleBorder" className="mt-3">
+                    <Button color="purpleBorder">
                         <span>Створити свій квест</span>
                         <IoCreateOutline className="size-6" />
                     </Button>

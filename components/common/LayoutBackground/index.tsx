@@ -1,11 +1,12 @@
 "use client";
+
 import {
     motion,
     useMotionTemplate,
     useMotionValue,
     animate,
 } from "framer-motion";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
 
@@ -19,9 +20,9 @@ export const LayoutBackground = () => {
             repeat: Infinity,
             repeatType: "mirror",
         });
-    }, [color]);
+    }, [color]); */
 
-    const backgroundImage = useMotionTemplate`radial-gradient(150% 160% at 55% 0%, #020617 55%, ${color})`; */
+    /* const backgroundImage = useMotionTemplate`radial-gradient(150% 160% at 55% 0%, #020617 55%, ${color})`; */
 
     return (
         <motion.main
@@ -29,4 +30,4 @@ export const LayoutBackground = () => {
             className="fixed w-screen h-screen z-[-1]"
         ></motion.main>
     );
-}
+};

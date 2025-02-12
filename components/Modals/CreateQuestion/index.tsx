@@ -18,8 +18,8 @@ import {
 } from "@/store/slices/quests";
 import { motion } from "framer-motion";
 import {
-    defaultAnimationWithTransform,
-    defaultAnimation,
+    popAnimationWithTransform,
+    popAnimation,
 } from "../../../helpers/animation";
 import { FaImage, FaRegTrashAlt, FaTrash } from "react-icons/fa";
 import { MAX_TITLE_LENGTH } from "@/constants";
@@ -82,7 +82,7 @@ export const CreateQuestion = () => {
         isModalOpened("QuestionCreation", modals) && (
             <>
                 <motion.div
-                    {...defaultAnimationWithTransform}
+                    {...popAnimationWithTransform}
                     className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4"
                 >
                     <ReturnBtn
@@ -95,11 +95,7 @@ export const CreateQuestion = () => {
                     </div>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
-                            <motion.div
-                                key={media}
-                                {...defaultAnimation}
-                                className="relative"
-                            >
+                            <motion.div key={media} {...popAnimation}>
                                 {media || question?.mediaUrl ? (
                                     <>
                                         <Image
