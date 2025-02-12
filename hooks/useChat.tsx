@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import * as signalR from "@microsoft/signalr";
 
 interface Message {
-    user: string;
-    text: string;
+    userId: string;
+    message: string;
     timestamp: string;
 }
 
@@ -15,51 +15,64 @@ export const useChat = () => {
     const [isConnected, setIsConnected] = useState(false);
 
     useEffect(() => {
-        if (connection) return;
-
         const newConnection = new signalR.HubConnectionBuilder()
             .withUrl(`${process.env.NEXT_PUBLIC_SOCKET_URL}/chathub`, {
                 transport: signalR.HttpTransportType.WebSockets,
                 skipNegotiation: true,
             })
-            .withAutomaticReconnect()
+            .configureLogging(signalR.LogLevel.Information)
+            .withAutomaticReconnect([0, 2000, 5000, 10000])
             .build();
-
-        newConnection.on("ReceiveMessage", (user: string, text: string) => {
-            setMessages((prev) => [
-                ...prev,
-                { user, text, timestamp: new Date().toLocaleTimeString() },
-            ]);
-        });
 
         newConnection
             .start()
             .then(() => {
-                /* console.log("Підключено до чату"); */
+                console.log("[Chat] ✅ Подключено к чату.");
                 setIsConnected(true);
                 setConnection(newConnection);
+
+                // Запрос истории чата
+                newConnection.invoke("GetChatHistory").catch(console.error);
             })
             .catch(console.error);
 
         return () => {
-            if (newConnection.state === signalR.HubConnectionState.Connected) {
-                newConnection
-                    .stop()
-                    /* .then(() => console.log("Відключено від чату")); */
-            }
+            newConnection
+                .stop()
+                .then(() => console.log("[Chat] 🔌 Отключено."));
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!connection) return;
+
+        connection.on("ReceiveMessage", (chatMessage) => {
+            setMessages((prev) => [...prev, chatMessage]);
+        });
+
+        connection.on("ChatHistory", (chatMessages) => {
+            setMessages(chatMessages);
+        });
+
+        return () => {
+            connection.off("ReceiveMessage");
+            connection.off("ChatHistory");
         };
     }, [connection]);
 
-    const sendMessage = (user: string, text: string) => {
+    const sendMessage = async (text: string, userId: string) => {
         if (
+            !text.trim() ||
             !connection ||
             connection.state !== signalR.HubConnectionState.Connected
-        ) {
-            /* console.error("Немає підключення до чату"); */
+        )
             return;
-        }
 
-        connection.invoke("SendMessage", user, text).catch(console.error);
+        try {
+            await connection.invoke("SendMessage", userId, text);
+        } catch (error) {
+            console.error("[Chat] ❌ Ошибка отправки:", error);
+        }
     };
 
     return { messages, sendMessage, isConnected };

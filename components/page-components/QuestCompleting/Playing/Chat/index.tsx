@@ -9,15 +9,12 @@ import { TbArrowBackUp } from "react-icons/tb";
 import { ChatProps } from "./Chat.props";
 import { cn } from "@/helpers/cn";
 import { useChat } from "@/hooks/useChat";
-import { printUserNickname } from "@/helpers/printUserNickname";
 import { toast } from "react-toastify";
 import Image from "next/image";
 
 export const Chat = ({ isOpened, setIsOpened, user }: ChatProps) => {
-    const messagesEndRef = useRef<HTMLUListElement>(null);
-
+    const messagesEndRef = useRef<HTMLDivElement>(null);
     const { messages, sendMessage, isConnected } = useChat();
-
     const [input, setInput] = useState("");
 
     const onMessageSend = () => {
@@ -26,15 +23,12 @@ export const Chat = ({ isOpened, setIsOpened, user }: ChatProps) => {
             return;
         }
 
-        sendMessage(printUserNickname(user.firstName, user.lastName), input);
+        sendMessage(input, user.id);
         setInput("");
     };
 
     useEffect(() => {
-        if (messagesEndRef.current) {
-            messagesEndRef.current.scrollTop =
-                messagesEndRef.current.scrollHeight;
-        }
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
     return (
@@ -61,49 +55,36 @@ export const Chat = ({ isOpened, setIsOpened, user }: ChatProps) => {
                         Чат учасників квесту
                     </div>
 
-                    <ul
-                        ref={messagesEndRef}
-                        className="flex-grow overflow-y-auto pr-2"
-                    >
+                    <div className="flex-grow overflow-y-auto pr-2">
                         {messages.map((msg, index) => (
-                            <li
+                            <div
                                 key={index}
                                 className="py-4 border-b border-gray-700"
                             >
                                 <div className="flex justify-between">
                                     <div className="flex items-start gap-3">
                                         <div className="rounded-md border border-purple p-2 w-14 h-14 flex items-center justify-center">
-                                            {user.avatar ? (
-                                                <Image
-                                                    width={0}
-                                                    height={0}
-                                                    sizes="100vw"
-                                                    alt={printUserNickname(
-                                                        user.firstName,
-                                                        user.lastName,
-                                                    )}
-                                                    src={user.avatar}
-                                                />
-                                            ) : (
-                                                <AiOutlineUser className="text-purple size-7" />
-                                            )}
+                                            <AiOutlineUser className="text-purple size-7" />
                                         </div>
                                         <div>
                                             <div className="text-base xsm:text-lg font-semibold mt-1">
-                                                {msg.user}
+                                                {msg.userId}
                                             </div>
                                         </div>
                                     </div>
                                     <div className="text-gray-dark text-xs xsm:text-sm">
-                                        {msg.timestamp}
+                                        {new Date(
+                                            msg.timestamp,
+                                        ).toLocaleTimeString()}
                                     </div>
                                 </div>
                                 <p className="text-gray mt-2 text-sm xsm:text-base">
-                                    {msg.text}
+                                    {msg.message}
                                 </p>
-                            </li>
+                            </div>
                         ))}
-                    </ul>
+                        <div ref={messagesEndRef}></div>
+                    </div>
 
                     <form
                         className="sticky bottom-0 p-2 xsm:p-4 mt-4"
@@ -129,6 +110,7 @@ export const Chat = ({ isOpened, setIsOpened, user }: ChatProps) => {
                     </form>
                 </div>
             </div>
+
             <div
                 className={cn(
                     "fixed top-0 left-0 bottom-0 right-0 bg-black opacity-50 z-10",
