@@ -4,6 +4,7 @@ import { Actions } from "./Actions";
 import { ResultsProps } from "./Results.props";
 
 export const Results = ({ quest, result }: ResultsProps) => {
+    console.log(result);
     return (
         <div className="relative">
             <div className="pt-2 sm:pt-16 px-4 relative bg-[url(/results-bg.png)] bg-cover bg-center">
@@ -14,12 +15,12 @@ export const Results = ({ quest, result }: ResultsProps) => {
                 />
                 <h1 className="pt-10 pb-5 text-center text-xl xsm:text-3xl">
                     Вітаємо з проходженням <br />
-                    <span className="text-purple">Назва тесту!</span>
+                    <span className="text-purple">{quest.title}</span>
                 </h1>
             </div>
             <div className="mt-6 grid grid-cols-1 xl:grid-cols-3 gap-6 w-full 2xl:px-20 px-4 items-start">
-                <GeneralResults />
-                <Actions />
+                <GeneralResults result={result} quest={quest} />
+                <Actions quest={quest} />
                 <MakeReview quest={quest} />
             </div>
         </div>

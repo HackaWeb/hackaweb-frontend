@@ -69,7 +69,6 @@ export const PlayingGame = ({
             direction.current = 1;
         } else {
             onCompleteTest();
-            toast.success("Тест успішно завершено!");
         }
     };
 

@@ -101,22 +101,18 @@ export const QuestCompletingPageComponent = ({
 
         try {
             console.log("Відправлення відповідей", formattedAnswers);
-            /* const response = await submitQuest(quest.id, {
-                userAnswers: formattedAnswers.userAnswers,
-            }); */
-            /* console.log(response); */
-            return;
+            const response = await submitQuest(
+                quest.id,
+                formattedAnswers.userAnswers,
+            );
 
-            if (true) {
+            if (response.quizId) {
                 toast.success("Тест успішно завершено!");
-                /* setResult(response); */
+                setResult(response);
                 setStage("results");
             } else {
                 toast.error("Помилка при завершенні тестування");
             }
-
-            /* const response = await submitAnswer(formattedAnswers); */
-            /* console.log("Ответы отправлены:", response); */
         } catch (error) {
             console.error("Помилка при відправленні відповідей", error);
         }
