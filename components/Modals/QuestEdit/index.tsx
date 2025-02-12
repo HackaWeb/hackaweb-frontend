@@ -13,19 +13,19 @@ import { IoImageOutline } from "react-icons/io5";
 import { RiEditLine } from "react-icons/ri";
 import { ModalBg } from "../ModalBg";
 import {
+    deleteQuestion,
     editQuest,
     editQuestion,
-    getQuestById,
     uploadQuestionMedia,
     uploadQuestMedia,
 } from "@/api/quests";
-import { setQuest, setQuestions } from "@/store/slices/quests/quests";
 import { EditQuestBody } from "@/api/requestBodies/quests.interface";
 import { toast } from "react-toastify";
+import { toggleModal } from "@/store/slices/modals/modals";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 function QuestEdit() {
     const {
-        dispatch,
         modals,
         onImageUpload,
         onQuestionAddClick,
@@ -33,23 +33,14 @@ function QuestEdit() {
         quest,
         media,
         questions,
-        options,
+        dispatch,
+        removedQuestions,
+        deleteQuestionHandler,
     } = useQuestModals();
-
     const [title, setTitle] = useState<string>("");
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [description, setDescription] = useState<string>("");
     const [duration, setDuration] = useState<string>("");
-
-    const getQuest = async (id: string) => {
-        const data = await getQuestById(id);
-        dispatch(setQuest(data.quiz));
-        dispatch(setQuestions(data.quiz.questions));
-
-        setTitle(data.quiz.title);
-        setDescription(data.quiz.description);
-        setDuration(data.quiz.duration.toString());
-    };
 
     const editQuestHandler = async () => {
         if (!questions) return;
@@ -90,6 +81,13 @@ function QuestEdit() {
                 }
             }
 
+            //Remove Questions(if available)
+            if (removedQuestions) {
+                for (let id of removedQuestions) {
+                    await deleteQuestion(id);
+                }
+            }
+
             return data;
         } catch (error) {
             console.log(error);
@@ -110,11 +108,16 @@ function QuestEdit() {
         const data = await editQuestHandler();
         console.log(data);
         toast.success("Квест успішно відредаговано!");
+        dispatch(toggleModal("QuestEdit"));
     };
 
     useEffect(() => {
-        getQuest("f43735d6-5c9c-47ae-b41e-e4774df121f7");
-    }, []);
+        if (!quest) return;
+
+        setTitle(quest.title);
+        setDescription(quest.description);
+        setDuration(quest.duration.toString());
+    }, [quest]);
 
     return (
         isModalOpened("QuestEdit", modals) && (
@@ -247,6 +250,21 @@ function QuestEdit() {
                                                 }
                                             >
                                                 <FiEdit2 size={20} />
+                                            </Button>
+                                            <Button
+                                                color="redBorder"
+                                                className="bg-red"
+                                                type="button"
+                                                onClick={() =>
+                                                    deleteQuestionHandler(
+                                                        question.id,
+                                                    )
+                                                }
+                                            >
+                                                <FaRegTrashAlt
+                                                    size={20}
+                                                    color="white"
+                                                />
                                             </Button>
                                         </div>
                                     ))}

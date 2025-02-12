@@ -7,6 +7,7 @@ export interface QuestsState {
     questions: Question[] | null;
     options: ChoiceOption[] | null;
     activeQuestionId: string | null;
+    removedQuestions: string[] | null;
 }
 
 export interface CreateQuest {

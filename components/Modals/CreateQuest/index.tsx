@@ -20,6 +20,10 @@ import {
 import { ModalBg } from "../ModalBg";
 import { useQuestModals } from "@/hooks/useQuestModals";
 import { CreateQuestBody } from "@/api/requestBodies/quests.interface";
+import { useRouter } from "next/navigation";
+import { toggleModal } from "@/store/slices/modals/modals";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { removeQuestion } from "@/store/slices/quests/quests";
 
 export const CreateQuest = () => {
     const {
@@ -29,6 +33,8 @@ export const CreateQuest = () => {
         onQuestionAddClick,
         onQuestionEditClick,
         questions,
+        dispatch,
+        deleteQuestionHandler,
     } = useQuestModals();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [title, setTitle] = useState<string>("");
@@ -102,6 +108,7 @@ export const CreateQuest = () => {
         const data = await createQuestHandler();
         console.log(data);
         toast.success("Квест успішно створено!");
+        dispatch(toggleModal("QuestCreation"));
     };
 
     return (
@@ -220,6 +227,7 @@ export const CreateQuest = () => {
                                                 disabled
                                                 defaultValue={question.text}
                                             />
+
                                             <Button
                                                 color="purpleBackground"
                                                 type="button"
@@ -231,6 +239,21 @@ export const CreateQuest = () => {
                                                 }
                                             >
                                                 <FiEdit2 size={20} />
+                                            </Button>
+                                            <Button
+                                                color="redBorder"
+                                                className="bg-red"
+                                                type="button"
+                                                onClick={() =>
+                                                    deleteQuestionHandler(
+                                                        question.id,
+                                                    )
+                                                }
+                                            >
+                                                <FaRegTrashAlt
+                                                    size={20}
+                                                    color="white"
+                                                />
                                             </Button>
                                         </div>
                                     ))}

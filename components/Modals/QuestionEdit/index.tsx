@@ -11,11 +11,7 @@ import { Select } from "@/components/ui/Select";
 import { useEffect, useRef } from "react";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { Question } from "@/types/question.interface";
-import {
-    editQuestion,
-    setActiveId,
-    setOptions,
-} from "@/store/slices/quests/quests";
+import { editQuestion } from "@/store/slices/quests/quests";
 import { VIDEO_DURATION } from "@/constants";
 
 function QuestionEdit() {

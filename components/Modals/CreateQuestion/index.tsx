@@ -15,8 +15,8 @@ import { useEffect, useRef } from "react";
 import { VIDEO_DURATION } from "@/constants";
 import {
     addQuestion,
-    setActiveId,
     setOptions,
+    setQuestionActiveId,
 } from "@/store/slices/quests/quests";
 
 export const CreateQuestion = () => {
@@ -87,7 +87,7 @@ export const CreateQuestion = () => {
     useEffect(() => {
         if (modals.includes("QuestionCreation")) {
             dispatch(setOptions(null));
-            dispatch(setActiveId(null));
+            dispatch(setQuestionActiveId(null));
         }
     }, [modals]);
 

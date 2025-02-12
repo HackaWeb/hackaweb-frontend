@@ -5,8 +5,10 @@ import {
     EditQuestionBody,
     GetQuestsQuery,
 } from "./requestBodies/quests.interface";
+import { DeleteResponseSuccess } from "./responses/common/deleteSuccess.interface";
 import {
     CreateQuestResponse,
+    EditQuestionResponse,
     EditQuestResponse,
     GetCompletedQuestByOwnerIdResponse,
     GetQuestByIdResponse,
@@ -99,12 +101,30 @@ export const editQuest = async (
 export const editQuestion = async (
     questionId: string,
     body: EditQuestionBody,
-): Promise<CreateQuestResponse> =>
+): Promise<EditQuestionResponse> =>
     fetchApi({
         endpoint: `/questions/${questionId}`,
         isAuthRequired: true,
         method: "PUT",
         body,
+    });
+
+export const deleteQuestion = async (
+    questionId: string,
+): Promise<DeleteResponseSuccess> =>
+    fetchApi({
+        endpoint: `/questions/${questionId}`,
+        isAuthRequired: true,
+        method: "DELETE",
+    });
+
+export const deleteQuest = async (
+    questId: string,
+): Promise<DeleteResponseSuccess> =>
+    fetchApi({
+        endpoint: `/quiz/${questId}`,
+        isAuthRequired: true,
+        method: "DELETE",
     });
 
 export const uploadQuestMedia = async (

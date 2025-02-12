@@ -7,6 +7,7 @@ const initialState: QuestsState = {
     questions: null,
     options: null,
     activeQuestionId: null,
+    removedQuestions: null,
 };
 
 const quests = createSlice({
@@ -33,7 +34,7 @@ const quests = createSlice({
                 options: action.payload,
             };
         },
-        setActiveId: (state, action: PayloadAction<string | null>) => {
+        setQuestionActiveId: (state, action: PayloadAction<string | null>) => {
             return {
                 ...state,
                 activeQuestionId: action.payload,
@@ -44,6 +45,20 @@ const quests = createSlice({
                 ...state,
                 questions: state.questions
                     ? [...state.questions, action.payload]
+                    : [action.payload],
+            };
+        },
+
+        removeQuestion: (state, action: PayloadAction<string>) => {
+            const questions = state.questions!.filter(
+                (q) => q.id !== action.payload,
+            );
+
+            return {
+                ...state,
+                questions,
+                removedQuestions: state.removedQuestions
+                    ? [...state.removedQuestions, action.payload]
                     : [action.payload],
             };
         },
@@ -100,6 +115,7 @@ const quests = createSlice({
                 ? state.questions?.find((q) => q.id === state.activeQuestionId)
                 : null,
         selectOptions: (state) => state.options,
+        selectRemovedQuestions: (state) => state.removedQuestions,
     },
 });
 
@@ -108,6 +124,7 @@ export const {
     selectOptions,
     selectActiveQuestion,
     selectQuestions,
+    selectRemovedQuestions,
 } = quests.selectors;
 
 export const {
@@ -119,7 +136,8 @@ export const {
     addOption,
     editOption,
     removeOption,
-    setActiveId,
+    setQuestionActiveId,
+    removeQuestion,
 } = quests.actions;
 
 export default quests.reducer;
