@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
 import { LeaderboardProps } from "./Leaderboard.props";
 import { getTimeInMinutes } from "@/helpers/getTimeInMinutes";
+import { printUserNickname } from "@/helpers/printUserNickname";
 
 export const Leaderboard = ({
     leaderboard,
@@ -64,9 +65,10 @@ export const Leaderboard = ({
                                             href={`/users/${player.user.id}`}
                                             className="text-purple"
                                         >
-                                            {player.user.firstName +
-                                                " " +
-                                                player.user.lastName}
+                                            {printUserNickname(
+                                                player.user.firstName,
+                                                player.user.lastName,
+                                            )}
                                         </Link>
                                     </td>
                                     <td className="w-[80px] px-4 py-2">
