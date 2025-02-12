@@ -44,10 +44,6 @@ export const Aside = ({ profile }: AsideProps) => {
         router.refresh();
     };
 
-    useEffect(() => {
-        setActiveLink(links.find((l) => l.link === path)!.title);
-    }, []);
-
     return (
         <>
             <Button
