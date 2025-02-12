@@ -10,12 +10,17 @@ import { useRedirect } from "@/hooks/useRedirect";
 import { FaImage } from "react-icons/fa";
 import { printUserNickname } from "@/helpers/printUserNickname";
 import { formatDate } from "@/helpers/formatDate";
+import { motion } from "framer-motion";
+import { slideFromBottomAnimation } from "@/helpers/animation";
 
 export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
     const redirect = useRedirect();
 
     return (
-        <div className="bg-blackOpacity rounded-md">
+        <motion.div
+            {...slideFromBottomAnimation}
+            className="bg-blackOpacity rounded-md"
+        >
             {quest.imageUrl ? (
                 <Image
                     src={quest.imageUrl}
@@ -71,6 +76,6 @@ export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
                     </Link>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
