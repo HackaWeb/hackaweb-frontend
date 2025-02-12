@@ -27,7 +27,6 @@ export const QuestCompletingPageComponent = ({
         null,
     );
 
-    // Время, которое прошло
     const timeSpent = quest.duration * 60 - timeLeft;
 
     const onStartQuestClick = async () => {
@@ -66,8 +65,6 @@ export const QuestCompletingPageComponent = ({
         }
     };
 
-    console.log(userAnswers);
-
     const onCompleteTest = async () => {
         const formattedAnswers = {
             quizId: quest.id,
@@ -103,14 +100,13 @@ export const QuestCompletingPageComponent = ({
         };
 
         try {
-            console.log("Відправлення відповідей", formattedAnswers);
             const response = await submitQuest(
                 quest.id,
                 formattedAnswers.userAnswers,
             );
 
             if (response.quizId) {
-                toast.success("Тест успішно завершено!");
+                toast.success("Квест успішно завершено!");
                 setResult(response);
                 setStage("results");
             } else {

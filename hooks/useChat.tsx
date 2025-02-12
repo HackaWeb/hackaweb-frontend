@@ -28,19 +28,15 @@ export const useChat = () => {
         newConnection
             .start()
             .then(() => {
-                console.log("[Chat] ✅ Подключено к чату.");
                 setIsConnected(true);
                 setConnection(newConnection);
 
-                // Запрос истории чата
                 newConnection.invoke("GetChatHistory").catch(console.error);
             })
             .catch(console.error);
 
         return () => {
-            newConnection
-                .stop()
-                .then(() => console.log("[Chat] 🔌 Отключено."));
+            newConnection.stop().then();
         };
     }, []);
 
@@ -48,7 +44,6 @@ export const useChat = () => {
         if (!connection) return;
 
         connection.on("ReceiveMessage", (chatMessage) => {
-            console.log(chatMessage);
             setMessages((prev) => [...prev, chatMessage]);
         });
 

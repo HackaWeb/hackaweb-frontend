@@ -62,7 +62,6 @@ export const QuestEdit = () => {
         };
 
         try {
-            //Upload Quest
             const data = await editQuest(quest!.id, questBody);
 
             if (media) {
@@ -73,7 +72,6 @@ export const QuestEdit = () => {
                 await uploadQuestMedia(data.id, questMedia);
             }
 
-            //Upload Questions
             const editedQuestions = questions.map((q) => {
                 return {
                     id: q.id,
@@ -92,7 +90,6 @@ export const QuestEdit = () => {
 
             await editQuestions(quest!.id, editedQuestions);
 
-            //Upload Media(if available)
             for (let question of questions) {
                 if (question.mediaUrl) {
                     const questionMedia = new FormData();
@@ -104,7 +101,6 @@ export const QuestEdit = () => {
                 }
             }
 
-            //Remove Questions(if available)
             if (removedQuestions) {
                 for (let id of removedQuestions) {
                     await deleteQuestion(id);
@@ -126,7 +122,7 @@ export const QuestEdit = () => {
             return toast.error("Опис не може бути більше 200 символів!");
 
         if (Number(duration) > MAX_QUEST_DURATION)
-            return toast.error("Максимальна тривалість тесту 60хв!");
+            return toast.error("Максимальна тривалість квесту 60хв!");
 
         if (!questions?.length)
             return toast.error("Додайте хоча б одне питання!");
@@ -141,7 +137,6 @@ export const QuestEdit = () => {
 
         const data = await editQuestHandler();
         router.refresh();
-        console.log(data);
         toast.success("Квест успішно відредаговано!");
         dispatch(toggleModal("QuestEdit"));
     };

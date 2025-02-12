@@ -13,7 +13,6 @@ export const Leaderboard = ({
     leaderboard,
     questDuration,
 }: LeaderboardProps) => {
-    console.log(leaderboard);
     return (
         <motion.div
             {...slideFromBottomAnimation}

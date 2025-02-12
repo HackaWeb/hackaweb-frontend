@@ -57,7 +57,6 @@ export const OwnQuests = ({
         }
     };
 
-    console.log(ownQuests);
     return (
         ownQuests && (
             <div className="bg-blackOpacity rounded-md overflow-x-auto w-full">

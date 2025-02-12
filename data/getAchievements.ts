@@ -13,12 +13,6 @@ export const getAchievements = (
             name: "Майстер квестів",
             condition: ownQuests.length >= 5,
         },
-        /*
-        {
-            name: "Рекордсмен",
-            condition: completedQuests.some((q) => q.accuracy >= 90),
-        },
-        */ // How do we get accuracy?
         { name: "Дослідник", condition: completedQuests.length >= 5 },
     ];
 

@@ -22,7 +22,6 @@ const QuestDetails = async ({ params }: PageProps) => {
             console.log(quest);
         }
     } catch (error) {
-        console.log(error);
         notFound();
     }
 
@@ -34,7 +33,7 @@ const QuestDetails = async ({ params }: PageProps) => {
         try {
             const response = await getLeaderboardByQuestId(questId);
             if ("error" in response) {
-                console.log(response.error);
+                console.log(response);
                 return;
             }
 

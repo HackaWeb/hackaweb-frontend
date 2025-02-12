@@ -119,7 +119,7 @@ export const CreateQuest = () => {
             return toast.error("Опис не може бути більше 200 символів!");
 
         if (Number(duration) > MAX_QUEST_DURATION)
-            return toast.error("Максимальна тривалість тесту 60хв!");
+            return toast.error("Максимальна тривалість квесту 60хв!");
 
         if (!questions?.length)
             return toast.error("Додайте хоча б одне питання!");
@@ -127,9 +127,8 @@ export const CreateQuest = () => {
         if (!media || !title.length || !Number(duration) || !description.length)
             return toast.error("Заповніть усі поля!");
 
-        const data = await createQuestHandler();
+        await createQuestHandler();
         router.refresh();
-        console.log(data);
         toast.success("Квест успішно створено!");
         dispatch(toggleModal("QuestCreation"));
     };

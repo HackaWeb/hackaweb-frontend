@@ -14,7 +14,6 @@ const MyProfile = async () => {
     const getProfile = async () => {
         try {
             const data = await getMyProfile();
-            console.log(data);
 
             if ("statusCode" in data) {
                 redirect("/login");

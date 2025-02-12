@@ -15,7 +15,7 @@ import { AnimatePresence, motion, Variants } from "framer-motion";
 import { ImSpinner2 } from "react-icons/im";
 
 const sortOptions: SelectOption[] = [
-    { title: "Рейтингом тесту", value: "testRating" },
+    { title: "Рейтингом квесту", value: "testRating" },
     { title: "Кількістю пройдених разів", value: "completedQuantity" },
     { title: "За алфавітом", value: "alphabet" },
     { title: "Рейтингом автора", value: "authorRating" },
@@ -41,7 +41,6 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
     const [searchQuest, setSearchQuest] = useState<string>("");
     const [quests, setQuests] = useState(serverQuests);
     const [isLoading, setIsLoading] = useState(false);
-    console.log(quests);
 
     const processQuestsHandler = async () => {
         const sortType = sortOption

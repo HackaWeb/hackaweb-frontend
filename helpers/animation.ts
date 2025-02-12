@@ -2,7 +2,7 @@ export const popAnimationWithTransform = {
     initial: {
         opacity: 0,
         scale: 0.6,
-        x: "-50%", // Only this way -transform-x-1/2 works
+        x: "-50%",
     },
     animate: {
         opacity: 1,

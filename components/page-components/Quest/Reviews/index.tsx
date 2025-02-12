@@ -8,7 +8,6 @@ import { slideFromBottomAnimation } from "@/helpers/animation";
 import { formatDate } from "@/helpers/formatDate";
 
 export const Reviews = ({ quest }: ReviewsProps) => {
-    console.log(quest);
     return (
         <motion.div
             {...slideFromBottomAnimation}

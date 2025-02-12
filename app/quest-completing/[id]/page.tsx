@@ -47,8 +47,6 @@ const QuestCompleting = async ({ params }: PageProps) => {
         notFound();
     }
 
-    console.log(quest);
-
     return <QuestCompletingPageComponent quest={quest} user={user} />;
 };
 

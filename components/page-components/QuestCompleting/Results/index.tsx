@@ -5,7 +5,6 @@ import { ResultsProps } from "./Results.props";
 import Image from "next/image";
 
 export const Results = ({ quest, result, timeSpent }: ResultsProps) => {
-    console.log(result);
     return (
         <div className="relative">
             <div className="pt-2 sm:pt-16 px-4 relative bg-[url(/results-bg.png)] bg-cover bg-center">

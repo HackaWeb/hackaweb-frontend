@@ -20,8 +20,8 @@ export const ChoiceQuestion = ({
     const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 
     useEffect(() => {
+        if (!question.options) return;
         if (initialAnswer.length > 0) {
-            //@ts-ignore
             const restoredIndexes = question.options
                 .map((option, index) =>
                     initialAnswer.includes(option) ? index : -1,
@@ -45,8 +45,10 @@ export const ChoiceQuestion = ({
 
         setSelectedOptions(newSelectedOptions);
 
-        //@ts-ignore
-        onAnswerChange(newSelectedOptions.map((i) => question.options[i]));
+        if (question.options) {
+            //@ts-ignore
+            onAnswerChange(newSelectedOptions.map((i) => question.options[i]));
+        }
     };
 
     return (

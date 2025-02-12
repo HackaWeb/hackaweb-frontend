@@ -28,7 +28,7 @@ export const GeneralResults = ({
                         хв
                     </li>
                     <li className="mt-1">
-                        Місце в рейтингу тесту:{" "}
+                        Місце в рейтингу квесту:{" "}
                         <span className="text-purple">3</span> з 20
                     </li>
                 </ul>

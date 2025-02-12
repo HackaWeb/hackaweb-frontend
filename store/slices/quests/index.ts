@@ -21,7 +21,6 @@ const quests = createSlice({
             };
         },
         setQuestions: (state, action: PayloadAction<Question[] | null>) => {
-            console.log(action.payload);
             return {
                 ...state,
                 questions: action.payload,
