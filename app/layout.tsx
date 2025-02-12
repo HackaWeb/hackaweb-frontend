@@ -41,6 +41,7 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
     } else {
         try {
             const profileData = await getMyProfile();
+            console.log(profileData);
 
             if ("email" in profileData) {
                 profile = profileData;
