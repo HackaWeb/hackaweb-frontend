@@ -22,7 +22,7 @@ export const Aside = ({ profile }: AsideProps) => {
         { title: "Мій кабінет", link: profile ? "/profile" : "/login" },
         { title: "Я адміністратор", link: profile ? "/profile" : "/login" },
     ];
-    
+
     const router = useRouter();
     const dispatch = useAppDispatch();
     const aside = useAppSelector(selectAside);

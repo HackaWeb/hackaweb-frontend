@@ -50,7 +50,7 @@ const UserQuestsDashboard = ({
                                 </td>
                                 <td className="px-4 py-2">
                                     <Image
-                                        src={quest.file}
+                                        src={quest.imageUrl}
                                         alt="quest image"
                                         width={64}
                                         height={64}
@@ -64,7 +64,7 @@ const UserQuestsDashboard = ({
                                 </td>
                                 {/*TODO: Зіграно разів*/}
                                 <td className="px-4 py-2">
-                                    <RenderRating rating={quest.rating} />
+                                    <RenderRating rating={quest.rate} />
                                 </td>
                                 <td className="px-4 py-2">
                                     <p>10</p>

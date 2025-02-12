@@ -47,13 +47,13 @@ export const Reviews = ({ quest }: ReviewsProps) => {
                                         {review.createdAt}
                                     </div>
                                     <RenderRating
-                                        rating={review.rating}
+                                        rating={review.rate}
                                         className="mt-2 gap-1"
                                     />
                                 </div>
                             </div>
                             <div className="text-gray-light">
-                                {review.comment}
+                                {review.text}
                             </div>
                         </div>
                     ))
