@@ -47,11 +47,11 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
                 profile = profileData;
             } else {
                 profile = null;
-                await setCookie("token", "");
+                setCookie("token", "");
             }
         } catch (error) {
             console.error(error);
-            await setCookie("token", "");
+            setCookie("token", "");
         }
     }
 
