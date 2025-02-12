@@ -4,6 +4,7 @@ import { CompletedQuests } from "@/components/common/tables/CompletedQuests";
 import { OwnQuests } from "@/components/common/tables/OwnQuests";
 import { ProfileForm } from "@/components/common/ProfileForm";
 import { LeftColumnProfile } from "@/components/common/LeftColumnProfile";
+import { motion } from "framer-motion";
 
 export const MyProfilePageComponent = ({
     profile,

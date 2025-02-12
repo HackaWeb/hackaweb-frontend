@@ -17,6 +17,9 @@ import { useRouter } from "next/navigation";
 import { DeleteProfile } from "./DeleteProfile";
 import Image from "next/image";
 import { LeftColumnProfileProps } from "./LeftColumnProfile.props";
+import { setCookie } from "@/helpers/setCookie";
+import { motion } from "framer-motion";
+import { defaultAnimation } from "@/helpers/animation";
 
 export const LeftColumnProfile = ({
     profile,
@@ -64,6 +67,7 @@ export const LeftColumnProfile = ({
             }
             toast.success("Аватар видалено успішно!");
             setAvatar(null);
+            setCookie("token", "");
         } catch (error) {
             console.error(error);
             toast.error(DEFAULT_FIELD_ERROR.message);
@@ -93,7 +97,11 @@ export const LeftColumnProfile = ({
                         rating={profile.rating}
                         className="gap-[6px] absolute top-1 left-1"
                     />
-                    <div className="bg-blackOpacity-dark w-full h-full flex items-center justify-center rounded-md overflow-hidden">
+                    <motion.div
+                        key={avatar}
+                        {...defaultAnimation}
+                        className="bg-blackOpacity-dark w-full h-full flex items-center justify-center rounded-md overflow-hidden"
+                    >
                         {avatar ? (
                             <>
                                 {isEditable && (
@@ -117,7 +125,7 @@ export const LeftColumnProfile = ({
                         ) : (
                             <AiOutlineUser className="text-purple size-20" />
                         )}
-                    </div>
+                    </motion.div>
                 </div>
                 {isEditable && (
                     <label className="underline text-purple mt-2 text-center block cursor-pointer">

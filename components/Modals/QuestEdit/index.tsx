@@ -15,7 +15,7 @@ import { ModalBg } from "../ModalBg";
 import {
     deleteQuestion,
     editQuest,
-    editQuestion,
+    editQuestions,
     uploadQuestionMedia,
     uploadQuestMedia,
 } from "@/api/quests";
@@ -24,6 +24,8 @@ import { toast } from "react-toastify";
 import { toggleModal } from "@/store/slices/modals";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { defaultAnimationWithTransform } from "../../../helpers/animation";
 
 export const QuestEdit = () => {
     const router = useRouter();
@@ -67,13 +69,26 @@ export const QuestEdit = () => {
             }
 
             //Upload Questions
-            for (let question of questions) {
-                await editQuestion(question.id, {
-                    text: question.text,
-                    type: question.type,
-                });
+            const editedQuestions = questions.map((q) => {
+                return {
+                    id: q.id,
+                    quizId: quest!.id,
+                    options: q.choiceOptions.map((o) => {
+                        return {
+                            title: o.title,
+                            isCorrect: o.isCorrect,
+                            questionId: q.id,
+                        };
+                    }),
+                    text: q.text,
+                    type: q.type,
+                };
+            });
 
-                //Upload Media(if available)
+            await editQuestions(quest!.id, editedQuestions);
+
+            //Upload Media(if available)
+            for (let question of questions) {
                 if (question.mediaUrl) {
                     const questionMedia = new FormData();
                     const file = await fetch(question.mediaUrl!).then((r) =>
@@ -126,7 +141,10 @@ export const QuestEdit = () => {
     return (
         isModalOpened("QuestEdit", modals) && (
             <>
-                <div className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4">
+                <motion.div
+                    {...defaultAnimationWithTransform}
+                    className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4"
+                >
                     <ReturnBtn
                         className="self-start mt-2 mb-10 ml-2 sm:ml-4"
                         modal="QuestEdit"
@@ -223,14 +241,10 @@ export const QuestEdit = () => {
                                             key={index}
                                             className="flex gap-2 place-items-center"
                                         >
-                                            {(question.mediaUrl &&
-                                                question.mediaUrl.includes(
-                                                    ".png",
-                                                )) ||
-                                            question.fileType === "image" ? (
+                                            {question.mediaUrl ? (
                                                 <figure className="w-14 h-14 place-content-center">
                                                     <Image
-                                                        src={question.mediaUrl!}
+                                                        src={question.mediaUrl}
                                                         alt="question image"
                                                         className="rounded-md "
                                                         sizes="100vw"
@@ -296,7 +310,7 @@ export const QuestEdit = () => {
                             </Button>
                         </form>
                     </div>
-                </div>
+                </motion.div>
                 <ModalBg modal="QuestEdit" />
             </>
         )

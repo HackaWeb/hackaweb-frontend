@@ -11,6 +11,8 @@ import { deleteQuest, getQuestById } from "@/api/quests";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { slideAnimation } from "@/helpers/animation";
 
 export const OwnQuests = ({
     profile,
@@ -54,7 +56,14 @@ export const OwnQuests = ({
     };
     return (
         ownQuests && (
-            <div className="bg-blackOpacity rounded-md overflow-x-auto w-full">
+            <motion.div
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                custom={1}
+                variants={slideAnimation}
+                className="bg-blackOpacity rounded-md overflow-x-auto w-full"
+            >
                 <div className="flex justify-between items-center p-4">
                     <h2 className="text-xl font-semibold text-white">
                         {isCreatedByMe
@@ -96,7 +105,7 @@ export const OwnQuests = ({
                                     <th className="p-3 text-left w-[120px]">
                                         Рейтинг
                                     </th>
-                                    {isCreatedByMe && (
+                                    {(isCreatedByMe || profile.isAdmin) && (
                                         <th className="p-3 text-left w-[100px]">
                                             Дії
                                         </th>
@@ -133,7 +142,7 @@ export const OwnQuests = ({
                                         <td className="p-3">
                                             {quest.rate || 0}
                                         </td>
-                                        {isCreatedByMe && (
+                                        {(isCreatedByMe || profile.isAdmin) && (
                                             <td className="p-3">
                                                 <button
                                                     className="p-2 bg-purple-600 rounded-md hover:bg-purple-dark duration-300"
@@ -167,7 +176,7 @@ export const OwnQuests = ({
                             : `Користувач ще не створив жодного квесту`}
                     </div>
                 )}
-            </div>
+            </motion.div>
         )
     );
 };

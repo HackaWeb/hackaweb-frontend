@@ -32,3 +32,15 @@ export interface EditQuestionBody {
     text: string;
     type: number;
 }
+
+export type EditQuestionsBody = {
+    id: string;
+    text: string;
+    type: number;
+    quizId: string;
+    options: {
+        title: string;
+        isCorrect: boolean;
+        questionId: string;
+    }[];
+}[];

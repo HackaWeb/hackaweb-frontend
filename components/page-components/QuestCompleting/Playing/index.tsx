@@ -1,4 +1,5 @@
-import { useState } from "react";
+"use client";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { ChoiceQuestion } from "./ChoiceQuestion";
 import { InputQuestion } from "./InputQuestion";
@@ -9,45 +10,63 @@ import { Chat } from "./Chat";
 import { toast } from "react-toastify";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import { PlayingProps } from "./Playing.props";
+import { motion } from "framer-motion";
+import { slideAnimation } from "@/helpers/animation";
+import { BiDirections } from "react-icons/bi";
 
 export const PlayingGame = ({
     questions,
     onCompleteTest,
+    userAnswers,
     setUserAnswers,
     timeLeft,
     user,
-}: PlayingProps) => {
+}: PlayingProps & {
+    userAnswers: Record<number, any>;
+    setUserAnswers: React.Dispatch<React.SetStateAction<Record<number, any>>>;
+}) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [answers, setAnswers] = useState<Record<number, any>>({});
     const [questionsCompleted, setQuestionsCompleted] = useState<number[]>([]);
     const [isChatOpened, setIsChatOpened] = useState(false);
+    const direction = useRef<number>(0);
 
     const currentQuestion = questions[currentQuestionIndex];
 
+    const setCurrentQuestionIndexHandler = (index: number) => {
+        setCurrentQuestionIndex((prev) => {
+            if (index > prev) {
+                direction.current = 1;
+            } else if (index < prev) {
+                direction.current = -1;
+            } else {
+                direction.current = 0;
+            }
+            return index;
+        });
+    };
+
     const onAnswerChange = (answer: any) => {
-        setAnswers((prev) => {
+        setUserAnswers((prev) => {
             const newAnswers = { ...prev, [currentQuestionIndex]: answer };
-            setUserAnswers(newAnswers);
-
-            setQuestionsCompleted((prevCompleted) => {
-                return prevCompleted.includes(currentQuestionIndex)
-                    ? prevCompleted
-                    : [...prevCompleted, currentQuestionIndex];
-            });
-
             return newAnswers;
+        });
+
+        setQuestionsCompleted((prevCompleted) => {
+            return prevCompleted.includes(currentQuestionIndex)
+                ? prevCompleted
+                : [...prevCompleted, currentQuestionIndex];
         });
     };
 
     const onNextQuestionClick = () => {
-        console.log(answers[currentQuestionIndex]);
-        if (answers[currentQuestionIndex] === undefined) {
+        if (userAnswers[currentQuestionIndex] === undefined) {
             toast.error("Ви не обрали відповідь!");
             return;
         }
 
         if (currentQuestionIndex < questions.length - 1) {
             setCurrentQuestionIndex((prev) => prev + 1);
+            direction.current = 1;
         } else {
             onCompleteTest();
             toast.success("Тест успішно завершено!");
@@ -60,7 +79,7 @@ export const PlayingGame = ({
                 return (
                     <BooleanQuestion
                         onAnswerChange={onAnswerChange}
-                        initialAnswer={answers[currentQuestionIndex]}
+                        initialAnswer={userAnswers[currentQuestionIndex]}
                     />
                 );
             case 1:
@@ -68,7 +87,7 @@ export const PlayingGame = ({
                     <ChoiceQuestion
                         question={currentQuestion}
                         onAnswerChange={onAnswerChange}
-                        initialAnswer={answers[currentQuestionIndex] || []}
+                        initialAnswer={userAnswers[currentQuestionIndex] || []}
                     />
                 );
             case 2:
@@ -76,7 +95,7 @@ export const PlayingGame = ({
                     <InputQuestion
                         onAnswerChange={onAnswerChange}
                         initialAnswer={
-                            (answers[currentQuestionIndex] as string) || ""
+                            (userAnswers[currentQuestionIndex] as string) || ""
                         }
                     />
                 );
@@ -100,38 +119,44 @@ export const PlayingGame = ({
             />
             <ProgressBar
                 currentQuestionIndex={currentQuestionIndex}
-                setCurrentQuestionIndex={setCurrentQuestionIndex}
+                setCurrentQuestionIndex={setCurrentQuestionIndexHandler}
                 questionsCompleted={questionsCompleted}
                 questions={questions}
             />
-
-            <div className="bg-blackOpacity pt-16 px-4 relative">
-                <InfoBox
-                    timeLeft={timeLeft as number}
-                    questionsLength={questions.length}
-                    currentQuestionIndex={currentQuestionIndex}
-                />
-                <img
-                    src="/question.png"
-                    alt="Питання"
-                    className="mx-auto mt-3 rounded-lg w-full max-w-[400px]"
-                />
-                <h1 className="pt-10 pb-5 text-center text-xl xsm:text-3xl">
-                    {currentQuestion.title}
-                </h1>
-            </div>
-
-            {renderQuestion()}
-
-            <Button
-                color="purpleBackground"
-                className="mt-6 mx-auto max-w-[200px] w-full mb-10"
-                onClick={onNextQuestionClick}
+            <motion.div
+                key={currentQuestionIndex}
+                custom={direction.current}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={slideAnimation}
             >
-                {currentQuestionIndex === questions.length - 1
-                    ? "Завершити тест"
-                    : "Наступне питання"}
-            </Button>
+                <div className="bg-blackOpacity pt-16 px-4 relative">
+                    <InfoBox
+                        timeLeft={timeLeft as number}
+                        questionsLength={questions.length}
+                        currentQuestionIndex={currentQuestionIndex}
+                    />
+                    <img
+                        src="/question.png"
+                        alt="Питання"
+                        className="mx-auto mt-3 rounded-lg w-full max-w-[400px]"
+                    />
+                    <h1 className="pt-10 pb-5 text-center text-xl xsm:text-3xl">
+                        {currentQuestion.text}
+                    </h1>
+                </div>
+                {renderQuestion()}
+                <Button
+                    color="purpleBackground"
+                    className="mt-6 mx-auto max-w-[200px] w-full mb-10"
+                    onClick={onNextQuestionClick}
+                >
+                    {currentQuestionIndex === questions.length - 1
+                        ? "Завершити тест"
+                        : "Наступне питання"}
+                </Button>
+            </motion.div>
         </div>
     );
 };

@@ -1,11 +1,14 @@
+import { QuestionWhileTesting } from "@/types/question.interface";
 import { fetchApi } from "./fetchApi";
 import {
     CreateQuestBody,
     EditQuestBody,
     EditQuestionBody,
+    EditQuestionsBody,
     GetQuestsQuery,
 } from "./requestBodies/quest.interface";
 import { DeleteResponseSuccess } from "./responses/common/deleteSuccess.interface";
+import { EditResponseSuccess } from "./responses/common/editSuccess.interface";
 import {
     CreateQuestResponse,
     EditQuestionResponse,
@@ -45,9 +48,7 @@ export const getQuestsByOwnerId = async (
         method: "GET",
     });
 
-export const getQuestQuestionsByQuestId = async (
-    questId: string,
-): Promise<any> =>
+export const getQuestionsByQuestId = async (questId: string): Promise<QuestionWhileTesting[]> =>
     fetchApi({
         endpoint: `/quiz/questions/${questId}`,
         isAuthRequired: true,
@@ -95,6 +96,17 @@ export const editQuest = async (
         endpoint: `/quiz/${questId}`,
         isAuthRequired: true,
         method: "PUT",
+        body,
+    });
+
+export const editQuestions = async (
+    quizId: string,
+    body: EditQuestionsBody,
+): Promise<EditResponseSuccess> =>
+    fetchApi({
+        endpoint: `/questions/${quizId}/questions`,
+        isAuthRequired: true,
+        method: "POST",
         body,
     });
 

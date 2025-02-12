@@ -7,22 +7,26 @@ import { isModalOpened } from "@/helpers/isModalOpened";
 import { toast } from "react-toastify";
 import { ModalBg } from "../ModalBg";
 import { BsFillImageFill } from "react-icons/bs";
-import { FaVideo } from "react-icons/fa6";
 import { Select } from "@/components/ui/Select";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { Question } from "@/types/question.interface";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import {
     addQuestion,
     setOptions,
     setQuestionActiveId,
 } from "@/store/slices/quests";
+import { motion } from "framer-motion";
+import {
+    defaultAnimationWithTransform,
+    defaultAnimation,
+} from "../../../helpers/animation";
+import { FaImage } from "react-icons/fa";
 
 export const CreateQuestion = () => {
     const {
         dispatch,
         fileInputRef,
-        fileType,
         modals,
         onFileUpload,
         options,
@@ -34,12 +38,8 @@ export const CreateQuestion = () => {
         text,
         resetOptions,
         media,
-        setFileType,
-        setMedia,
         setText,
     } = useQuestionModal();
-
-    const videoRef = useRef<HTMLVideoElement>(null);
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -55,36 +55,11 @@ export const CreateQuestion = () => {
             type,
             choiceOptions: options,
             mediaUrl: media ? media : undefined,
-            fileType: fileType ? fileType : undefined,
         };
 
         dispatch(addQuestion(question));
         resetOptions("QuestionCreation", "Питання створено!");
     };
-
-    useEffect(() => {
-        if (fileType === "video" && videoRef.current) {
-            const video = videoRef.current;
-            const handleMetadataLoad = () => {
-                if (
-                    video.duration >
-                    Number(process.env.NEXT_PUBLIC_MAX_VIDEO_DURATION)
-                ) {
-                    setMedia(null);
-                    setFileType(null);
-                    toast.error(
-                        `Тривалість відео неповинна перевищувати ${process.env.NEXT_PUBLIC_MAX_VIDEO_DURATION} секунд!`,
-                    );
-                }
-            };
-
-            video.addEventListener("loadedmetadata", handleMetadataLoad);
-
-            return () => {
-                video.removeEventListener("loadedmetadata", handleMetadataLoad);
-            };
-        }
-    }, [media, fileType]);
 
     useEffect(() => {
         if (modals.includes("QuestionCreation")) {
@@ -96,7 +71,10 @@ export const CreateQuestion = () => {
     return (
         isModalOpened("QuestionCreation", modals) && (
             <>
-                <div className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4">
+                <motion.div
+                    {...defaultAnimationWithTransform}
+                    className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4"
+                >
                     <ReturnBtn
                         className="self-start mt-2 mb-10 ml-2 sm:ml-4"
                         modal="QuestionCreation"
@@ -107,39 +85,32 @@ export const CreateQuestion = () => {
                     </div>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
-                            {media ? (
-                                fileType === "image" ? (
+                            <motion.div key={media} {...defaultAnimation}>
+                                {media || question?.mediaUrl ? (
                                     <img
                                         src={media || question?.mediaUrl}
                                         alt="Зображення питання"
                                         className="w-full h-auto aspect-square object-cover"
                                     />
                                 ) : (
-                                    <video
-                                        src={media || question?.mediaUrl}
-                                        controls
-                                        ref={videoRef}
-                                        className="w-full h-auto aspect-square object-cover"
-                                    />
-                                )
-                            ) : (
-                                <div className="w-full h-auto border-2 border-purple aspect-square flex items-center justify-center">
-                                    <BsFillImageFill className="size-20 text-gray" />
-                                </div>
-                            )}
+                                    <div className="w-full h-auto border-2 border-purple aspect-square flex items-center justify-center">
+                                        <BsFillImageFill className="size-20 text-gray" />
+                                    </div>
+                                )}
+                            </motion.div>
                             <Input
                                 id="media"
                                 type="file"
                                 ref={fileInputRef}
                                 className="hidden"
-                                accept=".png, .mp4"
+                                accept=".png"
                                 onChange={onFileUpload}
                             />
                             <div
                                 onClick={() => fileInputRef.current?.click()}
                                 className="text-purple underline cursor-pointer text-center mt-2 flex items-center justify-center gap-2"
                             >
-                                <FaVideo size={18} /> Змінити відео/картинку
+                                <FaImage size={18} /> Змінити картинку
                             </div>
                         </div>
                         <form className="w-full mt-6" onSubmit={onSubmit}>
@@ -181,7 +152,7 @@ export const CreateQuestion = () => {
                             </Button>
                         </form>
                     </div>
-                </div>
+                </motion.div>
                 <ModalBg modal="QuestionCreation" />
             </>
         )
