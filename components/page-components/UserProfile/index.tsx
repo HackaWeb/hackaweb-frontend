@@ -1,10 +1,10 @@
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { UserProfileProps } from "./UserProfile.props";
-import { LeftColumn } from "./LeftColumn";
 import { CompletedQuests } from "@/components/common/tables/CompletedQuests";
 import { OwnQuests } from "@/components/common/tables/OwnQuests";
 import { cn } from "@/helpers/cn";
 import { ProfileForm } from "@/components/common/ProfileForm";
+import { LeftColumnProfile } from "@/components/common/LeftColumnProfile";
 
 export const UserProfilePageComponent = ({
     isEditable,
@@ -27,7 +27,8 @@ export const UserProfilePageComponent = ({
                             : "grid-cols-1 xl:grid-cols-[240px_auto]",
                     )}
                 >
-                    <LeftColumn
+                    <LeftColumnProfile
+                        isSelfProfile={false}
                         profile={profile}
                         isEditable={isEditable}
                         completedQuests={completedQuests}
