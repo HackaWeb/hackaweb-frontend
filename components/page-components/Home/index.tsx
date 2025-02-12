@@ -13,6 +13,8 @@ import { getQuests } from "@/api/quests";
 import { SortType } from "@/types/quest.interface";
 import { motion, Variants } from "framer-motion";
 import { ImSpinner } from "react-icons/im";
+import { toggleModal } from "@/store/slices/modals";
+import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 
 const sortOptions: SelectOption[] = [
     { title: "Рейтингом тесту", value: "testRating" },

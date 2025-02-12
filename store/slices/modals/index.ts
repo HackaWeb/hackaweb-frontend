@@ -22,6 +22,13 @@ const modals = createSlice({
             const active = state.active.filter((m) => m !== action.payload);
             return { ...state, active, prev: action.payload };
         },
+
+        setModals: (state, action: PayloadAction<ModalType[]>) => {
+            return {
+                ...state,
+                active: action.payload,
+            };
+        },
     },
     selectors: {
         selectModals: (state) => state.active,
@@ -32,6 +39,6 @@ const modals = createSlice({
 
 export const { selectModals, selectPrev, selectDeleteConfirmationTitle } =
     modals.selectors;
-export const { toggleModal } = modals.actions;
+export const { toggleModal, setModals } = modals.actions;
 
 export default modals.reducer;
