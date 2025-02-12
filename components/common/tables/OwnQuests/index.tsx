@@ -151,6 +151,8 @@ export const OwnQuests = ({
                                                             quest.id,
                                                         );
                                                     }}
+                                                    name="Редагувати квест"
+                                                    aria-label="Редагувати квест"
                                                 >
                                                     <AiOutlineEdit className="text-white" />
                                                 </button>
@@ -159,6 +161,8 @@ export const OwnQuests = ({
                                                     onClick={() => {
                                                         deleteHandler(quest.id);
                                                     }}
+                                                    name="Видалити квест"
+                                                    aria-label="Видалити квест"
                                                 >
                                                     <AiOutlineDelete className="text-white" />
                                                 </button>
