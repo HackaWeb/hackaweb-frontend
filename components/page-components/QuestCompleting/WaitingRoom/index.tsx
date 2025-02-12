@@ -38,7 +38,7 @@ export const WaitingRoom = ({ onStartQuestClick, quest }: WaitingRoomProps) => {
             </div>
             <Button
                 color="purpleBackground"
-                className="mt-4 mx-auto max-w-[200] w-full mb-10"
+                className="mt-4 mx-auto max-w-[200px] w-full mb-10"
                 onClick={onStartQuestClick}
             >
                 Почати квест

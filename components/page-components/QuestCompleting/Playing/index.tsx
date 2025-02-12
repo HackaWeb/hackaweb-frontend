@@ -1,4 +1,5 @@
 "use client";
+
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { ChoiceQuestion } from "./ChoiceQuestion";
@@ -12,8 +13,8 @@ import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import { PlayingProps } from "./Playing.props";
 import { motion } from "framer-motion";
 import { slideFromSidesAnimation } from "@/helpers/animation";
-import { BiDirections } from "react-icons/bi";
 import Image from "next/image";
+import { FaImage } from "react-icons/fa";
 
 export const PlayingGame = ({
     questions,
@@ -137,14 +138,20 @@ export const PlayingGame = ({
                         questionsLength={questions.length}
                         currentQuestionIndex={currentQuestionIndex}
                     />
-                    <Image
-                        src="/question.png"
-                        alt="Питання"
-                        className="mx-auto mt-3 rounded-lg w-full max-w-[400px]"
-                        sizes="100vw"
-                        height={0}
-                        width={0}
-                    />
+                    {currentQuestion.mediaUrl ? (
+                        <Image
+                            src={currentQuestion.mediaUrl}
+                            alt="Питання"
+                            className="mx-auto mt-3 rounded-lg w-full max-w-[400px]"
+                            sizes="100vw"
+                            height={0}
+                            width={0}
+                        />
+                    ) : (
+                        <div className="max-w-[400px] mx-auto flex items-center justify-center rounded-lg">
+                            <FaImage className="size-80" />
+                        </div>
+                    )}
                     <h1 className="pt-10 pb-5 text-center text-xl xsm:text-3xl">
                         {currentQuestion.text}
                     </h1>
