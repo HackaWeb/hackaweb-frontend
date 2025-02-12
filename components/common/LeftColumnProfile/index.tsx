@@ -101,6 +101,8 @@ export const LeftColumnProfile = ({
                             className="absolute top-1 right-1 p-1 z-10"
                             onClick={deleteAvatarHandler}
                             color="redBorder"
+                            name="Видалити аватар"
+                            aria-label="Видалити аватар"
                         >
                             <AiOutlineClose className="size-5" />
                         </Button>
