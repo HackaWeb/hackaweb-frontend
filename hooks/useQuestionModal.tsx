@@ -1,52 +1,47 @@
-import {
-    CustomSelectOption,
-    SelectOption,
-} from "@/types/selectOption.interface";
+import { SelectOption } from "@/types/selectOption.interface";
 import { useEffect, useRef, useState } from "react";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import { useAppDispatch } from "@/store/hooks/useAppDispatch";
-import {
-    selectModals,
-    selectPrev,
-    toggleModal,
-} from "@/store/slices/modals/modals";
-import {
-    selectEditingQuestion,
-    selectQuestions,
-    setEditingId,
-} from "@/store/slices/questions/questions";
-import { selectOptions, setOptions } from "@/store/slices/options/options";
 import { toast } from "react-toastify";
 import { ModalType } from "@/store/slices/modals/modals.types";
 import { BooleanAnswer } from "@/components/Modals/CreateQuestion/BooleanAnswer";
 import { InputAnswer } from "@/components/Modals/CreateQuestion/InputAnswer";
 import { Choice } from "@/components/Modals/CreateQuestion/ChoiceAnswer";
+import {
+    selectModals,
+    selectPrev,
+    toggleModal,
+} from "@/store/slices/modals/modals";
+import { useAppDispatch } from "@/store/hooks/useAppDispatch";
+import {
+    selectActiveQuestion,
+    selectOptions,
+    setOptions,
+} from "@/store/slices/quests/quests";
 
-const questionTypes: CustomSelectOption[] = [
+const questionTypes: SelectOption[] = [
     {
         title: "Відкритого типу",
-        value: "input",
+        value: "2",
     },
     {
         title: "Вибір з варіантами",
-        value: "choice",
+        value: "1",
     },
     {
         title: "Правда/Брехня",
-        value: "boolean",
+        value: "0",
     },
 ];
 
 export const useQuestionModal = () => {
     const dispatch = useAppDispatch();
     const modals = useAppSelector(selectModals);
-    const questions = useAppSelector(selectQuestions);
-    const question = useAppSelector(selectEditingQuestion);
-    const prevModal = useAppSelector(selectPrev);
+    const question = useAppSelector(selectActiveQuestion);
     const options = useAppSelector(selectOptions);
+    const prevModal = useAppSelector(selectPrev);
 
     const [media, setMedia] = useState<string | null>(null);
-    const [title, setTitle] = useState<string>("");
+    const [text, setText] = useState<string>("");
     const [fileType, setFileType] = useState<"image" | "video" | null>(null);
     const [questionType, setQuestionType] = useState<SelectOption | null>(null);
 
@@ -65,17 +60,27 @@ export const useQuestionModal = () => {
     };
 
     useEffect(() => {
-        dispatch(setOptions(question?.options || []));
-        if (question?.type !== questionType?.value) dispatch(setOptions([]));
+        if (question) {
+            const options = question.choiceOptions.map((o, index) => {
+                return {
+                    ...o,
+                    index,
+                };
+            });
+            dispatch(setOptions(options));
+        }
+
+        if (question?.type !== Number(questionType?.value))
+            dispatch(setOptions(null));
     }, [question, questionType]);
 
     const renderQuestionTitle = () => {
         switch (question?.type) {
-            case "input":
+            case 2:
                 return "Відкритого типу";
-            case "choice":
+            case 1:
                 return "Вибір з варіантами";
-            case "boolean":
+            case 0:
                 return "Правда/Брехня";
             default:
                 return "";
@@ -84,11 +89,11 @@ export const useQuestionModal = () => {
 
     const renderGetAnswer = () => {
         switch (questionType?.value) {
-            case "input":
+            case "2":
                 return <InputAnswer />;
-            case "choice":
+            case "1":
                 return <Choice />;
-            case "boolean":
+            case "0":
                 return <BooleanAnswer />;
             default:
                 return <></>;
@@ -96,12 +101,11 @@ export const useQuestionModal = () => {
     };
 
     const resetOptions = (modal: ModalType, msg: string) => {
-        setTitle("");
+        setText("");
         setMedia(null);
         setFileType(null);
+        dispatch(setOptions(null));
         setQuestionType(null);
-        dispatch(setOptions([]));
-        dispatch(setEditingId(null));
         dispatch(toggleModal(modal));
         if (prevModal) dispatch(toggleModal(prevModal));
         toast.success(msg);
@@ -121,10 +125,11 @@ export const useQuestionModal = () => {
         prevModal,
         options,
         fileInputRef,
-        title,
-        questions,
-        setTitle,
+        text,
         resetOptions,
         media,
+        setMedia,
+        setFileType,
+        setText,
     };
 };

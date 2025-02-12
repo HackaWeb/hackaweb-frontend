@@ -1,21 +1,14 @@
 "use client";
 
 import { isModalOpened } from "@/helpers/isModalOpened";
-import { useAppSelector } from "@/store/hooks/useAppSelector";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { RiEditLine } from "react-icons/ri";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { BsFillImageFill } from "react-icons/bs";
-import { selectModals, toggleModal } from "@/store/slices/modals/modals";
-import {
-    selectQuestions,
-    setEditingId,
-} from "@/store/slices/questions/questions";
 import { FiEdit2 } from "react-icons/fi";
 import Image from "next/image";
 import { IoImageOutline } from "react-icons/io5";
@@ -24,45 +17,45 @@ import {
     uploadQuestionMedia,
     uploadQuestMedia,
 } from "@/api/quests";
-import { parseQuestionType } from "@/helpers/parseQuestionType";
 import { ModalBg } from "../ModalBg";
+import { useQuestModals } from "@/hooks/useQuestModals";
+import { CreateQuestBody } from "@/api/requestBodies/quests.interface";
+import { useRouter } from "next/navigation";
+import { toggleModal } from "@/store/slices/modals/modals";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { removeQuestion } from "@/store/slices/quests/quests";
 
 export const CreateQuest = () => {
-    const dispatch = useAppDispatch();
-    const questions = useAppSelector(selectQuestions);
-    const modals = useAppSelector(selectModals);
+    const router = useRouter();
+
+    const {
+        media,
+        modals,
+        onImageUpload,
+        onQuestionAddClick,
+        onQuestionEditClick,
+        questions,
+        dispatch,
+        deleteQuestionHandler,
+    } = useQuestModals();
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [media, setMedia] = useState<string | null>(null);
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [duration, setDuration] = useState<string>("");
 
-    const onQuestionAddClick = () => {
-        dispatch(toggleModal("QuestCreation"));
-        dispatch(toggleModal("QuestionCreation"));
-    };
-
-    const onQuestionEditClick = (id: string) => {
-        dispatch(setEditingId(id));
-        dispatch(toggleModal("QuestCreation"));
-        dispatch(toggleModal("QuestionEdit"));
-    };
-
     const createQuestHandler = async () => {
-        const questMedia = new FormData();
-        const file = await fetch(media!).then((r) => r.blob());
-        questMedia.append("file", file as File);
+        if (!questions) return;
 
-        const questBody = {
+        const questBody: CreateQuestBody["quiz"] = {
             title,
             description,
             duration: Number(duration),
             questions: questions.map((question) => {
                 return {
                     questionId: question.id,
-                    title: question.title,
-                    type: parseQuestionType(question.type),
-                    options: question.options.map((o) => {
+                    title: question.text,
+                    type: question.type,
+                    options: question.choiceOptions!.map((o) => {
                         return {
                             title: o.title
                                 .trim()
@@ -77,17 +70,26 @@ export const CreateQuest = () => {
 
         try {
             const data = await createQuest({ quiz: questBody });
-            const { errors } = await uploadQuestMedia(data.id, questMedia);
-            for (let question of questions) {
-                const questionMedia = new FormData();
-                const file = await fetch(question.mediaUrl!).then((r) =>
-                    r.blob(),
-                );
-                questionMedia.append("file", file as File);
-                await uploadQuestionMedia(question.id, questionMedia);
+
+            if (media) {
+                const questMedia = new FormData();
+                const file = await fetch(media!).then((r) => r.blob());
+                questMedia.append("file", file as File);
+
+                await uploadQuestMedia(data.id, questMedia);
             }
 
-            if (errors) console.error(errors);
+            for (let question of questions) {
+                if (question.mediaUrl) {
+                    const questionMedia = new FormData();
+                    const file = await fetch(question.mediaUrl).then((r) =>
+                        r.blob(),
+                    );
+                    questionMedia.append("file", file as File);
+                    await uploadQuestionMedia(question.id, questionMedia);
+                }
+            }
+
             return data;
         } catch (error) {
             console.log(error);
@@ -101,40 +103,41 @@ export const CreateQuest = () => {
             !title.length ||
             !Number(duration) ||
             !description.length ||
-            !questions.length
+            !questions?.length
         )
             return toast.error("Заповніть коректно усі поля!");
 
         const data = await createQuestHandler();
+        router.refresh();
         console.log(data);
         toast.success("Квест успішно створено!");
-    };
-
-    const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const uploadedFile = e.target.files?.[0];
-
-        if (uploadedFile) {
-            const fileURL = URL.createObjectURL(uploadedFile);
-            setMedia(fileURL);
-        }
+        dispatch(toggleModal("QuestCreation"));
     };
 
     return (
         isModalOpened("QuestCreation", modals) && (
             <>
-                <div className="absolute left-[50%] -translate-x-[50%] max-w-[700px] w-full top-10 z-10 flex flex-col place-content-center place-items-center bg-blue p-6">
-                    <ReturnBtn className="self-start" modal="QuestCreation" />
-                    <div className="text-3xl mt-10">Створення Квесту</div>
+                <div className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4">
+                    <ReturnBtn
+                        className="self-start mt-2 mb-10 ml-2 sm:ml-4"
+                        modal="QuestCreation"
+                    />
+                    <div className="text-xl sm:text-3xl text-center">
+                        Створення Квесту
+                    </div>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
                             {media ? (
-                                <img
+                                <Image
                                     src={media}
                                     alt="Зображення квесту"
-                                    className="w-full h-auto aspect-square object-cover"
+                                    className="w-full aspect-square object-cover"
+                                    sizes="100vw"
+                                    height={0}
+                                    width={0}
                                 />
                             ) : (
-                                <div className="w-full h-auto border-2 border-purple aspect-square flex items-center justify-center">
+                                <div className="w-full border-2 border-purple aspect-square flex items-center justify-center">
                                     <BsFillImageFill className="size-20 text-gray" />
                                 </div>
                             )}
@@ -151,7 +154,7 @@ export const CreateQuest = () => {
                                 color="purpleBackground"
                                 onClick={() => fileInputRef.current?.click()}
                             >
-                                <RiEditLine size={24} />
+                                <RiEditLine className="size-4 sm:size-8" />
                             </Button>
                         </div>
                         <form
@@ -206,8 +209,7 @@ export const CreateQuest = () => {
                                     <span className="text-gray">
                                         Список питань
                                     </span>
-
-                                    {questions.map((question, index) => (
+                                    {questions?.map((question, index) => (
                                         <div
                                             key={index}
                                             className="flex gap-2 place-items-center"
@@ -228,18 +230,35 @@ export const CreateQuest = () => {
                                             )}
                                             <Input
                                                 disabled
-                                                defaultValue={question.title}
+                                                defaultValue={question.text}
                                             />
+
                                             <Button
                                                 color="purpleBackground"
                                                 type="button"
                                                 onClick={() =>
                                                     onQuestionEditClick(
+                                                        "QuestCreation",
                                                         question.id,
                                                     )
                                                 }
                                             >
                                                 <FiEdit2 size={20} />
+                                            </Button>
+                                            <Button
+                                                color="redBorder"
+                                                className="bg-red"
+                                                type="button"
+                                                onClick={() =>
+                                                    deleteQuestionHandler(
+                                                        question.id,
+                                                    )
+                                                }
+                                            >
+                                                <FaRegTrashAlt
+                                                    size={20}
+                                                    color="white"
+                                                />
                                             </Button>
                                         </div>
                                     ))}
@@ -247,9 +266,11 @@ export const CreateQuest = () => {
 
                                 <Button
                                     color="yellowBorder"
-                                    className="mt-8"
+                                    className="mt-2"
                                     type="button"
-                                    onClick={onQuestionAddClick}
+                                    onClick={() =>
+                                        onQuestionAddClick("QuestCreation")
+                                    }
                                 >
                                     Додати питання
                                 </Button>

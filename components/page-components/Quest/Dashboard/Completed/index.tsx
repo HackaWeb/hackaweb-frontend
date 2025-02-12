@@ -35,7 +35,7 @@ const CompletedQuestsDashboard = ({
                                 </td>
                                 <td className="px-4 py-2">
                                     <Image
-                                        src={result.quest.file}
+                                        src={result.quest.imageUrl}
                                         alt="quest image"
                                         width={64}
                                         height={64}

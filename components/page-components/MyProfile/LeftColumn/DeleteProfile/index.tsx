@@ -35,7 +35,7 @@ export const DeleteProfile = () => {
         try {
             const data = await deleteUserProfile();
 
-            if ("statusCode" in data && data.statusCode !== 200) {
+            if ("statusCode" in data) {
                 return data.errors;
             }
             return [];

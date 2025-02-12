@@ -2,8 +2,8 @@ import { User } from "./user.interface";
 
 export interface Feedback {
     id: string;
-    rating: number;
-    comment: string;
+    rate: number;
+    text: string;
     createdAt: string;
     author: User;
 }

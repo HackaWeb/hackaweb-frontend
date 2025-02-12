@@ -11,7 +11,7 @@ import { FaImage } from "react-icons/fa";
 import { printUserNickname } from "@/helpers/printUserNickname";
 import { formatDate } from "@/helpers/formatDate";
 
-export const GeneralInfo = ({ quest, timesPlayed }: GeneraInfoProps) => {
+export const GeneralInfo = ({ quest }: GeneraInfoProps) => {
     const redirect = useRedirect();
 
     return (
@@ -48,9 +48,13 @@ export const GeneralInfo = ({ quest, timesPlayed }: GeneraInfoProps) => {
                 </div>
                 <div className="text-gray mt-2">
                     <span className="font-semibold text-white">
-                        {timesPlayed}
+                        {quest.passCount}
                     </span>{" "}
-                    разів зіграно
+                    разів зіграно,{" "}
+                    <span className="font-semibold text-white">
+                        {quest.duration}
+                    </span>{" "}
+                    хв.
                 </div>
                 <p className="text-gray mt-6">{quest.description}</p>
                 <RenderRating rating={quest.rate} className="mt-3 gap-[6px]" />

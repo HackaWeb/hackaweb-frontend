@@ -15,7 +15,7 @@ export const DeleteProfile = ({ profile }: DeleteProps) => {
         try {
             const data = await deleteUserProfile(profile.id);
 
-            if ("statusCode" in data && data.statusCode !== 200) {
+            if ("statusCode" in data && Number(data.statusCode) !== 200) {
                 return data.errors;
             }
 

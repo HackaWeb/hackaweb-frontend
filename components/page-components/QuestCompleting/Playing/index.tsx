@@ -1,18 +1,24 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { ChoiceQuestion } from "./ChoiceQuestion";
 import { InputQuestion } from "./InputQuestion";
 import { BooleanQuestion } from "./BooleanQuestion";
-import { PlayingProps } from "./Playing.props";
-import { useState } from "react";
-import { toast } from "react-toastify";
-import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
-import { Chat } from "./Chat";
 import { ProgressBar } from "./ProgressBar";
 import { InfoBox } from "./InfoBox";
+import { Chat } from "./Chat";
+import { toast } from "react-toastify";
+import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
+import { PlayingProps } from "./Playing.props";
 
-export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
+export const PlayingGame = ({
+    questions,
+    onCompleteTest,
+    setUserAnswers,
+    timeLeft,
+    user,
+}: PlayingProps) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [answers, setAnswers] = useState<{ [key: number]: any }>({});
+    const [answers, setAnswers] = useState<Record<number, any>>({});
     const [questionsCompleted, setQuestionsCompleted] = useState<number[]>([]);
     const [isChatOpened, setIsChatOpened] = useState(false);
 
@@ -21,6 +27,7 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
     const onAnswerChange = (answer: any) => {
         setAnswers((prev) => {
             const newAnswers = { ...prev, [currentQuestionIndex]: answer };
+            setUserAnswers(newAnswers);
 
             setQuestionsCompleted((prevCompleted) => {
                 return prevCompleted.includes(currentQuestionIndex)
@@ -33,23 +40,17 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
     };
 
     const onNextQuestionClick = () => {
-        if (
-            answers[currentQuestionIndex] == null ||
-            answers[currentQuestionIndex].length === 0
-        ) {
+        console.log(answers[currentQuestionIndex]);
+        if (answers[currentQuestionIndex] === undefined) {
             toast.error("Ви не обрали відповідь!");
             return;
         }
 
         if (currentQuestionIndex < questions.length - 1) {
             setCurrentQuestionIndex((prev) => prev + 1);
-        }
-
-        if (currentQuestionIndex === questions.length - 1) {
+        } else {
             onCompleteTest();
             toast.success("Тест успішно завершено!");
-
-            console.log(answers);
         }
     };
 
@@ -79,9 +80,8 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
                         }
                     />
                 );
-
             default:
-                return <></>;
+                return null;
         }
     };
 
@@ -93,15 +93,21 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
             >
                 <IoChatbubbleEllipsesSharp className="text-purple size-5 md:size-8" />
             </button>
-            <Chat isOpened={isChatOpened} setIsOpened={setIsChatOpened} />
+            <Chat
+                isOpened={isChatOpened}
+                setIsOpened={setIsChatOpened}
+                user={user}
+            />
             <ProgressBar
                 currentQuestionIndex={currentQuestionIndex}
                 setCurrentQuestionIndex={setCurrentQuestionIndex}
                 questionsCompleted={questionsCompleted}
                 questions={questions}
             />
+
             <div className="bg-blackOpacity pt-16 px-4 relative">
                 <InfoBox
+                    timeLeft={timeLeft as number}
                     questionsLength={questions.length}
                     currentQuestionIndex={currentQuestionIndex}
                 />
@@ -114,7 +120,9 @@ export const PlayingGame = ({ questions, onCompleteTest }: PlayingProps) => {
                     {currentQuestion.title}
                 </h1>
             </div>
+
             {renderQuestion()}
+
             <Button
                 color="purpleBackground"
                 className="mt-6 mx-auto max-w-[200px] w-full mb-10"

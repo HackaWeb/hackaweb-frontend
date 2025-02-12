@@ -20,6 +20,7 @@ import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { setCookie } from "@/helpers/setCookie";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { ImSpinner } from "react-icons/im";
 import { toast } from "react-toastify";
 
 const translateErrorMessage = (errorMessage: string) => {
@@ -45,6 +46,7 @@ export const RegisterPageComponent = () => {
         password: "",
         confirmPassword: "",
     });
+    const [isLoading, setIsLoading] = useState(false);
 
     const registerUser = async (
         registerRequestBody: RegisterRequestBody,
@@ -67,6 +69,7 @@ export const RegisterPageComponent = () => {
 
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
+
         if (
             !formData.email.trim() ||
             !formData.password.trim() ||
@@ -81,10 +84,12 @@ export const RegisterPageComponent = () => {
             return;
         }
 
+        setIsLoading(true);
         const results = await registerUser({
             email: formData.email,
             password: formData.password,
         });
+        setIsLoading(false);
 
         if (results.length === 0) {
             toast.success("Вас успішно зареєстровано!");
@@ -102,6 +107,11 @@ export const RegisterPageComponent = () => {
     return (
         <div className="container sm:mt-12 mt-6 flex flex-col place-items-center">
             <h1>Реєстрація</h1>
+            {isLoading && (
+                <div className="flex items-center justify-center mt-6">
+                    <ImSpinner className="size-14 animate-spin text-gray" />
+                </div>
+            )}
             <form
                 onSubmit={onSubmit}
                 className="flex flex-col place-items-center"

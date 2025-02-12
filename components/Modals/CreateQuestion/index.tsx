@@ -7,12 +7,17 @@ import { isModalOpened } from "@/helpers/isModalOpened";
 import { toast } from "react-toastify";
 import { ModalBg } from "../ModalBg";
 import { BsFillImageFill } from "react-icons/bs";
-import { addQuestion } from "@/store/slices/questions/questions";
 import { FaVideo } from "react-icons/fa6";
 import { Select } from "@/components/ui/Select";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
-import { QuestionType } from "@/types/question.type";
 import { Question } from "@/types/question.interface";
+import { useEffect, useRef } from "react";
+import { VIDEO_DURATION } from "@/constants";
+import {
+    addQuestion,
+    setOptions,
+    setQuestionActiveId,
+} from "@/store/slices/quests/quests";
 
 export const CreateQuestion = () => {
     const {
@@ -26,25 +31,30 @@ export const CreateQuestion = () => {
         questionTypes,
         renderGetAnswer,
         setQuestionType,
-        setTitle,
         question,
-        title,
+        text,
         resetOptions,
         media,
+        setFileType,
+        setMedia,
+        setText,
     } = useQuestionModal();
+
+    const videoRef = useRef<HTMLVideoElement>(null);
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const type = questionType?.value as QuestionType;
-        if (!title.length || !type || !options.length)
+        const type = Number(questionType?.value);
+
+        if (!text.length || !options?.length)
             return toast.error("Спочатку заповніть усі поля!");
 
         const question: Question = {
             id: crypto.randomUUID(),
-            title,
+            text,
             type,
-            options,
+            choiceOptions: options,
             mediaUrl: media ? media : undefined,
             fileType: fileType ? fileType : undefined,
         };
@@ -53,16 +63,46 @@ export const CreateQuestion = () => {
         resetOptions("QuestionCreation", "Питання створено!");
     };
 
+    useEffect(() => {
+        if (fileType === "video" && videoRef.current) {
+            const video = videoRef.current;
+            const handleMetadataLoad = () => {
+                if (video.duration > VIDEO_DURATION) {
+                    setMedia(null);
+                    setFileType(null);
+                    toast.error(
+                        "Тривалість відео неповинна перевищувати 60 секунд!",
+                    );
+                }
+            };
+
+            video.addEventListener("loadedmetadata", handleMetadataLoad);
+
+            return () => {
+                video.removeEventListener("loadedmetadata", handleMetadataLoad);
+            };
+        }
+    }, [media, fileType]);
+
+    useEffect(() => {
+        if (modals.includes("QuestionCreation")) {
+            dispatch(setOptions(null));
+            dispatch(setQuestionActiveId(null));
+        }
+    }, [modals]);
+
     return (
         isModalOpened("QuestionCreation", modals) && (
             <>
-                <div className="absolute left-[50%] -translate-x-[50%] max-w-[700px] w-full top-10 z-10 flex flex-col place-content-center place-items-center bg-blue p-6">
+                <div className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4">
                     <ReturnBtn
-                        className="self-start"
+                        className="self-start mt-2 mb-10 ml-2 sm:ml-4"
                         modal="QuestionCreation"
                         isPrev
                     />
-                    <div className="text-3xl mt-10">Створення Питання</div>
+                    <div className="text-xl sm:text-3xl text-center">
+                        Створення Питання
+                    </div>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
                             {media ? (
@@ -76,6 +116,7 @@ export const CreateQuestion = () => {
                                     <video
                                         src={media || question?.mediaUrl}
                                         controls
+                                        ref={videoRef}
                                         className="w-full h-auto aspect-square object-cover"
                                     />
                                 )
@@ -106,10 +147,10 @@ export const CreateQuestion = () => {
                                 </label>
                                 <Input
                                     id="name"
-                                    value={title}
+                                    value={text}
                                     className="mt-2"
                                     placeholder="Назва питання..."
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    onChange={(e) => setText(e.target.value)}
                                 />
                             </div>
                             <div className="mt-4">

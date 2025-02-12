@@ -1,6 +1,13 @@
+import { SortType } from "@/types/quest.interface";
+
 export interface GetQuestByOwnerIdBody {
     pageNumber: number;
     pageSize: number;
+}
+
+export interface GetQuestsQuery {
+    sortType?: SortType;
+    titleFilter?: string;
 }
 
 export interface CreateQuestBody {
@@ -18,4 +25,15 @@ export interface CreateQuestBody {
             }[];
         }[];
     };
+}
+
+export interface EditQuestBody {
+    title: string;
+    description: string;
+    duration: number;
+}
+
+export interface EditQuestionBody {
+    text: string;
+    type: number;
 }

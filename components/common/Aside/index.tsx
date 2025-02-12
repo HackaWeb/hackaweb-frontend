@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
-import { AsideProps } from "./Aside.props";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
 import { selectAside, setIsAsideOpened } from "@/store/slices/aside/aside";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
@@ -13,38 +13,25 @@ import { RiLogoutBoxLine } from "react-icons/ri";
 import Image from "next/image";
 import { setCookie } from "@/helpers/setCookie";
 import { toast } from "react-toastify";
-
-interface LinkItem {
-    title: string;
-    link: string;
-}
+import { AsideProps } from "./Aside.props";
 
 export const Aside = ({ profile }: AsideProps) => {
+    const links = [
+        { title: "Усі квести", link: "/" },
+        { title: "Створити квест", link: profile ? "/profile" : "/login" },
+        { title: "Мій кабінет", link: profile ? "/profile" : "/login" },
+        { title: "Я адміністратор", link: profile ? "/profile" : "/login" },
+    ];
+
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const pathname = usePathname();
-
     const aside = useAppSelector(selectAside);
+
+    const [activeLink, setActiveLink] = useState<string | null>(null);
 
     const setIsAsideOpenedHandler = (value: boolean) => {
         dispatch(setIsAsideOpened(value));
     };
-
-    const links: LinkItem[] = [
-        { title: "Усі квести", link: "/" },
-        {
-            title: "Створити квест",
-            link: profile ? "/profile" : "/login",
-        },
-        {
-            title: "Мій кабінет",
-            link: profile ? "/profile" : "/login",
-        },
-        {
-            title: "Я адміністратор",
-            link: profile ? "#" : "/login",
-        },
-    ];
 
     const onLogoutClick = () => {
         setCookie("token", "");
@@ -125,13 +112,11 @@ export const Aside = ({ profile }: AsideProps) => {
                             </div>
                             <div>
                                 <Link href="/profile" className="text-white">
-                                    {!profile.firstName && !profile.lastName ? (
-                                        "Користувач"
-                                    ) : (
-                                        <>{`${profile.firstName || ""} ${
-                                            profile.lastName || ""
-                                        }`}</>
-                                    )}
+                                    {!profile.firstName && !profile.lastName
+                                        ? "Користувач"
+                                        : `${profile.firstName || ""} ${
+                                              profile.lastName || ""
+                                          }`}
                                 </Link>
                                 <button
                                     onClick={onLogoutClick}
@@ -150,19 +135,25 @@ export const Aside = ({ profile }: AsideProps) => {
                                     className="relative flex items-center mt-5 transition-all"
                                     key={index}
                                 >
-                                    {pathname === link.link &&
-                                        link.link !== "/login" && (
-                                            <div className="absolute -left-2 xsm:-left-4 flex items-center">
-                                                <div className="w-[4px] h-10 bg-purple"></div>
-                                                <div className="w-4 h-6 bg-purple blur-md"></div>
-                                            </div>
-                                        )}
                                     <Link
                                         href={link.link}
                                         className="ml-2 text-white"
+                                        onClick={() =>
+                                            setActiveLink(link.title)
+                                        }
                                     >
                                         {link.title}
                                     </Link>
+                                    <div
+                                        className={`absolute -left-2 xsm:-left-4 flex items-center transition-all duration-300 ${
+                                            activeLink === link.title
+                                                ? "opacity-100"
+                                                : "opacity-0"
+                                        }`}
+                                    >
+                                        <div className="w-[4px] h-10 bg-purple"></div>
+                                        <div className="w-4 h-6 bg-purple blur-md"></div>
+                                    </div>
                                 </li>
                             ))}
                         </ul>

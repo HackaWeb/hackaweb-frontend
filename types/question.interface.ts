@@ -1,7 +1,7 @@
 import { QuestionType } from "./question.type";
 
 export interface ChoiceOption {
-    id: number;
+    index?: number;
     title: string;
     isCorrect: boolean;
 }
@@ -13,9 +13,9 @@ export interface ChoiceOptionWhileTesting {
 
 export interface Question {
     id: string;
-    title: string;
-    type: QuestionType;
-    options: ChoiceOption[];
+    text: string;
+    type: number;
+    choiceOptions: ChoiceOption[];
     mediaUrl?: string;
     fileType?: "image" | "video";
 }
@@ -25,7 +25,7 @@ export interface QuestionWhileTesting {
     title: string;
     type: number;
     options?: ChoiceOptionWhileTesting[];
-    file?: string;
+    mediaUrl?: string;
 }
 
 // якщо тип інпут, options: [{ title: string, isCorrect: true }]

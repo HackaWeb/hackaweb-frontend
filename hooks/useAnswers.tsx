@@ -1,16 +1,20 @@
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import { selectOptions } from "@/store/slices/options/options";
+import {
+    selectActiveQuestion,
+    selectOptions,
+} from "@/store/slices/quests/quests";
 
 export const useAnswers = () => {
     const dispatch = useAppDispatch();
+    const question = useAppSelector(selectActiveQuestion);
     const options = useAppSelector(selectOptions);
 
-    const getOption = (id: number) =>
-        options.find((option) => option.id === id);
+    const getOption = (index: number) =>
+        options?.find((option) => option.index === index);
 
-    const isChecked = (id: number) =>
-        Boolean(getOption(id) && getOption(id)?.isCorrect);
+    const isChecked = (index: number) =>
+        Boolean(getOption(index) && getOption(index)?.isCorrect);
 
-    return { dispatch, getOption, options, isChecked };
+    return { dispatch, getOption, options, isChecked, question };
 };

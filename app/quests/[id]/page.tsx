@@ -5,6 +5,7 @@ import { GeneralInfo } from "@/components/page-components/Quest/GeneralInfo";
 import { Leaderboard } from "@/components/page-components/Quest/Leaderboard";
 import { Reviews } from "@/components/page-components/Quest/Reews";
 import { Button } from "@/components/ui/Button";
+import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { LeaderboardUser, Quest } from "@/types/quest.interface";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -49,13 +50,10 @@ const QuestDetails = async ({ params }: PageProps) => {
         <div>
             <h1>Деталі квесту</h1>
             <Link href="#" className="block mt-4">
-                <Button color="purpleBorder">
-                    <TbArrowBackUp className="size-6" />
-                    <span>Повернутися назад</span>
-                </Button>
+                <ReturnBtn />
             </Link>
             <div className="grid grid-cols-1 lg:grid-cols-[0.4fr_0.6fr] mt-6 gap-8 items-start">
-                <GeneralInfo quest={quest} timesPlayed={0} />
+                <GeneralInfo quest={quest} />
                 <div className="grid ">
                     <Leaderboard
                         leaderboard={leaderboard}

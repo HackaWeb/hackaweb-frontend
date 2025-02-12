@@ -3,16 +3,16 @@ import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { isModalOpened } from "@/helpers/isModalOpened";
 import { ModalBg } from "../ModalBg";
 import { Button } from "@/components/ui/Button";
-import { editQuestion } from "@/store/slices/questions/questions";
 import { toast } from "react-toastify";
 import { BsFillImageFill } from "react-icons/bs";
 import { Input } from "@/components/ui/Input";
 import { FaVideo } from "react-icons/fa6";
 import { Select } from "@/components/ui/Select";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
-import { QuestionType } from "@/types/question.type";
 import { Question } from "@/types/question.interface";
+import { editQuestion } from "@/store/slices/quests/quests";
+import { VIDEO_DURATION } from "@/constants";
 
 function QuestionEdit() {
     const {
@@ -27,12 +27,16 @@ function QuestionEdit() {
         renderGetAnswer,
         renderQuestionTitle,
         setQuestionType,
-        setTitle,
-        title,
+        setText,
+        text,
         resetOptions,
         fileType,
         media,
+        setMedia,
+        setFileType,
     } = useQuestionModal();
+
+    const videoRef = useRef<HTMLVideoElement>(null);
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -41,14 +45,14 @@ function QuestionEdit() {
 
         const type = questionType?.value;
 
-        if (!title.length || !type)
+        if (!text.length || !options?.length)
             return toast.error("Спочатку заповніть усі поля!");
 
         const edited: Question = {
             id: question.id,
-            title: title || question.title,
-            type: (questionType.value as QuestionType) || question.type,
-            options: options.length ? options : question.options,
+            text: text || question.text,
+            type: type?.length ? Number(type) : question.type,
+            choiceOptions: options?.length ? options : question.choiceOptions,
             mediaUrl: media || question.mediaUrl || undefined,
             fileType: fileType || question.fileType || undefined,
         };
@@ -61,22 +65,46 @@ function QuestionEdit() {
         if (question) {
             setQuestionType({
                 title: renderQuestionTitle(),
-                value: question.type,
+                value: question.type.toString(),
             });
-            setTitle(question.title);
+            setText(question.text);
         }
+        setFileType(question?.mediaUrl?.includes("png") ? "image" : "video");
     }, [question]);
+
+    useEffect(() => {
+        if (videoRef.current) {
+            const video = videoRef.current;
+            const handleMetadataLoad = () => {
+                if (video.duration > VIDEO_DURATION) {
+                    setMedia(null);
+                    setFileType(null);
+                    toast.error(
+                        "Тривалість відео неповинна перевищувати 60 секунд!",
+                    );
+                }
+            };
+
+            video.addEventListener("loadedmetadata", handleMetadataLoad);
+
+            return () => {
+                video.removeEventListener("loadedmetadata", handleMetadataLoad);
+            };
+        }
+    }, [media, fileType]);
 
     return (
         isModalOpened("QuestionEdit", modals) && (
             <>
-                <div className="absolute left-[50%] -translate-x-[50%] max-w-[700px] w-full top-10 z-10 flex flex-col place-content-center place-items-center bg-blue p-6">
+                <div className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4">
                     <ReturnBtn
-                        className="self-start"
+                        className="self-start mt-2 mb-10 ml-2 sm:ml-4"
                         modal="QuestionEdit"
                         isPrev
                     />
-                    <div className="text-3xl mt-10">Редагування Питання</div>
+                    <div className="text-xl sm:text-3xl text-center">
+                        Редагування Питання
+                    </div>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
                             {media || question?.mediaUrl ? (
@@ -91,6 +119,7 @@ function QuestionEdit() {
                                     <video
                                         src={media || question?.mediaUrl}
                                         controls
+                                        ref={videoRef}
                                         className="w-full h-auto aspect-square object-cover"
                                     />
                                 )
@@ -121,10 +150,10 @@ function QuestionEdit() {
                                 </label>
                                 <Input
                                     id="name"
-                                    value={title}
+                                    value={text}
                                     className="mt-2"
                                     placeholder="Назва питання..."
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    onChange={(e) => setText(e.target.value)}
                                 />
                             </div>
                             <div className="mt-4">

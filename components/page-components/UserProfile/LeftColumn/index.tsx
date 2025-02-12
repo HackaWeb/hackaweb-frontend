@@ -17,8 +17,13 @@ import { useRouter } from "next/navigation";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { DeleteProfile } from "./DeleteAccount";
 
-export const LeftColumn = ({ profile, isEditable }: LeftColumnProps) => {
-    const achievements = getAchievements(profile);
+export const LeftColumn = ({
+    profile,
+    isEditable,
+    completedQuests,
+    ownQuests,
+}: LeftColumnProps) => {
+    const achievements = getAchievements(profile, completedQuests, ownQuests);
 
     const [avatar, setAvatar] = useState<string | null>(profile.avatar);
 

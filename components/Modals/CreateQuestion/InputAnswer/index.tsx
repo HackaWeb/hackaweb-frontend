@@ -1,11 +1,11 @@
 "use client";
 import { Input } from "@/components/ui/Input";
+import { useAnswers } from "@/hooks/useAnswers";
 import {
     addOption,
     editOption,
     removeOption,
-} from "@/store/slices/options/options";
-import { useAnswers } from "@/hooks/useAnswers";
+} from "@/store/slices/quests/quests";
 
 export const InputAnswer = () => {
     const { dispatch, getOption } = useAnswers();
@@ -16,12 +16,18 @@ export const InputAnswer = () => {
         if (!title) return dispatch(removeOption(0));
 
         if (!getOption(0))
-            return dispatch(addOption({ id: 0, title, isCorrect: true }));
+            return dispatch(
+                addOption({
+                    index: 0,
+                    title,
+                    isCorrect: true,
+                }),
+            );
 
         dispatch(
             editOption({
+                index: 0,
                 title,
-                id: 0,
                 isCorrect: true,
             }),
         );

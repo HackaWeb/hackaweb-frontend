@@ -15,12 +15,13 @@ import {
     INVALID_EMAIL_OR_PASSWORD_MESSAGE,
     INVALID_INPUTES_MESSAGE,
 } from "@/constants";
-import { revalidatePath } from "next/cache";
+import { ImSpinner } from "react-icons/im";
 
 export const LoginPageComponent = () => {
     const router = useRouter();
 
     const [formData, setFormData] = useState({ email: "", password: "" });
+    const [isLoading, setIsLoading] = useState(false);
 
     const loginUser = async (loginRequestBody: LoginRequestBody) => {
         try {
@@ -61,10 +62,12 @@ export const LoginPageComponent = () => {
             return;
         }
 
+        setIsLoading(true);
         const results = await loginUser({
             email: formData.email,
             password: formData.password,
         });
+        setIsLoading(false);
 
         if (results.length === 0) {
             toast.success("Вас успішно авторизовано!");
@@ -82,6 +85,11 @@ export const LoginPageComponent = () => {
     return (
         <div className="container sm:mt-12 mt-6 flex flex-col place-items-center">
             <h1>Авторизація</h1>
+            {isLoading && (
+                <div className="flex items-center justify-center mt-6">
+                    <ImSpinner className="size-14 animate-spin text-gray" />
+                </div>
+            )}
             <form onSubmit={onSubmit} className="flex flex-col w-full">
                 <div className="space-y-2 sm:mt-10 mt-6">
                     <Input

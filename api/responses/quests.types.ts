@@ -1,9 +1,4 @@
-import { Feedback } from "@/types/feedback.interface";
-import {
-    LeaderboardUser,
-    Quest,
-    QuestWithoutQuestions,
-} from "@/types/quest.interface";
+import { Quest, QuestWithoutQuestions } from "@/types/quest.interface";
 import { User } from "@/types/user.interface";
 
 export interface CreateQuestResponse {
@@ -14,7 +9,7 @@ export interface CreateQuestResponse {
     imageUrl: string;
     rate: number;
     passCount: number;
-    ownerId: string;
+    owner: User;
     duration: number;
     questions: {
         id: string;
@@ -32,6 +27,7 @@ export interface CreateQuestResponse {
         text: string;
         rate: number;
         createdAt: string;
+        author: User;
     }[];
 }
 
@@ -46,8 +42,22 @@ export interface GetQuestByOwnerIdResponse {
 
 export type GetCompletedQuestByOwnerIdResponse = Quest[];
 export interface GetQuestByIdResponse {
-    quiz: Quest;
+    quiz: CreateQuestResponse;
 }
 
 export interface GetQuestByIdWithoutQuestionsResponse
     extends QuestWithoutQuestions {}
+
+export interface EditQuestResponse {
+    id: string;
+    title: string;
+    description: string;
+    duration: number;
+}
+
+export interface EditQuestionResponse {
+    id: string;
+    text: string;
+    type: number;
+    quizId: string;
+}

@@ -5,13 +5,14 @@ import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { SelectOption } from "@/types/selectOption.interface";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoCreateOutline } from "react-icons/io5";
 import { HomePageComponentProps } from "./Home.props";
 import { Quest } from "./Quest";
-import { useAppDispatch } from "@/store/hooks/useAppDispatch";
-import { toggleModal } from "@/store/slices/modals/modals";
+import { getQuests } from "@/api/quests";
+import { SortType } from "@/types/quest.interface";
 import { motion, Variants } from "framer-motion";
+import { ImSpinner } from "react-icons/im";
 
 const sortOptions: SelectOption[] = [
     { title: "Рейтингом тесту", value: "testRating" },
@@ -19,6 +20,13 @@ const sortOptions: SelectOption[] = [
     { title: "За алфавітом", value: "alphabet" },
     { title: "Рейтингом автора", value: "authorRating" },
 ];
+
+const sortOptionActionMap: Record<string, SortType> = {
+    testRating: SortType.Rating,
+    completedQuantity: SortType.NumberOfPasses,
+    alphabet: SortType.Alphabet,
+    authorRating: SortType.AuthorRating,
+};
 
 const bounceAnimation: Variants = {
     hidden: { opacity: 0, y: 50 },
@@ -28,24 +36,47 @@ const bounceAnimation: Variants = {
         transition: { type: "spring", stiffness: 200, damping: 10 },
     },
 };
-export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
-    const dispatch = useAppDispatch();
 
+export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
     const [sortOption, setSortOption] = useState<SelectOption | null>(null);
     const [searchQuest, setSearchQuest] = useState<string>("");
     const [quests, setQuests] = useState(serverQuests);
+    const [isLoading, setIsLoading] = useState(false);
 
-    console.log(quests);
+    const processQuestsHandler = async () => {
+        const sortType = sortOption
+            ? sortOptionActionMap[sortOption.value]
+            : undefined;
+        const titleFilter = searchQuest.length >= 3 ? searchQuest : undefined;
+
+        try {
+            setIsLoading(true);
+            const response = await getQuests({ sortType, titleFilter });
+
+            if (response.quizzes) {
+                setQuests(response.quizzes);
+                setIsLoading(false);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        if (sortOption || searchQuest.length >= 3) {
+            const timeoutId = setTimeout(() => {
+                processQuestsHandler();
+            }, 500);
+
+            return () => clearTimeout(timeoutId);
+        }
+    }, [sortOption, searchQuest]);
 
     return (
         <>
-            <h1>Квести</h1>
-            <Link href="#" className="mt-3 duration-0">
-                <Button
-                    color="purpleBorder"
-                    className="mt-3"
-                    onClick={() => dispatch(toggleModal("QuestCreation"))}
-                >
+            <h1 className="mt-12">Квести</h1>
+            <Link href="/profile" className="mt-3 duration-0">
+                <Button color="purpleBorder" className="mt-3">
                     <span>Створити свій квест</span>
                     <IoCreateOutline className="size-6" />
                 </Button>
@@ -66,28 +97,40 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
                     className="xsm:max-w-[300px] max-w-none"
                 />
             </div>
-            <div className="mt-4 text-gray">
-                <span className="text-white font-bold">{quests.length}</span>{" "}
-                результатів знайдено
-            </div>
-            {quests.length ? (
-                <>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-7 mt-6">
-                        {quests.map((quest, index) => (
-                            <motion.div
-                                key={index}
-                                initial="hidden"
-                                animate="visible"
-                                variants={bounceAnimation}
-                                transition={{ delay: index * 0.1 }}
-                            >
-                                <Quest key={index} quest={quest} />
-                            </motion.div>
-                        ))}
-                    </div>
-                </>
+            {isLoading ? (
+                <div className="flex items-center justify-center mt-10">
+                    <ImSpinner className="size-14 animate-spin text-gray" />
+                </div>
             ) : (
-                <div className="text-gray text-sm">Квестів не знайдено</div>
+                <>
+                    <div className="mt-4 text-gray">
+                        <span className="text-white font-bold">
+                            {quests.length}
+                        </span>{" "}
+                        результатів знайдено
+                    </div>
+                    {quests.length ? (
+                        <>
+                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-7 mt-6">
+                                {quests.map((quest, index) => (
+                                    <motion.div
+                                        key={index}
+                                        initial="hidden"
+                                        animate="visible"
+                                        variants={bounceAnimation}
+                                        transition={{ delay: index * 0.1 }}
+                                    >
+                                        <Quest key={index} quest={quest} />
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </>
+                    ) : (
+                        <div className="text-gray text-sm">
+                            Квестів не знайдено
+                        </div>
+                    )}
+                </>
             )}
         </>
     );
