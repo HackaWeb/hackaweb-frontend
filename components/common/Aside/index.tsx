@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
 import { selectAside, setIsAsideOpened } from "@/store/slices/aside";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
@@ -14,6 +14,7 @@ import Image from "next/image";
 import { setCookie } from "@/helpers/setCookie";
 import { toast } from "react-toastify";
 import { AsideProps, Links, TitleType } from "./Aside.props";
+import { GiThink } from "react-icons/gi";
 
 export const Aside = ({ profile }: AsideProps) => {
     const links: Links = [
@@ -29,7 +30,6 @@ export const Aside = ({ profile }: AsideProps) => {
 
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const path = usePathname();
     const aside = useAppSelector(selectAside);
 
     const [activeLink, setActiveLink] = useState<TitleType | null>(null);
@@ -68,10 +68,11 @@ export const Aside = ({ profile }: AsideProps) => {
                 <div className="xsm:mt-10 mt-4">
                     <Link
                         href="/"
-                        className="mx-4 text-white text-2xl"
+                        className="mx-4 text-white text-2xl flex items-center gap-2"
                         onClick={() => setActiveLink("Усі квести")}
                     >
-                        КВЕСТ АПП
+                        <GiThink className="size-12" />
+                        <span>QuizzApp</span>
                     </Link>
                     {!profile ? (
                         <div className="flex mt-4 xsm:mt-8 mx-4 items-center gap-4 bg-blackOpacity p-2">
