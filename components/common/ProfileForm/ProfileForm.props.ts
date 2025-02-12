@@ -1,5 +1,6 @@
 import { Profile } from "@/types/user.interface";
 
-export interface MiddleColumnProps {
+export interface ProfileFormProps {
     profile: Profile;
+    isEditSelfProfile: boolean;
 }

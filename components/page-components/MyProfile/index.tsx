@@ -1,9 +1,9 @@
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { LeftColumn } from "./LeftColumn";
-import { MiddleColumn } from "./MiddleColumn";
 import { MyProfileProps } from "./MyProfile.props";
 import { CompletedQuests } from "@/components/common/tables/CompletedQuests";
 import { OwnQuests } from "@/components/common/tables/OwnQuests";
+import { ProfileForm } from "@/components/common/ProfileForm";
 
 export const MyProfilePageComponent = ({
     profile,
@@ -22,7 +22,7 @@ export const MyProfilePageComponent = ({
                         ownQuests={ownQuests}
                     />
                 </div>
-                <MiddleColumn profile={profile} />
+                <ProfileForm profile={profile} isEditSelfProfile={true} />
                 <div className="grid-cols-1 grid items-start sm:-col-start-3 sm:-col-end-1 2xl:col-start-auto 2xl:col-end-auto">
                     <OwnQuests
                         ownQuests={ownQuests}

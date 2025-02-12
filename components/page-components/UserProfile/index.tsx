@@ -3,8 +3,8 @@ import { UserProfileProps } from "./UserProfile.props";
 import { LeftColumn } from "./LeftColumn";
 import { CompletedQuests } from "@/components/common/tables/CompletedQuests";
 import { OwnQuests } from "@/components/common/tables/OwnQuests";
-import { MiddleColumn } from "./MiddleColumn";
 import { cn } from "@/helpers/cn";
+import { ProfileForm } from "@/components/common/ProfileForm";
 
 export const UserProfilePageComponent = ({
     isEditable,
@@ -33,7 +33,12 @@ export const UserProfilePageComponent = ({
                         completedQuests={completedQuests}
                         ownQuests={ownQuests}
                     />
-                    {isEditable && <MiddleColumn profile={profile} />}
+                    {isEditable && (
+                        <ProfileForm
+                            profile={profile}
+                            isEditSelfProfile={false}
+                        />
+                    )}
                     <div>
                         <OwnQuests
                             profile={profile}
