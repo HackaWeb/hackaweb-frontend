@@ -31,10 +31,10 @@ export const metadata: Metadata = {
         description:
             "Захопливі квізи та вікторини на будь-яку тему. Змагайся з друзями та стань чемпіоном!",
         type: "website",
-        url: "https://quizapp.vercel.app/",
+        url: "https://quiz-app.vercel.app/",
         images: [
             {
-                url: "https://quizapp.vercel.app/logo.png",
+                url: "https://quiz-app.vercel.app/logo.png",
                 width: 1200,
                 height: 630,
                 alt: "QuizApp – Інтерактивні вікторини та квізи",
