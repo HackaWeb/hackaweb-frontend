@@ -10,7 +10,7 @@ import React, { useEffect } from "react";
 const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
 
 function Background() {
-    const color = useMotionValue(COLORS_TOP[0]);
+    /* const color = useMotionValue(COLORS_TOP[0]);
 
     useEffect(() => {
         animate(color, COLORS_TOP, {
@@ -21,11 +21,11 @@ function Background() {
         });
     }, [color]);
 
-    const backgroundImage = useMotionTemplate`radial-gradient(150% 160% at 55% 0%, #020617 55%, ${color})`;
+    const backgroundImage = useMotionTemplate`radial-gradient(150% 160% at 55% 0%, #020617 55%, ${color})`; */
 
     return (
         <motion.main
-            style={{ backgroundImage }}
+            /* style={{ backgroundImage }} */
             className="fixed w-screen h-screen z-[-1]"
         ></motion.main>
     );
