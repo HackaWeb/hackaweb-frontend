@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
 import { selectAside, setIsAsideOpened } from "@/store/slices/aside";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
@@ -13,21 +13,26 @@ import { RiLogoutBoxLine } from "react-icons/ri";
 import Image from "next/image";
 import { setCookie } from "@/helpers/setCookie";
 import { toast } from "react-toastify";
-import { AsideProps } from "./Aside.props";
+import { AsideProps, Links, TitleType } from "./Aside.props";
 
 export const Aside = ({ profile }: AsideProps) => {
-    const links = [
+    const links: Links = [
         { title: "Усі квести", link: "/" },
-        { title: "Створити квест", link: profile ? "/profile" : "/login" },
+        {
+            title: "Створити квест",
+            link: profile ? "/profile" : "/login",
+            modal: "QuestCreation",
+        },
         { title: "Мій кабінет", link: profile ? "/profile" : "/login" },
         { title: "Я адміністратор", link: profile ? "/profile" : "/login" },
     ];
 
     const router = useRouter();
     const dispatch = useAppDispatch();
+    const path = usePathname();
     const aside = useAppSelector(selectAside);
 
-    const [activeLink, setActiveLink] = useState<string | null>(null);
+    const [activeLink, setActiveLink] = useState<TitleType | null>(null);
 
     const setIsAsideOpenedHandler = (value: boolean) => {
         dispatch(setIsAsideOpened(value));
@@ -38,6 +43,10 @@ export const Aside = ({ profile }: AsideProps) => {
         toast.success("Ви успішно вийшли з акаунту!");
         router.refresh();
     };
+
+    useEffect(() => {
+        setActiveLink(links.find((l) => l.link === path)!.title);
+    }, []);
 
     return (
         <>
@@ -61,7 +70,11 @@ export const Aside = ({ profile }: AsideProps) => {
                 } lg:translate-x-0`}
             >
                 <div className="xsm:mt-10 mt-4">
-                    <Link href="/" className="mx-4 text-white text-2xl">
+                    <Link
+                        href="/"
+                        className="mx-4 text-white text-2xl"
+                        onClick={() => setActiveLink("Усі квести")}
+                    >
                         КВЕСТ АПП
                     </Link>
                     {!profile ? (
