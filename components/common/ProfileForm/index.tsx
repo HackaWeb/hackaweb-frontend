@@ -9,8 +9,12 @@ import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { useRouter } from "next/navigation";
 import { ProfileFormProps } from "./ProfileForm.props";
+import { MAX_FIRSTNAME_LENGTH, MAX_LASTNAME_LENGTH } from "@/constants";
 
-export const ProfileForm = ({ profile, isEditSelfProfile }: ProfileFormProps) => {
+export const ProfileForm = ({
+    profile,
+    isEditSelfProfile,
+}: ProfileFormProps) => {
     const router = useRouter();
 
     const [userData, setUserData] = useState({
@@ -37,6 +41,14 @@ export const ProfileForm = ({ profile, isEditSelfProfile }: ProfileFormProps) =>
     };
 
     const onUpdateProfileSubmit = async () => {
+        if (!userData.firstName && !userData.lastName) return;
+
+        if (userData.firstName.length > MAX_FIRSTNAME_LENGTH)
+            return toast.error("Ім'я не має перевищувати 50 символів!");
+
+        if (userData.lastName.length > MAX_LASTNAME_LENGTH)
+            return toast.error("Прізвище не має перевищувати 75 символів!");
+
         const formData = new FormData();
         formData.append("firstName", userData.firstName);
         formData.append("lastName", userData.lastName);

@@ -13,6 +13,8 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { slideAnimation } from "@/helpers/animation";
+import Image from "next/image";
+import { formatDate } from "@/helpers/formatDate";
 
 export const OwnQuests = ({
     profile,
@@ -54,6 +56,8 @@ export const OwnQuests = ({
             toast.error("Помилка видалення квесту, спробуйте пізніше");
         }
     };
+
+    console.log(ownQuests);
     return (
         ownQuests && (
             <motion.div
@@ -100,6 +104,9 @@ export const OwnQuests = ({
                                         Час
                                     </th>
                                     <th className="p-3 text-left w-[120px]">
+                                        К-ість завдань
+                                    </th>
+                                    <th className="p-3 text-left w-[120px]">
                                         Зіграно раз
                                     </th>
                                     <th className="p-3 text-left w-[120px]">
@@ -127,15 +134,22 @@ export const OwnQuests = ({
                                             </Link>
                                         </td>
                                         <td className="p-3">
-                                            <img
+                                            <Image
                                                 src={quest.imageUrl}
                                                 alt={quest.title}
                                                 className="w-16 h-12 object-cover rounded-md"
+                                                sizes="100vw"
+                                                height={0}
+                                                width={0}
                                             />
                                         </td>
                                         <td className="p-3">
                                             {quest.duration} хв.
                                         </td>
+                                        <td className="p-3">
+                                            {quest.taskCount}
+                                        </td>
+
                                         <td className="p-3">
                                             {quest.passCount}
                                         </td>

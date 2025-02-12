@@ -28,6 +28,11 @@ import {
     defaultAnimation,
     defaultAnimationWithTransform,
 } from "../../../helpers/animation";
+import {
+    MAX_DESCRIPTION_LENGTH,
+    MAX_QUEST_DURATION,
+    MAX_TITLE_LENGTH,
+} from "@/constants";
 
 export const CreateQuest = () => {
     const router = useRouter();
@@ -106,14 +111,21 @@ export const CreateQuest = () => {
 
     const onCreateQuestSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        if (
-            !media ||
-            !title.length ||
-            !Number(duration) ||
-            !description.length ||
-            !questions?.length
-        )
-            return toast.error("Заповніть коректно усі поля!");
+
+        if (title.length > MAX_TITLE_LENGTH)
+            return toast.error("Назва не може бути більше 100 символів!");
+
+        if (description.length > MAX_DESCRIPTION_LENGTH)
+            return toast.error("Опис не може бути більше 200 символів!");
+
+        if (Number(duration) > MAX_QUEST_DURATION)
+            return toast.error("Максимальна тривалість тесту 60хв!");
+
+        if (!questions?.length)
+            return toast.error("Додайте хоча б одне питання!");
+
+        if (!media || !title.length || !Number(duration) || !description.length)
+            return toast.error("Заповніть усі поля!");
 
         const data = await createQuestHandler();
         router.refresh();
@@ -284,7 +296,7 @@ export const CreateQuest = () => {
 
                                 <Button
                                     color="yellowBorder"
-                                    className="mt-2"
+                                    className="mt-3"
                                     type="button"
                                     onClick={() =>
                                         onQuestionAddClick("QuestCreation")

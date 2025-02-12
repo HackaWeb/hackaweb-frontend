@@ -63,6 +63,27 @@ const quests = createSlice({
             };
         },
 
+        removeQuestionImage: (state, action: PayloadAction<string>) => {
+            const questions = state.questions!.filter(
+                (q) => q.id !== action.payload,
+            );
+
+            const question = state.questions?.find(
+                (q) => q.id === action.payload,
+            )!;
+
+            return {
+                ...state,
+                questions: [
+                    ...questions,
+                    {
+                        ...question,
+                        mediaUrl: undefined,
+                    },
+                ],
+            };
+        },
+
         editQuestion: (state, action: PayloadAction<Question>) => {
             const filtered = state.questions!.filter(
                 (q) => q.id !== state.activeQuestionId,
@@ -138,6 +159,7 @@ export const {
     removeOption,
     setQuestionActiveId,
     removeQuestion,
+    removeQuestionImage,
 } = quests.actions;
 
 export default quests.reducer;

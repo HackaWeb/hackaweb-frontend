@@ -21,7 +21,9 @@ import {
     defaultAnimationWithTransform,
     defaultAnimation,
 } from "../../../helpers/animation";
-import { FaImage } from "react-icons/fa";
+import { FaImage, FaRegTrashAlt, FaTrash } from "react-icons/fa";
+import { MAX_TITLE_LENGTH } from "@/constants";
+import Image from "next/image";
 
 export const CreateQuestion = () => {
     const {
@@ -39,6 +41,7 @@ export const CreateQuestion = () => {
         resetOptions,
         media,
         setText,
+        removeImageHandler,
     } = useQuestionModal();
 
     const onSubmit = (e: React.FormEvent) => {
@@ -46,11 +49,18 @@ export const CreateQuestion = () => {
 
         const type = Number(questionType?.value);
 
-        if (!text.length || !options?.length)
-            return toast.error("Спочатку заповніть усі поля!");
+        if (text.length > MAX_TITLE_LENGTH)
+            return toast.error(
+                "Довжина питання не може бути більше 100 символів!",
+            );
+
+        if (!options?.length)
+            return toast.error("Не забудьте додати варіанти відповідей!");
+
+        if (!text.length) return toast.error("Спочатку заповніть усі поля!");
 
         const question: Question = {
-            id: crypto.randomUUID(),
+            id: window.crypto.randomUUID(),
             text,
             type,
             choiceOptions: options,
@@ -85,13 +95,33 @@ export const CreateQuestion = () => {
                     </div>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
-                            <motion.div key={media} {...defaultAnimation}>
+                            <motion.div
+                                key={media}
+                                {...defaultAnimation}
+                                className="relative"
+                            >
                                 {media || question?.mediaUrl ? (
-                                    <img
-                                        src={media || question?.mediaUrl}
-                                        alt="Зображення питання"
-                                        className="w-full h-auto aspect-square object-cover"
-                                    />
+                                    <>
+                                        <Image
+                                            src={media || question?.mediaUrl!}
+                                            alt="Зображення питання"
+                                            className="w-full h-auto aspect-square object-cover"
+                                            sizes="100vw"
+                                            height={0}
+                                            width={0}
+                                        />
+                                        <Button
+                                            className="absolute right-4 p-3 bottom-4 bg-red"
+                                            color="redBorder"
+                                            type="button"
+                                            onClick={() => removeImageHandler()}
+                                        >
+                                            <FaRegTrashAlt
+                                                size={20}
+                                                color="white"
+                                            />
+                                        </Button>
+                                    </>
                                 ) : (
                                     <div className="w-full h-auto border-2 border-purple aspect-square flex items-center justify-center">
                                         <BsFillImageFill className="size-20 text-gray" />

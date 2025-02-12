@@ -12,9 +12,7 @@ import { Quest } from "./Quest";
 import { getQuests } from "@/api/quests";
 import { SortType } from "@/types/quest.interface";
 import { AnimatePresence, motion, Variants } from "framer-motion";
-import { ImSpinner } from "react-icons/im";
-import { toggleModal } from "@/store/slices/modals";
-import { useAppDispatch } from "@/store/hooks/useAppDispatch";
+import { ImSpinner2 } from "react-icons/im";
 
 const sortOptions: SelectOption[] = [
     { title: "Рейтингом тесту", value: "testRating" },
@@ -72,6 +70,10 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
 
             return () => clearTimeout(timeoutId);
         }
+
+        if (!searchQuest) {
+            setQuests(serverQuests);
+        }
     }, [sortOption, searchQuest]);
 
     return (
@@ -84,9 +86,6 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
                         <IoCreateOutline className="size-6" />
                     </Button>
                 </Link>
-                {isLoading && (
-                    <ImSpinner className="size-14 animate-spin text-gray" />
-                )}
             </div>
             <div className="flex gap-4 mt-10 flex-col xsm:flex-row">
                 <Input
@@ -103,6 +102,9 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
                     placeholder="Сортувати за..."
                     className="xsm:max-w-[300px] max-w-none"
                 />
+                {isLoading && (
+                    <ImSpinner2 className="size-8 animate-spin text-gray" />
+                )}
             </div>
             <>
                 <div className="mt-4 text-gray">
@@ -111,7 +113,7 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
                     </span>{" "}
                     результатів знайдено
                 </div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-7 mt-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-7 mt-6">
                     {quests.length ? (
                         <AnimatePresence>
                             {quests.map((quest, index) => (

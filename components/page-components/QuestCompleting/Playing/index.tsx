@@ -13,6 +13,7 @@ import { PlayingProps } from "./Playing.props";
 import { motion } from "framer-motion";
 import { slideAnimation } from "@/helpers/animation";
 import { BiDirections } from "react-icons/bi";
+import Image from "next/image";
 
 export const PlayingGame = ({
     questions,
@@ -137,10 +138,13 @@ export const PlayingGame = ({
                         questionsLength={questions.length}
                         currentQuestionIndex={currentQuestionIndex}
                     />
-                    <img
+                    <Image
                         src="/question.png"
                         alt="Питання"
                         className="mx-auto mt-3 rounded-lg w-full max-w-[400px]"
+                        sizes="100vw"
+                        height={0}
+                        width={0}
                     />
                     <h1 className="pt-10 pb-5 text-center text-xl xsm:text-3xl">
                         {currentQuestion.text}
