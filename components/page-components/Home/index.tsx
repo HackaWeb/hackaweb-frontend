@@ -72,7 +72,6 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
         }
     }, [sortOption, searchQuest]);
 
-
     return (
         <>
             <h1 className="mt-12">Квести</h1>

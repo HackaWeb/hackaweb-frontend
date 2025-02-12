@@ -113,7 +113,7 @@ export const MiddleColumn = ({ profile }: MiddleColumnProps) => {
                         color="purpleBackground"
                         className="mt-6 mx-auto mb-2"
                     >
-                        Зберігти зміни
+                        Зберегти зміни
                     </Button>
                 </form>
             </div>

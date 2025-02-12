@@ -33,7 +33,7 @@ export const OwnQuests = ({
 
     const deleteHandler = async (id: string) => {
         await deleteQuest(id);
-        
+
         dispatch(setQuest(null));
         toast.success("Ви успішно видалили свій квест!");
         router.refresh();
