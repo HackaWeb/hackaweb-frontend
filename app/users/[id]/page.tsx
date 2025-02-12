@@ -1,32 +1,16 @@
 import { UserProfilePageComponent } from "@/components/page-components/UserProfile";
-import { Profile } from "@/types/user.interface";
 import { getMyProfile } from "@/api/user";
 import { getUserProfile } from "@/api/user";
 import { getCookie } from "@/helpers/getCookie";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { getCompletedQuestsByOwnerId, getQuestsByOwnerId } from "@/api/quests";
+import { toast } from "react-toastify";
+import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 
 const UserProfile = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params;
     const token = await getCookie("token");
-
-    let profile: Profile | null = null;
-
-    // that, who requests user profile page, (possibly is admin)
-    const getIsReqeusterAdmin = async () => {
-        try {
-            const profile = await getMyProfile();
-
-            if (!("statusCode" in profile) && profile.isAdmin) {
-                return true;
-            }
-
-            return false;
-        } catch (error) {
-            console.error(error);
-            return false;
-        }
-    };
 
     const getUserProfileHandler = async () => {
         try {
@@ -52,46 +36,53 @@ const UserProfile = async ({ params }: { params: Promise<{ id: string }> }) => {
         }
     };
 
-    let isAdmin = false;
-    if (token) {
-        isAdmin = await getIsReqeusterAdmin();
-    }
+    const profile = await getUserProfileHandler();
+    if (!profile) notFound();
 
-    profile = await getUserProfileHandler();
+    const getIsReqeusterAdmin = async () => {
+        try {
+            const profile = await getMyProfile();
 
-    console.log("isAdmin", isAdmin);
-    console.log("profile", profile);
+            if (!("statusCode" in profile) && profile.isAdmin) {
+                return true;
+            }
 
-    if (!profile) {
-        notFound();
-    }
+            return false;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    };
 
-    /*const getCompletedQuests = async () => {
-        const data = await getCompletedQuestsByOwnerId(profile.id);
-        
-        return data;
-    }; */
+    const isAdmin = token ? await getIsReqeusterAdmin() : false;
 
-    /* const getOwnQuests = async () => {
-        const data = await getQuestsByOwnerId(
-            {
-                pageNumber: 0,
-                pageSize: 20,
-            },
-            profile.id,
-        );
-        console.log(data);
+    const getOwnQuests = async () => {
+        try {
+            const data = await getQuestsByOwnerId(id);
+            return data.quizzes;
+        } catch (error) {
+            console.error(error);
+            return [];
+        }
+    };
 
-        return data.items;
-    }; */
+    const getCompletedQuests = async () => {
+        try {
+            return await getCompletedQuestsByOwnerId(id);
+        } catch (error) {
+            console.error(error);
+            toast.error(DEFAULT_FIELD_ERROR.message);
+            return [];
+        }
+    };
 
-    /* const ownQuests = await getOwnQuests(); */
-    /* const completedQuests = await getCompletedQuests(); */
+    const ownQuests = await getOwnQuests();
+    const completedQuests = await getCompletedQuests();
 
     return (
         <UserProfilePageComponent
-            ownQuests={[]}
-            completedQuests={[]}
+            ownQuests={ownQuests}
+            completedQuests={completedQuests}
             isEditable={isAdmin}
             profile={profile}
         />

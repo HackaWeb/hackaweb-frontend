@@ -5,12 +5,13 @@ import { QuestCompletingPageComponent } from "@/components/page-components/Quest
 import { getCookie } from "@/helpers/getCookie";
 import { Quest } from "@/types/quest.interface";
 import { QuestionWhileTesting } from "@/types/question.interface";
+import { Profile } from "@/types/user.interface";
 import { notFound, redirect } from "next/navigation";
 
 const QuestCompleting = async ({ params }: PageProps) => {
     const token = await getCookie("token");
     const { id } = await params;
-    let isAuthorized;
+    let user: Profile | null = null;
 
     if (!token || !token.length) {
         redirect("/login");
@@ -20,16 +21,14 @@ const QuestCompleting = async ({ params }: PageProps) => {
         const profileData = await getMyProfile();
 
         if ("email" in profileData) {
-            isAuthorized = true;
-        } else {
-            isAuthorized = false;
+            user = profileData;
         }
     } catch (error) {
         console.error(error);
-        isAuthorized = false;
+        user = null;
     }
 
-    if (!isAuthorized) {
+    if (!user) {
         redirect("/login");
     }
 
@@ -50,7 +49,7 @@ const QuestCompleting = async ({ params }: PageProps) => {
 
     console.log(quest);
 
-    return <QuestCompletingPageComponent quest={quest} />;
+    return <QuestCompletingPageComponent quest={quest} user={user} />;
 };
 
 export default QuestCompleting;

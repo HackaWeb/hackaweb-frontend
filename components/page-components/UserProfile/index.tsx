@@ -27,7 +27,12 @@ export const UserProfilePageComponent = ({
                             : "grid-cols-1 xl:grid-cols-[240px_auto]",
                     )}
                 >
-                    <LeftColumn profile={profile} isEditable={isEditable} />
+                    <LeftColumn
+                        profile={profile}
+                        isEditable={isEditable}
+                        completedQuests={completedQuests}
+                        ownQuests={ownQuests}
+                    />
                     {isEditable && <MiddleColumn profile={profile} />}
                     <div>
                         <OwnQuests

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CompletedQuestsProps } from "./CompletedQuests.props";
+import { printUserNickname } from "@/helpers/printUserNickname";
 
 export const CompletedQuests = async ({
     profile,
@@ -13,7 +14,10 @@ export const CompletedQuests = async ({
                     <h2 className="text-xl font-semibold text-white">
                         {isCompletedByMe
                             ? "Пройдені квести"
-                            : `Пройдені квести користувачем ${profile.firstName} ${profile.lastName}`}
+                            : `Пройдені квести користувачем ${printUserNickname(
+                                                              profile.firstName,
+                                                              profile.lastName,
+                                                          )}`}
                     </h2>
                 </div>
                 {completedQuests.length ? (
