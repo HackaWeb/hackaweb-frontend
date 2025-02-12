@@ -11,7 +11,7 @@ import { HomePageComponentProps } from "./Home.props";
 import { Quest } from "./Quest";
 import { getQuests } from "@/api/quests";
 import { SortType } from "@/types/quest.interface";
-import { motion, Variants } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import { ImSpinner } from "react-icons/im";
 
 const sortOptions: SelectOption[] = [
@@ -33,7 +33,6 @@ const bounceAnimation: Variants = {
     visible: {
         opacity: 1,
         y: 0,
-        transition: { type: "spring", stiffness: 200, damping: 10 },
     },
 };
 
@@ -76,12 +75,17 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
     return (
         <>
             <h1 className="mt-12">Квести</h1>
-            <Link href="/profile" className="mt-3 duration-0">
-                <Button color="purpleBorder" className="mt-3">
-                    <span>Створити свій квест</span>
-                    <IoCreateOutline className="size-6" />
-                </Button>
-            </Link>
+            <div className="flex items-center gap-8">
+                <Link href="/profile" className="mt-3 duration-0">
+                    <Button color="purpleBorder" className="mt-3">
+                        <span>Створити свій квест</span>
+                        <IoCreateOutline className="size-6" />
+                    </Button>
+                </Link>
+                {isLoading && (
+                    <ImSpinner className="size-14 animate-spin text-gray" />
+                )}
+            </div>
             <div className="flex gap-4 mt-10 flex-col xsm:flex-row">
                 <Input
                     placeholder="Пошук за назвою..."
@@ -98,41 +102,39 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
                     className="xsm:max-w-[300px] max-w-none"
                 />
             </div>
-            {isLoading ? (
-                <div className="flex items-center justify-center mt-10">
-                    <ImSpinner className="size-14 animate-spin text-gray" />
+            <>
+                <div className="mt-4 text-gray">
+                    <span className="text-white font-bold">
+                        {quests.length}
+                    </span>{" "}
+                    результатів знайдено
                 </div>
-            ) : (
-                <>
-                    <div className="mt-4 text-gray">
-                        <span className="text-white font-bold">
-                            {quests.length}
-                        </span>{" "}
-                        результатів знайдено
-                    </div>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-7 mt-6">
                     {quests.length ? (
-                        <>
-                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-7 mt-6">
-                                {quests.map((quest, index) => (
-                                    <motion.div
-                                        key={index}
-                                        initial="hidden"
-                                        animate="visible"
-                                        variants={bounceAnimation}
-                                        transition={{ delay: index * 0.1 }}
-                                    >
-                                        <Quest key={index} quest={quest} />
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </>
+                        <AnimatePresence>
+                            {quests.map((quest, index) => (
+                                <motion.div
+                                    key={quest.id}
+                                    layout
+                                    initial="hidden"
+                                    animate="visible"
+                                    exit="hidden"
+                                    variants={bounceAnimation}
+                                    transition={{
+                                        delay: index * 0.1,
+                                    }}
+                                >
+                                    <Quest key={index} quest={quest} />
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
                     ) : (
                         <div className="text-gray text-sm">
                             Квестів не знайдено
                         </div>
                     )}
-                </>
-            )}
+                </div>
+            </>
         </>
     );
 };

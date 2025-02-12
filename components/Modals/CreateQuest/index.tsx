@@ -23,6 +23,11 @@ import { CreateQuestBody } from "@/api/requestBodies/quest.interface";
 import { useRouter } from "next/navigation";
 import { toggleModal } from "@/store/slices/modals";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { motion } from "framer-motion";
+import {
+    defaultAnimation,
+    defaultAnimationWithTransform,
+} from "../../../helpers/animation";
 
 export const CreateQuest = () => {
     const router = useRouter();
@@ -120,7 +125,10 @@ export const CreateQuest = () => {
     return (
         isModalOpened("QuestCreation", modals) && (
             <>
-                <div className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4">
+                <motion.div
+                    {...defaultAnimationWithTransform}
+                    className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-1/2 md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4"
+                >
                     <ReturnBtn
                         className="self-start mt-2 mb-10 ml-2 sm:ml-4"
                         modal="QuestCreation"
@@ -131,14 +139,20 @@ export const CreateQuest = () => {
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
                             {media ? (
-                                <Image
-                                    src={media}
-                                    alt="Зображення квесту"
-                                    className="w-full aspect-square object-cover"
-                                    sizes="100vw"
-                                    height={0}
-                                    width={0}
-                                />
+                                <motion.div
+                                    key={media}
+                                    {...defaultAnimation}
+                                    className="w-full"
+                                >
+                                    <Image
+                                        src={media}
+                                        alt="Зображення квесту"
+                                        className="w-full aspect-square object-cover"
+                                        sizes="100vw"
+                                        height={0}
+                                        width={0}
+                                    />
+                                </motion.div>
                             ) : (
                                 <div className="w-full border-2 border-purple aspect-square flex items-center justify-center">
                                     <BsFillImageFill className="size-20 text-gray" />
@@ -213,7 +227,8 @@ export const CreateQuest = () => {
                                         Список питань
                                     </span>
                                     {questions?.map((question, index) => (
-                                        <div
+                                        <motion.div
+                                            layoutId={question.id}
                                             key={index}
                                             className="flex gap-2 place-items-center"
                                         >
@@ -263,7 +278,7 @@ export const CreateQuest = () => {
                                                     color="white"
                                                 />
                                             </Button>
-                                        </div>
+                                        </motion.div>
                                     ))}
                                 </div>
 
@@ -287,7 +302,7 @@ export const CreateQuest = () => {
                             </Button>
                         </form>
                     </div>
-                </div>
+                </motion.div>
                 <ModalBg modal="QuestCreation" />
             </>
         )
