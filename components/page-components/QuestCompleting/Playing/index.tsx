@@ -1,5 +1,4 @@
 "use client";
-
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { ChoiceQuestion } from "./ChoiceQuestion";
@@ -144,12 +143,10 @@ export const PlayingGame = ({
                         className="mx-auto mt-3 rounded-lg w-full max-w-[400px]"
                     />
                     <h1 className="pt-10 pb-5 text-center text-xl xsm:text-3xl">
-                        {currentQuestion.title}
+                        {currentQuestion.text}
                     </h1>
                 </div>
-
                 {renderQuestion()}
-
                 <Button
                     color="purpleBackground"
                     className="mt-6 mx-auto max-w-[200px] w-full mb-10"
