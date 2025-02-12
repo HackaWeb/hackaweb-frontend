@@ -8,12 +8,13 @@ import {
 } from "@/api/responses/common/failure.interface";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { cn } from "@/helpers/cn";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { setCookie } from "@/helpers/setCookie";
 import { validateEmail } from "@/helpers/validateEmail";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { ImSpinner } from "react-icons/im";
+import { ImSpinner2 } from "react-icons/im";
 import { toast } from "react-toastify";
 
 const translateErrorMessage = (errorMessage: string) => {
@@ -117,11 +118,6 @@ export const RegisterPageComponent = () => {
     return (
         <div className="container sm:mt-12 mt-6 flex flex-col place-items-center">
             <h1>Реєстрація</h1>
-            {isLoading && (
-                <div className="flex items-center justify-center mt-6">
-                    <ImSpinner className="size-14 animate-spin text-gray" />
-                </div>
-            )}
             <form
                 onSubmit={onSubmit}
                 className="flex flex-col place-items-center"
@@ -162,13 +158,17 @@ export const RegisterPageComponent = () => {
                 <Button
                     color="purpleBackground"
                     type="submit"
-                    className="px-10 sm:px-20 text-lg mt-5 sm:mt-10"
+                    className={cn(
+                        "px-10 sm:px-20 text-lg mt-5 sm:mt-16",
+                        isLoading && "opacity-70",
+                    )}
+                    disabled={isLoading}
                 >
-                    Реєстрація
+                    {isLoading && (
+                        <ImSpinner2 className="size-6 animate-spin text-gray" />
+                    )}{" "}
+                    <span>Реєстрація</span>
                 </Button>
-                <span className="mt-8 sm:mt-20">
-                    Або зареєструватися через соц. мережі
-                </span>
             </form>
         </div>
     );

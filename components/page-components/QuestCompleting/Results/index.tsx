@@ -10,12 +10,12 @@ export const Results = ({ quest, result, timeSpent }: ResultsProps) => {
         <div className="relative">
             <div className="pt-2 sm:pt-16 px-4 relative bg-[url(/results-bg.png)] bg-cover bg-center">
                 <Image
-                    src={quest.imageUrl}
-                    alt={quest.title}
-                    className="mx-auto mt-3 rounded-lg w-full max-w-[400px] max-h-[400px]"
-                    width={0}
-                    height={0}
+                    src="/test.png"
+                    alt="Питання"
+                    className="mx-auto mt-3 rounded-lg w-full max-w-[400px]"
                     sizes="100vw"
+                    height={0}
+                    width={0}
                 />
                 <h1 className="pt-10 pb-5 text-center text-xl xsm:text-3xl">
                     Вітаємо з проходженням квізу

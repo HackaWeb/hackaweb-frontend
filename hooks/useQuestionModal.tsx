@@ -9,6 +9,7 @@ import { Choice } from "@/components/Modals/CreateQuestion/ChoiceAnswer";
 import { selectModals, selectPrev, toggleModal } from "@/store/slices/modals";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import {
+    removeQuestionImage,
     selectActiveQuestion,
     selectOptions,
     setOptions,
@@ -41,6 +42,11 @@ export const useQuestionModal = () => {
     const [questionType, setQuestionType] = useState<SelectOption | null>(null);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const removeImageHandler = (questionId?: string) => {
+        setMedia(null);
+        if (questionId) dispatch(removeQuestionImage(questionId));
+    };
 
     const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const uploadedFile = e.target.files?.[0];
@@ -119,5 +125,6 @@ export const useQuestionModal = () => {
         resetOptions,
         media,
         setText,
+        removeImageHandler,
     };
 };

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CompletedQuestsProps } from "./CompletedQuests.props";
 import { printUserNickname } from "@/helpers/printUserNickname";
 import { motion } from "framer-motion";
-import { slideFromSidesAnimation } from "@/helpers/animation";
+import Image from "next/image";
 
 export const CompletedQuests = ({
     profile,
@@ -60,10 +60,13 @@ export const CompletedQuests = ({
                                             </Link>
                                         </td>
                                         <td className="p-3">
-                                            <img
+                                            <Image
                                                 src={completed.imageUrl}
                                                 alt={completed.title}
                                                 className="w-16 h-12 object-cover rounded-md"
+                                                sizes="100vw"
+                                                height={0}
+                                                width={0}
                                             />
                                         </td>
                                         <td className="p-3">37 / 60 хв.</td>

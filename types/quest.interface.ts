@@ -16,6 +16,7 @@ export interface Quest {
     createdAt: string;
     rate: number;
     imageUrl: string;
+    taskCount: number;
     passCount: number;
     duration: number;
     owner: User;

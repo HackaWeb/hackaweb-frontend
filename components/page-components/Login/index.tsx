@@ -11,8 +11,9 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 import { LoginRequestBody } from "@/api/requestBodies/auth.interface";
-import { ImSpinner } from "react-icons/im";
+import { ImSpinner2 } from "react-icons/im";
 import { validateEmail } from "@/helpers/validateEmail";
+import { cn } from "@/helpers/cn";
 
 export const LoginPageComponent = () => {
     const router = useRouter();
@@ -87,11 +88,6 @@ export const LoginPageComponent = () => {
     return (
         <div className="container sm:mt-12 mt-6 flex flex-col place-items-center">
             <h1>Авторизація</h1>
-            {isLoading && (
-                <div className="flex items-center justify-center mt-6">
-                    <ImSpinner className="size-14 animate-spin text-gray" />
-                </div>
-            )}
             <form onSubmit={onSubmit} className="flex flex-col w-full">
                 <div className="space-y-2 sm:mt-10 mt-6">
                     <Input
@@ -123,13 +119,16 @@ export const LoginPageComponent = () => {
                 <Button
                     color="purpleBackground"
                     type="submit"
-                    className="px-10 sm:px-20 text-lg mt-5 mx-auto sm:mt-10"
+                    className={cn(
+                        "px-10 sm:px-20 text-lg mt-5 mx-auto sm:mt-16",
+                        isLoading && "opacity-70",
+                    )}
                 >
-                    Увійти
+                    {isLoading && (
+                        <ImSpinner2 className="size-6 animate-spin text-gray" />
+                    )}{" "}
+                    <span>Увійти</span>
                 </Button>
-                <span className="mt-8 sm:mt-20 text-center">
-                    Або увійти через соц. мережі
-                </span>
             </form>
         </div>
     );

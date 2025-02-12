@@ -11,7 +11,7 @@ export const Checkbox = ({
     id,
 }: CheckboxProps) => {
     const toggleCheckbox = () => {
-        onChange(!checked);
+        if (onChange) onChange(!checked);
     };
 
     return (
