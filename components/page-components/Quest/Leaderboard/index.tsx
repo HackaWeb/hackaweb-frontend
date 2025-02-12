@@ -65,6 +65,17 @@ export const Leaderboard = ({
                                             {index + 1}
                                         </span>
                                     </td>
+                                    <td className="w-[200px] px-4 py-2 truncate">
+                                        <Link
+                                            href={`/users/${player.user.id}`}
+                                            className="text-purple"
+                                        >
+                                            {printUserNickname(
+                                                player.user.firstName,
+                                                player.user.lastName,
+                                            )}
+                                        </Link>
+                                    </td>
                                     <td className="w-[80px] px-4 py-2">
                                         <div className="w-10 h-10 rounded-md border border-purple flex items-center justify-center p-1">
                                             {player.user.avatar ? (
