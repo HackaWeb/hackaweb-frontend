@@ -4,14 +4,10 @@ import { getQuestById } from "@/api/quests";
 import { GeneralInfo } from "@/components/page-components/Quest/GeneralInfo";
 import { Leaderboard } from "@/components/page-components/Quest/Leaderboard";
 import { Reviews } from "@/components/page-components/Quest/Reviews";
-import { Button } from "@/components/ui/Button";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { LeaderboardUser, Quest } from "@/types/quest.interface";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { TbArrowBackUp } from "react-icons/tb";
-import { motion } from "framer-motion";
-import { slideFromRightAnimation } from "@/helpers/animation";
 
 const QuestDetails = async ({ params }: PageProps) => {
     const questId = (await params).id;

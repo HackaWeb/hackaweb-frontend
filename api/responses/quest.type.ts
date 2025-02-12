@@ -11,6 +11,7 @@ export interface CreateQuestResponse {
     passCount: number;
     owner: User;
     duration: number;
+    taskCount: number;
     questions: {
         id: string;
         text: string;
