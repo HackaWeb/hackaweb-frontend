@@ -38,7 +38,6 @@ export const useQuestionModal = () => {
 
     const [media, setMedia] = useState<string | null>(null);
     const [text, setText] = useState<string>("");
-    const [fileType, setFileType] = useState<"image" | "video" | null>(null);
     const [questionType, setQuestionType] = useState<SelectOption | null>(null);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -48,10 +47,7 @@ export const useQuestionModal = () => {
 
         if (uploadedFile) {
             const fileURL = URL.createObjectURL(uploadedFile);
-            const isVideo = uploadedFile.type.includes("video");
-
             setMedia(fileURL);
-            setFileType(isVideo ? "video" : "image");
         }
     };
 
@@ -99,7 +95,6 @@ export const useQuestionModal = () => {
     const resetOptions = (modal: ModalType, msg: string) => {
         setText("");
         setMedia(null);
-        setFileType(null);
         dispatch(setOptions(null));
         setQuestionType(null);
         dispatch(toggleModal(modal));
@@ -112,7 +107,6 @@ export const useQuestionModal = () => {
         questionType,
         renderGetAnswer,
         onFileUpload,
-        fileType,
         setQuestionType,
         renderQuestionTitle,
         dispatch,
@@ -124,8 +118,6 @@ export const useQuestionModal = () => {
         text,
         resetOptions,
         media,
-        setMedia,
-        setFileType,
         setText,
     };
 };
