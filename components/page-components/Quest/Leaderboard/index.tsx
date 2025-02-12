@@ -4,11 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
 import { LeaderboardProps } from "./Leaderboard.props";
+import { getTimeInMinutes } from "@/helpers/getTimeInMinutes";
 
 export const Leaderboard = ({
     leaderboard,
     questDuration,
 }: LeaderboardProps) => {
+    console.log(leaderboard);
     return (
         <div className="overflow-x-auto bg-blackOpacity pt-4 rounded-lg h-auto">
             <h2 className="text-white text-lg font-semibold mb-4 ml-4">
@@ -82,7 +84,8 @@ export const Leaderboard = ({
                                         </div>
                                     </td>
                                     <td className="w-[150px] px-4 py-2 text-gray-light">
-                                        {player.timeSpent} / {questDuration} хв.
+                                        {getTimeInMinutes(player.timeSpent)} /{" "}
+                                        {questDuration.toFixed(2)} хв.
                                     </td>
                                     <td className="w-[120px] px-4 py-2 text-gray-light">
                                         {player.accuracy} / 100 %
