@@ -112,6 +112,17 @@ export const LeftColumnProfile = ({
                     >
                         {avatar ? (
                             <>
+                                {isEditable && (
+                                    <Button
+                                        className="absolute top-1 right-1 p-1"
+                                        onClick={deleteAvatarHandler}
+                                        color="redBorder"
+                                        name="Видалити аватар"
+                                        aria-label="Видалити аватар"
+                                    >
+                                        <AiOutlineClose className="size-5" />
+                                    </Button>
+                                )}
                                 <Image
                                     src={avatar}
                                     alt="Avatar"
@@ -140,17 +151,19 @@ export const LeftColumnProfile = ({
                 <div className="mt-2 text-center text-xl font-semibold">
                     {profile.firstName || ""} {profile.lastName || ""}
                 </div>
-                <ul className="mt-6 pb-4 border-b-2 border-b-gray-300 border-opacity-10 flex flex-col justify-start gap-2 relative">
-                    {achievements.unlocked.map((achiev, index) => (
-                        <li
-                            key={index}
-                            className="bg-blackOpacity-dark text-yellow border-2 border-purple p-1 rounded-md w-fit inline-block"
-                        >
-                            {achiev}
-                        </li>
-                    ))}
+                <div className="mt-6 pb-4 border-b-2 border-b-gray-300 border-opacity-10 relative">
+                    <ul className="flex flex-col justify-start gap-2">
+                        {achievements.unlocked.map((achiev, index) => (
+                            <li
+                                key={index}
+                                className="bg-blackOpacity-dark text-yellow border-2 border-purple p-1 rounded-md w-fit inline-block"
+                            >
+                                {achiev}
+                            </li>
+                        ))}
+                    </ul>
                     <IoTrophyOutline className="absolute right-0 bottom-0 text-purple size-8" />
-                </ul>
+                </div>
                 <ul className="mt-4 flex flex-col gap-2">
                     {achievements.locked.map((achiev, index) => (
                         <li

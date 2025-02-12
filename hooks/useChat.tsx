@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import * as signalR from "@microsoft/signalr";
 
 interface Message {
-    userId: string;
+    avatarUrl: string;
+    nickName: string;
     message: string;
     timestamp: string;
 }
@@ -47,6 +48,7 @@ export const useChat = () => {
         if (!connection) return;
 
         connection.on("ReceiveMessage", (chatMessage) => {
+            console.log(chatMessage);
             setMessages((prev) => [...prev, chatMessage]);
         });
 

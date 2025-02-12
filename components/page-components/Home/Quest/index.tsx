@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { QuestProps } from "./Quest.props";
 import Link from "next/link";
 import { RenderRating } from "@/helpers/RenderRating";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
 import { printUserNickname } from "@/helpers/printUserNickname";
 import { FaImage, FaUser } from "react-icons/fa";
 import { formatDate } from "@/helpers/formatDate";
+import { QuestProps } from "./Quest.props";
 
 export const Quest = ({ quest }: QuestProps) => {
     return (
