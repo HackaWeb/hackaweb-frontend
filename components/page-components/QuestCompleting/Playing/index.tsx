@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { ChoiceQuestion } from "./ChoiceQuestion";
@@ -16,12 +18,15 @@ import { BiDirections } from "react-icons/bi";
 export const PlayingGame = ({
     questions,
     onCompleteTest,
+    userAnswers,
     setUserAnswers,
     timeLeft,
     user,
-}: PlayingProps) => {
+}: PlayingProps & {
+    userAnswers: Record<number, any>;
+    setUserAnswers: React.Dispatch<React.SetStateAction<Record<number, any>>>;
+}) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [answers, setAnswers] = useState<Record<number, any>>({});
     const [questionsCompleted, setQuestionsCompleted] = useState<number[]>([]);
     const [isChatOpened, setIsChatOpened] = useState(false);
     const direction = useRef<number>(0);
@@ -42,23 +47,20 @@ export const PlayingGame = ({
     };
 
     const onAnswerChange = (answer: any) => {
-        setAnswers((prev) => {
+        setUserAnswers((prev) => {
             const newAnswers = { ...prev, [currentQuestionIndex]: answer };
-            setUserAnswers(newAnswers);
-
-            setQuestionsCompleted((prevCompleted) => {
-                return prevCompleted.includes(currentQuestionIndex)
-                    ? prevCompleted
-                    : [...prevCompleted, currentQuestionIndex];
-            });
-
             return newAnswers;
+        });
+
+        setQuestionsCompleted((prevCompleted) => {
+            return prevCompleted.includes(currentQuestionIndex)
+                ? prevCompleted
+                : [...prevCompleted, currentQuestionIndex];
         });
     };
 
     const onNextQuestionClick = () => {
-        console.log(answers[currentQuestionIndex]);
-        if (answers[currentQuestionIndex] === undefined) {
+        if (userAnswers[currentQuestionIndex] === undefined) {
             toast.error("Ви не обрали відповідь!");
             return;
         }
@@ -78,7 +80,7 @@ export const PlayingGame = ({
                 return (
                     <BooleanQuestion
                         onAnswerChange={onAnswerChange}
-                        initialAnswer={answers[currentQuestionIndex]}
+                        initialAnswer={userAnswers[currentQuestionIndex]}
                     />
                 );
             case 1:
@@ -86,7 +88,7 @@ export const PlayingGame = ({
                     <ChoiceQuestion
                         question={currentQuestion}
                         onAnswerChange={onAnswerChange}
-                        initialAnswer={answers[currentQuestionIndex] || []}
+                        initialAnswer={userAnswers[currentQuestionIndex] || []}
                     />
                 );
             case 2:
@@ -94,7 +96,7 @@ export const PlayingGame = ({
                     <InputQuestion
                         onAnswerChange={onAnswerChange}
                         initialAnswer={
-                            (answers[currentQuestionIndex] as string) || ""
+                            (userAnswers[currentQuestionIndex] as string) || ""
                         }
                     />
                 );
