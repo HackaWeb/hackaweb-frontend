@@ -9,7 +9,7 @@ import React, { useEffect } from "react";
 
 const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
 
-function Background() {
+export const LayoutBackground = () => {
     /* const color = useMotionValue(COLORS_TOP[0]);
 
     useEffect(() => {
@@ -30,5 +30,3 @@ function Background() {
         ></motion.main>
     );
 }
-
-export default Background;
