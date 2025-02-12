@@ -89,9 +89,9 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
             >
                 <LayoutBackground />
                 <ReduxProvider>
-                    {!pathname.includes("quest-completing") && (
+                    {/* {!pathname.includes("quest-completing") && (
                         <Aside profile={profile} />
-                    )}
+                    )} */}
                     <main
                         className={
                             !pathname.includes("quest-completing")
