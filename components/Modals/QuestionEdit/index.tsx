@@ -96,13 +96,15 @@ function QuestionEdit() {
     return (
         isModalOpened("QuestionEdit", modals) && (
             <>
-                <div className="max-h-[90vh] overflow-y-auto pt-72 absolute left-[50%] -translate-x-[50%] max-w-[700px] w-full top-10 z-10 flex flex-col place-content-center place-items-center bg-blue p-6 mx-4 rounded-lg">
+                <div className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4">
                     <ReturnBtn
-                        className="self-start mt-2 mb-10"
+                        className="self-start mt-2 mb-10 ml-2 sm:ml-4"
                         modal="QuestionEdit"
                         isPrev
                     />
-                    <div className="text-3xl mt-10">Редагування Питання</div>
+                    <div className="text-xl sm:text-3xl text-center">
+                        Редагування Питання
+                    </div>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
                             {media || question?.mediaUrl ? (
