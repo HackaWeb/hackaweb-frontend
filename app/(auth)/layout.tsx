@@ -1,11 +1,21 @@
+"use client";
+
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
+import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { FaGoogle } from "react-icons/fa6";
+import { motion } from "framer-motion";
+import { slideFromBottomAnimation } from "@/helpers/animation";
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
+    const pathname = usePathname();
     return (
-        <div className="flex place-content-center place-items-center h-full">
-            <div className="container p-4 sm:p-8 bg-blackOpacity rounded-lg flex flex-col max-w-xl">
+        <div className="flex place-content-center place-items-center h-full overflow-hidden">
+            <motion.div
+                key={pathname}
+                {...slideFromBottomAnimation}
+                className="container p-4 sm:p-8 bg-blackOpacity rounded-lg flex flex-col max-w-xl"
+            >
                 <div>
                     <ReturnBtn />
                 </div>
@@ -18,7 +28,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
                         <span className="text-lg">Google</span>
                     </button>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };

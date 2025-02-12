@@ -12,7 +12,7 @@ import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { Question } from "@/types/question.interface";
 import { editQuestion } from "@/store/slices/quests";
 import { motion } from "framer-motion";
-import { defaultAnimationWithTransform } from "../../../helpers/animation";
+import { popAnimationWithTransform } from "../../../helpers/animation";
 import { FaImage } from "react-icons/fa";
 
 export const QuestionEdit = () => {
@@ -70,7 +70,7 @@ export const QuestionEdit = () => {
         isModalOpened("QuestionEdit", modals) && (
             <>
                 <motion.div
-                    {...defaultAnimationWithTransform}
+                    {...popAnimationWithTransform}
                     className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4"
                 >
                     <ReturnBtn
