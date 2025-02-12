@@ -8,6 +8,7 @@ import { ProfileForm } from "@/components/common/ProfileForm";
 import { LeftColumnProfile } from "@/components/common/LeftColumnProfile";
 import { motion } from "framer-motion";
 import { slideFromBottomAnimation } from "@/helpers/animation";
+import { printUserNickname } from "@/helpers/printUserNickname";
 
 export const UserProfilePageComponent = ({
     isEditable,
@@ -19,7 +20,8 @@ export const UserProfilePageComponent = ({
         profile && (
             <motion.div {...slideFromBottomAnimation} className="mt-8">
                 <h1>
-                    Профіль користувача {profile.firstName} {profile.lastName}
+                    Профіль користувача{" "}
+                    {printUserNickname(profile.firstName, profile.lastName)}
                 </h1>
                 <ReturnBtn className="mt-4" />
                 <div
@@ -27,7 +29,7 @@ export const UserProfilePageComponent = ({
                         "mt-8 grid gap-6 grid-cols-1",
                         isEditable
                             ? "sm:grid-cols-[240px_auto] 2xl:grid-cols-[240px_330px_auto]"
-                            : "grid-cols-1 xl:grid-cols-[240px_auto]",
+                            : "grid-cols-1 xl:grid-cols-[240px_auto] items-start",
                     )}
                 >
                     <LeftColumnProfile

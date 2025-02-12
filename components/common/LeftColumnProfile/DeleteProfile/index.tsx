@@ -29,7 +29,7 @@ export const DeleteProfile = ({
                     }, 500);
                 } else {
                     toast.success(
-                        `Профіль користувача ${profile?.firstName} ${profile?.lastName} успішно видалено!`,
+                        `Профіль користувача ${profile?.firstName || ""} ${profile?.lastName || ""} успішно видалено!`,
                     );
                     router.back();
                 }

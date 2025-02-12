@@ -142,7 +142,6 @@ export const OwnQuests = ({
                                         <td className="p-3">
                                             {quest.taskCount}
                                         </td>
-
                                         <td className="p-3">
                                             {quest.passCount}
                                         </td>
