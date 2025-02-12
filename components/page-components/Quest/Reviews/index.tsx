@@ -1,15 +1,14 @@
 "use client";
 
-import Image from "next/image";
 import { RenderRating } from "@/helpers/RenderRating";
 import { AiOutlineUser } from "react-icons/ai";
-import Link from "next/link";
 import { ReviewsProps } from "./Reviews.props";
-import { printUserNickname } from "@/helpers/printUserNickname";
 import { motion } from "framer-motion";
 import { slideFromBottomAnimation } from "@/helpers/animation";
+import { formatDate } from "@/helpers/formatDate";
 
 export const Reviews = ({ quest }: ReviewsProps) => {
+    console.log(quest);
     return (
         <motion.div
             {...slideFromBottomAnimation}
@@ -18,7 +17,7 @@ export const Reviews = ({ quest }: ReviewsProps) => {
             <h2 className="text-white text-lg font-semibold mb-4">
                 Відгуки ({quest.feedbacks.length})
             </h2>
-            {/* <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
                 {quest.feedbacks.length ? (
                     quest.feedbacks.map((review, index) => (
                         <div
@@ -28,31 +27,15 @@ export const Reviews = ({ quest }: ReviewsProps) => {
                             <div className="flex gap-4">
                                 <div className="flex flex-col items-center">
                                     <div className="w-12 h-12 rounded-md border border-purple flex items-center justify-center p-1">
-                                        {review.author &&
-                                        review.author.avatar ? (
-                                            <Image
-                                                src={review.author.avatar}
-                                                alt="Avatar"
-                                                width={24}
-                                                height={24}
-                                            />
-                                        ) : (
+                                        {
                                             <AiOutlineUser className="text-purple size-6" />
-                                        )}
+                                        }
                                     </div>
                                 </div>
                                 <div className="flex-1">
-                                    <Link
-                                        className="font-semibold"
-                                        href={`/users/${review.author.id}`}
-                                    >
-                                        {printUserNickname(
-                                            review.author.firstName,
-                                            review.author.lastName,
-                                        )}
-                                    </Link>
+                                    <div>Користувач</div>
                                     <div className="text-gray-light text-sm">
-                                        {review.createdAt}
+                                        {formatDate(review.createdAt)}
                                     </div>
                                     <RenderRating
                                         rating={review.rate}
@@ -68,7 +51,7 @@ export const Reviews = ({ quest }: ReviewsProps) => {
                         Цей квест ще не має відгуків
                     </div>
                 )}
-            </div> */}
+            </div>
         </motion.div>
     );
 };
