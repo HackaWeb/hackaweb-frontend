@@ -25,9 +25,14 @@ import { toggleModal } from "@/store/slices/modals";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import {
-    defaultAnimation,
-    defaultAnimationWithTransform,
+    popAnimation,
+    popAnimationWithTransform,
 } from "../../../helpers/animation";
+import {
+    MAX_DESCRIPTION_LENGTH,
+    MAX_QUEST_DURATION,
+    MAX_TITLE_LENGTH,
+} from "@/constants";
 
 export const CreateQuest = () => {
     const router = useRouter();
@@ -106,14 +111,21 @@ export const CreateQuest = () => {
 
     const onCreateQuestSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        if (
-            !media ||
-            !title.length ||
-            !Number(duration) ||
-            !description.length ||
-            !questions?.length
-        )
-            return toast.error("Заповніть коректно усі поля!");
+
+        if (title.length > MAX_TITLE_LENGTH)
+            return toast.error("Назва не може бути більше 100 символів!");
+
+        if (description.length > MAX_DESCRIPTION_LENGTH)
+            return toast.error("Опис не може бути більше 200 символів!");
+
+        if (Number(duration) > MAX_QUEST_DURATION)
+            return toast.error("Максимальна тривалість тесту 60хв!");
+
+        if (!questions?.length)
+            return toast.error("Додайте хоча б одне питання!");
+
+        if (!media || !title.length || !Number(duration) || !description.length)
+            return toast.error("Заповніть усі поля!");
 
         const data = await createQuestHandler();
         router.refresh();
@@ -126,7 +138,7 @@ export const CreateQuest = () => {
         isModalOpened("QuestCreation", modals) && (
             <>
                 <motion.div
-                    {...defaultAnimationWithTransform}
+                    {...popAnimationWithTransform}
                     className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-1/2 md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4"
                 >
                     <ReturnBtn
@@ -141,7 +153,7 @@ export const CreateQuest = () => {
                             {media ? (
                                 <motion.div
                                     key={media}
-                                    {...defaultAnimation}
+                                    {...popAnimation}
                                     className="w-full"
                                 >
                                     <Image
@@ -284,7 +296,7 @@ export const CreateQuest = () => {
 
                                 <Button
                                     color="yellowBorder"
-                                    className="mt-2"
+                                    className="mt-3"
                                     type="button"
                                     onClick={() =>
                                         onQuestionAddClick("QuestCreation")

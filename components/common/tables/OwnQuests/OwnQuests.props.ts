@@ -4,5 +4,6 @@ import { Profile } from "@/types/user.interface";
 export interface OwnQuestsProps {
     profile: Profile;
     isCreatedByMe: boolean;
-    ownQuests?: Quest[];
+    ownQuests?: Omit<Quest, "createdAt">[];
+    isEditable: boolean;
 }

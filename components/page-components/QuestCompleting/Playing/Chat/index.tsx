@@ -11,6 +11,8 @@ import { cn } from "@/helpers/cn";
 import { useChat } from "@/hooks/useChat";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { popAnimation } from "@/helpers/animation";
 
 export const Chat = ({ isOpened, setIsOpened, user }: ChatProps) => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -57,18 +59,32 @@ export const Chat = ({ isOpened, setIsOpened, user }: ChatProps) => {
 
                     <div className="flex-grow overflow-y-auto pr-2">
                         {messages.map((msg, index) => (
-                            <div
+                            <motion.div
                                 key={index}
+                                {...popAnimation}
                                 className="py-4 border-b border-gray-700"
                             >
                                 <div className="flex justify-between">
                                     <div className="flex items-start gap-3">
                                         <div className="rounded-md border border-purple p-2 w-14 h-14 flex items-center justify-center">
-                                            <AiOutlineUser className="text-purple size-7" />
+                                            {msg.avatarUrl ? (
+                                                <Image
+                                                    src={msg.avatarUrl}
+                                                    alt={
+                                                        msg.nickName ||
+                                                        "Користувач"
+                                                    }
+                                                    width={0}
+                                                    height={0}
+                                                    sizes="100vw"
+                                                />
+                                            ) : (
+                                                <AiOutlineUser className="text-purple size-7" />
+                                            )}
                                         </div>
                                         <div>
                                             <div className="text-base xsm:text-lg font-semibold mt-1">
-                                                {msg.userId}
+                                                {msg.nickName || "Користувач"}
                                             </div>
                                         </div>
                                     </div>
@@ -81,7 +97,7 @@ export const Chat = ({ isOpened, setIsOpened, user }: ChatProps) => {
                                 <p className="text-gray mt-2 text-sm xsm:text-base">
                                     {msg.message}
                                 </p>
-                            </div>
+                            </motion.div>
                         ))}
                         <div ref={messagesEndRef}></div>
                     </div>

@@ -12,8 +12,10 @@ import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { Question } from "@/types/question.interface";
 import { editQuestion } from "@/store/slices/quests";
 import { motion } from "framer-motion";
-import { defaultAnimationWithTransform } from "../../../helpers/animation";
-import { FaImage } from "react-icons/fa";
+import { FaImage, FaRegTrashAlt } from "react-icons/fa";
+import { MAX_TITLE_LENGTH } from "@/constants";
+import Image from "next/image";
+import { popAnimationWithTransform } from "../../../helpers/animation";
 
 export const QuestionEdit = () => {
     const {
@@ -32,6 +34,7 @@ export const QuestionEdit = () => {
         text,
         resetOptions,
         media,
+        removeImageHandler,
     } = useQuestionModal();
 
     const onSubmit = (e: React.FormEvent) => {
@@ -41,13 +44,20 @@ export const QuestionEdit = () => {
 
         const type = questionType?.value;
 
-        if (!text.length || !options?.length)
-            return toast.error("Спочатку заповніть усі поля!");
+        if (text.length > MAX_TITLE_LENGTH)
+            return toast.error(
+                "Довжина питання не може бути більше 100 символів!",
+            );
+
+        if (!options?.length)
+            return toast.error("Не забудьте додати варіанти відповідей!");
+
+        if (!text.length) return toast.error("Спочатку заповніть усі поля!");
 
         const edited: Question = {
             id: question.id,
-            text: text || question.text,
-            type: type?.length ? Number(type) : question.type,
+            text: text,
+            type: Number(type),
             choiceOptions: options?.length ? options : question.choiceOptions,
             mediaUrl: media || question.mediaUrl || undefined,
         };
@@ -70,7 +80,7 @@ export const QuestionEdit = () => {
         isModalOpened("QuestionEdit", modals) && (
             <>
                 <motion.div
-                    {...defaultAnimationWithTransform}
+                    {...popAnimationWithTransform}
                     className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4"
                 >
                     <ReturnBtn
@@ -83,17 +93,37 @@ export const QuestionEdit = () => {
                     </div>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
-                            {media || question?.mediaUrl ? (
-                                <img
-                                    src={media || question?.mediaUrl}
-                                    alt="Зображення питання"
-                                    className="w-full h-auto aspect-square object-cover"
-                                />
-                            ) : (
-                                <div className="w-full h-auto border-2 border-purple aspect-square flex items-center justify-center">
-                                    <BsFillImageFill className="size-20 text-gray" />
-                                </div>
-                            )}
+                            <div className="relative">
+                                {media || question?.mediaUrl ? (
+                                    <>
+                                        <Image
+                                            src={media || question?.mediaUrl!}
+                                            alt="Зображення питання"
+                                            className="w-full h-auto aspect-square object-cover"
+                                            sizes="100vw"
+                                            height={0}
+                                            width={0}
+                                        />
+                                        <Button
+                                            className="absolute right-4 p-3 bottom-4 bg-red"
+                                            color="redBorder"
+                                            type="button"
+                                            onClick={() =>
+                                                removeImageHandler(question?.id)
+                                            }
+                                        >
+                                            <FaRegTrashAlt
+                                                size={20}
+                                                color="white"
+                                            />
+                                        </Button>
+                                    </>
+                                ) : (
+                                    <div className="w-full h-auto border-2 border-purple aspect-square flex items-center justify-center">
+                                        <BsFillImageFill className="size-20 text-gray" />
+                                    </div>
+                                )}
+                            </div>
                             <Input
                                 id="media"
                                 type="file"

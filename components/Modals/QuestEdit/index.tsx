@@ -25,7 +25,12 @@ import { toggleModal } from "@/store/slices/modals";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { defaultAnimationWithTransform } from "../../../helpers/animation";
+import { popAnimationWithTransform } from "../../../helpers/animation";
+import {
+    MAX_DESCRIPTION_LENGTH,
+    MAX_QUEST_DURATION,
+    MAX_TITLE_LENGTH,
+} from "@/constants";
 
 export const QuestEdit = () => {
     const router = useRouter();
@@ -91,7 +96,7 @@ export const QuestEdit = () => {
             for (let question of questions) {
                 if (question.mediaUrl) {
                     const questionMedia = new FormData();
-                    const file = await fetch(question.mediaUrl!).then((r) =>
+                    const file = await fetch(question.mediaUrl).then((r) =>
                         r.blob(),
                     );
                     questionMedia.append("file", file as File);
@@ -114,14 +119,25 @@ export const QuestEdit = () => {
 
     const onEditQuestSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        if (title.length > MAX_TITLE_LENGTH)
+            return toast.error("Назва не може бути більше 100 символів!");
+
+        if (description.length > MAX_DESCRIPTION_LENGTH)
+            return toast.error("Опис не може бути більше 200 символів!");
+
+        if (Number(duration) > MAX_QUEST_DURATION)
+            return toast.error("Максимальна тривалість тесту 60хв!");
+
+        if (!questions?.length)
+            return toast.error("Додайте хоча б одне питання!");
+
         if (
             (!media && !quest?.imageUrl) ||
             !title.length ||
             !Number(duration) ||
-            !description.length ||
-            !questions?.length
+            !description.length
         )
-            return toast.error("Заповніть коректно усі поля!");
+            return toast.error("Заповніть усі поля!");
 
         const data = await editQuestHandler();
         router.refresh();
@@ -142,7 +158,7 @@ export const QuestEdit = () => {
         isModalOpened("QuestEdit", modals) && (
             <>
                 <motion.div
-                    {...defaultAnimationWithTransform}
+                    {...popAnimationWithTransform}
                     className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4"
                 >
                     <ReturnBtn
@@ -292,7 +308,7 @@ export const QuestEdit = () => {
 
                                 <Button
                                     color="yellowBorder"
-                                    className="mt-8"
+                                    className="mt-3"
                                     type="button"
                                     onClick={() =>
                                         onQuestionAddClick("QuestEdit")

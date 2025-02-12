@@ -4,13 +4,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
 import { LeaderboardProps } from "./Leaderboard.props";
+import { getTimeInMinutes } from "@/helpers/getTimeInMinutes";
+import { printUserNickname } from "@/helpers/printUserNickname";
+import { motion } from "framer-motion";
+import { slideFromBottomAnimation } from "@/helpers/animation";
 
 export const Leaderboard = ({
     leaderboard,
     questDuration,
 }: LeaderboardProps) => {
+    console.log(leaderboard);
     return (
-        <div className="overflow-x-auto bg-blackOpacity pt-4 rounded-lg h-auto">
+        <motion.div
+            {...slideFromBottomAnimation}
+            className="overflow-x-auto bg-blackOpacity pt-4 rounded-lg h-auto"
+        >
             <h2 className="text-white text-lg font-semibold mb-4 ml-4">
                 Таблиця лідерів ({leaderboard.length})
             </h2>
@@ -62,9 +70,10 @@ export const Leaderboard = ({
                                             href={`/users/${player.user.id}`}
                                             className="text-purple"
                                         >
-                                            {player.user.firstName +
-                                                " " +
-                                                player.user.lastName}
+                                            {printUserNickname(
+                                                player.user.firstName,
+                                                player.user.lastName,
+                                            )}
                                         </Link>
                                     </td>
                                     <td className="w-[80px] px-4 py-2">
@@ -82,10 +91,11 @@ export const Leaderboard = ({
                                         </div>
                                     </td>
                                     <td className="w-[150px] px-4 py-2 text-gray-light">
-                                        {player.timeSpent} / {questDuration} хв.
+                                        {getTimeInMinutes(player.timeSpent)} /{" "}
+                                        {questDuration.toFixed(2)} хв.
                                     </td>
                                     <td className="w-[120px] px-4 py-2 text-gray-light">
-                                        {player.accuracy} / 100 %
+                                        {player.accuracy.toFixed(0)} / 100 %
                                     </td>
                                 </tr>
                             ))}
@@ -97,6 +107,6 @@ export const Leaderboard = ({
                     Ніхто ще не пройшов цей квест
                 </div>
             )}
-        </div>
+        </motion.div>
     );
 };

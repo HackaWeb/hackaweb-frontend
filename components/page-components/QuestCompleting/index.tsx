@@ -6,8 +6,9 @@ import { PlayingGame } from "./Playing";
 import { Results } from "./Results";
 import { QuestCompletingProps } from "./QuestCompleting.props";
 import { QuestionWhileTesting } from "@/types/question.interface";
-import { getQuestionsByQuestId } from "@/api/quests";
+import { getQuestionsByQuestId, submitQuest } from "@/api/quests";
 import { toast } from "react-toastify";
+import { SubmitQuestResponseSuccess } from "@/api/responses/quest.type";
 
 type Stage = "waiting" | "game" | "results";
 
@@ -22,6 +23,12 @@ export const QuestCompletingPageComponent = ({
     const [timerInterval, setTimerInterval] = useState<NodeJS.Timeout | null>(
         null,
     );
+    const [result, setResult] = useState<null | SubmitQuestResponseSuccess>(
+        null,
+    );
+
+    // Время, которое прошло
+    const timeSpent = quest.duration * 60 - timeLeft;
 
     const onStartQuestClick = async () => {
         try {
@@ -62,51 +69,53 @@ export const QuestCompletingPageComponent = ({
     console.log(userAnswers);
 
     const onCompleteTest = async () => {
-        try {
-            const formattedAnswers = {
-                quizId: quest.id,
-                userId: user.id,
-                userAnswers: questions.map((question, index) => {
-                    const userAnswer = userAnswers[index];
+        const formattedAnswers = {
+            quizId: quest.id,
+            userId: user.id,
+            userAnswers: questions.map((question, index) => {
+                const userAnswer = userAnswers[index];
 
-                    return {
-                        questionType: question.type,
-                        options: Array.isArray(userAnswer)
-                            ? userAnswer.map((option) => ({
-                                  optionId: option.id,
+                return {
+                    questionType: question.type,
+                    questionId: question.id,
+                    answers: Array.isArray(userAnswer)
+                        ? userAnswer.map((option) => ({
+                              optionId: option.id,
+                              text: undefined,
+                          }))
+                        : typeof userAnswer === "boolean"
+                        ? [
+                              {
+                                  optionId:
+                                      question.options?.[userAnswer ? 0 : 1]
+                                          ?.id,
                                   text: undefined,
-                              }))
-                            : typeof userAnswer === "boolean"
-                            ? [
-                                  {
-                                      optionId:
-                                          question.options?.[userAnswer ? 0 : 1]
-                                              ?.id,
-                                      text: undefined,
-                                  },
-                              ]
-                            : [
-                                  {
-                                      optionId: undefined,
-                                      text: userAnswer?.toString() || "",
-                                  },
-                              ],
-                    };
-                }),
-            };
+                              },
+                          ]
+                        : [
+                              {
+                                  optionId: undefined,
+                                  text: userAnswer?.toString() || "",
+                              },
+                          ],
+                };
+            }),
+        };
 
-            console.log("Отправляем ответы:", formattedAnswers);
-            return;
+        try {
+            console.log("Відправлення відповідей", formattedAnswers);
+            const response = await submitQuest(
+                quest.id,
+                formattedAnswers.userAnswers,
+            );
 
-            if (true) {
+            if (response.quizId) {
                 toast.success("Тест успішно завершено!");
+                setResult(response);
                 setStage("results");
             } else {
                 toast.error("Помилка при завершенні тестування");
             }
-
-            /* const response = await submitAnswer(formattedAnswers); */
-            /* console.log("Ответы отправлены:", response); */
         } catch (error) {
             console.error("Помилка при відправленні відповідей", error);
         }
@@ -142,7 +151,9 @@ export const QuestCompletingPageComponent = ({
             );
 
         case "results":
-            return <Results quest={quest} result={null} />;
+            return (
+                <Results quest={quest} result={result} timeSpent={timeSpent} />
+            );
 
         default:
             return <></>;

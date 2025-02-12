@@ -11,8 +11,9 @@ import { toast } from "react-toastify";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import { PlayingProps } from "./Playing.props";
 import { motion } from "framer-motion";
-import { slideAnimation } from "@/helpers/animation";
+import { slideFromSidesAnimation } from "@/helpers/animation";
 import { BiDirections } from "react-icons/bi";
+import Image from "next/image";
 
 export const PlayingGame = ({
     questions,
@@ -69,7 +70,6 @@ export const PlayingGame = ({
             direction.current = 1;
         } else {
             onCompleteTest();
-            toast.success("Тест успішно завершено!");
         }
     };
 
@@ -129,7 +129,7 @@ export const PlayingGame = ({
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                variants={slideAnimation}
+                variants={slideFromSidesAnimation}
             >
                 <div className="bg-blackOpacity pt-16 px-4 relative">
                     <InfoBox
@@ -137,10 +137,13 @@ export const PlayingGame = ({
                         questionsLength={questions.length}
                         currentQuestionIndex={currentQuestionIndex}
                     />
-                    <img
+                    <Image
                         src="/question.png"
                         alt="Питання"
                         className="mx-auto mt-3 rounded-lg w-full max-w-[400px]"
+                        sizes="100vw"
+                        height={0}
+                        width={0}
                     />
                     <h1 className="pt-10 pb-5 text-center text-xl xsm:text-3xl">
                         {currentQuestion.text}

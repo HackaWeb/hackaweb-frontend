@@ -20,7 +20,10 @@ export const MakeReview = ({ quest }: MakeReviewProps) => {
     };
 
     const onReviewSubmitClick = async () => {
-        isSended && toast.error("Ви вже надіслали відгук!");
+        if (isSended) {
+            toast.error("Ви вже надіслали відгук!");
+            return;
+        }
 
         if (!rating || !review.trim()) {
             toast.error("Заповніть текст відгуку та рейтинг!");
@@ -37,6 +40,9 @@ export const MakeReview = ({ quest }: MakeReviewProps) => {
             if ("quizId" in response) {
                 setIsSended(true);
                 toast.success("Відгук успішно надіслано!");
+
+                setRating(0);
+                setReview("");
 
                 return;
             }
