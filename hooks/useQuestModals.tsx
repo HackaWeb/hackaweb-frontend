@@ -3,14 +3,21 @@ import { useAppSelector } from "@/store/hooks/useAppSelector";
 import { selectModals, toggleModal } from "@/store/slices/modals/modals";
 import { ModalType } from "@/store/slices/modals/modals.types";
 import {
-    selectEditingQuest,
-    setEditingQuestion,
-} from "@/store/slices/quests/editQuests";
+    selectActiveQuestion,
+    selectOptions,
+    selectQuest,
+    selectQuestions,
+    setActiveId,
+    setOptions,
+} from "@/store/slices/quests/quests";
 import { useState } from "react";
 
 export const useQuestModals = () => {
     const dispatch = useAppDispatch();
-    const quest = useAppSelector(selectEditingQuest);
+    const quest = useAppSelector(selectQuest);
+    const questions = useAppSelector(selectQuestions);
+    const question = useAppSelector(selectActiveQuestion);
+    const options = useAppSelector(selectOptions);
     const modals = useAppSelector(selectModals);
     const [media, setMedia] = useState<string | null>(null);
 
@@ -22,7 +29,7 @@ export const useQuestModals = () => {
     const onQuestionEditClick = (current: ModalType, id: string) => {
         dispatch(toggleModal(current));
         dispatch(toggleModal("QuestionEdit"));
-        dispatch(setEditingQuestion(id));
+        dispatch(setActiveId(id));
     };
 
     const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,5 +49,8 @@ export const useQuestModals = () => {
         onQuestionAddClick,
         onQuestionEditClick,
         onImageUpload,
+        questions,
+        question,
+        options,
     };
 };

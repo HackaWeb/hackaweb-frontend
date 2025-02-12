@@ -52,6 +52,10 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
         }
     };
 
+    const clickHandler = () => {
+        dispatch(toggleModal("QuestCreation"));
+    };
+
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             processQuestsHandler();

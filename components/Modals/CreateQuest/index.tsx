@@ -1,21 +1,14 @@
 "use client";
 
 import { isModalOpened } from "@/helpers/isModalOpened";
-import { useAppSelector } from "@/store/hooks/useAppSelector";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { RiEditLine } from "react-icons/ri";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { BsFillImageFill } from "react-icons/bs";
-import { selectModals, toggleModal } from "@/store/slices/modals/modals";
-import {
-    selectQuestions,
-    setEditingId,
-} from "@/store/slices/questions/questions";
 import { FiEdit2 } from "react-icons/fi";
 import Image from "next/image";
 import { IoImageOutline } from "react-icons/io5";
@@ -24,9 +17,9 @@ import {
     uploadQuestionMedia,
     uploadQuestMedia,
 } from "@/api/quests";
-import { parseQuestionType } from "@/helpers/parseQuestionType";
 import { ModalBg } from "../ModalBg";
 import { useQuestModals } from "@/hooks/useQuestModals";
+import { CreateQuestBody } from "@/api/requestBodies/quests.interface";
 
 export const CreateQuest = () => {
     const {
@@ -43,20 +36,18 @@ export const CreateQuest = () => {
     const [duration, setDuration] = useState<string>("");
 
     const createQuestHandler = async () => {
-        const questMedia = new FormData();
-        const file = await fetch(media!).then((r) => r.blob());
-        questMedia.append("file", file as File);
+        if (!questions) return;
 
-        const questBody = {
+        const questBody: CreateQuestBody["quiz"] = {
             title,
             description,
             duration: Number(duration),
             questions: questions.map((question) => {
                 return {
                     questionId: question.id,
-                    title: question.title,
-                    type: parseQuestionType(question.type),
-                    options: question.options.map((o) => {
+                    title: question.text,
+                    type: question.type,
+                    options: question.choiceOptions!.map((o) => {
                         return {
                             title: o.title
                                 .trim()
@@ -71,17 +62,26 @@ export const CreateQuest = () => {
 
         try {
             const data = await createQuest({ quiz: questBody });
-            const { errors } = await uploadQuestMedia(data.id, questMedia);
-            for (let question of questions) {
-                const questionMedia = new FormData();
-                const file = await fetch(question.mediaUrl!).then((r) =>
-                    r.blob(),
-                );
-                questionMedia.append("file", file as File);
-                await uploadQuestionMedia(question.id, questionMedia);
+
+            if (media) {
+                const questMedia = new FormData();
+                const file = await fetch(media!).then((r) => r.blob());
+                questMedia.append("file", file as File);
+
+                await uploadQuestMedia(data.id, questMedia);
             }
 
-            if (errors) console.error(errors);
+            for (let question of questions) {
+                if (question.mediaUrl) {
+                    const questionMedia = new FormData();
+                    const file = await fetch(question.mediaUrl).then((r) =>
+                        r.blob(),
+                    );
+                    questionMedia.append("file", file as File);
+                    await uploadQuestionMedia(question.id, questionMedia);
+                }
+            }
+
             return data;
         } catch (error) {
             console.log(error);
@@ -95,7 +95,7 @@ export const CreateQuest = () => {
             !title.length ||
             !Number(duration) ||
             !description.length ||
-            !questions.length
+            !questions?.length
         )
             return toast.error("Заповніть коректно усі поля!");
 
@@ -197,7 +197,7 @@ export const CreateQuest = () => {
                                     <span className="text-gray">
                                         Список питань
                                     </span>
-                                    {questions.map((question, index) => (
+                                    {questions?.map((question, index) => (
                                         <div
                                             key={index}
                                             className="flex gap-2 place-items-center"
@@ -218,7 +218,7 @@ export const CreateQuest = () => {
                                             )}
                                             <Input
                                                 disabled
-                                                defaultValue={question.title}
+                                                defaultValue={question.text}
                                             />
                                             <Button
                                                 color="purpleBackground"

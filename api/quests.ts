@@ -1,11 +1,13 @@
 import { fetchApi } from "./fetchApi";
 import {
     CreateQuestBody,
+    EditQuestBody,
+    EditQuestionBody,
     GetQuestsQuery,
-    GetQuestByOwnerIdBody,
 } from "./requestBodies/quests.interface";
 import {
     CreateQuestResponse,
+    EditQuestResponse,
     GetCompletedQuestByOwnerIdResponse,
     GetQuestByIdResponse,
     GetQuestByIdWithoutQuestionsResponse,
@@ -71,6 +73,28 @@ export const createQuest = async (
         endpoint: "/quiz/",
         isAuthRequired: true,
         method: "POST",
+        body,
+    });
+
+export const editQuest = async (
+    questId: string,
+    body: EditQuestBody,
+): Promise<EditQuestResponse> =>
+    fetchApi({
+        endpoint: `/quiz/${questId}`,
+        isAuthRequired: true,
+        method: "PUT",
+        body,
+    });
+
+export const editQuestion = async (
+    questionId: string,
+    body: EditQuestionBody,
+): Promise<CreateQuestResponse> =>
+    fetchApi({
+        endpoint: `/questions/${questionId}`,
+        isAuthRequired: true,
+        method: "PUT",
         body,
     });
 

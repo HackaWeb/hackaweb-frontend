@@ -13,7 +13,11 @@ import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { Question } from "@/types/question.interface";
 import { useEffect, useRef } from "react";
 import { VIDEO_DURATION } from "@/constants";
-import { addQuestion } from "@/store/slices/quests/editQuests";
+import {
+    addQuestion,
+    setActiveId,
+    setOptions,
+} from "@/store/slices/quests/quests";
 
 export const CreateQuestion = () => {
     const {
@@ -42,7 +46,8 @@ export const CreateQuestion = () => {
         e.preventDefault();
 
         const type = Number(questionType?.value);
-        if (!text.length || !type || !options?.length)
+
+        if (!text.length || !options?.length)
             return toast.error("Спочатку заповніть усі поля!");
 
         const question: Question = {
@@ -78,6 +83,13 @@ export const CreateQuestion = () => {
             };
         }
     }, [media, fileType]);
+
+    useEffect(() => {
+        if (modals.includes("QuestionCreation")) {
+            dispatch(setOptions(null));
+            dispatch(setActiveId(null));
+        }
+    }, [modals]);
 
     return (
         isModalOpened("QuestionCreation", modals) && (

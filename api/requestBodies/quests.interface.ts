@@ -26,3 +26,14 @@ export interface CreateQuestBody {
         }[];
     };
 }
+
+export interface EditQuestBody {
+    title: string;
+    description: string;
+    duration: number;
+}
+
+export interface EditQuestionBody {
+    text: string;
+    type: number;
+}

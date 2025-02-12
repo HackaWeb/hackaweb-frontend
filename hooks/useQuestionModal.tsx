@@ -13,10 +13,10 @@ import {
 } from "@/store/slices/modals/modals";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import {
-    selectEditingOptions,
-    selectEditingQuestion,
-    setEditingOptions,
-} from "@/store/slices/quests/editQuests";
+    selectActiveQuestion,
+    selectOptions,
+    setOptions,
+} from "@/store/slices/quests/quests";
 
 const questionTypes: SelectOption[] = [
     {
@@ -36,8 +36,8 @@ const questionTypes: SelectOption[] = [
 export const useQuestionModal = () => {
     const dispatch = useAppDispatch();
     const modals = useAppSelector(selectModals);
-    const question = useAppSelector(selectEditingQuestion);
-    const options = useAppSelector(selectEditingOptions);
+    const question = useAppSelector(selectActiveQuestion);
+    const options = useAppSelector(selectOptions);
     const prevModal = useAppSelector(selectPrev);
 
     const [media, setMedia] = useState<string | null>(null);
@@ -60,8 +60,18 @@ export const useQuestionModal = () => {
     };
 
     useEffect(() => {
-        if (question?.type !== questionType?.value)
-            dispatch(setEditingOptions(null));
+        if (question) {
+            const options = question.choiceOptions.map((o, index) => {
+                return {
+                    ...o,
+                    index,
+                };
+            });
+            dispatch(setOptions(options));
+        }
+
+        if (question?.type !== Number(questionType?.value))
+            dispatch(setOptions(null));
     }, [question, questionType]);
 
     const renderQuestionTitle = () => {
@@ -94,9 +104,8 @@ export const useQuestionModal = () => {
         setText("");
         setMedia(null);
         setFileType(null);
-        dispatch(setEditingOptions(null));
+        dispatch(setOptions(null));
         setQuestionType(null);
-        dispatch(setEditingOptions([]));
         dispatch(toggleModal(modal));
         if (prevModal) dispatch(toggleModal(prevModal));
         toast.success(msg);
