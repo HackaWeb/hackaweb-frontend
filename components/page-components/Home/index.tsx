@@ -10,7 +10,6 @@ import { IoCreateOutline } from "react-icons/io5";
 import { HomePageComponentProps } from "./Home.props";
 import { Quest } from "./Quest";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
-import { toggleModal } from "@/store/slices/modals/modals";
 import { getQuests } from "@/api/quests";
 import { SortType } from "@/types/quest.interface";
 import { motion, Variants } from "framer-motion";
@@ -69,16 +68,13 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
         return () => clearTimeout(timeoutId);
     }, [sortOption, searchQuest]);
 
-    console.log(quests);
-
     return (
         <>
             <h1 className="mt-12">Квести</h1>
-            <Link href="#" className="mt-3 duration-0">
+            <Link href="/profile" className="mt-3 duration-0">
                 <Button
                     color="purpleBorder"
                     className="mt-3"
-                    /* onClick={clickHandler} */
                 >
                     <span>Створити свій квест</span>
                     <IoCreateOutline className="size-6" />
