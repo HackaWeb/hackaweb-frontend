@@ -1,13 +1,12 @@
 "use client";
 
-import { QuestProps } from "@/components/page-components/Home/Quest/Quest.props";
 import { Button } from "@/components/ui/Button";
 import { useRedirect } from "@/hooks/useRedirect";
 import Link from "next/link";
+import { ActionsProps } from "./Actions.props";
 
-export const Actions = ({ quest }: QuestProps) => {
+export const Actions = ({ quest }: ActionsProps) => {
     const redirect = useRedirect();
-    console.log("QQ", quest);
 
     return (
         <div className="max-w-[300px] mx-auto">
