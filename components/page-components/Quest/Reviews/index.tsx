@@ -23,7 +23,8 @@ export const Reviews = ({ quest }: ReviewsProps) => {
                             <div className="flex gap-4">
                                 <div className="flex flex-col items-center">
                                     <div className="w-12 h-12 rounded-md border border-purple flex items-center justify-center p-1">
-                                        {review.author.avatar ? (
+                                        {review.author &&
+                                        review.author.avatar ? (
                                             <Image
                                                 src={review.author.avatar}
                                                 alt="Avatar"

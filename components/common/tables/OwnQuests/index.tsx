@@ -11,12 +11,11 @@ import { deleteQuest, getQuestById } from "@/api/quests";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import { slideFromSidesAnimation } from "@/helpers/animation";
 
 export const OwnQuests = ({
     profile,
     isCreatedByMe,
+    isEditable,
     ownQuests,
 }: OwnQuestsProps) => {
     const router = useRouter();
@@ -47,7 +46,7 @@ export const OwnQuests = ({
             await deleteQuest(id);
 
             dispatch(setQuest(null));
-            toast.success("Ви успішно видалили свій квест!");
+            toast.success("Квест успішно видалено!");
             router.refresh();
         } catch (error) {
             console.log(error);
@@ -98,7 +97,7 @@ export const OwnQuests = ({
                                     <th className="p-3 text-left w-[120px]">
                                         Рейтинг
                                     </th>
-                                    {(isCreatedByMe || profile.isAdmin) && (
+                                    {(isCreatedByMe || isEditable) && (
                                         <th className="p-3 text-left w-[100px]">
                                             Дії
                                         </th>
@@ -135,7 +134,7 @@ export const OwnQuests = ({
                                         <td className="p-3">
                                             {quest.rate || 0}
                                         </td>
-                                        {(isCreatedByMe || profile.isAdmin) && (
+                                        {(isCreatedByMe || isEditable) && (
                                             <td className="p-3">
                                                 <button
                                                     className="p-2 bg-purple-600 rounded-md hover:bg-purple-dark duration-300"

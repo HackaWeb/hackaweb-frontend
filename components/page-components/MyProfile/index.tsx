@@ -29,9 +29,10 @@ export const MyProfilePageComponent = ({
                 <ProfileForm profile={profile} isEditSelfProfile={true} />
                 <div className="grid-cols-1 grid items-start sm:-col-start-3 sm:-col-end-1 2xl:col-start-auto 2xl:col-end-auto">
                     <OwnQuests
+                        isCreatedByMe={true}
                         ownQuests={ownQuests}
                         profile={profile}
-                        isCreatedByMe={true}
+                        isEditable={true}
                     />
                     <CompletedQuests
                         completedQuests={completedQuests}
