@@ -1,0 +1,34 @@
+import { SortType } from "@/types/quest.interface";
+
+export interface GetQuestsQuery {
+    sortType?: SortType;
+    titleFilter?: string;
+}
+
+export interface CreateQuestBody {
+    quiz: {
+        title: string;
+        description: string;
+        duration: number;
+        questions: {
+            questionId: string;
+            title: string;
+            type: number;
+            options: {
+                title: string;
+                isCorrect: boolean;
+            }[];
+        }[];
+    };
+}
+
+export interface EditQuestBody {
+    title: string;
+    description: string;
+    duration: number;
+}
+
+export interface EditQuestionBody {
+    text: string;
+    type: number;
+}

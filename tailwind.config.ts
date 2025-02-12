@@ -8,6 +8,14 @@ export default {
     ],
     theme: {
         extend: {
+            screens: {
+                xsm: "450px",
+                sm: "640px",
+                md: "768px",
+                lg: "1024px",
+                xl: "1280px",
+                "2xl": "1536px",
+            },
             colors: {
                 yellow: {
                     DEFAULT: "#ffd500",
@@ -21,16 +29,22 @@ export default {
                 },
                 gray: {
                     DEFAULT: "#bdbdbd",
+                    superdark: "#242A4D",
                     dark: "#7a7a7a",
                     light: "#e0e0e0",
                 },
                 red: {
                     DEFAULT: "#ff0000",
-                    dark: "#ff4d4d",
-                    light: "#cc0000",
+                    dark: "#cc0000",
+                    light: "#ff4d4d",
+                },
+                blue: {
+                    DEFAULT: "#161a2e",
+                    dark: "#131627",
+                    light: "#5584FE",
                 },
                 blackOpacity: {
-                    DEFAUlT: "#00000026",
+                    DEFAULT: "#00000026",
                     light: "#0000001a",
                     dark: "#0000004d",
                 },

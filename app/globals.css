@@ -16,18 +16,17 @@
     --white: #ffffff;
 
     --gray: #bdbdbd;
+    --gray-dark: #7a7a7a;
+    --gray-light: #e0e0e0;
+    --gray-superdark: #242a4d;
 
     --black-opacity: #00000026;
     --black-opacity-light: #0000001a;
     --black-opacity-dark: #0000004d;
-    /*  --black-opacity: rgb(0, 0, 0, 15%);
-    --black-opacity-light: rgb(0, 0, 0, 10%);
-    --black-opacity-dark: rgb(0, 0, 0, 30%); */
 
     --red: #ff0000;
     --red-light: #ff4d4d;
     --red-dark: #cc0000;
-    --test: #565656;
 }
 
 * {
@@ -36,15 +35,21 @@
     box-sizing: border-box;
 }
 
+html {
+    overflow-x: hidden;
+}
+
 body {
     color: var(--white);
     background: var(--background);
     font-family: Inter, sans-serif;
+    overflow-x: hidden;
 }
 
 a {
     color: var(--purple);
     transition: 0.3s;
+    cursor: pointer;
 
     &:hover {
         color: var(--purple-dark);
@@ -55,4 +60,9 @@ h1 {
     font-size: 32px;
     font-weight: 700;
     line-height: 1.2;
+}
+
+img {
+    width: 100%;
+    height: auto;
 }

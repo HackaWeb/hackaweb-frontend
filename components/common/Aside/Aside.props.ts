@@ -1,3 +1,5 @@
+import { Profile } from "@/types/user.interface";
+
 export interface AsideProps {
-    isAuthorized: boolean;
+    profile: Profile | null;
 }

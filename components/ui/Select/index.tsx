@@ -1,10 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SelectOption } from "@/types/selectOption.interface";
 import { SelectProps } from "./Select.props";
 import { AiOutlineDown } from "react-icons/ai";
 import { cn } from "@/helpers/cn";
+import { onOutsideClick } from "@/helpers/onOutsideClick";
+import { Variants, motion } from "framer-motion";
+
+const selectVariants: Variants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: {
+        opacity: 1,
+        y: 0,
+    },
+};
 
 export const Select = ({
     options,
@@ -14,18 +24,31 @@ export const Select = ({
     className,
     placeholder,
 }: SelectProps) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const selectRef = useRef<HTMLDivElement>(null);
+
+    const [isOptionsOpened, setIsOptionsOpened] = useState(false);
 
     const onSelectOptionClick = (option: SelectOption) => {
         setActiveOption(option);
-        setIsOpen(false);
+        setIsOptionsOpened(false);
     };
 
+    onOutsideClick(selectRef, () => {
+        setIsOptionsOpened(false);
+    });
+
     return (
-        <div className={cn("relative w-full", className)} id={id}>
+        <div
+            className={cn("relative w-full", className)}
+            id={id}
+            ref={selectRef}
+        >
             <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex justify-between items-center px-4 py-3 bg-blackOpacity-DEFAUlT text-white rounded-md focus:outline-none"
+                onClick={() => {
+                    setIsOptionsOpened(!isOptionsOpened);
+                }}
+                type="button"
+                className="w-full flex justify-between items-center px-4 py-3 bg-blackOpacity text-white rounded-md focus:outline-none"
             >
                 {activeOption ? (
                     activeOption.title
@@ -35,22 +58,36 @@ export const Select = ({
                 <AiOutlineDown
                     className="text-gray transition-transform"
                     style={{
-                        transform: isOpen ? "rotate(180deg)" : "rotate(0)",
+                        transform: isOptionsOpened
+                            ? "rotate(180deg)"
+                            : "rotate(0)",
                     }}
                 />
             </button>
-            {isOpen && (
-                <ul className="absolute left-0 top-full mt-1 w-full bg-[#201f2d] text-gray rounded-md shadow-lg z-10 overflow-hidden">
-                    {options.map((option) => (
+            {isOptionsOpened && (
+                <motion.ul
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={selectVariants}
+                    className="absolute left-0 top-full mt-1 w-full bg-[#201f2d] text-gray rounded-md shadow-lg z-10 overflow-hidden"
+                    transition={{
+                        transition: {
+                            type: "tween",
+                            duration: 0.2,
+                        },
+                    }}
+                >
+                    {options.map((option, index) => (
                         <li
-                            key={option.value}
+                            key={index}
                             onClick={() => onSelectOptionClick(option)}
                             className="px-4 py-3 cursor-pointer hover:bg-blackOpacity-light transition-colors"
                         >
                             {option.title}
                         </li>
                     ))}
-                </ul>
+                </motion.ul>
             )}
         </div>
     );

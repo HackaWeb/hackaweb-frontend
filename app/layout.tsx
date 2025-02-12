@@ -1,13 +1,17 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { ReactNode } from "react";
 import { ReduxProvider } from "@/components/providers/Redux";
 import { Aside } from "@/components/common/Aside";
 import { cn } from "@/helpers/cn";
 import { ToastProvider } from "@/components/providers/Toast";
 import { getCookie } from "@/helpers/getCookie";
-import { getProfile } from "@/api/auth";
+import { getPathname } from "@/helpers/getPathname";
+import { Modals } from "@/components/Modals";
+import { getMyProfile } from "@/api/user";
+import { setCookie } from "@/helpers/setCookie";
+import { LayoutBackground } from "@/components/common/LayoutBackground";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -28,23 +32,24 @@ interface RootLayoutProps {
 
 const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
     const token = await getCookie("token");
+    const pathname = await getPathname();
 
-    let isAuthorized;
+    let profile = null;
 
     if (!token || !token.length) {
-        isAuthorized = false;
+        profile = null;
     } else {
         try {
-            const profile = await getProfile();
+            const profileData = await getMyProfile();
 
-            if ("email" in profile) {
-                isAuthorized = true;
+            if ("email" in profileData) {
+                profile = profileData;
             } else {
-                isAuthorized = false;
+                profile = null;
+                setCookie("token", "");
             }
         } catch (error) {
-            console.log(error);
-            isAuthorized = false;
+            console.error(error);
         }
     }
 
@@ -52,13 +57,30 @@ const RootLayout = async ({ children }: Readonly<RootLayoutProps>) => {
         <html lang="en">
             <body
                 className={cn(
-                    "grid grid-cols-[minmax(320px,420px)_1fr]",
+                    !pathname.includes("quest-completing")
+                        ? "grid grid-cols-[1fr] lg:grid-cols-[320px_1fr] relative"
+                        : "",
                     inter.variable,
                 )}
             >
+                <LayoutBackground />
                 <ReduxProvider>
-                    <Aside isAuthorized={isAuthorized} />
-                    <main className="p-12">{children}</main>
+                    {!pathname.includes("quest-completing") && (
+                        <Aside profile={profile} />
+                    )}
+                    <main
+                        className={
+                            !pathname.includes("quest-completing")
+                                ? "sm:p-12 p-6"
+                                : ""
+                        }
+                    >
+                        {children}
+                    </main>
+                    <div className="fixed -z-10 bg-[#8C55FE] bg-opacity-40 w-[550px] h-[550px] -left-[160px] top-0 blur-[500px]"></div>
+                    <div className="fixed -z-10 bg-[#00D1FF] bg-opacity-20 w-[550px] h-[550px] left-[50%] top-[50%] blur-[500px] -translate-x-[50%]"></div>
+                    <div className="fixed -z-10 bg-[#BD00FF] bg-opacity-20 w-[550px] h-[550px] -right-[150px] -bottom-[100px] blur-[500px]"></div>
+                    <Modals />
                     <ToastProvider />
                 </ReduxProvider>
             </body>

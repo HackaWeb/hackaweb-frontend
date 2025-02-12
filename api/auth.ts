@@ -1,9 +1,24 @@
-import { fetchApi } from "./fetchApi.api";
-import { GetProfileResponse } from "./responses/auth.types";
+import { fetchApi } from "./fetchApi";
+import {
+    LoginRequestBody,
+    RegisterRequestBody,
+} from "./requestBodies/auth.interface";
+import { LoginResponse, RegisterResponse } from "./responses/auth.type";
 
-export const getProfile = async (): Promise<GetProfileResponse> =>
+export const register = async (
+    body: RegisterRequestBody,
+): Promise<RegisterResponse> =>
     fetchApi({
-        endpoint: "/auth/profile/",
-        isAuthRequired: true,
-        method: "GET",
+        endpoint: "/auth/register",
+        isAuthRequired: false,
+        method: "POST",
+        body: body,
+    });
+
+export const login = async (body: LoginRequestBody): Promise<LoginResponse> =>
+    fetchApi({
+        endpoint: "/auth/login",
+        isAuthRequired: false,
+        method: "POST",
+        body: body,
     });

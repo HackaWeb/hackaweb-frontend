@@ -14,8 +14,7 @@ export const fetchApi = async <T>({
     isAuthRequired,
 }: FetchOptions): Promise<T> => {
     const headers: Record<string, string> = {
-        accept: "application/json",
-        "Content-Type": "application/json",
+        accept: "text/plain",
     };
 
     if (isAuthRequired) {
@@ -23,12 +22,22 @@ export const fetchApi = async <T>({
         headers.Authorization = `Bearer ${token}`;
     }
 
+    const isFormData = body instanceof FormData;
+
+    if (!isFormData) {
+        headers["Content-Type"] = "application/json";
+    }
+
     const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`,
         {
             method,
             headers,
-            body: body ? JSON.stringify(body) : null,
+            body: isFormData
+                ? (body as FormData)
+                : body
+                ? JSON.stringify(body)
+                : undefined,
         },
     );
 
