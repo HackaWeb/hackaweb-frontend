@@ -1,3 +1,4 @@
+import { QuestionWhileTesting } from "@/types/question.interface";
 import { fetchApi } from "./fetchApi";
 import {
     CreateQuestBody,
@@ -47,9 +48,7 @@ export const getQuestsByOwnerId = async (
         method: "GET",
     });
 
-export const getQuestQuestionsByQuestId = async (
-    questId: string,
-): Promise<any> =>
+export const getQuestionsByQuestId = async (questId: string): Promise<QuestionWhileTesting[]> =>
     fetchApi({
         endpoint: `/quiz/questions/${questId}`,
         isAuthRequired: true,

@@ -8,6 +8,7 @@ export enum SortType {
     Alphabet = 2,
     AuthorRating = 3,
 }
+
 export interface Quest {
     id: string;
     title: string;

@@ -41,6 +41,7 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
     const [searchQuest, setSearchQuest] = useState<string>("");
     const [quests, setQuests] = useState(serverQuests);
     const [isLoading, setIsLoading] = useState(false);
+    console.log(quests);
 
     const processQuestsHandler = async () => {
         const sortType = sortOption
