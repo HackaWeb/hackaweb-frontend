@@ -6,10 +6,15 @@ import { AiOutlineUser } from "react-icons/ai";
 import Link from "next/link";
 import { ReviewsProps } from "./Reviews.props";
 import { printUserNickname } from "@/helpers/printUserNickname";
+import { motion } from "framer-motion";
+import { slideFromBottomAnimation } from "@/helpers/animation";
 
 export const Reviews = ({ quest }: ReviewsProps) => {
     return (
-        <div className="bg-blackOpacity p-4 rounded-lg mt-8">
+        <motion.div
+            {...slideFromBottomAnimation}
+            className="bg-blackOpacity p-4 rounded-lg mt-8"
+        >
             <h2 className="text-white text-lg font-semibold mb-4">
                 Відгуки ({quest.feedbacks.length})
             </h2>
@@ -64,6 +69,6 @@ export const Reviews = ({ quest }: ReviewsProps) => {
                     </div>
                 )}
             </div> */}
-        </div>
+        </motion.div>
     );
 };

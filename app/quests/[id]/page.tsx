@@ -10,6 +10,8 @@ import { LeaderboardUser, Quest } from "@/types/quest.interface";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TbArrowBackUp } from "react-icons/tb";
+import { motion } from "framer-motion";
+import { slideFromRightAnimation } from "@/helpers/animation";
 
 const QuestDetails = async ({ params }: PageProps) => {
     const questId = (await params).id;

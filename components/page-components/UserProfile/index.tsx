@@ -7,7 +7,7 @@ import { cn } from "@/helpers/cn";
 import { ProfileForm } from "@/components/common/ProfileForm";
 import { LeftColumnProfile } from "@/components/common/LeftColumnProfile";
 import { motion } from "framer-motion";
-import { slideFromRightAnimation } from "@/helpers/animation";
+import { slideFromBottomAnimation } from "@/helpers/animation";
 
 export const UserProfilePageComponent = ({
     isEditable,
@@ -17,7 +17,7 @@ export const UserProfilePageComponent = ({
 }: UserProfileProps) => {
     return (
         profile && (
-            <motion.div {...slideFromRightAnimation} className="mt-8">
+            <motion.div {...slideFromBottomAnimation} className="mt-8">
                 <h1>
                     Профіль користувача {profile.firstName} {profile.lastName}
                 </h1>

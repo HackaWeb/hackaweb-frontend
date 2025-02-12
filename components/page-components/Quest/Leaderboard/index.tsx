@@ -6,6 +6,8 @@ import { AiOutlineUser } from "react-icons/ai";
 import { LeaderboardProps } from "./Leaderboard.props";
 import { getTimeInMinutes } from "@/helpers/getTimeInMinutes";
 import { printUserNickname } from "@/helpers/printUserNickname";
+import { motion } from "framer-motion";
+import { slideFromBottomAnimation } from "@/helpers/animation";
 
 export const Leaderboard = ({
     leaderboard,
@@ -13,7 +15,10 @@ export const Leaderboard = ({
 }: LeaderboardProps) => {
     console.log(leaderboard);
     return (
-        <div className="overflow-x-auto bg-blackOpacity pt-4 rounded-lg h-auto">
+        <motion.div
+            {...slideFromBottomAnimation}
+            className="overflow-x-auto bg-blackOpacity pt-4 rounded-lg h-auto"
+        >
             <h2 className="text-white text-lg font-semibold mb-4 ml-4">
                 Таблиця лідерів ({leaderboard.length})
             </h2>
@@ -60,17 +65,6 @@ export const Leaderboard = ({
                                             {index + 1}
                                         </span>
                                     </td>
-                                    <td className="w-[200px] px-4 py-2 truncate">
-                                        <Link
-                                            href={`/users/${player.user.id}`}
-                                            className="text-purple"
-                                        >
-                                            {printUserNickname(
-                                                player.user.firstName,
-                                                player.user.lastName,
-                                            )}
-                                        </Link>
-                                    </td>
                                     <td className="w-[80px] px-4 py-2">
                                         <div className="w-10 h-10 rounded-md border border-purple flex items-center justify-center p-1">
                                             {player.user.avatar ? (
@@ -102,6 +96,6 @@ export const Leaderboard = ({
                     Ніхто ще не пройшов цей квест
                 </div>
             )}
-        </div>
+        </motion.div>
     );
 };
