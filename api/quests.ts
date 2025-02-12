@@ -3,9 +3,11 @@ import {
     CreateQuestBody,
     EditQuestBody,
     EditQuestionBody,
+    EditQuestionsBody,
     GetQuestsQuery,
 } from "./requestBodies/quest.interface";
 import { DeleteResponseSuccess } from "./responses/common/deleteSuccess.interface";
+import { EditResponseSuccess } from "./responses/common/editSuccess.interface";
 import {
     CreateQuestResponse,
     EditQuestionResponse,
@@ -95,6 +97,17 @@ export const editQuest = async (
         endpoint: `/quiz/${questId}`,
         isAuthRequired: true,
         method: "PUT",
+        body,
+    });
+
+export const editQuestions = async (
+    quizId: string,
+    body: EditQuestionsBody,
+): Promise<EditResponseSuccess> =>
+    fetchApi({
+        endpoint: `/questions/${quizId}/questions`,
+        isAuthRequired: true,
+        method: "POST",
         body,
     });
 

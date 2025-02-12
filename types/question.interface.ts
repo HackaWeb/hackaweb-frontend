@@ -1,5 +1,3 @@
-import { QuestionType } from "./question.type";
-
 export interface ChoiceOption {
     index?: number;
     title: string;
@@ -17,7 +15,6 @@ export interface Question {
     type: number;
     choiceOptions: ChoiceOption[];
     mediaUrl?: string;
-    fileType?: "image" | "video";
 }
 
 export interface QuestionWhileTesting {
