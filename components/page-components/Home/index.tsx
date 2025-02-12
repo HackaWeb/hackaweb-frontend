@@ -42,6 +42,7 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
     const [sortOption, setSortOption] = useState<SelectOption | null>(null);
     const [searchQuest, setSearchQuest] = useState<string>("");
     const [quests, setQuests] = useState(serverQuests);
+    console.log(quests);
 
     const processQuestsHandler = async () => {
         const sortType = sortOption

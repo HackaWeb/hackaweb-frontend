@@ -26,6 +26,8 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { removeQuestion } from "@/store/slices/quests/quests";
 
 export const CreateQuest = () => {
+    const router = useRouter();
+
     const {
         media,
         modals,
@@ -106,6 +108,7 @@ export const CreateQuest = () => {
             return toast.error("Заповніть коректно усі поля!");
 
         const data = await createQuestHandler();
+        router.refresh();
         console.log(data);
         toast.success("Квест успішно створено!");
         dispatch(toggleModal("QuestCreation"));
@@ -261,7 +264,7 @@ export const CreateQuest = () => {
 
                                 <Button
                                     color="yellowBorder"
-                                    className="mt-8"
+                                    className="mt-2"
                                     type="button"
                                     onClick={() =>
                                         onQuestionAddClick("QuestCreation")

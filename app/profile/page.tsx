@@ -32,7 +32,11 @@ const MyProfile = async () => {
     const getOwnQuests = async () => {
         try {
             const data = await getQuestsByOwnerId(profile.id);
-            return data.quizzes;
+            if (data.quizzes) {
+                return data.quizzes;
+            }
+            
+            return [];
         } catch (error) {
             console.error(error);
             return [];
@@ -44,7 +48,6 @@ const MyProfile = async () => {
             return await getCompletedQuestsByOwnerId();
         } catch (error) {
             console.error(error);
-            toast.error(DEFAULT_FIELD_ERROR.message);
             return [];
         }
     };

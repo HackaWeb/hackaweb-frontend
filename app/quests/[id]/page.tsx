@@ -53,7 +53,7 @@ const QuestDetails = async ({ params }: PageProps) => {
                 <ReturnBtn />
             </Link>
             <div className="grid grid-cols-1 lg:grid-cols-[0.4fr_0.6fr] mt-6 gap-8 items-start">
-                <GeneralInfo quest={quest} timesPlayed={0} />
+                <GeneralInfo quest={quest} />
                 <div className="grid ">
                     <Leaderboard
                         leaderboard={leaderboard}

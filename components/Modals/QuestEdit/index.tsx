@@ -23,8 +23,11 @@ import { EditQuestBody } from "@/api/requestBodies/quests.interface";
 import { toast } from "react-toastify";
 import { toggleModal } from "@/store/slices/modals/modals";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 function QuestEdit() {
+    const router = useRouter();
+
     const {
         modals,
         onImageUpload,
@@ -106,6 +109,7 @@ function QuestEdit() {
             return toast.error("Заповніть коректно усі поля!");
 
         const data = await editQuestHandler();
+        router.refresh();
         console.log(data);
         toast.success("Квест успішно відредаговано!");
         dispatch(toggleModal("QuestEdit"));

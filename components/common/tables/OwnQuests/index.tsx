@@ -9,12 +9,14 @@ import { toggleModal } from "@/store/slices/modals/modals";
 import { deleteQuest, getQuestById } from "@/api/quests";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export const OwnQuests = ({
     profile,
     isCreatedByMe,
     ownQuests,
 }: OwnQuestsProps) => {
+    const router = useRouter();
     const dispatch = useAppDispatch();
 
     const getQuest = async (id: string) => {
@@ -25,13 +27,16 @@ export const OwnQuests = ({
 
     const onQuestEditClick = async (id: string) => {
         await getQuest(id);
+
         dispatch(toggleModal("QuestEdit"));
     };
 
     const deleteHandler = async (id: string) => {
         await deleteQuest(id);
+        
         dispatch(setQuest(null));
         toast.success("Ви успішно видалили свій квест!");
+        router.refresh();
     };
     return (
         ownQuests && (
