@@ -126,19 +126,21 @@ function QuestEdit() {
     return (
         isModalOpened("QuestEdit", modals) && (
             <>
-                <div className="max-h-[90vh] overflow-y-auto pt-72 absolute left-[50%] -translate-x-[50%] max-w-[700px] w-full top-10 z-10 bg-blue p-6 mx-4 flex flex-col place-content-center place-items-center rounded-lg">
+                <div className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4">
                     <ReturnBtn
-                        className="self-start mt-2 mb-10"
+                        className="self-start mt-2 mb-10 ml-2 sm:ml-4"
                         modal="QuestEdit"
                     />
-                    <div className="text-3xl">Редагування Квесту</div>
+                    <div className="text-xl sm:text-3xl text-center">
+                        Редагування Квесту
+                    </div>
                     <div className="w-full p-4">
                         <div className="relative w-full mt-2">
                             {media || quest?.imageUrl ? (
                                 <Image
                                     src={media || quest?.imageUrl!}
                                     alt="Зображення квесту"
-                                    className="h-[30rem] aspect-square object-cover"
+                                    className="w-full aspect-square object-cover"
                                     sizes="100vw"
                                     height={0}
                                     width={0}
@@ -161,7 +163,7 @@ function QuestEdit() {
                                 color="purpleBackground"
                                 onClick={() => fileInputRef.current?.click()}
                             >
-                                <RiEditLine size={24} />
+                                <RiEditLine className="size-4 sm:size-8" />
                             </Button>
                         </div>
                         <form

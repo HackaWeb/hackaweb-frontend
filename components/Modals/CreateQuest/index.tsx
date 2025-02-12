@@ -117,7 +117,7 @@ export const CreateQuest = () => {
     return (
         isModalOpened("QuestCreation", modals) && (
             <>
-                <div className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg">
+                <div className="max-h-[95vh] overflow-y-auto pt-4 fixed left-[50%] -translate-x-[50%] md:max-w-[700px] w-[95%] md:w-full md:top-10 top-4 z-10 bg-blue sm:p-6 flex flex-col rounded-lg bottom-4">
                     <ReturnBtn
                         className="self-start mt-2 mb-10 ml-2 sm:ml-4"
                         modal="QuestCreation"
@@ -131,7 +131,7 @@ export const CreateQuest = () => {
                                 <Image
                                     src={media}
                                     alt="Зображення квесту"
-                                    className="h-[30rem] aspect-square object-cover"
+                                    className="w-full aspect-square object-cover"
                                     sizes="100vw"
                                     height={0}
                                     width={0}
