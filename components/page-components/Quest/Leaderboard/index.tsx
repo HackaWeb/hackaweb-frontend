@@ -90,7 +90,7 @@ export const Leaderboard = ({
                                         {questDuration.toFixed(2)} хв.
                                     </td>
                                     <td className="w-[120px] px-4 py-2 text-gray-light">
-                                        {player.accuracy} / 100 %
+                                        {player.accuracy.toFixed(0)} / 100 %
                                     </td>
                                 </tr>
                             ))}
