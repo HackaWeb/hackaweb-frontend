@@ -6,7 +6,7 @@ export const GeneralResults = ({
     quest,
     timeSpent,
 }: GeneralResultsProps) => {
-    const timeSpentInMinutes = Math.floor(timeSpent / 60);
+    const timeSpentInMinutes = Math.ceil(timeSpent / 60);
 
     return (
         <div className="bg-blackOpacity p-6 rounded-lg">
@@ -23,13 +23,9 @@ export const GeneralResults = ({
                     <li className="mt-1">
                         Час проходження:{" "}
                         <span className="text-purple">
-                            {timeSpentInMinutes.toFixed(2)}
+                            {Math.ceil(timeSpent / 60)}
                         </span>{" "}
                         хв
-                    </li>
-                    <li className="mt-1">
-                        Місце в рейтингу квесту:{" "}
-                        <span className="text-purple">3</span> з 20
                     </li>
                 </ul>
                 <IoTrophyOutline className="absolute -top-12 xsm:top-auto right-0 xsm:bottom-0 size-9 text-purple" />
