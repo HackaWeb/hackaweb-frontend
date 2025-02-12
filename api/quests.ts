@@ -6,6 +6,7 @@ import {
     EditQuestionBody,
     EditQuestionsBody,
     GetQuestsQuery,
+    SubmitQuestRequestBody,
 } from "./requestBodies/quest.interface";
 import { DeleteResponseSuccess } from "./responses/common/deleteSuccess.interface";
 import { EditResponseSuccess } from "./responses/common/editSuccess.interface";
@@ -18,6 +19,7 @@ import {
     GetQuestByIdWithoutQuestionsResponse,
     GetQuestByOwnerIdResponse,
     GetQuestsResponse,
+    SubmitQuestResponseSuccess,
     uploadMediaResponse,
 } from "./responses/quest.type";
 
@@ -48,7 +50,9 @@ export const getQuestsByOwnerId = async (
         method: "GET",
     });
 
-export const getQuestionsByQuestId = async (questId: string): Promise<QuestionWhileTesting[]> =>
+export const getQuestionsByQuestId = async (
+    questId: string,
+): Promise<QuestionWhileTesting[]> =>
     fetchApi({
         endpoint: `/quiz/questions/${questId}`,
         isAuthRequired: true,
@@ -105,6 +109,17 @@ export const editQuestions = async (
 ): Promise<EditResponseSuccess> =>
     fetchApi({
         endpoint: `/questions/${quizId}/questions`,
+        isAuthRequired: true,
+        method: "POST",
+        body,
+    });
+
+export const submitQuest = async (
+    quizId: string,
+    body: SubmitQuestRequestBody,
+): Promise<SubmitQuestResponseSuccess> =>
+    fetchApi({
+        endpoint: `/quiz/submit/${quizId}`,
         isAuthRequired: true,
         method: "POST",
         body,

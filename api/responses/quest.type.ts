@@ -61,3 +61,10 @@ export interface EditQuestionResponse {
     type: number;
     quizId: string;
 }
+
+export interface SubmitQuestResponseSuccess {
+    quizId: string;
+    correctAnswers: number;
+    totalQuestions: number;
+    score: number;
+}
