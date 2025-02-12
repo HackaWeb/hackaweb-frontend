@@ -35,8 +35,8 @@ export default {
                 },
                 red: {
                     DEFAULT: "#ff0000",
-                    dark: "#ff4d4d",
-                    light: "#cc0000",
+                    dark: "#cc0000",
+                    light: "#ff4d4d",
                 },
                 blue: {
                     DEFAULT: "#161a2e",
