@@ -26,10 +26,10 @@ export const UserProfilePageComponent = ({
                 <ReturnBtn className="mt-4" />
                 <div
                     className={cn(
-                        "mt-8 grid gap-6 grid-cols-1",
+                        "mt-8 grid gap-6 grid-cols-1 items-start",
                         isEditable
                             ? "sm:grid-cols-[240px_auto] 2xl:grid-cols-[240px_330px_auto]"
-                            : "grid-cols-1 xl:grid-cols-[240px_auto] items-start",
+                            : "grid-cols-1 xl:grid-cols-[240px_auto]",
                     )}
                 >
                     <LeftColumnProfile

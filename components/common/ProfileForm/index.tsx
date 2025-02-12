@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { updateUserProfile } from "@/api/user";
 import { toast } from "react-toastify";
 import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
@@ -41,6 +41,9 @@ export const ProfileForm = ({
     };
 
     const onUpdateProfileSubmit = async () => {
+    const onUpdateProfileSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+        
         if (!userData.firstName && !userData.lastName) return;
 
         if (userData.firstName.length > MAX_FIRSTNAME_LENGTH)
