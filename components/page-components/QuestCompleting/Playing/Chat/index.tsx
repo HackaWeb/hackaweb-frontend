@@ -64,11 +64,24 @@ export const Chat = ({ isOpened, setIsOpened, user }: ChatProps) => {
                                 <div className="flex justify-between">
                                     <div className="flex items-start gap-3">
                                         <div className="rounded-md border border-purple p-2 w-14 h-14 flex items-center justify-center">
-                                            <AiOutlineUser className="text-purple size-7" />
+                                            {msg.avatarUrl ? (
+                                                <Image
+                                                    src={msg.avatarUrl}
+                                                    alt={
+                                                        msg.nickName ||
+                                                        "Користувач"
+                                                    }
+                                                    width={0}
+                                                    height={0}
+                                                    sizes="100vw"
+                                                />
+                                            ) : (
+                                                <AiOutlineUser className="text-purple size-7" />
+                                            )}
                                         </div>
                                         <div>
                                             <div className="text-base xsm:text-lg font-semibold mt-1">
-                                                {msg.userId}
+                                                {msg.nickName || "Користувач"}
                                             </div>
                                         </div>
                                     </div>

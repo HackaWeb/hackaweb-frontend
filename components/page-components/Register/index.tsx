@@ -30,6 +30,10 @@ const translateErrorMessage = (errorMessage: string) => {
             return errorMessage;
     }
 };
+const alreadyTakenEmailError = {
+    message: "Ця пошта вже зайнята",
+    field: "This email is already taken",
+};
 
 export const RegisterPageComponent = () => {
     const router = useRouter();
@@ -50,6 +54,12 @@ export const RegisterPageComponent = () => {
             if ("jwtToken" in res) {
                 setCookie("token", res.jwtToken);
                 return [];
+            }
+            if (
+                "message" in res &&
+                res.message === alreadyTakenEmailError.field
+            ) {
+                return [alreadyTakenEmailError];
             }
 
             return res.errors.map((error) => ({
