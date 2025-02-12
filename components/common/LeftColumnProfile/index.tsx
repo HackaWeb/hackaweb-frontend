@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { DeleteProfile } from "./DeleteProfile";
 import Image from "next/image";
 import { LeftColumnProfileProps } from "./LeftColumnProfile.props";
+import { setCookie } from "@/helpers/setCookie";
 
 export const LeftColumnProfile = ({
     profile,
@@ -64,6 +65,7 @@ export const LeftColumnProfile = ({
             }
             toast.success("Аватар видалено успішно!");
             setAvatar(null);
+            setCookie("token", "");
         } catch (error) {
             console.error(error);
             toast.error(DEFAULT_FIELD_ERROR.message);

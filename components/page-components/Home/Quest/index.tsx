@@ -4,7 +4,7 @@ import Link from "next/link";
 import { RenderRating } from "@/helpers/RenderRating";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
 import { printUserNickname } from "@/helpers/printUserNickname";
-import { FaImage } from "react-icons/fa";
+import { FaImage, FaUser } from "react-icons/fa";
 import { formatDate } from "@/helpers/formatDate";
 
 export const Quest = ({ quest }: QuestProps) => {
@@ -43,10 +43,17 @@ export const Quest = ({ quest }: QuestProps) => {
                     ({quest.owner.rating || 0} з 5)
                 </div>
                 <div className="flex items-center justify-between text-gray mt-10">
-                    <span className="flex items-center gap-1">
-                        <MdOutlineAccessTimeFilled />
-                        {quest.duration} хв.
-                    </span>
+                    <div className="flex gap-4">
+                        <span className="flex items-center gap-1">
+                            <FaUser />
+                            {quest.passCount}
+                        </span>
+                        <span className="flex items-center gap-1">
+                            <MdOutlineAccessTimeFilled />
+                            {quest.duration} хв.
+                        </span>
+                    </div>
+
                     <span>{formatDate(quest.createdAt)}</span>
                 </div>
             </div>

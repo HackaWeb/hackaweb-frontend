@@ -96,7 +96,7 @@ export const OwnQuests = ({
                                     <th className="p-3 text-left w-[120px]">
                                         Рейтинг
                                     </th>
-                                    {isCreatedByMe && (
+                                    {(isCreatedByMe || profile.isAdmin) && (
                                         <th className="p-3 text-left w-[100px]">
                                             Дії
                                         </th>
@@ -133,7 +133,7 @@ export const OwnQuests = ({
                                         <td className="p-3">
                                             {quest.rate || 0}
                                         </td>
-                                        {isCreatedByMe && (
+                                        {(isCreatedByMe || profile.isAdmin) && (
                                             <td className="p-3">
                                                 <button
                                                     className="p-2 bg-purple-600 rounded-md hover:bg-purple-dark duration-300"
