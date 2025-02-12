@@ -11,10 +11,9 @@ import { Select } from "@/components/ui/Select";
 import { useEffect, useRef } from "react";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { Question } from "@/types/question.interface";
-import { editQuestion } from "@/store/slices/quests/quests";
-import { VIDEO_DURATION } from "@/constants";
+import { editQuestion } from "@/store/slices/quests";
 
-function QuestionEdit() {
+export const QuestionEdit = () => {
     const {
         dispatch,
         fileInputRef,
@@ -76,11 +75,14 @@ function QuestionEdit() {
         if (videoRef.current) {
             const video = videoRef.current;
             const handleMetadataLoad = () => {
-                if (video.duration > VIDEO_DURATION) {
+                if (
+                    video.duration >
+                    Number(process.env.NEXT_PUBLIC_MAX_VIDEO_DURATION)
+                ) {
                     setMedia(null);
                     setFileType(null);
                     toast.error(
-                        "Тривалість відео неповинна перевищувати 60 секунд!",
+                        `Тривалість відео неповинна перевищувати ${process.env.NEXT_PUBLIC_MAX_VIDEO_DURATION} секунд!`,
                     );
                 }
             };
@@ -187,6 +189,4 @@ function QuestionEdit() {
             </>
         )
     );
-}
-
-export default QuestionEdit;
+};

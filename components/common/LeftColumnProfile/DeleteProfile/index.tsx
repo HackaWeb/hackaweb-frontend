@@ -1,4 +1,5 @@
 "use client";
+
 import { DEFAULT_FIELD_ERROR } from "@/api/responses/common/failure.interface";
 import { deleteUserProfile } from "@/api/user";
 import { Button } from "@/components/ui/Button";
@@ -6,8 +7,12 @@ import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { setCookie } from "@/helpers/setCookie";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { DeleteProfileProps } from "./DeleteProfile.props";
 
-export const DeleteProfile = () => {
+export const DeleteProfile = ({
+    profile,
+    isSelfProfile,
+}: DeleteProfileProps) => {
     const router = useRouter();
 
     const deleteProfileHandler = async () => {
@@ -15,14 +20,19 @@ export const DeleteProfile = () => {
             const result = await deleteProfileFetchHandler();
 
             if (result.length === 0) {
-                toast.success("Ваш профіль успішно видалено!");
-                setCookie("token", "");
-                router.push("/");
-
-                const timeout = setTimeout(() => {
-                    router.refresh();
-                    clearTimeout(timeout);
-                });
+                if (isSelfProfile) {
+                    toast.success("Ваш профіль успішно видалено!");
+                    setCookie("token", "");
+                    router.push("/");
+                    setTimeout(() => {
+                        router.refresh();
+                    }, 500);
+                } else {
+                    toast.success(
+                        `Профіль користувача ${profile?.firstName} ${profile?.lastName} успішно видалено!`,
+                    );
+                    router.back();
+                }
             } else {
                 printToastErrorMessages(result.map((res) => res.message));
             }
@@ -33,9 +43,9 @@ export const DeleteProfile = () => {
 
     const deleteProfileFetchHandler = async () => {
         try {
-            const data = await deleteUserProfile();
+            const data = await deleteUserProfile(profile?.id);
 
-            if ("statusCode" in data) {
+            if ("statusCode" in data && Number(data.statusCode) !== 200) {
                 return data.errors;
             }
             return [];
@@ -44,15 +54,11 @@ export const DeleteProfile = () => {
         }
     };
 
-    const onDeleteButtonClick = async () => {
-        await deleteProfileHandler();
-    };
-
     return (
         <Button
             className="mt-6 w-full"
             color="redBorder"
-            onClick={onDeleteButtonClick}
+            onClick={deleteProfileHandler}
         >
             Видалити акаунт
         </Button>

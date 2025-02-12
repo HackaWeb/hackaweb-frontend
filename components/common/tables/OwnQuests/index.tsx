@@ -1,11 +1,12 @@
 "use client";
+
 import Link from "next/link";
 import { OwnQuestsProps } from "./OwnQuests.props";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { Button } from "@/components/ui/Button";
 import { printUserNickname } from "@/helpers/printUserNickname";
-import { setQuest, setQuestions } from "@/store/slices/quests/quests";
-import { toggleModal } from "@/store/slices/modals/modals";
+import { setQuest, setQuestions } from "@/store/slices/quests";
+import { toggleModal } from "@/store/slices/modals";
 import { deleteQuest, getQuestById } from "@/api/quests";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { toast } from "react-toastify";
@@ -20,9 +21,17 @@ export const OwnQuests = ({
     const dispatch = useAppDispatch();
 
     const getQuest = async (id: string) => {
-        const data = await getQuestById(id);
-        dispatch(setQuest(data.quiz));
-        dispatch(setQuestions(data.quiz.questions));
+        try {
+            const response = await getQuestById(id);
+
+            if (response.quiz) {
+                dispatch(setQuest(response.quiz));
+                dispatch(setQuestions(response.quiz.questions));
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Помилка завантаження квесту, спробуйте пізніше");
+        }
     };
 
     const onQuestEditClick = async (id: string) => {
@@ -32,11 +41,16 @@ export const OwnQuests = ({
     };
 
     const deleteHandler = async (id: string) => {
-        await deleteQuest(id);
+        try {
+            await deleteQuest(id);
 
-        dispatch(setQuest(null));
-        toast.success("Ви успішно видалили свій квест!");
-        router.refresh();
+            dispatch(setQuest(null));
+            toast.success("Ви успішно видалили свій квест!");
+            router.refresh();
+        } catch (error) {
+            console.log(error);
+            toast.error("Помилка видалення квесту, спробуйте пізніше");
+        }
     };
     return (
         ownQuests && (
@@ -82,9 +96,6 @@ export const OwnQuests = ({
                                     <th className="p-3 text-left w-[120px]">
                                         Рейтинг
                                     </th>
-                                    {/* <th className="p-3 text-left w-[150px]">
-                                        Кількість завдань
-                                    </th> */}
                                     {isCreatedByMe && (
                                         <th className="p-3 text-left w-[100px]">
                                             Дії
@@ -122,13 +133,10 @@ export const OwnQuests = ({
                                         <td className="p-3">
                                             {quest.rate || 0}
                                         </td>
-                                        {/* <td className="p-3">
-                                            {quest.questions?.length}
-                                        </td> */}
                                         {isCreatedByMe && (
-                                            <td className="p-3 flex gap-2">
+                                            <td className="p-3">
                                                 <button
-                                                    className="p-2 bg-purple-600 rounded-md"
+                                                    className="p-2 bg-purple-600 rounded-md hover:bg-purple-dark duration-300"
                                                     onClick={() => {
                                                         onQuestEditClick(
                                                             quest.id,
@@ -138,7 +146,7 @@ export const OwnQuests = ({
                                                     <AiOutlineEdit className="text-white" />
                                                 </button>
                                                 <button
-                                                    className="p-2 bg-red-600 rounded-md"
+                                                    className="p-2 ml-2 bg-red-600 rounded-md hover:bg-red-dark duration-300"
                                                     onClick={() => {
                                                         deleteHandler(quest.id);
                                                     }}

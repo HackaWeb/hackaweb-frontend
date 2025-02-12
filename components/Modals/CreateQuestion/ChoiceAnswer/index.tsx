@@ -8,7 +8,7 @@ import {
     addOption,
     editOption,
     removeOption,
-} from "@/store/slices/quests/quests";
+} from "@/store/slices/quests";
 
 export const Choice = () => {
     const { dispatch, getOption, isChecked } = useAnswers();

@@ -1,7 +1,7 @@
 "use client";
 
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
-import { toggleModal } from "@/store/slices/modals/modals";
+import { toggleModal } from "@/store/slices/modals";
 import { ModalBgProps } from "./ModalBg.props";
 
 export const ModalBg = ({ modal }: ModalBgProps) => {

@@ -20,4 +20,5 @@ const aside = createSlice({
 
 export const { selectAside } = aside.selectors;
 export const { setIsAsideOpened } = aside.actions;
+
 export default aside.reducer;

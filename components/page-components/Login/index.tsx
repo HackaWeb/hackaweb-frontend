@@ -11,11 +11,8 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 import { LoginRequestBody } from "@/api/requestBodies/auth.interface";
-import {
-    INVALID_EMAIL_OR_PASSWORD_MESSAGE,
-    INVALID_INPUTES_MESSAGE,
-} from "@/constants";
 import { ImSpinner } from "react-icons/im";
+import { validateEmail } from "@/helpers/validateEmail";
 
 export const LoginPageComponent = () => {
     const router = useRouter();
@@ -41,7 +38,7 @@ export const LoginPageComponent = () => {
                             field: "",
                             message:
                                 res.message === "Invalid email or password."
-                                    ? INVALID_EMAIL_OR_PASSWORD_MESSAGE
+                                    ? "Невірна пошта або пароль"
                                     : res.message,
                         },
                     ];
@@ -58,7 +55,12 @@ export const LoginPageComponent = () => {
         e.preventDefault();
 
         if (!formData.email.trim() || !formData.password.trim()) {
-            toast.error(INVALID_INPUTES_MESSAGE);
+            toast.error("Заповніть усі поля");
+            return;
+        }
+
+        if (!validateEmail(formData.email)) {
+            toast.error("Ваша пошта не є поштою");
             return;
         }
 

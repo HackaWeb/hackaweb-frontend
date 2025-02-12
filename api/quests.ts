@@ -4,7 +4,7 @@ import {
     EditQuestBody,
     EditQuestionBody,
     GetQuestsQuery,
-} from "./requestBodies/quests.interface";
+} from "./requestBodies/quest.interface";
 import { DeleteResponseSuccess } from "./responses/common/deleteSuccess.interface";
 import {
     CreateQuestResponse,
@@ -16,7 +16,7 @@ import {
     GetQuestByOwnerIdResponse,
     GetQuestsResponse,
     uploadMediaResponse,
-} from "./responses/quests.types";
+} from "./responses/quest.type";
 
 export const getQuestById = async (
     questId: string,

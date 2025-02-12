@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ModalState, ModalType } from "./modals.types";
+import { ModalState, ModalType } from "./modals.type";
 
 const initialState: ModalState = {
     active: [],

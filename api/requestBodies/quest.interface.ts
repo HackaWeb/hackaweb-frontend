@@ -1,10 +1,5 @@
 import { SortType } from "@/types/quest.interface";
 
-export interface GetQuestByOwnerIdBody {
-    pageNumber: number;
-    pageSize: number;
-}
-
 export interface GetQuestsQuery {
     sortType?: SortType;
     titleFilter?: string;

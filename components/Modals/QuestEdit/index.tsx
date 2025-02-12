@@ -19,13 +19,13 @@ import {
     uploadQuestionMedia,
     uploadQuestMedia,
 } from "@/api/quests";
-import { EditQuestBody } from "@/api/requestBodies/quests.interface";
+import { EditQuestBody } from "@/api/requestBodies/quest.interface";
 import { toast } from "react-toastify";
-import { toggleModal } from "@/store/slices/modals/modals";
+import { toggleModal } from "@/store/slices/modals";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
-function QuestEdit() {
+export const QuestEdit = () => {
     const router = useRouter();
 
     const {
@@ -301,6 +301,4 @@ function QuestEdit() {
             </>
         )
     );
-}
-
-export default QuestEdit;
+};

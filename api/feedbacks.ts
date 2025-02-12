@@ -1,6 +1,6 @@
 import { fetchApi } from "./fetchApi";
-import { CreateFeeedbackRequestBody } from "./requestBodies/feedbacks.interface";
-import { CreateFeedbackResponse } from "./responses/feedbacks.types";
+import { CreateFeeedbackRequestBody } from "./requestBodies/feedback.interface";
+import { CreateFeedbackResponse } from "./responses/feedback.type";
 
 export const createFeedback = async (
     body: CreateFeeedbackRequestBody,

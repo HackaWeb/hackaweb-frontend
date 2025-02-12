@@ -1,9 +1,9 @@
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
-import { LeftColumn } from "./LeftColumn";
 import { MyProfileProps } from "./MyProfile.props";
 import { CompletedQuests } from "@/components/common/tables/CompletedQuests";
 import { OwnQuests } from "@/components/common/tables/OwnQuests";
 import { ProfileForm } from "@/components/common/ProfileForm";
+import { LeftColumnProfile } from "@/components/common/LeftColumnProfile";
 
 export const MyProfilePageComponent = ({
     profile,
@@ -16,10 +16,12 @@ export const MyProfilePageComponent = ({
             <ReturnBtn className="mt-4" />
             <div className="mt-8 grid grid-cols-[1fr] sm:grid-cols-[240px_auto] 2xl:grid-cols-[240px_330px_auto] gap-6 items-start">
                 <div>
-                    <LeftColumn
+                    <LeftColumnProfile
                         profile={profile}
                         completedQuests={completedQuests}
                         ownQuests={ownQuests}
+                        isEditable={true}
+                        isSelfProfile={true}
                     />
                 </div>
                 <ProfileForm profile={profile} isEditSelfProfile={true} />

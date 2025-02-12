@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { AiOutlineUser, AiOutlineClose } from "react-icons/ai";
 import { IoTrophyOutline } from "react-icons/io5";
-import { LeftColumnProps } from "./LeftColumn.props";
 import { getAchievements } from "@/data/getAchievements";
 import { RenderRating } from "@/helpers/RenderRating";
 import { Button } from "@/components/ui/Button";
@@ -17,12 +16,15 @@ import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { useRouter } from "next/navigation";
 import { DeleteProfile } from "./DeleteProfile";
 import Image from "next/image";
+import { LeftColumnProfileProps } from "./LeftColumnProfile.props";
 
-export const LeftColumn = ({
+export const LeftColumnProfile = ({
     profile,
+    isEditable,
     completedQuests,
     ownQuests,
-}: LeftColumnProps) => {
+    isSelfProfile,
+}: LeftColumnProfileProps) => {
     const router = useRouter();
     const achievements = getAchievements(profile, completedQuests, ownQuests);
 
@@ -32,7 +34,8 @@ export const LeftColumn = ({
         imageData: File,
     ): Promise<RequestError[]> => {
         const formData = new FormData();
-        formData.append("Avatar", imageData);
+        formData.append("avatar", imageData);
+        formData.append("userId", profile.id);
 
         try {
             const data = await updateUserProfile(formData);
@@ -44,7 +47,6 @@ export const LeftColumn = ({
                 setAvatar(data.avatarUrl);
                 router.refresh();
                 toast.success("Аватар успішно змінено!");
-
                 return [];
             }
         } catch (error) {
@@ -54,9 +56,6 @@ export const LeftColumn = ({
     };
 
     const deleteAvatarHandler = async () => {
-        const body = new FormData();
-        body.append("avatar", "");
-
         try {
             const data = await deleteUserAvatar(profile.id);
             if (!data.isSuccess) {
@@ -87,23 +86,25 @@ export const LeftColumn = ({
     };
 
     return (
-        <div>
+        <div className="max-w-[400px]">
             <div className="p-4 bg-blackOpacity rounded-md">
                 <div className="w-full h-auto aspect-square border border-purple rounded-md p-2 relative">
                     <RenderRating
-                        rating={0}
+                        rating={profile.rating}
                         className="gap-[6px] absolute top-1 left-1"
                     />
                     <div className="bg-blackOpacity-dark w-full h-full flex items-center justify-center rounded-md overflow-hidden">
                         {avatar ? (
                             <>
-                                <Button
-                                    className="absolute top-1 right-1 p-1"
-                                    onClick={deleteAvatarHandler}
-                                    color="redBorder"
-                                >
-                                    <AiOutlineClose className="size-5" />
-                                </Button>
+                                {isEditable && (
+                                    <Button
+                                        className="absolute top-1 right-1 p-1"
+                                        onClick={deleteAvatarHandler}
+                                        color="redBorder"
+                                    >
+                                        <AiOutlineClose className="size-5" />
+                                    </Button>
+                                )}
                                 <Image
                                     src={avatar}
                                     alt="Avatar"
@@ -118,15 +119,20 @@ export const LeftColumn = ({
                         )}
                     </div>
                 </div>
-                <label className="underline text-purple mt-2 text-center block cursor-pointer">
-                    Змінити аватар
-                    <input
-                        type="file"
-                        accept=".png,,.jpeg"
-                        className="hidden"
-                        onChange={onAvatarChange}
-                    />
-                </label>
+                {isEditable && (
+                    <label className="underline text-purple mt-2 text-center block cursor-pointer">
+                        Змінити аватар
+                        <input
+                            type="file"
+                            accept=".png,.jpeg"
+                            className="hidden"
+                            onChange={onAvatarChange}
+                        />
+                    </label>
+                )}
+                <div className="mt-2 text-center text-xl font-semibold">
+                    {profile.firstName || ""} {profile.lastName || ""}
+                </div>
                 <ul className="mt-6 pb-4 border-b-2 border-b-gray-300 border-opacity-10 flex flex-col justify-start gap-2 relative">
                     {achievements.unlocked.map((achiev, index) => (
                         <li
@@ -149,7 +155,12 @@ export const LeftColumn = ({
                     ))}
                 </ul>
             </div>
-            <DeleteProfile />
+            {isEditable && (
+                <DeleteProfile
+                    profile={profile}
+                    isSelfProfile={isSelfProfile}
+                />
+            )}
         </div>
     );
 };

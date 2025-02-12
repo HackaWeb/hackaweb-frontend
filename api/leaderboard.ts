@@ -1,5 +1,5 @@
 import { fetchApi } from "./fetchApi";
-import { GetLeaderboardByQuestIdResponse } from "./responses/leaderboard.types";
+import { GetLeaderboardByQuestIdResponse } from "./responses/leaderboard.type";
 
 export const getLeaderboardByQuestId = async (
     questId: string,

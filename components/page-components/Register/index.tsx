@@ -8,16 +8,9 @@ import {
 } from "@/api/responses/common/failure.interface";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import {
-    INVALID_CONFIRMATION_PASSWORD_MESSAGE,
-    INVALID_INPUTES_MESSAGE,
-    INVALID_PASSWORD_LENGTH_MESSAGE,
-    INVALID_PASSWORD_NUMBER_MESSAGE,
-    INVALID_PASSWORD_SPECIAL_CHARACTER_MESSAGE,
-    INVALID_PASSWORD_UPPERCASE_MESSAGE,
-} from "@/constants";
 import { printToastErrorMessages } from "@/helpers/displayToasts";
 import { setCookie } from "@/helpers/setCookie";
+import { validateEmail } from "@/helpers/validateEmail";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { ImSpinner } from "react-icons/im";
@@ -26,13 +19,13 @@ import { toast } from "react-toastify";
 const translateErrorMessage = (errorMessage: string) => {
     switch (errorMessage) {
         case "Password must be at least 8 characters":
-            return INVALID_PASSWORD_LENGTH_MESSAGE;
+            return "Пароль повинен містити принаймні 8 символів";
         case "Password must contain at least one uppercase letter":
-            return INVALID_PASSWORD_UPPERCASE_MESSAGE;
+            return "Пароль повинен містити принаймні одну велику літеру";
         case "Password must contain at least one number":
-            return INVALID_PASSWORD_NUMBER_MESSAGE;
+            return "Пароль повинен містити принаймні одну цифру";
         case "Password must contain at least one special character":
-            return INVALID_PASSWORD_SPECIAL_CHARACTER_MESSAGE;
+            return "Пароль повинен містити принаймні один спеціальний символ";
         default:
             return errorMessage;
     }
@@ -53,10 +46,12 @@ export const RegisterPageComponent = () => {
     ): Promise<RequestError[]> => {
         try {
             const res = await register(registerRequestBody);
+
             if ("jwtToken" in res) {
                 setCookie("token", res.jwtToken);
                 return [];
             }
+
             return res.errors.map((error) => ({
                 field: "",
                 message: translateErrorMessage(error.message),
@@ -75,12 +70,17 @@ export const RegisterPageComponent = () => {
             !formData.password.trim() ||
             !formData.confirmPassword.trim()
         ) {
-            toast.error(INVALID_INPUTES_MESSAGE);
+            toast.error("Заповніть усі поля");
+            return;
+        }
+
+        if (!validateEmail(formData.email)) {
+            toast.error("Ваша пошта не є поштою");
             return;
         }
 
         if (formData.password !== formData.confirmPassword) {
-            toast.error(INVALID_CONFIRMATION_PASSWORD_MESSAGE);
+            toast.error("Паролі не співпадають");
             return;
         }
 

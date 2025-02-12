@@ -1,5 +1,6 @@
 import { Profile } from "@/types/user.interface";
 
-export interface DeleteProps {
+export interface DeleteProfileProps {
     profile: Profile;
+    isSelfProfile: boolean;
 }

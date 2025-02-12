@@ -5,7 +5,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import { selectAside, setIsAsideOpened } from "@/store/slices/aside/aside";
+import { selectAside, setIsAsideOpened } from "@/store/slices/aside";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { Button } from "@/components/ui/Button";
 import { RxHamburgerMenu } from "react-icons/rx";

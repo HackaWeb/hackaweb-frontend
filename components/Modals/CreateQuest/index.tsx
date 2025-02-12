@@ -19,11 +19,10 @@ import {
 } from "@/api/quests";
 import { ModalBg } from "../ModalBg";
 import { useQuestModals } from "@/hooks/useQuestModals";
-import { CreateQuestBody } from "@/api/requestBodies/quests.interface";
+import { CreateQuestBody } from "@/api/requestBodies/quest.interface";
 import { useRouter } from "next/navigation";
-import { toggleModal } from "@/store/slices/modals/modals";
+import { toggleModal } from "@/store/slices/modals";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { removeQuestion } from "@/store/slices/quests/quests";
 
 export const CreateQuest = () => {
     const router = useRouter();
@@ -38,7 +37,9 @@ export const CreateQuest = () => {
         dispatch,
         deleteQuestionHandler,
     } = useQuestModals();
+
     const fileInputRef = useRef<HTMLInputElement>(null);
+
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [duration, setDuration] = useState<string>("");
@@ -74,6 +75,7 @@ export const CreateQuest = () => {
             if (media) {
                 const questMedia = new FormData();
                 const file = await fetch(media!).then((r) => r.blob());
+
                 questMedia.append("file", file as File);
 
                 await uploadQuestMedia(data.id, questMedia);
@@ -86,6 +88,7 @@ export const CreateQuest = () => {
                         r.blob(),
                     );
                     questionMedia.append("file", file as File);
+
                     await uploadQuestionMedia(question.id, questionMedia);
                 }
             }

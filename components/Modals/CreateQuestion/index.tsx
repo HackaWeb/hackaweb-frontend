@@ -12,12 +12,11 @@ import { Select } from "@/components/ui/Select";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { Question } from "@/types/question.interface";
 import { useEffect, useRef } from "react";
-import { VIDEO_DURATION } from "@/constants";
 import {
     addQuestion,
     setOptions,
     setQuestionActiveId,
-} from "@/store/slices/quests/quests";
+} from "@/store/slices/quests";
 
 export const CreateQuestion = () => {
     const {
@@ -67,11 +66,14 @@ export const CreateQuestion = () => {
         if (fileType === "video" && videoRef.current) {
             const video = videoRef.current;
             const handleMetadataLoad = () => {
-                if (video.duration > VIDEO_DURATION) {
+                if (
+                    video.duration >
+                    Number(process.env.NEXT_PUBLIC_MAX_VIDEO_DURATION)
+                ) {
                     setMedia(null);
                     setFileType(null);
                     toast.error(
-                        "Тривалість відео неповинна перевищувати 60 секунд!",
+                        `Тривалість відео неповинна перевищувати ${process.env.NEXT_PUBLIC_MAX_VIDEO_DURATION} секунд!`,
                     );
                 }
             };
