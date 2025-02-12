@@ -40,7 +40,6 @@ export const ProfileForm = ({
         }
     };
 
-    const onUpdateProfileSubmit = async () => {
     const onUpdateProfileSubmit = async (e: FormEvent) => {
         e.preventDefault();
         
