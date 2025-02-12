@@ -6,7 +6,7 @@ import { cn } from "@/helpers/cn";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import { selectPrev, toggleModal } from "@/store/slices/modals/modals";
+import { selectPrev, toggleModal } from "@/store/slices/modals";
 
 export const ReturnBtn = ({
     className,

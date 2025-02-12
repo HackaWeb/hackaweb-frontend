@@ -11,7 +11,7 @@ import { Select } from "@/components/ui/Select";
 import { useEffect, useRef } from "react";
 import { useQuestionModal } from "@/hooks/useQuestionModal";
 import { Question } from "@/types/question.interface";
-import { editQuestion } from "@/store/slices/quests/quests";
+import { editQuestion } from "@/store/slices/quests";
 
 export const QuestionEdit = () => {
     const {

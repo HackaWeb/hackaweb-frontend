@@ -16,7 +16,7 @@ import {
     addQuestion,
     setOptions,
     setQuestionActiveId,
-} from "@/store/slices/quests/quests";
+} from "@/store/slices/quests";
 
 export const CreateQuestion = () => {
     const {

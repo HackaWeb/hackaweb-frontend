@@ -1,7 +1,7 @@
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
-import { selectModals, toggleModal } from "@/store/slices/modals/modals";
-import { ModalType } from "@/store/slices/modals/modals.types";
+import { selectModals, toggleModal } from "@/store/slices/modals";
+import { ModalType } from "@/store/slices/modals/modals.type";
 import {
     removeQuestion,
     selectActiveQuestion,
@@ -10,7 +10,7 @@ import {
     selectQuestions,
     selectRemovedQuestions,
     setQuestionActiveId,
-} from "@/store/slices/quests/quests";
+} from "@/store/slices/quests";
 import { useState } from "react";
 import { toast } from "react-toastify";
 

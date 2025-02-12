@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ChoiceOption, Question } from "@/types/question.interface";
-import { CreateQuest, QuestsState } from "../quests/quests.types";
+import { CreateQuest, QuestsState } from "./quests.type";
 
 const initialState: QuestsState = {
     quest: null,

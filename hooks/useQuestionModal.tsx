@@ -2,21 +2,17 @@ import { SelectOption } from "@/types/selectOption.interface";
 import { useEffect, useRef, useState } from "react";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
 import { toast } from "react-toastify";
-import { ModalType } from "@/store/slices/modals/modals.types";
+import { ModalType } from "@/store/slices/modals/modals.type";
 import { BooleanAnswer } from "@/components/Modals/CreateQuestion/BooleanAnswer";
 import { InputAnswer } from "@/components/Modals/CreateQuestion/InputAnswer";
 import { Choice } from "@/components/Modals/CreateQuestion/ChoiceAnswer";
-import {
-    selectModals,
-    selectPrev,
-    toggleModal,
-} from "@/store/slices/modals/modals";
+import { selectModals, selectPrev, toggleModal } from "@/store/slices/modals";
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import {
     selectActiveQuestion,
     selectOptions,
     setOptions,
-} from "@/store/slices/quests/quests";
+} from "@/store/slices/quests";
 
 const questionTypes: SelectOption[] = [
     {

@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import modals from "./slices/modals/modals";
-import quests from "./slices/quests/quests";
-import aside from "./slices/aside/aside";
+import modals from "./slices/modals";
+import quests from "./slices/quests";
+import aside from "./slices/aside";
 
 export const store = configureStore({
     reducer: { modals, aside, quests },

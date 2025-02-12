@@ -21,7 +21,7 @@ import {
 } from "@/api/quests";
 import { EditQuestBody } from "@/api/requestBodies/quest.interface";
 import { toast } from "react-toastify";
-import { toggleModal } from "@/store/slices/modals/modals";
+import { toggleModal } from "@/store/slices/modals";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 

@@ -1,7 +1,7 @@
 "use client";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { useAnswers } from "@/hooks/useAnswers";
-import { editOption, setOptions } from "@/store/slices/quests/quests";
+import { editOption, setOptions } from "@/store/slices/quests";
 import { toast } from "react-toastify";
 
 export const BooleanAnswer = () => {

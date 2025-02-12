@@ -21,7 +21,7 @@ import { ModalBg } from "../ModalBg";
 import { useQuestModals } from "@/hooks/useQuestModals";
 import { CreateQuestBody } from "@/api/requestBodies/quest.interface";
 import { useRouter } from "next/navigation";
-import { toggleModal } from "@/store/slices/modals/modals";
+import { toggleModal } from "@/store/slices/modals";
 import { FaRegTrashAlt } from "react-icons/fa";
 
 export const CreateQuest = () => {

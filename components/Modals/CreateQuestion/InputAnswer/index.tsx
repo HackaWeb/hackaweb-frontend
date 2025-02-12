@@ -5,7 +5,7 @@ import {
     addOption,
     editOption,
     removeOption,
-} from "@/store/slices/quests/quests";
+} from "@/store/slices/quests";
 
 export const InputAnswer = () => {
     const { dispatch, getOption } = useAnswers();

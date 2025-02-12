@@ -3,7 +3,7 @@ import { useAppSelector } from "@/store/hooks/useAppSelector";
 import {
     selectActiveQuestion,
     selectOptions,
-} from "@/store/slices/quests/quests";
+} from "@/store/slices/quests";
 
 export const useAnswers = () => {
     const dispatch = useAppDispatch();
