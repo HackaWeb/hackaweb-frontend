@@ -3,7 +3,7 @@ import { getLeaderboardByQuestId } from "@/api/leaderboard";
 import { getQuestById } from "@/api/quests";
 import { GeneralInfo } from "@/components/page-components/Quest/GeneralInfo";
 import { Leaderboard } from "@/components/page-components/Quest/Leaderboard";
-import { Reviews } from "@/components/page-components/Quest/Reews";
+import { Reviews } from "@/components/page-components/Quest/Reviews";
 import { Button } from "@/components/ui/Button";
 import { ReturnBtn } from "@/components/ui/ReturnBtn";
 import { LeaderboardUser, Quest } from "@/types/quest.interface";

@@ -1,23 +1,33 @@
+"use client";
 import Link from "next/link";
 import { CompletedQuestsProps } from "./CompletedQuests.props";
 import { printUserNickname } from "@/helpers/printUserNickname";
+import { motion } from "framer-motion";
+import { slideAnimation } from "@/helpers/animation";
 
-export const CompletedQuests = async ({
+export const CompletedQuests = ({
     profile,
     isCompletedByMe,
     completedQuests,
 }: CompletedQuestsProps) => {
     return (
         completedQuests && (
-            <div className="bg-blackOpacity rounded-md mt-6 overflow-x-auto w-full">
+            <motion.div
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                custom={1}
+                variants={slideAnimation}
+                className="bg-blackOpacity rounded-md mt-6 overflow-x-auto w-full"
+            >
                 <div className="p-4">
                     <h2 className="text-xl font-semibold text-white">
                         {isCompletedByMe
                             ? "Пройдені квести"
                             : `Пройдені квести користувачем ${printUserNickname(
-                                                              profile.firstName,
-                                                              profile.lastName,
-                                                          )}`}
+                                  profile.firstName,
+                                  profile.lastName,
+                              )}`}
                     </h2>
                 </div>
                 {completedQuests.length ? (
@@ -78,7 +88,7 @@ export const CompletedQuests = async ({
                             : `Користувач ще не пройшов жодного квесту`}
                     </div>
                 )}
-            </div>
+            </motion.div>
         )
     );
 };
