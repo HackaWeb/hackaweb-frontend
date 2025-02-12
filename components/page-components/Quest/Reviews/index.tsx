@@ -22,7 +22,8 @@ export const Reviews = ({ quest }: ReviewsProps) => {
                             <div className="flex gap-4">
                                 <div className="flex flex-col items-center">
                                     <div className="w-12 h-12 rounded-md border border-purple flex items-center justify-center p-1">
-                                        {review.author.avatar ? (
+                                        {review.author &&
+                                        review.author.avatar ? (
                                             <Image
                                                 src={review.author.avatar}
                                                 alt="Avatar"
@@ -35,14 +36,16 @@ export const Reviews = ({ quest }: ReviewsProps) => {
                                     </div>
                                 </div>
                                 <div className="flex-1">
-                                    <Link
-                                        className="font-semibold"
-                                        href={`/users/${review.author.id}`}
-                                    >
-                                        {review.author.firstName +
-                                            " " +
-                                            review.author.lastName}
-                                    </Link>
+                                    {review.author && (
+                                        <Link
+                                            className="font-semibold"
+                                            href={`/users/${review.author.id}`}
+                                        >
+                                            {review.author.firstName +
+                                                " " +
+                                                review.author.lastName}
+                                        </Link>
+                                    )}
                                     <div className="text-gray-light text-sm">
                                         {review.createdAt}
                                     </div>
@@ -52,9 +55,7 @@ export const Reviews = ({ quest }: ReviewsProps) => {
                                     />
                                 </div>
                             </div>
-                            <div className="text-gray-light">
-                                {review.text}
-                            </div>
+                            <div className="text-gray-light">{review.text}</div>
                         </div>
                     ))
                 ) : (

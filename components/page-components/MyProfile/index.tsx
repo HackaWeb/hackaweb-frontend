@@ -31,7 +31,7 @@ export const MyProfilePageComponent = ({
                     <OwnQuests
                         ownQuests={ownQuests}
                         profile={profile}
-                        isCreatedByMe={true}
+                        isEditable={true}
                     />
                     <CompletedQuests
                         completedQuests={completedQuests}

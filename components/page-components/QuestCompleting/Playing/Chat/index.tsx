@@ -11,6 +11,8 @@ import { cn } from "@/helpers/cn";
 import { useChat } from "@/hooks/useChat";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { popAnimation } from "@/helpers/animation";
 
 export const Chat = ({ isOpened, setIsOpened, user }: ChatProps) => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -57,8 +59,9 @@ export const Chat = ({ isOpened, setIsOpened, user }: ChatProps) => {
 
                     <div className="flex-grow overflow-y-auto pr-2">
                         {messages.map((msg, index) => (
-                            <div
+                            <motion.div
                                 key={index}
+                                {...popAnimation}
                                 className="py-4 border-b border-gray-700"
                             >
                                 <div className="flex justify-between">
@@ -81,7 +84,7 @@ export const Chat = ({ isOpened, setIsOpened, user }: ChatProps) => {
                                 <p className="text-gray mt-2 text-sm xsm:text-base">
                                     {msg.message}
                                 </p>
-                            </div>
+                            </motion.div>
                         ))}
                         <div ref={messagesEndRef}></div>
                     </div>
