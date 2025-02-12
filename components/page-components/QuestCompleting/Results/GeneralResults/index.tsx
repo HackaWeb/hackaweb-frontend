@@ -21,7 +21,10 @@ export const GeneralResults = ({
                         / {result?.totalQuestions}
                     </li>
                     <li className="mt-1">
-                        Час проходження: <span className="text-purple">35</span>{" "}
+                        Час проходження:{" "}
+                        <span className="text-purple">
+                            {timeSpentInMinutes.toFixed(2)}
+                        </span>{" "}
                         хв
                     </li>
                     <li className="mt-1">
