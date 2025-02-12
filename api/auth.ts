@@ -3,7 +3,7 @@ import {
     LoginRequestBody,
     RegisterRequestBody,
 } from "./requestBodies/auth.interface";
-import { LoginResponse, RegisterResponse } from "./responses/auth.types";
+import { LoginResponse, RegisterResponse } from "./responses/auth.type";
 
 export const register = async (
     body: RegisterRequestBody,
