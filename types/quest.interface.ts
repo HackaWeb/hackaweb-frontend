@@ -15,6 +15,7 @@ export interface Quest {
     createdAt: string;
     rate: number;
     imageUrl: string;
+    passCount: number;
     duration: number;
     owner: User;
     feedbacks: Feedback[];

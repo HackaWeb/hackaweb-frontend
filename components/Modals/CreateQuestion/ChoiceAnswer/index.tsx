@@ -4,12 +4,17 @@ import { Input } from "@/components/ui/Input";
 import { ChangeEvent } from "react";
 import { toast } from "react-toastify";
 import { useAnswers } from "@/hooks/useAnswers";
+import {
+    addOption,
+    editOption,
+    removeOption,
+} from "@/store/slices/quests/quests";
 
 export const Choice = () => {
     const { dispatch, getOption, isChecked } = useAnswers();
 
-    const checkHandler = (isCorrect: boolean, id: string) => {
-        const option = getOption(id);
+    const checkHandler = (isCorrect: boolean, index: number) => {
+        const option = getOption(index);
 
         if (!option) return toast.error("Спочатку напишіть варіант відповіді!");
 
@@ -17,24 +22,24 @@ export const Choice = () => {
             editOption({
                 title: option.title,
                 isCorrect,
-                id,
+                index,
             }),
         );
     };
 
-    const inputHandler = (e: ChangeEvent<HTMLInputElement>, id: string) => {
+    const inputHandler = (e: ChangeEvent<HTMLInputElement>, index: number) => {
         const title = e.target.value;
 
-        if (!title) return dispatch(removeOption(id));
+        if (!title) return dispatch(removeOption(index));
 
-        if (!getOption(id))
-            return dispatch(addOption({ id, title, isCorrect: false }));
+        if (!getOption(index))
+            return dispatch(addOption({ index, title, isCorrect: false }));
 
         dispatch(
             editOption({
                 title,
-                id,
-                isCorrect: isChecked(id),
+                index,
+                isCorrect: isChecked(index),
             }),
         );
     };
@@ -45,19 +50,21 @@ export const Choice = () => {
                 Оберіть правильну-(і) відповідь-(і)
             </label>
             <div>
-                {[1, 2, 3, 4].map((_, id) => {
+                {[0, 1, 2, 3].map((_, index) => {
                     return (
-                        <div className="mt-2" key={id}>
+                        <div className="mt-2" key={index}>
                             <div className="flex justify-between relative">
                                 <Input
-                                    placeholder={`Впишіть варіант ${id + 1}..`}
-                                    value={getOption(id)?.title || ""}
-                                    onChange={(e) => inputHandler(e, id)}
+                                    placeholder={`Впишіть варіант ${
+                                        index + 1
+                                    }..`}
+                                    value={getOption(index)?.title || ""}
+                                    onChange={(e) => inputHandler(e, index)}
                                 />
                                 <Checkbox
-                                    checked={isChecked(id)}
+                                    checked={isChecked(index)}
                                     onChange={(e) => {
-                                        checkHandler(e, id);
+                                        checkHandler(e, index);
                                     }}
                                     className="absolute right-4 top-3"
                                 />

@@ -1,20 +1,20 @@
 import { useAppDispatch } from "@/store/hooks/useAppDispatch";
 import { useAppSelector } from "@/store/hooks/useAppSelector";
 import {
-    selectEditingOptions,
-    selectEditingQuestion,
-} from "@/store/slices/quests/editQuests";
+    selectActiveQuestion,
+    selectOptions,
+} from "@/store/slices/quests/quests";
 
 export const useAnswers = () => {
     const dispatch = useAppDispatch();
-    const question = useAppSelector(selectEditingQuestion);
-    const options = useAppSelector(selectEditingOptions);
+    const question = useAppSelector(selectActiveQuestion);
+    const options = useAppSelector(selectOptions);
 
-    const getOption = (optionId: string) =>
-        options?.find((option) => option.id === optionId);
+    const getOption = (index: number) =>
+        options?.find((option) => option.index === index);
 
-    const isChecked = (optionId: string) =>
-        Boolean(getOption(optionId) && getOption(optionId)?.isCorrect);
+    const isChecked = (index: number) =>
+        Boolean(getOption(index) && getOption(index)?.isCorrect);
 
     return { dispatch, getOption, options, isChecked, question };
 };

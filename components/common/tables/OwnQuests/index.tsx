@@ -1,15 +1,38 @@
+"use client";
 import Link from "next/link";
 import { OwnQuestsProps } from "./OwnQuests.props";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { Button } from "@/components/ui/Button";
 import { printUserNickname } from "@/helpers/printUserNickname";
+import { setQuest, setQuestions } from "@/store/slices/quests/quests";
+import { toggleModal } from "@/store/slices/modals/modals";
+import { deleteQuest, getQuestById } from "@/api/quests";
+import { useAppDispatch } from "@/store/hooks/useAppDispatch";
+import { toast } from "react-toastify";
 
-export const OwnQuests = async ({
+export const OwnQuests = ({
     profile,
     isCreatedByMe,
     ownQuests,
 }: OwnQuestsProps) => {
-    console.log(ownQuests);
+    const dispatch = useAppDispatch();
+
+    const getQuest = async (id: string) => {
+        const data = await getQuestById(id);
+        dispatch(setQuest(data.quiz));
+        dispatch(setQuestions(data.quiz.questions));
+    };
+
+    const onQuestEditClick = async (id: string) => {
+        await getQuest(id);
+        dispatch(toggleModal("QuestEdit"));
+    };
+
+    const deleteHandler = async (id: string) => {
+        await deleteQuest(id);
+        dispatch(setQuest(null));
+        toast.success("Ви успішно видалили свій квест!");
+    };
     return (
         ownQuests && (
             <div className="bg-blackOpacity rounded-md overflow-x-auto w-full">
@@ -23,7 +46,13 @@ export const OwnQuests = async ({
                               )}`}
                     </h2>
                     {isCreatedByMe && (
-                        <Button color="purpleBorder" className="py-2 px-4">
+                        <Button
+                            color="purpleBorder"
+                            className="py-2 px-4"
+                            onClick={() =>
+                                dispatch(toggleModal("QuestCreation"))
+                            }
+                        >
                             Створити квест
                         </Button>
                     )}
@@ -93,10 +122,22 @@ export const OwnQuests = async ({
                                         </td> */}
                                         {isCreatedByMe && (
                                             <td className="p-3 flex gap-2">
-                                                <button className="p-2 bg-purple-600 rounded-md">
+                                                <button
+                                                    className="p-2 bg-purple-600 rounded-md"
+                                                    onClick={() => {
+                                                        onQuestEditClick(
+                                                            quest.id,
+                                                        );
+                                                    }}
+                                                >
                                                     <AiOutlineEdit className="text-white" />
                                                 </button>
-                                                <button className="p-2 bg-red-600 rounded-md">
+                                                <button
+                                                    className="p-2 bg-red-600 rounded-md"
+                                                    onClick={() => {
+                                                        deleteHandler(quest.id);
+                                                    }}
+                                                >
                                                     <AiOutlineDelete className="text-white" />
                                                 </button>
                                             </td>

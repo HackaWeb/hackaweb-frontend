@@ -2,13 +2,15 @@ import { Feedback } from "@/types/feedback.interface";
 import { ChoiceOption, Question } from "@/types/question.interface";
 import { User } from "@/types/user.interface";
 
-export interface EditQuestsState {
-    editingQuest: EditQuest | null;
-    editingQuestion: Question | null;
-    editingOptions: ChoiceOption[] | null;
+export interface QuestsState {
+    quest: CreateQuest | null;
+    questions: Question[] | null;
+    options: ChoiceOption[] | null;
+    activeQuestionId: string | null;
+    removedQuestions: string[] | null;
 }
 
-export interface EditQuest {
+export interface CreateQuest {
     id: string;
     title: string;
     description: string;
@@ -20,9 +22,4 @@ export interface EditQuest {
     owner: User;
     feedbacks: Feedback[];
     questions: Question[];
-}
-
-export interface EditQuestion {
-    id: string;
-    body: Question;
 }

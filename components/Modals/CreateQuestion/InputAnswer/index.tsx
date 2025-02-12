@@ -1,27 +1,33 @@
 "use client";
 import { Input } from "@/components/ui/Input";
 import { useAnswers } from "@/hooks/useAnswers";
+import {
+    addOption,
+    editOption,
+    removeOption,
+} from "@/store/slices/quests/quests";
 
 export const InputAnswer = () => {
     const { dispatch, getOption } = useAnswers();
 
-    const inputHandler = (
-        e: React.ChangeEvent<HTMLInputElement>,
-        id: string,
-    ) => {
+    const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const title = e.target.value;
 
-        if (!title) return dispatch(removeOption(id));
+        if (!title) return dispatch(removeOption(0));
 
-        if (!getOption(id))
+        if (!getOption(0))
             return dispatch(
-                addOption({ id: crypto.randomUUID(), title, isCorrect: true }),
+                addOption({
+                    index: 0,
+                    title,
+                    isCorrect: true,
+                }),
             );
 
         dispatch(
             editOption({
+                index: 0,
                 title,
-                id,
                 isCorrect: true,
             }),
         );
@@ -36,7 +42,7 @@ export const InputAnswer = () => {
                 id="correctAnswer"
                 className="mt-2"
                 placeholder="Правильна відповідь..."
-                value={getOption()?.title || ""}
+                value={getOption(0)?.title || ""}
                 onChange={inputHandler}
             />
         </div>

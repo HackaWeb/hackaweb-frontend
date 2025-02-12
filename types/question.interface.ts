@@ -1,7 +1,7 @@
 import { QuestionType } from "./question.type";
 
 export interface ChoiceOption {
-    id: string;
+    index?: number;
     title: string;
     isCorrect: boolean;
 }

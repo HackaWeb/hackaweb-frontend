@@ -14,6 +14,8 @@ import { toggleModal } from "@/store/slices/modals/modals";
 import { getQuests } from "@/api/quests";
 import { SortType } from "@/types/quest.interface";
 import { motion, Variants } from "framer-motion";
+import { getCookie } from "@/helpers/getCookie";
+import { toast } from "react-toastify";
 
 const sortOptions: SelectOption[] = [
     { title: "Рейтингом тесту", value: "testRating" },
@@ -61,6 +63,13 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
         }
     };
 
+    const clickHandler = async () => {
+        const token = getCookie("token");
+        if (!token) return toast.error("Спочатку увійдіть в аккаунт!");
+
+        dispatch(toggleModal("QuestCreation"));
+    };
+
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             processQuestsHandler();
@@ -78,7 +87,7 @@ export const HomePageComponent = ({ serverQuests }: HomePageComponentProps) => {
                 <Button
                     color="purpleBorder"
                     className="mt-3"
-                    /* onClick={clickHandler} */
+                    onClick={clickHandler}
                 >
                     <span>Створити свій квест</span>
                     <IoCreateOutline className="size-6" />
